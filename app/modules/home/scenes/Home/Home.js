@@ -1,5 +1,5 @@
 import React from 'react';
-var { View, StyleSheet, Alert } = require('react-native');
+import { View, Alert } from 'react-native';
 
 import {Button} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux';
@@ -24,6 +24,10 @@ class Home extends React.Component {
         this.props.signOut(this.onSuccess.bind(this), this.onError.bind(this))
     }
 
+    onLocation() {
+        Actions.push("Location");
+    }
+
     onSuccess() {
         Actions.reset("Auth")
     }
@@ -38,7 +42,15 @@ class Home extends React.Component {
                 <Button
                     raised
                     borderRadius={4}
-                    title={'LOG OUT'}
+                    title={'Ubicación'}
+                    containerViewStyle={[styles.containerView]}
+                    buttonStyle={[styles.button]}
+                    textStyle={styles.buttonText}
+                    onPress={this.onLocation}/>
+                <Button
+                    raised
+                    borderRadius={4}
+                    title={'Cerrar Sesión'}
                     containerViewStyle={[styles.containerView]}
                     buttonStyle={[styles.button]}
                     textStyle={styles.buttonText}

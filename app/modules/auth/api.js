@@ -37,7 +37,18 @@ export function getUser(user, callback) {
             const exists = (snapshot.val() !== null);
 
             //if the user exist in the DB, replace the user variable with the returned snapshot
-            if (exists) user = snapshot.val();
+            if (exists) {
+                user = snapshot.val();
+                // userBD = snapshot.val();
+                // userNew = {
+                //     uid: userBD ? userBD.uid : null,
+                //     username: userBD ? userBD.username : null,
+                //     displayName: user.displayName,
+                //     email: user.email,
+                //     photoURL: user.photoURL
+                // }
+                // user = userNew
+            }
 
             const data = { exists, user }
             callback(true, data, null);
