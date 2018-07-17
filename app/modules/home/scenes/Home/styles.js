@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     container:{
         flex:1
     },
-  
+
     bottomContainer:{
         backgroundColor:"white",
         paddingVertical: padding * 3,
@@ -25,10 +25,6 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center"
     },
-
-    button: {
-        marginVertical: 10,
-    }
 });
 
 export default styles;

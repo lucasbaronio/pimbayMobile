@@ -64,7 +64,7 @@ class LocationExpo extends React.Component {
             coordinate={{latitude: -34.9038862, longitude: -56.1906814}}
             title={"Universidad ORT"}
             description={"La ortttttt descripcion"}
-        />;
+        />
       </MapView>
     );
   }

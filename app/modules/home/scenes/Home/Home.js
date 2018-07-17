@@ -28,6 +28,10 @@ class Home extends React.Component {
         Actions.push("Location");
     }
 
+    onNotification() {
+        Actions.push("Notification");
+    }
+
     onSuccess() {
         Actions.reset("Auth")
     }
@@ -43,16 +47,24 @@ class Home extends React.Component {
                     raised
                     borderRadius={4}
                     title={'Ubicación'}
-                    containerViewStyle={[styles.containerView]}
-                    buttonStyle={[styles.button]}
+                    containerViewStyle={[styles.bottomContainer]}
+                    buttonStyle={[styles.buttonContainer]}
                     textStyle={styles.buttonText}
                     onPress={this.onLocation}/>
                 <Button
                     raised
                     borderRadius={4}
+                    title={'Notificaciones'}
+                    containerViewStyle={[styles.bottomContainer]}
+                    buttonStyle={[styles.buttonContainer]}
+                    textStyle={styles.buttonText}
+                    onPress={this.onNotification}/>
+                <Button
+                    raised
+                    borderRadius={4}
                     title={'Cerrar Sesión'}
-                    containerViewStyle={[styles.containerView]}
-                    buttonStyle={[styles.button]}
+                    containerViewStyle={[styles.bottomContainer]}
+                    buttonStyle={[styles.buttonContainer]}
                     textStyle={styles.buttonText}
                     onPress={this.onSignOut}/>
             </View>
