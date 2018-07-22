@@ -1,29 +1,30 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { actions as home } from "../../index";
+import eventsOrInvitations from './events.json';
+
+// import { actions as home } from "../../index";
 // const { getEventsOrInvitations } = home;
 
 import styles from "./styles";
-// import Quote from "../../components/Quote";
+import EventCard from "../../../shared/EventCard";
+import InvitationCard from "../../../shared/InvitationCard";
 
 class Timeline extends React.Component {
-    constructor() {
-        super();
-        this.state = {}
-
-        // this.renderItem = this.renderItem.bind(this);
-    }
 
     // componentDidMount() {
     //     this.props.getEventsOrInvitations((error) => alert(error.message))
     // }
 
-    // renderItem({item, index}) {
-    //     return <Quote index={index}/>
-    // }
+    renderItem = ({item, index}) => {
+        // return (item.type === "EVENT" && item.id > 40)
+        return (item.type === "EVENT")
+        ? <EventCard item={item}/>
+        // : <InvitationCard item={item}/>
+        : null
+    }
 
     render() {
         // if (this.props.isLoading){
@@ -35,13 +36,13 @@ class Timeline extends React.Component {
         // }else{
             return (
                 <View style={styles.container}>
-                    <Text>Vacio</Text>
-                    {/* <FlatList
+                    <FlatList
                         ref='listRef'
-                        data={this.props.eventsOrInvitations}
+                        // data={this.props.eventsOrInvitations}
+                        data={eventsOrInvitations}
                         renderItem={this.renderItem}
                         initialNumToRender={5}
-                        keyExtractor={(item, index) => index.toString()}/> */}
+                        keyExtractor={(item, index) => index.toString()}/>
                 </View>
             );
         // }

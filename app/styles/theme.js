@@ -1,4 +1,5 @@
 import { Dimensions, Platform } from 'react-native';
+import { Constants } from 'expo';
 import { moderateScale as normalize } from 'react-native-size-matters';
 
 const color = {
@@ -9,7 +10,8 @@ const color = {
     light_grey: "#eaeaea",
     grey: "#ccc",
     red: "red",
-    underlayColor: "#ddd"
+    underlayColor: "#ddd",
+    transparent: "transparent"
 }
 
 const fontSize = {
@@ -31,6 +33,8 @@ const navbarHeight = (Platform.OS === 'ios') ? 64 : 54;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const statusBarHeight = Constants.statusBarHeight;
+
 const tabColor = (Platform.OS === "ios") ? "rgba(73,75,76, .5)" : "rgba(255,255,255,.8)";
 const selectedTabColor = (Platform.OS === "ios") ? "rgb(73,75,76)" : "#fff";
 
@@ -47,5 +51,6 @@ export {
     windowHeight,
     tabIconStyle,
     navTitleStyle,
-    normalize
+    normalize,
+    statusBarHeight
 }

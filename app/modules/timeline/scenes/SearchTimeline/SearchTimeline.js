@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 // import { actions as home } from "../../index"
 // const { getEventsOrInvitations } = home;
 
-import styles from "./styles"
+import styles, { colorBackgroundHeader } from "./styles"
 
 class SearchTimeline extends React.Component {
     constructor() {
@@ -64,7 +64,8 @@ class SearchTimeline extends React.Component {
                     leftComponent={{ text: '' }}
                     centerComponent={this.renderSearchBar()}
                     rightComponent={this.renderCancelButton()}
-                    innerContainerStyles={styles.header}
+                    // innerContainerStyles={styles.header}
+                    backgroundColor={colorBackgroundHeader}
                 />
             </View>
         );

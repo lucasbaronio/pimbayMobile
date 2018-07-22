@@ -12,15 +12,26 @@ import Register from '../modules/auth/scenes/Register';
 import CompleteProfile from '../modules/auth/scenes/CompleteProfile';
 import Login from '../modules/auth/scenes/Login';
 import ForgotPassword from '../modules/auth/scenes/ForgotPassword';
-import Home from '../modules/home/scenes/Home';
-import Timeline from '../modules/home/scenes/Timeline';
+
+// Timeline
+import Timeline from '../modules/timeline/scenes/Timeline';
+import SearchTimeline from '../modules/timeline/scenes/SearchTimeline';
+
+// InvitationsIn
 import InvitationsIn from '../modules/home/scenes/InvitationsIn';
+
+// InvitationsOut
 import InvitationsOut from '../modules/home/scenes/InvitationsOut';
+
+// Profile
 import Profile from '../modules/home/scenes/Profile';
+
+// Chats
 import Chats from '../modules/home/scenes/Chats';
-import LocationExpo from '../modules/home/scenes/LocationExpo';
-import NotificationExpo from '../modules/home/scenes/NotificationExpo';
-import SearchTimeline from '../modules/home/scenes/SearchTimeline';
+
+// import Home from '../modules/home/scenes/Home';
+// import LocationExpo from '../modules/home/scenes/LocationExpo';
+// import NotificationExpo from '../modules/home/scenes/NotificationExpo';
 
 import NavButton from '../components/NavButton';
 // import SaveButton from '../modules/home/components/SaveButton';
@@ -137,8 +148,6 @@ export default class extends React.Component {
                                             size={28}
                                             color={focused ? 'black' : 'grey'}
                                             name={`home`}
-                                            // text={`Inicio`}
-                                            // textStyle={focused ? [styles.label, styles.activeLabel] : styles.label}
                                         />
                                     )}
                                 />
@@ -152,8 +161,6 @@ export default class extends React.Component {
                                             size={28}
                                             color={focused ? 'black' : 'grey'}
                                             name={`arrows-in`}
-                                            // text={`Recibidas`}
-                                            // textStyle={focused ? [styles.label, styles.activeLabel] : styles.label}
                                         />
                                     )}
                                 />
@@ -167,8 +174,6 @@ export default class extends React.Component {
                                             size={28}
                                             color={focused ? 'black' : 'grey'}
                                             name={`ios-chatbubbles`}
-                                            // text={`Recibidas`}
-                                            // textStyle={focused ? [styles.label, styles.activeLabel] : styles.label}
                                         />
                                     )}
                                 />
@@ -182,8 +187,6 @@ export default class extends React.Component {
                                             size={28}
                                             color={focused ? 'black' : 'grey'}
                                             name={`arrows-out`}
-                                            // text={`Enviadas`}
-                                            // textStyle={focused ? [styles.label, styles.activeLabel] : styles.label}
                                         />
                                     )}
                                 />
@@ -197,8 +200,6 @@ export default class extends React.Component {
                                             size={28}
                                             color={focused ? 'black' : 'grey'}
                                             name={`user`}
-                                            // text={`Enviadas`}
-                                            // textStyle={focused ? [styles.label, styles.activeLabel] : styles.label}
                                         />
                                     )}
                                 />
