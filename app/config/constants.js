@@ -6,3 +6,6 @@ export const FIREBASE_STORAGE_BUCKET = "pimbaymobile.appspot.com";
 export const FIREBASE_MESSAGING_SENDER_ID = "619978772784";
 
 export const FACEBOOK_APP_ID = '197787241068265';
+
+export const API = 'https://api-pimbay.appspot.com/';
+export const API_EVENT = API + 'event?';
