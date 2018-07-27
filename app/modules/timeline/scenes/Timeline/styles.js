@@ -11,11 +11,14 @@ const styles = StyleSheet.create({
         // padding: 5,
         backgroundColor: '#fff',
     },
-
-    activityIndicator:{
+    activityIndicatorCenter:{
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: "center"
+    },
+    activityIndicatorBottom:{
+        flex: 1, 
+        marginVertical: 20
     }
 });
 
