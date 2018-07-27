@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { actions as timeline } from "../../index";
 const { getEventsOrInvitations } = timeline;
 
+import { API_EVENT_SIZE } from '../../constants';
+
 import styles from "./styles";
 import EventCard from "../../../shared/EventCard";
 // import InvitationCard from "../../../shared/InvitationCard";
@@ -18,13 +20,12 @@ class Timeline extends React.Component {
 
         this.state = {
             start: 0,
-            size: 10,
         }
     }
 
     componentDidMount() {
-        const { start, size } = this.state;
-        this.props.getEventsOrInvitations(start, size, (error) => alert(error.message))
+        const { start } = this.state;
+        this.props.getEventsOrInvitations(start, (error) => alert(error.message))
     }
 
     renderItem = ({item, index}) => {
@@ -46,11 +47,26 @@ class Timeline extends React.Component {
                 <View style={styles.container}>
                     <FlatList
                         ref='listRef'
+                        bounces={false}
                         data={this.props.eventsOrInvitations}
                         // data={eventsOrInvitations}
                         renderItem={this.renderItem}
                         initialNumToRender={5}
-                        keyExtractor={(item, index) => index.toString()}/>
+                        keyExtractor={(item, index) => index.toString()}
+                        onEndReached={() =>
+                            !this.props.isLoadingMore &&
+                            this.setState({
+                                start: this.state.start + API_EVENT_SIZE
+                            }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))}
+                        ListFooterComponent={() => {
+                            return (
+                              this.props.isLoadingMore &&
+                              <View style={{ flex: 1, marginVertical: 20 }}>
+                                <ActivityIndicator size="small" />
+                              </View>
+                            );
+                          }}
+                    />
                 </View>
             );
         }
@@ -60,6 +76,7 @@ class Timeline extends React.Component {
 function mapStateToProps(state, props) {
     return {
         isLoading: state.timelineReducer.isLoading,
+        isLoadingMore: state.timelineReducer.isLoadingMore,
         eventsOrInvitations: state.timelineReducer.eventsOrInvitations
     }
 }

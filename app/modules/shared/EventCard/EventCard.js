@@ -31,7 +31,7 @@ class EventCard extends React.PureComponent {
                 <Card
                     featuredTitle={item.title}
                     featuredTitleStyle={styles.titleCard}
-                    featuredSubtitle={item.date}
+                    featuredSubtitle={item.realizationDate}
                     featuredSubtitleStyle={styles.subtitleCard}
                     // image={require('../images/pic2.jpg')}
                     image={{uri: item.image}}
