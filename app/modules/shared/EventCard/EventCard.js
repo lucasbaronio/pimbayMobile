@@ -15,11 +15,9 @@ class EventCard extends React.PureComponent {
         this.state = {
             toggleSeeMore: true
         }
-
-        this.onToggleSeeMore = this.onToggleSeeMore.bind(this);
     }
 
-    onToggleSeeMore() {
+    onToggleSeeMore = () => {
         this.setState({toggleSeeMore: !this.state.toggleSeeMore});
     }
 

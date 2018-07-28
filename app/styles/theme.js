@@ -10,6 +10,8 @@ const color = {
     light_grey: "#eaeaea",
     grey: "#ccc",
     red: "red",
+    blue: "#2196F3",
+    light_blue: "#90CAF9",
     underlayColor: "#ddd",
     transparent: "transparent"
 }

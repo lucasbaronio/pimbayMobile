@@ -16,6 +16,7 @@ import ForgotPassword from '../modules/auth/scenes/ForgotPassword';
 // Timeline
 import Timeline from '../modules/timeline/scenes/Timeline';
 import SearchTimeline from '../modules/timeline/scenes/SearchTimeline';
+import CreateInvitation from '../modules/timeline/scenes/CreateInvitation';
 
 // InvitationsIn
 import InvitationsIn from '../modules/home/scenes/InvitationsIn';
@@ -130,7 +131,7 @@ export default class extends React.Component {
                                 showLabel = {true}
                                 lazy = {true}
                                 // showIcon = {true}
-                                tabBarPosition = {(Platform.OS === 'android') ? 'top' : 'bottom'}
+                                tabBarPosition = 'bottom'
                                 tabStyle={ (Platform.OS === 'android') && { marginTop: Constants.statusBarHeight }}
                                 // tabBarStyle={{ marginTop: Constants.statusBarHeight }}
                                 // labelStyle={styles.label}
@@ -223,6 +224,9 @@ export default class extends React.Component {
                     <Scene key="SearchTimeline"
                         hideNavBar
                         component={SearchTimeline} title="Buscar" />
+                    <Scene key="CreateInvitation"
+                        renderLeftButton={this.renderCloseButton}
+                        component={CreateInvitation} title="Crear Invitación" />
                     
                 </Modal>
             </Router>

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 
 import { connect } from 'react-redux';
+import { Actions } from "react-native-router-flux";
 
 import { actions as timeline } from "../../index";
 const { getEventsOrInvitations } = timeline;
@@ -9,6 +10,7 @@ const { getEventsOrInvitations } = timeline;
 import { API_EVENT_SIZE } from '../../constants';
 
 import styles from "./styles";
+import ContextActionList from "../../components/ContextActionList";
 import EventCard from "../../../shared/EventCard";
 // import InvitationCard from "../../../shared/InvitationCard";
 
@@ -33,6 +35,18 @@ class Timeline extends React.Component {
         : null
     }
 
+    onPressContextAction = (item) => {
+        Actions.push("CreateInvitation", {contextAction: item});
+    }
+
+    renderHeader = () => {
+        return (
+            <ContextActionList 
+                timeline={true}
+                onPressContextAction={this.onPressContextAction}/>
+        )
+    }
+
     render() {
         if (this.props.isLoading){
             return(
@@ -43,12 +57,12 @@ class Timeline extends React.Component {
         }else{
             return (
                 <View style={styles.container}>
+                    
                     <FlatList
                         ref='listRef'
-                        // bounces={false}
                         data={this.props.eventsOrInvitations}
                         renderItem={this.renderItem}
-                        initialNumToRender={5}
+                        // initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
                         onEndReached={() => {
                             if (!this.onEndReachedCalledDuringMomentum) {
@@ -67,6 +81,7 @@ class Timeline extends React.Component {
                               </View>
                             );
                         }}
+                        ListHeaderComponent={this.renderHeader}
                     />
                 </View>
             );
