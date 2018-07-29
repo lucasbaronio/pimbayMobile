@@ -128,13 +128,9 @@ export default class extends React.Component {
                             <Tabs
                                 hideNavBar
                                 key = "Home"
-                                showLabel = {true}
                                 lazy = {true}
-                                // showIcon = {true}
                                 tabBarPosition = 'bottom'
                                 tabStyle={ (Platform.OS === 'android') && { marginTop: Constants.statusBarHeight }}
-                                // tabBarStyle={{ marginTop: Constants.statusBarHeight }}
-                                // labelStyle={styles.label}
                                 swipeEnabled={false}
                             >
                                 <Scene

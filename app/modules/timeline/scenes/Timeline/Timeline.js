@@ -38,7 +38,6 @@ class Timeline extends React.Component {
 
     onPressContextAction = (item) => {
         this.goToCreateInvitation({contextAction: item});
-        // Actions.push("CreateInvitation", {contextAction: item});
     }
 
     goToCreateInvitation = (props) => {
