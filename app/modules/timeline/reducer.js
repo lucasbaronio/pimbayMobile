@@ -12,7 +12,6 @@ const timelineReducer = (state = initialState, action) => {
         case t.LOADING_HEADER_TIMELINE: {
             const eventsOrInvitations = state.eventsOrInvitations;
 
-            //show loading signal
             if (eventsOrInvitations.length === 0) 
                 return { ...state, isLoading: true }
 
@@ -20,13 +19,7 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.LOADING_FOOTER_TIMELINE: {
-            // const eventsOrInvitations = state.eventsOrInvitations;
-
-            // //show loading signal
-            // if (eventsOrInvitations.length === 0) 
-                return { ...state, isLoadingMore: true }
-
-            // return state;
+            return { ...state, isLoadingMore: true }
         }
 
         case t.TIMELINE_AVAILABLE: {
@@ -37,10 +30,6 @@ const timelineReducer = (state = initialState, action) => {
             let eventsOrInvitations = invitations.concat(events);
             return { ...state, eventsOrInvitations, isLoading: false, isLoadingMore: false };
         }
-
-        // case t.LOGGED_OUT: {
-        //     return {...state, eventsOrInvitations: []};
-        // }
 
         default:
             return state;

@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator, TextInput } from 'react-native';
+import { Divider } from 'react-native-elements';
 
 import { connect } from 'react-redux';
-
-// import eventsOrInvitations from './events.json';
+import { Actions } from "react-native-router-flux";
 
 import { actions as timeline } from "../../index";
 const { getEventsOrInvitations } = timeline;
 
 import { API_EVENT_SIZE } from '../../constants';
 
-import styles from "./styles";
+import styles, { color } from "./styles";
+import ContextActionList from "../../components/ContextActionList";
 import EventCard from "../../../shared/EventCard";
 import InvitationCard from "../../../shared/InvitationCard";
 
@@ -34,16 +35,39 @@ class Timeline extends React.Component {
         : <InvitationCard item={item}/>
     }
 
+    onPressContextAction = (item) => {
+        this.goToCreateInvitation({contextAction: item});
+    }
+
+    goToCreateInvitation = (props) => {
+        Actions.push("CreateInvitation", props);
+    }
+
+    renderHeader = () => {
+        return (
+            <ContextActionList 
+                timeline={true}
+                onPressContextAction={this.onPressContextAction}/>
+        )
+    }
+
     render() {
         if (this.props.isLoading){
             return(
-                <View style={styles.activityIndicator}>
+                <View style={styles.activityIndicatorCenter}>
                     <ActivityIndicator animating={true}/>
                 </View>
             )
         }else{
             return (
                 <View style={styles.container}>
+                    <TextInput
+                        style={styles.createInvitationTextInput}
+                        onFocus={this.goToCreateInvitation}
+                        placeholder={"Que estas para hacer hoy?"}
+                        placeholderTextColor={color.black}
+                    />
+                    <Divider style={{ backgroundColor: color.black }} />
                     <FlatList
                         ref='listRef'
                         data={this.props.eventsOrInvitations}
@@ -61,12 +85,13 @@ class Timeline extends React.Component {
                         onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
                         ListFooterComponent={() => {
                             return (
-                                this.props.isLoadingMore &&
-                                <View style={styles.activityIndicatorBottom}>
-                                    <ActivityIndicator size="small" />
-                                </View>
+                              this.props.isLoadingMore &&
+                              <View style={styles.activityIndicatorBottom}>
+                                <ActivityIndicator size="small" />
+                              </View>
                             );
                         }}
+                        ListHeaderComponent={this.renderHeader}
                     />
                 </View>
             );
@@ -83,4 +108,3 @@ function mapStateToProps(state, props) {
 }
 
 export default connect(mapStateToProps, { getEventsOrInvitations })(Timeline);
-// export default connect(null, { })(Timeline);
