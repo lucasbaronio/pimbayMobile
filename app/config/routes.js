@@ -130,7 +130,7 @@ export default class extends React.Component {
                                 showLabel = {true}
                                 lazy = {true}
                                 // showIcon = {true}
-                                tabBarPosition = {(Platform.OS === 'android') ? 'top' : 'bottom'}
+                                tabBarPosition = 'bottom'
                                 tabStyle={ (Platform.OS === 'android') && { marginTop: Constants.statusBarHeight }}
                                 // tabBarStyle={{ marginTop: Constants.statusBarHeight }}
                                 // labelStyle={styles.label}

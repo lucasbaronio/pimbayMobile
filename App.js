@@ -12,6 +12,7 @@ function cacheFonts(fonts) {
 export default class App extends Component {
     constructor(props) {
         super(props);
+        console.disableYellowBox = true;
         this.state = {
             isReady: false,
         }

@@ -12,7 +12,7 @@ import { API_EVENT_SIZE } from '../../constants';
 
 import styles from "./styles";
 import EventCard from "../../../shared/EventCard";
-// import InvitationCard from "../../../shared/InvitationCard";
+import InvitationCard from "../../../shared/InvitationCard";
 
 class Timeline extends React.Component {
     constructor(props) {
@@ -31,8 +31,7 @@ class Timeline extends React.Component {
     renderItem = ({item, index}) => {
         return (item.type === "EVENT")
         ? <EventCard item={item}/>
-        // : <InvitationCard item={item}/>
-        : null
+        : <InvitationCard item={item}/>
     }
 
     render() {

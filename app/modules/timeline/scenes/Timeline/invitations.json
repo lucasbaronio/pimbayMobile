@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "type": "INVITATION", 
+        "categories": ["Deportes"],
+        "userId": 1, 
+        "userName": "Nano", 
+        "userPhoto": "https://www.ienglishstatus.com/wp-content/uploads/2018/04/Anonymous-Whatsapp-profile-picture.jpg",
+        "description": "Estoy para ir al Campeon del Siglo a ver a Peñarol", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-28T23:00:00.00Z"
+    },
+    {
+        "id": 2,
+        "type": "INVITATION", 
+        "categories": ["Deportes"],
+        "userId": 2, 
+        "userName": "Luquitas", 
+        "userPhoto": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        "description": "Estoy para jugar un f5", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-28T23:00:00.00Z"
+    },
+    {
+        "id": 3,
+        "type": "INVITATION", 
+        "categories": ["Deportes"],
+        "userId": 3, 
+        "userName": "Alvarito", 
+        "userPhoto": "https://www.georeferencer.com/static/img/person.png",
+        "description": "Estoy para hacer una manifestación al frente de la Pasiva", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-28T23:00:00.00Z"
+    }
+]
