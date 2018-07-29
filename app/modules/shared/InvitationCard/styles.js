@@ -1,29 +1,55 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, color, windowWidth } = theme;
+
+const { windowWidth } = theme;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: windowWidth,
     },
-    card: {
-
+    topSectionInvitation: {
+        alignItems: 'center',
+        flex: 1, 
+        flexDirection: 'row'
     },
-    // cardImage: {
-    //     opacity: 0.3
-    // },
-    titleCard: {
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        textShadowOffset: { width: -1, height: 1 },
-        textShadowRadius: 10
+    userNameStyle: {
+        fontSize: 14, 
+        fontWeight: 'bold',
+        flex: 1, 
+        marginLeft: 15
     },
-    subtitleCard: {
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        textShadowOffset: { width: -1, height: 1 },
-        textShadowRadius: 10
+    dueDateStyle: {
+        alignSelf:'center', 
+        color: 'red', 
+        flex: 1, 
+        fontSize: 14,
+        marginRight: 10,
+        textAlign: 'right'
+    },
+    middleSectionInvitation: {
+        flex: 1, 
+        marginTop: 10
+    },
+    descriptionStyle: {
+        fontSize: 14
+    },
+    bottomSectionInvitation: {
+        alignItems: 'flex-end', 
+        flex: 1, 
+        marginTop: 10
+    },
+    containerButtonStyle: {
+        marginRight: 0
+    },
+    buttonStyle: {
+        backgroundColor: '#03A9F4',
+        borderColor: "transparent",
+        borderRadius: 5,
+        borderWidth: 0,
+        height: 30,
+        width: 80
     }
-
 });
 
 export default styles;
