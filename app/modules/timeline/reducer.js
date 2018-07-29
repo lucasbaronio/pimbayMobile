@@ -30,6 +30,7 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.TIMELINE_AVAILABLE: {
+            console.log('TIMELINE_AVAILABLE ------------------------------------------')
             let { data } = action;
             let timelineOld = state.eventsOrInvitations;
             let events = timelineOld.concat(data);
