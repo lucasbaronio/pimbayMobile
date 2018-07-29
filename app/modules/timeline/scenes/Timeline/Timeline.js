@@ -12,7 +12,7 @@ import { API_EVENT_SIZE } from '../../constants';
 
 import styles from "./styles";
 import EventCard from "../../../shared/EventCard";
-// import InvitationCard from "../../../shared/InvitationCard";
+import InvitationCard from "../../../shared/InvitationCard";
 
 class Timeline extends React.Component {
     constructor(props) {
@@ -31,8 +31,7 @@ class Timeline extends React.Component {
     renderItem = ({item, index}) => {
         return (item.type === "EVENT")
         ? <EventCard item={item}/>
-        // : <InvitationCard item={item}/>
-        : null
+        : <InvitationCard item={item}/>
     }
 
     render() {
@@ -47,25 +46,27 @@ class Timeline extends React.Component {
                 <View style={styles.container}>
                     <FlatList
                         ref='listRef'
-                        bounces={false}
                         data={this.props.eventsOrInvitations}
-                        // data={eventsOrInvitations}
                         renderItem={this.renderItem}
-                        initialNumToRender={5}
+                        // initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
-                        onEndReached={() =>
-                            !this.props.isLoadingMore &&
-                            this.setState({
-                                start: this.state.start + API_EVENT_SIZE
-                            }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))}
+                        onEndReached={() => {
+                            if (!this.onEndReachedCalledDuringMomentum) {
+                                this.setState({
+                                    start: this.state.start + API_EVENT_SIZE
+                                }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
+                                this.onEndReachedCalledDuringMomentum = true;
+                            }
+                        }}
+                        onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
                         ListFooterComponent={() => {
                             return (
-                              this.props.isLoadingMore &&
-                              <View style={{ flex: 1, marginVertical: 20 }}>
-                                <ActivityIndicator size="small" />
-                              </View>
+                                this.props.isLoadingMore &&
+                                <View style={styles.activityIndicatorBottom}>
+                                    <ActivityIndicator size="small" />
+                                </View>
                             );
-                          }}
+                        }}
                     />
                 </View>
             );

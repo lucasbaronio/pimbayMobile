@@ -1,0 +1,57 @@
+[
+    {
+        "id": 1,
+        "type": "INVITATION", 
+        "categories": ["Noche"],
+        "userId": 1, 
+        "userName": "Nano.delafuente", 
+        "userPhoto": "https://serving.photos.photobox.com/12478522aeb344eebb8e8007f5cdbe10c8a1fb94236b2a6971ae4f090efc2b3907d8884f1b93c1f368dc2623.jpg",
+        "description": "Estoy para meter noche fuerte, necesito uno para el mano a mano", 
+        "date": "2018-07-28",
+        "dueDate": null
+    },
+    {
+        "id": 2,
+        "type": "INVITATION", 
+        "categories": ["Deportes"],
+        "userId": 2, 
+        "userName": "baronio7", 
+        "userPhoto": "http://i67.tinypic.com/21llnht.jpg",
+        "description": "Estoy para jugar un f5. Tengo equipo, necesito rival. Ya reserve cancha en Clubur para las 19hs, 150 pesos cada uno y estamos. Quien está?", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-30T19:00:00.00Z"
+    },
+    {
+        "id": 3,
+        "type": "INVITATION", 
+        "categories": ["Restaurantes"],
+        "userId": 3, 
+        "userName": "alvaro.scelza", 
+        "userPhoto": "http://i64.tinypic.com/t6rout.jpg",
+        "description": "Estoy para hacer una manifestación al frente de la Pasiva, tengo vengalas rojas y pintura camuflaje", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-28T23:00:00.00Z"
+    },
+    {
+        "id": 4,
+        "type": "INVITATION", 
+        "categories": ["Cine"],
+        "userId": 4, 
+        "userName": "mati_zalynas", 
+        "userPhoto": "http://i64.tinypic.com/21abyp2.jpg",
+        "description": "Estoy para ir a ver una pelicula al cine", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-28T23:00:00.00Z"
+    },
+    {
+        "id": 5,
+        "type": "INVITATION", 
+        "categories": ["Conciertos"],
+        "userId": 5, 
+        "userName": "aguscarrabs", 
+        "userPhoto": "http://i67.tinypic.com/2hog13b.jpg",
+        "description": "Estoy para ir al concierto de No te va a gustar", 
+        "date": "2018-07-28",
+        "dueDate": "2018-07-28T23:00:00.00Z"
+    }
+]
