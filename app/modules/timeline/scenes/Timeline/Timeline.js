@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator, TextInput } from 'react-native';
+import { Divider } from 'react-native-elements';
 
 import { connect } from 'react-redux';
-
-// import eventsOrInvitations from './events.json';
+import { Actions } from "react-native-router-flux";
 
 import { actions as timeline } from "../../index";
 const { getEventsOrInvitations } = timeline;
 
 import { API_EVENT_SIZE } from '../../constants';
 
-import styles from "./styles";
+import styles, { color } from "./styles";
+import ContextActionList from "../../components/ContextActionList";
 import EventCard from "../../../shared/EventCard";
 // import InvitationCard from "../../../shared/InvitationCard";
 
@@ -35,37 +36,63 @@ class Timeline extends React.Component {
         : null
     }
 
+    onPressContextAction = (item) => {
+        this.goToCreateInvitation({contextAction: item});
+    }
+
+    goToCreateInvitation = (props) => {
+        Actions.push("CreateInvitation", props);
+    }
+
+    renderHeader = () => {
+        return (
+            <ContextActionList 
+                timeline={true}
+                onPressContextAction={this.onPressContextAction}/>
+        )
+    }
+
     render() {
         if (this.props.isLoading){
             return(
-                <View style={styles.activityIndicator}>
+                <View style={styles.activityIndicatorCenter}>
                     <ActivityIndicator animating={true}/>
                 </View>
             )
         }else{
             return (
                 <View style={styles.container}>
+                    <TextInput
+                        style={styles.createInvitationTextInput}
+                        onFocus={this.goToCreateInvitation}
+                        placeholder={"Que estas para hacer hoy?"}
+                        placeholderTextColor={color.black}
+                    />
+                    <Divider style={{ backgroundColor: color.black }} />
                     <FlatList
                         ref='listRef'
-                        bounces={false}
                         data={this.props.eventsOrInvitations}
-                        // data={eventsOrInvitations}
                         renderItem={this.renderItem}
-                        initialNumToRender={5}
+                        // initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
-                        onEndReached={() =>
-                            !this.props.isLoadingMore &&
-                            this.setState({
-                                start: this.state.start + API_EVENT_SIZE
-                            }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))}
+                        onEndReached={() => {
+                            if (!this.onEndReachedCalledDuringMomentum) {
+                                this.setState({
+                                    start: this.state.start + API_EVENT_SIZE
+                                }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
+                                this.onEndReachedCalledDuringMomentum = true;
+                            }
+                        }}
+                        onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
                         ListFooterComponent={() => {
                             return (
                               this.props.isLoadingMore &&
-                              <View style={{ flex: 1, marginVertical: 20 }}>
+                              <View style={styles.activityIndicatorBottom}>
                                 <ActivityIndicator size="small" />
                               </View>
                             );
-                          }}
+                        }}
+                        ListHeaderComponent={this.renderHeader}
                     />
                 </View>
             );
@@ -82,4 +109,3 @@ function mapStateToProps(state, props) {
 }
 
 export default connect(mapStateToProps, { getEventsOrInvitations })(Timeline);
-// export default connect(null, { })(Timeline);
