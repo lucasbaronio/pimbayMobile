@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import { SearchBar, Header } from 'react-native-elements';
+import { Header } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
@@ -9,38 +9,29 @@ import { connect } from 'react-redux';
 // const { getEventsOrInvitations } = home;
 
 import styles, { colorBackgroundHeader } from "./styles"
+import SearchBarApp from '../../../shared/SearchBarApp/SearchBarApp';
 
 class SearchTimeline extends React.Component {
-    constructor() {
-        super();
-        this.state = {}
-
-        this.onChangeText = this.onChangeText.bind(this);
-        this.onClearText = this.onClearText.bind(this);
-    }
 
     // componentDidMount() {
     //     this.props.getEventsOrInvitations((error) => alert(error.message))
     // }
 
-    onChangeText() {
+    onChangeText = () => {
 
     }
 
-    onClearText() {
+    onClearText = () => {
 
     }
 
     renderSearchBar() {
         return (
             <View style={styles.searchView}>
-                <SearchBar
-                    round
-                    lightTheme
-                    containerStyle={styles.search}
+                <SearchBarApp 
                     onChangeText={this.onChangeText}
                     onClearText={this.onClearText}
-                    placeholder='Buscar...' />
+                    placeholder={"Buscar..."} />
             </View>
         );
     }

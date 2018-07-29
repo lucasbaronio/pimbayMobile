@@ -14,10 +14,15 @@ class CreateInvitation extends React.Component {
         return (
             <View>
                 <Text>Crear invitacion</Text>
-                <Text>{this.props.contextAction.id}</Text>
-                <Text>{this.props.contextAction.title}</Text>
-                <Text>{this.props.contextAction.icon}</Text>
-                <Text>{this.props.contextAction.typle}</Text>
+                {
+                    !!this.props.contextAction &&
+                    <Text>
+                        <Text>{this.props.contextAction.id}</Text>
+                        <Text>{this.props.contextAction.title}</Text>
+                        <Text>{this.props.contextAction.icon}</Text>
+                        <Text>{this.props.contextAction.typle}</Text>
+                    </Text>
+                }
             </View>
         );
     }

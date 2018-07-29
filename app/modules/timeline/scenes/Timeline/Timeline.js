@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator, TextInput } from 'react-native';
+import { Divider } from 'react-native-elements';
 
 import { connect } from 'react-redux';
 import { Actions } from "react-native-router-flux";
@@ -9,7 +10,7 @@ const { getEventsOrInvitations } = timeline;
 
 import { API_EVENT_SIZE } from '../../constants';
 
-import styles from "./styles";
+import styles, { color } from "./styles";
 import ContextActionList from "../../components/ContextActionList";
 import EventCard from "../../../shared/EventCard";
 // import InvitationCard from "../../../shared/InvitationCard";
@@ -36,7 +37,12 @@ class Timeline extends React.Component {
     }
 
     onPressContextAction = (item) => {
-        Actions.push("CreateInvitation", {contextAction: item});
+        this.goToCreateInvitation({contextAction: item});
+        // Actions.push("CreateInvitation", {contextAction: item});
+    }
+
+    goToCreateInvitation = (props) => {
+        Actions.push("CreateInvitation", props);
     }
 
     renderHeader = () => {
@@ -57,7 +63,13 @@ class Timeline extends React.Component {
         }else{
             return (
                 <View style={styles.container}>
-                    
+                    <TextInput
+                        style={styles.createInvitationTextInput}
+                        onFocus={this.goToCreateInvitation}
+                        placeholder={"Que estas para hacer hoy?"}
+                        placeholderTextColor={color.black}
+                    />
+                    <Divider style={{ backgroundColor: color.black }} />
                     <FlatList
                         ref='listRef'
                         data={this.props.eventsOrInvitations}

@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 import LocationButton from "./components/LocationButton";
 
 class EventCard extends React.PureComponent {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             toggleSeeMore: true
         }
