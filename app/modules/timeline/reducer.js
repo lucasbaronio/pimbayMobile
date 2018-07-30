@@ -1,5 +1,4 @@
 import * as t from './actionTypes';
-import invitations from './scenes/Timeline/invitations.json';
 
 let initialState = {
     isLoading: false,
@@ -23,11 +22,9 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.TIMELINE_AVAILABLE: {
-            console.log('TIMELINE_AVAILABLE ------------------------------------------')
             let { data } = action;
             let timelineOld = state.eventsOrInvitations;
-            let events = timelineOld.concat(data);
-            let eventsOrInvitations = invitations.concat(events);
+            let eventsOrInvitations = timelineOld.concat(data);
             return { ...state, eventsOrInvitations, isLoading: false, isLoadingMore: false };
         }
 

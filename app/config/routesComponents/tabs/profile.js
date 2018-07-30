@@ -5,7 +5,7 @@ import Profile from '../../../modules/home/scenes/Profile';
 import { FontAwesome } from '@expo/vector-icons';
 
 export default (
-    <Stack key="ProfileStack" hideNavBar>
+    <Stack key="ProfileStack" title="Perfil" hideNavBar>
         <Modal>
             <Scene
                 // hideNavBar

@@ -5,7 +5,7 @@ import InvitationsIn from '../../../modules/home/scenes/InvitationsIn';
 import { Foundation } from '@expo/vector-icons';
 
 export default (
-    <Stack key="InvitationsInStack" hideNavBar>
+    <Stack key="InvitationsInStack" title="Recibidas" hideNavBar>
         <Modal>
             <Scene
                 // hideNavBar

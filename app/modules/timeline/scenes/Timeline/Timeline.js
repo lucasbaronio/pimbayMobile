@@ -20,7 +20,7 @@ class Timeline extends React.Component {
         super(props);
 
         this.state = {
-            start: 0,
+            start: 2,
         }
     }
 
@@ -32,7 +32,9 @@ class Timeline extends React.Component {
     renderItem = ({item, index}) => {
         return (item.type === "EVENT")
         ? <EventCard item={item}/>
-        : <InvitationCard item={item}/>
+        : (item.type === "INVITATION")
+        ? <InvitationCard item={item}/>
+        : console.log(item) && null
     }
 
     onPressContextAction = (item) => {

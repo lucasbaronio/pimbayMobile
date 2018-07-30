@@ -5,7 +5,7 @@ import Chats from '../../../modules/home/scenes/Chats';
 import { Ionicons } from '@expo/vector-icons';
 
 export default (
-    <Stack key="ChatsStack" hideNavBar>
+    <Stack key="ChatsStack" title="Chats" hideNavBar>
         <Modal>
             <Scene
                 // hideNavBar

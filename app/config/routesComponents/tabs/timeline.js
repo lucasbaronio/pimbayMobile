@@ -8,7 +8,7 @@ import { SearchButton, CloseButton } from '../buttons';
 import { Entypo } from '@expo/vector-icons';
 
 export default (
-    <Stack key="TimelineStack" hideNavBar>
+    <Stack key="TimelineStack" title="Inicio" hideNavBar>
         <Modal>
             <Scene
                 // hideNavBar
