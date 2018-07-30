@@ -34,8 +34,9 @@ import Chats from '../modules/home/scenes/Chats';
 // import LocationExpo from '../modules/home/scenes/LocationExpo';
 // import NotificationExpo from '../modules/home/scenes/NotificationExpo';
 
+// import { renderAddButton, renderSearchTimelineButton, renderCloseButton } from './routesComponents/buttons';
+
 import NavButton from '../components/NavButton';
-// import SaveButton from '../modules/home/components/SaveButton';
 
 //Icons tabBar 
 import { 
@@ -76,9 +77,10 @@ export default class extends React.Component {
         )
     }
 
-    renderSearchTimelineButton(props) {
+    renderSearchTimelineButton = ({screen}) => {
+        console.log(screen);
         return (
-            <NavButton onPress={Actions.SearchTimeline}
+            <NavButton onPress={Actions.push(screen)}
                        name={"search"} type={"Feather"}
                        color={color.black}/>
         )
@@ -91,11 +93,6 @@ export default class extends React.Component {
                        type={"ionicon"}
                        color={color.black}/>
         )
-    }
-
-    renderSaveButton(props) {
-        if (props.showButton) return (<SaveButton data={props.data}/>)
-        else return null
     }
 
     render() {
@@ -139,7 +136,8 @@ export default class extends React.Component {
                                     key={"timeline"}
                                     title="Inicio"
                                     component={Timeline}
-                                    renderRightButton={this.renderSearchTimelineButton}
+                                    // renderRightButton={this.renderSearchTimelineButton}
+                                    renderRightButton={this.renderSearchTimelineButton({screen: 'SearchTimeline'})}
                                     icon={({ focused }) => (
                                         <Entypo
                                             size={28}
