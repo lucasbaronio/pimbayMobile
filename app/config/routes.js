@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { Constants } from 'expo';
-import { Scene, Router, ActionConst, Stack, Modal, Tabs } from 'react-native-router-flux';
+import { Scene, Router, Stack, Modal, Tabs } from 'react-native-router-flux';
 
 //Splash Component
 import Splash from '../components/Splash/Splash';
