@@ -4,23 +4,23 @@ import NavButton from '../../components/NavButton';
 
 import { color } from "../../styles/theme";
 
-export const renderAddButton = ({screen}) => {
+export function AddButton({goToScreen}) {
     return (
-        <NavButton onPress={Actions.push(screen)}
+        <NavButton onPress={() => Actions.push(goToScreen)}
                    name={"plus"} type={"entypo"}
                    color={color.black}/>
     )
 }
 
-export function renderSearchTimelineButton({screen}) {
+export function SearchButton({goToScreen}) {
     return (
-        <NavButton onPress={Actions.push(screen)}
+        <NavButton onPress={() => Actions.push(goToScreen)}
                     name={"search"} type={"Feather"}
                     color={color.black}/>
     )
 }
 
-export const renderCloseButton = () => {
+export function CloseButton() {
     return (
         <NavButton onPress={Actions.pop}
                    name={"md-close"}

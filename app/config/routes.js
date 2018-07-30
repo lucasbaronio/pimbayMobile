@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { Constants } from 'expo';
-import { Scene, Router, ActionConst, Stack, Modal, Tabs, Actions } from 'react-native-router-flux';
+import { Scene, Router, ActionConst, Stack, Modal, Tabs } from 'react-native-router-flux';
 
 //Splash Component
 import Splash from '../components/Splash/Splash';
@@ -12,39 +12,6 @@ import Register from '../modules/auth/scenes/Register';
 import CompleteProfile from '../modules/auth/scenes/CompleteProfile';
 import Login from '../modules/auth/scenes/Login';
 import ForgotPassword from '../modules/auth/scenes/ForgotPassword';
-
-// Timeline
-import Timeline from '../modules/timeline/scenes/Timeline';
-import SearchTimeline from '../modules/timeline/scenes/SearchTimeline';
-import CreateInvitation from '../modules/timeline/scenes/CreateInvitation';
-
-// InvitationsIn
-import InvitationsIn from '../modules/home/scenes/InvitationsIn';
-
-// InvitationsOut
-import InvitationsOut from '../modules/home/scenes/InvitationsOut';
-
-// Profile
-import Profile from '../modules/home/scenes/Profile';
-
-// Chats
-import Chats from '../modules/home/scenes/Chats';
-
-// import Home from '../modules/home/scenes/Home';
-// import LocationExpo from '../modules/home/scenes/LocationExpo';
-// import NotificationExpo from '../modules/home/scenes/NotificationExpo';
-
-// import { renderAddButton, renderSearchTimelineButton, renderCloseButton } from './routesComponents/buttons';
-
-import NavButton from '../components/NavButton';
-
-//Icons tabBar 
-import { 
-    Entypo, 
-    Foundation, 
-    FontAwesome,
-    Ionicons
-} from '@expo/vector-icons';
 
 //Import Store, actions
 import store from '../redux/store'
@@ -69,32 +36,6 @@ export default class extends React.Component {
         }));
     }
 
-    renderAddButton(props) {
-        return (
-            <NavButton onPress={Actions.NewQuote}
-                       name={"plus"} type={"entypo"}
-                       color={color.black}/>
-        )
-    }
-
-    renderSearchTimelineButton = ({screen}) => {
-        console.log(screen);
-        return (
-            <NavButton onPress={Actions.push(screen)}
-                       name={"search"} type={"Feather"}
-                       color={color.black}/>
-        )
-    }
-
-    renderCloseButton(props) {
-        return (
-            <NavButton onPress={Actions.pop}
-                       name={"md-close"}
-                       type={"ionicon"}
-                       color={color.black}/>
-        )
-    }
-
     render() {
         if (!this.state.isReady)
             return <Splash/>
@@ -113,14 +54,6 @@ export default class extends React.Component {
                             <Scene key="Login" component={Login} title="Iniciar Sesión"/>
                             <Scene key="ForgotPassword" component={ForgotPassword} title="Olvidé mi contraseña"/>
                         </Stack>
-
-                        {/* <Stack key="Main" initial={this.state.isLoggedIn}>
-                            <Scene key="Home" component={Home} initial={true} title="Inicio" type={ActionConst.REPLACE}/>
-                            <Scene key="Timeline" component={Timeline} initial={true} title="Inicio" type={ActionConst.REPLACE}
-                                renderRightButton={this.renderSearchTimelineButton}/>
-                            <Scene key="Location" component={LocationExpo} title="Ubicación" back/>
-                            <Scene key="Notification" component={NotificationExpo} title="Notificaciones" back/>
-                        </Stack> */}
                         <Stack key="Main" initial={this.state.isLoggedIn}>
                             <Tabs
                                 hideNavBar
@@ -130,98 +63,14 @@ export default class extends React.Component {
                                 tabStyle={ (Platform.OS === 'android') && { marginTop: Constants.statusBarHeight }}
                                 swipeEnabled={false}
                             >
-                                <Scene
-                                    // hideNavBar
-                                    initial
-                                    key={"timeline"}
-                                    title="Inicio"
-                                    component={Timeline}
-                                    // renderRightButton={this.renderSearchTimelineButton}
-                                    renderRightButton={this.renderSearchTimelineButton({screen: 'SearchTimeline'})}
-                                    icon={({ focused }) => (
-                                        <Entypo
-                                            size={28}
-                                            color={focused ? 'black' : 'grey'}
-                                            name={`home`}
-                                        />
-                                    )}
-                                />
-                                <Scene
-                                    // hideNavBar
-                                    key={"invitationIn"}
-                                    title="Recibidas"
-                                    component={InvitationsIn}
-                                    icon={({ focused }) => (
-                                        <Foundation
-                                            size={28}
-                                            color={focused ? 'black' : 'grey'}
-                                            name={`arrows-in`}
-                                        />
-                                    )}
-                                />
-                                <Scene
-                                    // hideNavBar
-                                    key={"chats"}
-                                    title="Chats"
-                                    component={Chats}
-                                    icon={({ focused }) => (
-                                        <Ionicons
-                                            size={28}
-                                            color={focused ? 'black' : 'grey'}
-                                            name={`ios-chatbubbles`}
-                                        />
-                                    )}
-                                />
-                                <Scene
-                                    // hideNavBar
-                                    key={"invitationOut"}
-                                    title="Enviadas"
-                                    component={InvitationsOut}
-                                    icon={({ focused }) => (
-                                        <Foundation
-                                            size={28}
-                                            color={focused ? 'black' : 'grey'}
-                                            name={`arrows-out`}
-                                        />
-                                    )}
-                                />
-                                <Scene
-                                    // hideNavBar
-                                    key={"profile"}
-                                    title="Perfil"
-                                    component={Profile}
-                                    icon={({ focused }) => (
-                                        <FontAwesome
-                                            size={28}
-                                            color={focused ? 'black' : 'grey'}
-                                            name={`user`}
-                                        />
-                                    )}
-                                />
-                                {/* <Scene
-                                    // hideNavBar
-                                    key={"InvitationOut"}
-                                    component={InvitationOut}
-                                    icon={({ focused }) => (
-                                        <Icon
-                                            size={iconSize}
-                                            color={focused ? activeIconColor : iconColor}
-                                            textStyle={focused ? [styles.label, styles.activeLabel] : styles.label}
-                                            name={`home3`}
-                                            text={`My Account`}
-                                        />
-                                    )}
-                                /> */}
+                                {require("./routesComponents/tabs/timeline").default}
+                                {require("./routesComponents/tabs/invitationIn").default}
+                                {require("./routesComponents/tabs/chats").default}
+                                {require("./routesComponents/tabs/invitationOut").default}
+                                {require("./routesComponents/tabs/profile").default}
                             </Tabs>
                         </Stack>
                     </Scene>
-                    <Scene key="SearchTimeline"
-                        hideNavBar
-                        component={SearchTimeline} title="Buscar" />
-                    <Scene key="CreateInvitation"
-                        renderLeftButton={this.renderCloseButton}
-                        component={CreateInvitation} title="Crear Invitación" />
-                    
                 </Modal>
             </Router>
         )
