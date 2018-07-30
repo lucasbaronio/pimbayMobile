@@ -67,7 +67,6 @@ class Timeline extends React.Component {
                         placeholder={"Que estas para hacer hoy?"}
                         placeholderTextColor={color.black}
                     />
-                    <Divider style={{ backgroundColor: color.black }} />
                     <FlatList
                         ref='listRef'
                         data={this.props.eventsOrInvitations}
