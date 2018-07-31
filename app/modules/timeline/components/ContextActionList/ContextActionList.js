@@ -57,21 +57,19 @@ const contextActions = [
 
 class ContextActionList extends React.Component {
 
-    // componentDidMount() {
-    //     this.props.getContextActionList((error) => alert(error.message))
-    // }
-
-    // componentDidMount() {
-    //     this.props.onRef(this)
-    //   }
-    //   componentWillUnmount() {
-    //     this.props.onRef(undefined)
-    //   }
-
     state = {
         selected: new Map(),
         itemSelected: {}
     };
+
+    componentWillMount() {
+        const { selectedItem } = this.props;
+        selectedItem && this.onPressItem(selectedItem);
+    }
+
+    // componentDidMount() {
+    //     this.props.getContextActionList((error) => alert(error.message))
+    // }
 
     onPressItem = (item) => {
         if (this.props.timeline) {

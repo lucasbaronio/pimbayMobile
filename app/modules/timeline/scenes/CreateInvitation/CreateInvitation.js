@@ -22,8 +22,8 @@ class CreateInvitation extends React.Component {
     componentWillMount() {
         const { contextAction } = this.props;
         if (contextAction) {
-            // this.setState({contextActionSelected: contextAction});
-            this.contextActionListChild.onPressItem(contextAction);
+            this.setState({contextActionSelected: contextAction});
+            // this.contextActionListChild.onPressItem(contextAction);
         }
     }
 
@@ -32,7 +32,7 @@ class CreateInvitation extends React.Component {
     }
 
     render() {
-        const { contextAction } = this.props;
+        const { contextActionSelected } = this.state;
 
         return (
             <ScrollView style={styles.container}>
@@ -57,7 +57,8 @@ class CreateInvitation extends React.Component {
                 </View>
                 <ContextActionList 
                     timeline={false}
-                    onRef={ref => (this.contextActionListChild = ref)}
+                    selectedItem={contextActionSelected ? contextActionSelected : null}
+                    // onRef={ref => (this.contextActionListChild = ref)}
                     onPressContextAction={this.onPressContextAction}/>
             </ScrollView>
         );
