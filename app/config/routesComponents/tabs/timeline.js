@@ -27,8 +27,11 @@ export default (
             />
             <Scene key="SearchTimeline"
                 hideNavBar
-                component={SearchTimeline} title="Buscar" />
+                hideTabBar
+                component={SearchTimeline} title="Buscar"
+            />
             <Scene key="CreateInvitation"
+                hideTabBar
                 renderLeftButton={<CloseButton />}
                 component={CreateInvitation} title="Crear Invitación" />
         </Modal>

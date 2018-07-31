@@ -18,8 +18,8 @@ class ContextAction extends React.PureComponent {
     }
 
     render() {
-        const { item } = this.props;
-        const colorAvatar = this.props.selected 
+        const { item, selected } = this.props;
+        const colorAvatar = selected 
                 ? styles.avatarBackgroundSelected
                 : styles.avatarBackgroundNoSelected;
 
@@ -36,7 +36,7 @@ class ContextAction extends React.PureComponent {
                         />
                     </View>
                     <View>
-                        <Text style={styles.text}>
+                        <Text style={[styles.text, selected && styles.textSelected]}>
                             {item.title}
                         </Text>
                     </View>

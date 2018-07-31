@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     text: {
         marginBottom: 5,
         textAlign: 'center',
+    },
+    textSelected: {
+        fontWeight: 'bold',
     }
 });
 

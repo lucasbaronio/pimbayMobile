@@ -57,16 +57,21 @@ const contextActions = [
 
 class ContextActionList extends React.Component {
 
-    // componentDidMount() {
-    //     this.props.getContextActionList((error) => alert(error.message))
-    // }
-
     state = {
         selected: new Map(),
         itemSelected: {}
     };
 
-    _onPressItem = (item) => {
+    componentWillMount() {
+        const { selectedItem } = this.props;
+        selectedItem && this.onPressItem(selectedItem);
+    }
+
+    // componentDidMount() {
+    //     this.props.getContextActionList((error) => alert(error.message))
+    // }
+
+    onPressItem = (item) => {
         if (this.props.timeline) {
             this.props.onPressContextAction(item);
         } else {
@@ -75,6 +80,7 @@ class ContextActionList extends React.Component {
                 selected.set(item.id, !selected.get(item.id));
                 return {selected, itemSelected: item};
             });
+            this.props.onPressContextAction(item);
         }
     };
 
@@ -82,7 +88,7 @@ class ContextActionList extends React.Component {
         return (
             <ContextAction 
                 item={item}
-                onPressItem={this._onPressItem}
+                onPressItem={this.onPressItem}
                 selected={!!this.state.selected.get(item.id)}/>
         )
     }
@@ -92,7 +98,7 @@ class ContextActionList extends React.Component {
             <View style={styles.container}>
                 <FlatList
                     horizontal
-                    // data={this.props.contextActionList}
+                    // data={this.props.contextActions}
                     data={contextActions}
                     extraData={this.state}
                     showsHorizontalScrollIndicator={false}
@@ -106,8 +112,8 @@ class ContextActionList extends React.Component {
 
 // function mapStateToProps(state, props) {
 //     return {
-//         isLoading: state.timelineReducer.isLoading,
-//         contextActionList: state.timelineReducer.contextActionList
+//         isLoading: state.timelineReducer.isLoadingContextActionList,
+//         contextActions: state.timelineReducer.contextActions
 //     }
 // }
 
