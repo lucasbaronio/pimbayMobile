@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: color.white,
     },
     activityIndicatorCenter: {
         flex: 1,
