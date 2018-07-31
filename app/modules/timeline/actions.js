@@ -9,7 +9,17 @@ export function getEventsOrInvitations(start, errorCB) {
         ? dispatch({type: t.LOADING_HEADER_TIMELINE})
         : dispatch({type: t.LOADING_FOOTER_TIMELINE})
         api.getEventsOrInvitations(start, function (success, data, error) {
-            if (success) dispatch({type: t.TIMELINE_AVAILABLE, data});
+            if (success) dispatch({type: t.TIMELINE_AVAILABLE, data, start});
+            else if (error) errorCB(error)
+        });
+    };
+}
+
+export function getContextActionList(errorCB) {
+    return (dispatch) => {
+        dispatch({type: t.LOADING_CONTEXT_ACTION_LIST})
+        api.getContextActionList(function (success, data, error) {
+            if (success) dispatch({type: t.CONTEXT_ACTION_LIST_AVAILABLE, data});
             else if (error) errorCB(error)
         });
     };

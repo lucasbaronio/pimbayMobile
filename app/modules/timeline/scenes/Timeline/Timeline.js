@@ -32,7 +32,9 @@ class Timeline extends React.Component {
     renderItem = ({item, index}) => {
         return (item.type === "EVENT")
         ? <EventCard item={item}/>
-        : <InvitationCard item={item}/>
+        : (item.type === "INVITATION")
+        ? <InvitationCard item={item}/>
+        : console.log(item) && null
     }
 
     onPressContextAction = (item) => {
@@ -67,7 +69,6 @@ class Timeline extends React.Component {
                         placeholder={"Que estas para hacer hoy?"}
                         placeholderTextColor={color.black}
                     />
-                    <Divider style={{ backgroundColor: color.black }} />
                     <FlatList
                         ref='listRef'
                         data={this.props.eventsOrInvitations}
