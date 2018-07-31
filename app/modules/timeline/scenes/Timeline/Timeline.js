@@ -20,7 +20,7 @@ class Timeline extends React.Component {
         super(props);
 
         this.state = {
-            start: 2,
+            start: 0,
         }
     }
 

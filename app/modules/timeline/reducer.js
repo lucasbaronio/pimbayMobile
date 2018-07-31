@@ -1,9 +1,12 @@
 import * as t from './actionTypes';
+import invitations from './scenes/Timeline/invitations.json';
 
 let initialState = {
     isLoading: false,
     isLoadingMore: false,
-    eventsOrInvitations: []
+    eventsOrInvitations: [],
+    isLoadingContextActionList: false,
+    contextActions: [],
 };
 
 const timelineReducer = (state = initialState, action) => {
@@ -22,10 +25,23 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.TIMELINE_AVAILABLE: {
-            let { data } = action;
+            let { data, start } = action;
             let timelineOld = state.eventsOrInvitations;
-            let eventsOrInvitations = timelineOld.concat(data);
+            let eventsOrInvitations = timelineOld;
+            if (start === 0)
+                eventsOrInvitations = eventsOrInvitations.concat(invitations)
+            eventsOrInvitations = eventsOrInvitations.concat(data);
             return { ...state, eventsOrInvitations, isLoading: false, isLoadingMore: false };
+        }
+
+        case t.LOADING_CONTEXT_ACTION_LIST: {
+            return { ...state, isLoadingContextActionList: true }
+        }
+
+        case t.CONTEXT_ACTION_LIST_AVAILABLE: {
+            let { data } = action;
+            let contextActions = data
+            return { ...state, contextActions, isLoadingContextActionList: false }
         }
 
         default:

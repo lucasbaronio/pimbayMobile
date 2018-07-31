@@ -1,20 +1,10 @@
-import { API_EVENT } from './constants';
-import invitations from './scenes/Timeline/invitations.json';
+import { API_EVENT, API_CONTEXT_ACTION_LIST } from './constants';
+import { get } from '../globalApi';
 
 export function getEventsOrInvitations(start, callback) {
-    return fetch(`${API_EVENT}start=${start}`/*, {
-            headers: { Authorization: `Bearer ${accessToken}`},
-        }*/)
-        .then((response) => response.json())
-        .then((timeline) => {
-            let timelineWithInvitations = timeline;
-            if (start === 0)
-                timelineWithInvitations = [].concat(timeline).concat(invitations);
-            callback(true, timelineWithInvitations, null)
-            // Cuando tengamos en el timeline eventos e invitaciones solo sirve esta linea
-            // callback(true, timeline, null)
-        })
-        .catch((error) => {
-            callback(false, null, error)
-        });
+    get(`${API_EVENT}start=${start}`, callback)
+}
+
+export function getContextActionList(callback) {
+    get(`${API_CONTEXT_ACTION_LIST}`, callback)
 }
