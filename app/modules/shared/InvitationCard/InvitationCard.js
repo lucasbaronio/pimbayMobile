@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Text} from 'react-native';
 import { Card, Button as ButtonElements, Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
-import styles from "./styles";
+import { Actions } from "react-native-router-flux";
 import moment from 'moment';
+import styles from "./styles";
 
 class InvitationCard extends Component {
 
@@ -20,6 +21,14 @@ class InvitationCard extends Component {
         if (hours > 0) return hours + " h " + minutes + " min";   
         if (minutes > 0) return minutes + " min";
         return "Vencido";
+    }
+
+    onInvitePress = (item) => {
+        this.goToCreateInvitation({type: 'OPEN_INVITATION', openInvitation: this.props.item});
+    }
+
+    goToCreateInvitation = (props) => {
+        Actions.push("CreateInvitation", props);
     }
 
     render() {
@@ -53,6 +62,7 @@ class InvitationCard extends Component {
                             title='Invitar'
                             containerViewStyle={styles.containerButtonStyle}
                             buttonStyle={styles.buttonStyle}
+                            onPress={this.onInvitePress}
                         />
                     </View>
                 </Card>

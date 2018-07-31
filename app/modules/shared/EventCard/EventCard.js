@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text, Button } from 'react-native';
 import { Card, Button as ButtonElements } from 'react-native-elements';
-
-import styles from "./styles";
 import { connect } from "react-redux";
-// Las Actions (para navegar entre screens) se ejecutan desde el Timeline
-// import { Actions } from "react-native-router-flux";
-
+import { Actions } from "react-native-router-flux";
 import LocationButton from "./components/LocationButton";
+import styles from "./styles";
 
-class EventCard extends React.PureComponent {
+class EventCard extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,6 +16,14 @@ class EventCard extends React.PureComponent {
 
     onToggleSeeMore = () => {
         this.setState({toggleSeeMore: !this.state.toggleSeeMore});
+    }
+
+    onInvitePress = (item) => {
+        this.goToCreateInvitation({type: 'EVENT_INVITATION', eventInvitation: this.props.item});
+    }
+
+    goToCreateInvitation = (props) => {
+        Actions.push("CreateInvitation", props);
     }
 
     render() {
@@ -64,6 +69,7 @@ class EventCard extends React.PureComponent {
                                 backgroundColor='#03A9F4'
                                 // fontFamily='Lato'
                                 // buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                                onPress={this.onInvitePress}
                                 title='Estoy para' />
                         </View>
                     </View>
