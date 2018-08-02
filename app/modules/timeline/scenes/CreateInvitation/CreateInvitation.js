@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Text, TextInput, DatePickerIOS, Platform } from 'react-native';
 import { SearchBar, Header } from 'react-native-elements';
 
 import ContextActionList from '../../components/ContextActionList';
+import EventCardCreateInvitation from '../../../shared/EventCardInvitation/EventCardCreateInvitation';
+import DatePicker from '../../components/DatePicker/DatePicker';
 
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -10,7 +12,7 @@ import styles from './styles';
 class CreateInvitation extends Component {
     state = {
         description: "",
-        heightDescription: 90,
+        placeholderDescription: "Que estas para hacer hoy?",
         onFocusDescription: false,
         contextActionSelected: null,
         eventInvitation: null,
@@ -23,12 +25,18 @@ class CreateInvitation extends Component {
             case 'OPEN_INVITATION':
                 const { openInvitation } = this.props;
                 this.setState({openInvitation: openInvitation});
+            break;
             case 'CONTEXT_ACTION':
                 const { contextAction } = this.props;
                 this.setState({contextActionSelected: contextAction});
+            break;
             case 'EVENT_INVITATION':
                 const { eventInvitation } = this.props;
-                this.setState({eventInvitation: eventInvitation});
+                this.setState({
+                    eventInvitation: eventInvitation, 
+                    placeholderDescription: "Comentario"
+                });
+            break;
         }
     }
 
@@ -42,6 +50,12 @@ class CreateInvitation extends Component {
             case 'EVENT_INVITATION':
                 return this.renderEventInvitation();
         }
+    }
+
+    renderDatePicker = () => {
+        return (
+            <DatePicker />
+        );
     }
 
     renderContextActionList = () => {
@@ -59,25 +73,17 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        const { id, title, type, realizationDate, place, image, categories, description } = this.props.eventInvitation;
+        // const { id, title, type, realizationDate, place, image, categories, description } = this.props.eventInvitation;
+        const { eventInvitation } = this.props;
         return (
-            <Text>
-                <Text>{id}</Text>
-                <Text>{title}</Text>
-               <Text>{type}</Text>
-               <Text>{realizationDate}</Text>
-               <Text>{place}</Text>
-               <Text>{image}</Text>
-               <Text>{categories}</Text>
-               <Text>{description}</Text>
-            </Text>
+            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
         );
     }
 
     renderOpenInvitation = () => {
         const { id, type, categories, userId, userName, userPhoto, description, date, dueDate } = this.props.openInvitation;
         return (
-            <Text>
+            <View>
                 <Text>{id}</Text>
                 <Text>{type}</Text>
                 <Text>{categories}</Text>
@@ -87,7 +93,7 @@ class CreateInvitation extends Component {
                 <Text>{description}</Text>
                 <Text>{date}</Text>
                 <Text>{dueDate}</Text>
-            </Text>
+            </View>
         );
     }
 
@@ -108,12 +114,13 @@ class CreateInvitation extends Component {
                         numberOfLines = {4}
                         onChangeText={(description) => this.setState({description})}
                         editable = {true}
-                        placeholder = "Que estas para hacer hoy?"
+                        placeholder = {this.state.placeholderDescription}
                         autoCorrect={false}
                         underlineColorAndroid="transparent"
                     />
                 </View>
                 {this.renderType()}
+                {this.renderDatePicker()}
             </ScrollView>
         );
     }

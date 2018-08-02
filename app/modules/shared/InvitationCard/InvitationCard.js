@@ -23,7 +23,7 @@ class InvitationCard extends Component {
         return "Vencido";
     }
 
-    onInvitePress = (item) => {
+    onInvitePress = () => {
         this.goToCreateInvitation({type: 'OPEN_INVITATION', openInvitation: this.props.item});
     }
 

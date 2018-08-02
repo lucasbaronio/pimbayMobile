@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
         backgroundColor: color.white,
     },
     description: {
-        // width: '100%',
         maxHeight: 90,
         borderColor: color.transparent,
         paddingHorizontal: 13,
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     descriptionView: {
         flex: 1,
         maxHeight: 300,
-    }
+    },
 });
 
 export default styles;
