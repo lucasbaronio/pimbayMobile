@@ -8,14 +8,14 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        margin: 5,
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor: color.grey
+        borderColor: color.grey,
+        padding: 5,
+        paddingHorizontal: 10
     },
     titleTimerDueDate: {
         fontSize: fontSize.regular,
-        fontFamily: fontFamily.bold,
     },
     timerDueDate: {
         color: color.red,
@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
         fontFamily: fontFamily.bold,
         textAlign: 'center',
         marginVertical: 5,
+    },
+    buttonAndroid: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     }
 });
 

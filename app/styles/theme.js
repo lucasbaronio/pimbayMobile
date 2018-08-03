@@ -17,8 +17,8 @@ const color = {
 }
 
 const fontSize = {
-    small: normalize(12),
-    regular: normalize(14),
+    small: normalize(14),
+    regular: normalize(17),
     large: normalize(21)
 }
 

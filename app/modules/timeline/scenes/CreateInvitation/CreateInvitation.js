@@ -8,6 +8,7 @@ import DatePicker from '../../components/DatePicker/DatePicker';
 
 import { connect } from 'react-redux';
 import styles from './styles';
+import Quota from '../../components/Quota/Quota';
 
 class CreateInvitation extends Component {
     state = {
@@ -17,6 +18,9 @@ class CreateInvitation extends Component {
         contextActionSelected: null,
         eventInvitation: null,
         openInvitation: null,
+        dueDate: null,
+        quota: null,
+        hasQuota: true,
     }
 
     componentWillMount() {
@@ -52,12 +56,6 @@ class CreateInvitation extends Component {
         }
     }
 
-    renderDatePicker = () => {
-        return (
-            <DatePicker />
-        );
-    }
-
     renderContextActionList = () => {
         const { contextActionSelected } = this.state;
         return (
@@ -73,7 +71,6 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        // const { id, title, type, realizationDate, place, image, categories, description } = this.props.eventInvitation;
         const { eventInvitation } = this.props;
         return (
             <EventCardCreateInvitation eventInvitation={eventInvitation}/>
@@ -95,6 +92,36 @@ class CreateInvitation extends Component {
                 <Text>{dueDate}</Text>
             </View>
         );
+    }
+
+    renderDatePicker = () => {
+        return (
+            <DatePicker 
+                onChangeDueDate={this.onChangeDueDate}/>
+        );
+    }
+
+    onChangeDueDate = (dueDate) => {
+        this.setState({dueDate: dueDate});
+    }
+
+    renderTypeInvitation = () => {
+        return (
+            <View>
+
+            </View>
+        );
+    }
+
+    renderQuota = () => {
+        return (
+            <Quota 
+                onChangeQuota={this.onChangeQuota}/>
+        );
+    }
+
+    onChangeQuota = ({quota, hasQuota}) => {
+        this.setState({quota, hasQuota})
     }
 
     render() {
@@ -121,6 +148,8 @@ class CreateInvitation extends Component {
                 </View>
                 {this.renderType()}
                 {this.renderDatePicker()}
+                {this.renderTypeInvitation()}
+                {this.renderQuota()}
             </ScrollView>
         );
     }

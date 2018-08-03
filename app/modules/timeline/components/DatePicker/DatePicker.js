@@ -1,5 +1,16 @@
 import React from 'react';
-import { View, Text, DatePickerIOS, DatePickerAndroid, Platform, TouchableOpacity } from 'react-native';
+import { 
+    View, Text, 
+    DatePickerIOS, 
+    DatePickerAndroid, 
+    TimePickerAndroid, 
+    Platform, 
+    TouchableOpacity,
+    Button,
+    Alert
+} from 'react-native';
+
+import { formatDateFromDate, formatTimeFromDate } from '../../utils/date';
 
 import styles from "./styles";
 
@@ -12,6 +23,13 @@ class DatePicker extends React.Component {
         hoursTimerDueDate: 1,
         minsTimerDueDate: 0,
     };
+
+    componentWillMount() {
+        var dueDate = this.state.dueDate;
+        dueDate.setHours(dueDate.getHours() + 1);
+        this.setState({dueDate: dueDate});
+        this.props.onChangeDueDate(dueDate);
+    }
 
     calculateTimerDueDate = () => {
         const { dueDate } = this.state;
@@ -30,13 +48,14 @@ class DatePicker extends React.Component {
                 hoursTimerDueDate: hours,
                 minsTimerDueDate: minutes,
             });
+            this.props.onChangeDueDate(dueDate);
         }
     }
 
     renderDatePicker = () => {
         return (Platform.OS === 'ios')
         ? this.renderDatePickerIOS()
-        : this.renderDatePickerAndroid() 
+        : this.renderButtonAndroid() 
     }
 
     renderDatePickerIOS = () => {
@@ -56,19 +75,79 @@ class DatePicker extends React.Component {
         );
     }
 
+    renderButtonAndroid = () => {
+        return (
+            <View style={styles.buttonAndroid}>
+                <View style={{flex: 1, margin: 5}}>
+                    <Button
+                        onPress={this.renderDatePickerAndroid}
+                        title={formatDateFromDate(this.state.dueDate)}
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                    />
+                </View>
+                <View style={{flex: 1, margin: 5}}>
+                    <Button
+                        onPress={this.renderTimePickerAndroid}
+                        title={formatTimeFromDate(this.state.dueDate)}
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                    />
+                </View>
+            </View>
+        );
+    }
+
     renderDatePickerAndroid = async () => {
         try {
             const { action, year, month, day } = await DatePickerAndroid.open({
                 // Month 0 is January.
-                date: new Date(),
+                date: this.state.dueDate,
                 minDate: new Date(),
                 mode: 'spinner'
             });
             if (action !== DatePickerAndroid.dismissedAction) {
                 // Selected year, month (0-11), day
+                const { dueDate } = this.state;
+                const hours = dueDate.getHours();
+                const mins = dueDate.getMinutes();
+                var newDueDate = new Date(year, month, day, hours, mins);
+                this.setState({
+                    dueDate: newDueDate
+                }, () => this.calculateTimerDueDate());
             }
         } catch ({code, message}) {
-            console.warn('Cannot open date picker', message);
+            console.warn('No podemos abrir el DatePicker', message);
+        }
+    }
+
+    renderTimePickerAndroid = async () => {
+        try {
+            const {action, hour, minute} = await TimePickerAndroid.open({
+                hour: this.state.dueDate.getHours(),
+                minute: this.state.dueDate.getMinutes(),
+                is24Hour: true,
+            });
+            if (action !== TimePickerAndroid.dismissedAction) {
+                // Selected hour (0-23), minute (0-59)
+                const { dueDate } = this.state;
+                const year = dueDate.getFullYear();
+                const month = dueDate.getMonth();
+                const day = dueDate.getDate();
+                var newDueDate = new Date(year, month, day, hour, minute);
+                if (newDueDate > dueDate) {
+                    this.setState({
+                        dueDate: newDueDate
+                    }, () => this.calculateTimerDueDate());
+                } else {
+                    Alert.alert(
+                        'Fecha de vencimiento',
+                        'La fecha de vencimiento no puede ser anterior a la actual.',
+                    )
+                }
+            }
+        } catch ({code, message}) {
+            console.warn('No podemos abrir el TimePicker', message);
         }
     }
 
