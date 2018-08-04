@@ -1,24 +1,61 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-// import { SearchBar, Header } from 'react-native-elements';
-// import { Actions } from 'react-native-router-flux';
-
+import React, { Component } from 'react';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
-// import { actions as home } from "../../index"
-// const { getEventsOrInvitations } = home;
+import { actions as homeActions } from "../../index";
+const { getInvitationsOut } = homeActions;
 
+import InvitationCard from "../../../shared/InvitationCard";
 import styles from "./styles"
 
-class InvitationsIn extends React.Component {
+class InvitationsIn extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.getInvitationsOut();
+    }
+
+    renderItem = ({item, index}) => {
+        return <InvitationCard item={item}/>
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text>Holaa invitaciones recibidas</Text>
+                <FlatList
+                        ref='listRef'
+                        data={this.props.invitationsOut}
+                        renderItem={this.renderItem}
+                        keyExtractor={(item, index) => index.toString()}
+                        //->onEndReached={() => {
+                            //if (!this.onEndReachedCalledDuringMomentum) {
+                            //    this.setState({
+                            //        start: this.state.start + API_EVENT_SIZE
+                            //    }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
+                            //    this.onEndReachedCalledDuringMomentum = true;
+                            //}
+                        //}}
+                        //-> onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+                        //-> ListFooterComponent={() => {
+                          //  return (
+                            //  this.props.isLoadingMore &&
+                              //<View style={styles.activityIndicatorBottom}>
+                               // <ActivityIndicator size="small" />
+                              //</View>
+                            //);
+                        //}}
+                />
             </View>
         );
     }
 }
 
-export default connect(null, { })(InvitationsIn);
+function mapStateToProps(state, props) {
+    return {
+        invitationsOut: state.invitationsReducer
+    }
+}
+
+export default connect(mapStateToProps, { getInvitationsOut })(InvitationsIn);
