@@ -1,0 +1,1 @@
+export const INVITATION_OUT_AVAILABLE = 'invitationsOut/INVITATION_OUT_AVAILABLE';
