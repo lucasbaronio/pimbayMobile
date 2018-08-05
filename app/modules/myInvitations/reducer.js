@@ -1,5 +1,5 @@
 import * as t from './actionTypes';
-import invitationsJson from './scenes/InvitationsIn/invitationsOut.json';
+import invitationsOutJson from './scenes/Invitations/invitationsOut.json';
 
 let initialState = {
     invitationsOut: []
@@ -8,7 +8,7 @@ let initialState = {
 const invitationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case t.INVITATION_OUT_AVAILABLE: {
-            let invitationsOut = invitationsJson;
+            let invitationsOut = invitationsOutJson;
             return { ...state, invitationsOut };
         }
 

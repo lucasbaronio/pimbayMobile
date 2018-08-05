@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scene, Stack, Modal } from 'react-native-router-flux';
-import InvitationsIn from '../../../modules/home/scenes/InvitationsIn';
+import Invitations from '../../../modules/myInvitations/scenes/Invitations';
 
 import { Foundation } from '@expo/vector-icons';
 
@@ -11,7 +11,7 @@ export default (
                 // hideNavBar
                 key={"InvitationsIn"}
                 title="Recibidas"
-                component={InvitationsIn}
+                component={Invitations}
                 icon={({ focused }) => (
                     <Foundation
                         size={28}

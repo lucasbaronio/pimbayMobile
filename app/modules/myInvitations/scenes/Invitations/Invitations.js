@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
-import { actions as homeActions } from "../../index";
-const { getInvitationsOut } = homeActions;
+import { actions as invitationsActions } from "../../index";
+const { getInvitationsOut } = invitationsActions;
 
 import InvitationCard from "../../../shared/InvitationCard";
 import styles from "./styles"
 
-class InvitationsIn extends Component {
+class Invitations extends Component {
     constructor(props) {
         super(props);
     }
@@ -53,11 +53,9 @@ class InvitationsIn extends Component {
 }
 
 function mapStateToProps(state, props) {
-    console.log("ACAAAAAAAAAAAA---------------");
-    console.log(state);
     return {
-        invitationsOut: state.homeReducer.invitationsOut
+        invitationsOut: state.invitationsReducer.invitationsOut
     }
 }
 
-export default connect(mapStateToProps, { getInvitationsOut })(InvitationsIn);
+export default connect(mapStateToProps, { getInvitationsOut })(Invitations);
