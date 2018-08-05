@@ -14,6 +14,7 @@ import styles, { color } from "./styles";
 import ContextActionList from "../../components/ContextActionList";
 import EventCard from "../../../shared/EventCard";
 import InvitationCard from "../../../shared/InvitationCard";
+import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 
 class Timeline extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Timeline extends React.Component {
         return (item.type === "EVENT")
         ? <EventCard item={item}/>
         : (item.type === "INVITATION")
-        ? <InvitationCard item={item}/>
+        ? <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
         : console.log(item) && null
     }
 

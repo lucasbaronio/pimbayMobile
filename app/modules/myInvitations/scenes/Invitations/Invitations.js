@@ -6,6 +6,7 @@ import { actions as invitationsActions } from "../../index";
 const { getInvitationsOut } = invitationsActions;
 
 import InvitationCard from "../../../shared/InvitationCard";
+import { SENT_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 import styles from "./styles"
 
 class Invitations extends Component {
@@ -18,7 +19,7 @@ class Invitations extends Component {
     }
 
     renderItem = ({item, index}) => {
-        return <InvitationCard item={item}/>
+        return <InvitationCard item={item} cardType={ SENT_INVITATION_CARD }/>
     }
 
     render() {

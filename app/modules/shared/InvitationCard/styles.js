@@ -34,8 +34,14 @@ const styles = StyleSheet.create({
     descriptionStyle: {
         fontSize: 14
     },
-    bottomSectionInvitation: {
+    bottomSectionInvitationTimeline: {
         alignItems: 'flex-end', 
+        flex: 1, 
+        marginTop: 10
+    },
+    bottomSectionInvitationSent: {
+        flexDirection: 'row',
+        alignItems: 'flex-start', 
         flex: 1, 
         marginTop: 10
     },
