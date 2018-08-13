@@ -16,12 +16,8 @@ import EventCard from "../../../shared/EventCard";
 import InvitationCard from "../../../shared/InvitationCard";
 
 class Timeline extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            start: 0,
-        }
+    state = {
+        start: 0,
     }
 
     componentDidMount() {

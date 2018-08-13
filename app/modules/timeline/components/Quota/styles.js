@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     colorCurrentQuota: {
         color: "green",
         fontSize: fontSize.regular,
-    }
+    },
 });
 
 export default styles;

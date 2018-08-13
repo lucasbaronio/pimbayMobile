@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, DatePickerIOS, Platform } from 'react-native';
-import { SearchBar, Header } from 'react-native-elements';
+import { ScrollView, View, Text, TextInput } from 'react-native';
 
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/EventCardInvitation/EventCardCreateInvitation';
+import TypeInvitation from '../../components/TypeInvitation/TypeInvitation';
 import DatePicker from '../../components/DatePicker/DatePicker';
+import Quota from '../../components/Quota/Quota';
+import InvitedUsers from '../../components/InvitedUsers';
 
 import { connect } from 'react-redux';
 import styles from './styles';
-import Quota from '../../components/Quota/Quota';
+
+import { actions as createInvitation } from "../../index";
+const { createNewInvitation } = createInvitation;
 
 class CreateInvitation extends Component {
     state = {
@@ -18,9 +22,11 @@ class CreateInvitation extends Component {
         contextActionSelected: null,
         eventInvitation: null,
         openInvitation: null,
+        typeInvitation: null,
         dueDate: null,
         quota: null,
         hasQuota: true,
+        invitedUsers: null,
     }
 
     componentWillMount() {
@@ -94,34 +100,20 @@ class CreateInvitation extends Component {
         );
     }
 
-    renderDatePicker = () => {
-        return (
-            <DatePicker 
-                onChangeDueDate={this.onChangeDueDate}/>
-        );
+    onChangeTypeInvitation = ({typeInvitationSelected}) => {
+        this.setState({typeInvitation: typeInvitationSelected});
     }
 
     onChangeDueDate = (dueDate) => {
         this.setState({dueDate: dueDate});
     }
 
-    renderTypeInvitation = () => {
-        return (
-            <View>
-
-            </View>
-        );
-    }
-
-    renderQuota = () => {
-        return (
-            <Quota 
-                onChangeQuota={this.onChangeQuota}/>
-        );
-    }
-
     onChangeQuota = ({quota, hasQuota}) => {
         this.setState({quota, hasQuota})
+    }
+
+    onChangeInvitedUserList = (invitedUsers) => {
+        this.setState({invitedUsers})
     }
 
     render() {
@@ -132,7 +124,7 @@ class CreateInvitation extends Component {
                     <TextInput
                         style = {[
                             styles.description, 
-                            this.state.onFocusDescription 
+                            !!this.state.onFocusDescription 
                             && styles.descriptionFocused
                         ]}
                         onFocus = {() => this.setState({onFocusDescription: true})}
@@ -147,12 +139,29 @@ class CreateInvitation extends Component {
                     />
                 </View>
                 {this.renderType()}
-                {this.renderDatePicker()}
-                {this.renderTypeInvitation()}
-                {this.renderQuota()}
+                <DatePicker 
+                    onChangeDueDate={this.onChangeDueDate}/>
+                <TypeInvitation 
+                    onChangeTypeInvitation={this.onChangeTypeInvitation} />
+                {
+                    this.state.typeInvitation !== "OPEN_INVITATION" &&
+                    <Quota 
+                        onChangeQuota={this.onChangeQuota}/>
+                }
+                {
+                    this.state.typeInvitation !== "OPEN_INVITATION" &&
+                    <InvitedUsers 
+                        onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                }
             </ScrollView>
         );
     }
 }
 
-export default connect(null, { })(CreateInvitation);
+function mapStateToProps(state, props) {
+    return {
+        user: state.authReducer.user
+    }
+}
+
+export default connect(mapStateToProps, { createNewInvitation })(CreateInvitation);

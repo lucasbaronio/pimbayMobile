@@ -1,13 +1,13 @@
 import React from 'react';
 import { 
     View, Text, 
-    Switch, 
-    Slider,
+    Switch,
     Platform, 
     TouchableOpacity,
     Button,
     Alert
 } from 'react-native';
+import { Slider } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons';
 
 import { formatDateFromDate, formatTimeFromDate } from '../../utils/date';
@@ -34,7 +34,7 @@ class Quota extends React.Component {
             <View style={styles.container}>
                 <View style={styles.headerQuota}>
                     <View style={styles.titleHasQuotaView}>
-                        <Text style={styles.titleHasQuota}>Con cupo limite</Text>
+                        <Text style={styles.titleHasQuota}>Con cupo limite?</Text>
                     </View>
                     <View>
                         <Switch
@@ -54,13 +54,13 @@ class Quota extends React.Component {
                             disabled={!this.state.switchHasQuota}
                             maximumValue={this.state.maximumValue}
                             minimumValue={this.state.minimumValue}
+                            thumbTintColor={(this.state.switchHasQuota) ? "#2196F3" : "#90CAF9" }
                             step={1}
                             value={this.state.quota}
-                            onValueChange={quota => {
-                                this.setState({ quota }, 
-                                    () => this.props.onChangeQuota({quota: quota, hasQuota: true}));
-                            }}
-                        />
+                            onValueChange={(quota) => this.setState({quota})} 
+                            onSlidingComplete={() => this.props.onChangeQuota({
+                                quota: this.state.quota, hasQuota: true
+                            })} />
                     </View>
                     <View>
                     <FontAwesome name="users" size={32} 

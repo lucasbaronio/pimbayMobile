@@ -28,3 +28,12 @@ export function CloseButton() {
                    color={color.black}/>
     )
 }
+
+export function BackButton() {
+    return (
+        <NavButton onPress={Actions.pop}
+                   name={"ios-arrow-back"}
+                   type={"ionicon"}
+                   color={color.black}/>
+    )
+}
