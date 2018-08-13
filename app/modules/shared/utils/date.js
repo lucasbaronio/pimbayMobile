@@ -38,3 +38,15 @@ export const formatTimeFromDate = (date) => {
     minutes = minutes < 10 ? '0'+minutes : minutes;
     return hours + ':' + minutes + ' ' + ampm;
 }
+
+export const getFormalDate = (dateString) => {
+    var days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sab'];
+    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+
+    var date = new Date(dateString);
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var dayOfWeek = days[ date.getDay() ];
+    var month = months[ date.getMonth() ];
+    return dayOfWeek + ', ' + date.getDate() + ' ' + month + ', ' + hours + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
+}

@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { Card, Button as ButtonElements } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import LocationButton from "./components/LocationButton";
+import LocationButton from "../components/LocationButton";
 import styles from "./styles";
 
 class EventCard extends PureComponent {

@@ -18,7 +18,7 @@ class LocationButton extends React.Component {
         return (
             <TouchableOpacity onPress={this._onPressButton}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Entypo name="location-pin" size={32} color="green" />
+                    <Entypo name="location" size={20} color="green" />
                     <Text>
                         {(place.length > 20) 
                         ? place.substring(0, 20) + '...' 

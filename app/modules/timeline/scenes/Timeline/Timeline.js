@@ -12,7 +12,8 @@ import { API_EVENT_SIZE } from '../../constants';
 
 import styles, { color } from "./styles";
 import ContextActionList from "../../components/ContextActionList";
-import EventCard from "../../../shared/EventCard";
+// import EventCard from "../../../shared/Event/EventCard";
+import EventCardMedium from "../../../shared/Event/EventCardMedium";
 import InvitationCard from "../../../shared/InvitationCard";
 import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 
@@ -28,7 +29,7 @@ class Timeline extends React.Component {
 
     renderItem = ({item, index}) => {
         return (item.type === "EVENT")
-        ? <EventCard item={item}/>
+        ? <EventCardMedium item={item}/>
         : (item.type === "INVITATION")
         ? <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
         : console.log(item) && null
