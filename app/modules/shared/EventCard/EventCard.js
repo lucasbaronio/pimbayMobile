@@ -18,7 +18,7 @@ class EventCard extends PureComponent {
         this.setState({toggleSeeMore: !this.state.toggleSeeMore});
     }
 
-    onInvitePress = (item) => {
+    onInvitePress = () => {
         this.goToCreateInvitation({type: 'EVENT_INVITATION', eventInvitation: this.props.item});
     }
 

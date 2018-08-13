@@ -11,3 +11,4 @@ export const API = 'https://api-pimbay.appspot.com/';
 export const API_EVENT_SIZE = 10;
 export const API_EVENT = `${API}event?size=${API_EVENT_SIZE}&`;
 export const API_CONTEXT_ACTION_LIST = `${API}contextAction`;
+export const API_CREATE_INVITATION = `${API}createInvitation`;

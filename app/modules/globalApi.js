@@ -25,7 +25,7 @@ export function get(uri, callback) {
 //     email: userData.email,
 //     password: userData.password,
 // }
-export function post(uri, body) {
+export function post(uri, body, callback) {
     return fetch(uri, {
         method: 'post',
         headers: {

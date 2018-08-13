@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, ActivityIndicator } from 'react-native';
-import { SearchBar, Header } from 'react-native-elements';
+import { ScrollView, View, Text, TextInput } from 'react-native';
 
 import ContextActionList from '../../components/ContextActionList';
+import EventCardCreateInvitation from '../../../shared/EventCardInvitation/EventCardCreateInvitation';
+import TypeInvitation from '../../components/TypeInvitation/TypeInvitation';
+import DatePicker from '../../components/DatePicker/DatePicker';
+import Quota from '../../components/Quota/Quota';
+import InvitedUsers from '../../components/InvitedUsers';
 
 import { connect } from 'react-redux';
 import styles from './styles';
 
+import { actions as createInvitation } from "../../index";
+const { createNewInvitation } = createInvitation;
+
 class CreateInvitation extends Component {
     state = {
         description: "",
-        heightDescription: 90,
+        placeholderDescription: "Que estas para hacer hoy?",
         onFocusDescription: false,
         contextActionSelected: null,
         eventInvitation: null,
         openInvitation: null,
+        typeInvitation: null,
+        dueDate: null,
+        quota: null,
+        hasQuota: true,
+        invitedUsers: null,
     }
 
     componentWillMount() {
@@ -23,12 +35,18 @@ class CreateInvitation extends Component {
             case 'OPEN_INVITATION':
                 const { openInvitation } = this.props;
                 this.setState({openInvitation: openInvitation});
+            break;
             case 'CONTEXT_ACTION':
                 const { contextAction } = this.props;
                 this.setState({contextActionSelected: contextAction});
+            break;
             case 'EVENT_INVITATION':
                 const { eventInvitation } = this.props;
-                this.setState({eventInvitation: eventInvitation});
+                this.setState({
+                    eventInvitation: eventInvitation, 
+                    placeholderDescription: "Comentario"
+                });
+            break;
         }
     }
 
@@ -59,25 +77,16 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        const { id, title, type, realizationDate, place, image, categories, description } = this.props.eventInvitation;
+        const { eventInvitation } = this.props;
         return (
-            <Text>
-                <Text>{id}</Text>
-                <Text>{title}</Text>
-               <Text>{type}</Text>
-               <Text>{realizationDate}</Text>
-               <Text>{place}</Text>
-               <Text>{image}</Text>
-               <Text>{categories}</Text>
-               <Text>{description}</Text>
-            </Text>
+            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
         );
     }
 
     renderOpenInvitation = () => {
         const { id, type, categories, userId, userName, userPhoto, description, date, dueDate } = this.props.openInvitation;
         return (
-            <Text>
+            <View>
                 <Text>{id}</Text>
                 <Text>{type}</Text>
                 <Text>{categories}</Text>
@@ -87,8 +96,24 @@ class CreateInvitation extends Component {
                 <Text>{description}</Text>
                 <Text>{date}</Text>
                 <Text>{dueDate}</Text>
-            </Text>
+            </View>
         );
+    }
+
+    onChangeTypeInvitation = ({typeInvitationSelected}) => {
+        this.setState({typeInvitation: typeInvitationSelected});
+    }
+
+    onChangeDueDate = (dueDate) => {
+        this.setState({dueDate: dueDate});
+    }
+
+    onChangeQuota = ({quota, hasQuota}) => {
+        this.setState({quota, hasQuota})
+    }
+
+    onChangeInvitedUserList = (invitedUsers) => {
+        this.setState({invitedUsers})
     }
 
     render() {
@@ -99,7 +124,7 @@ class CreateInvitation extends Component {
                     <TextInput
                         style = {[
                             styles.description, 
-                            this.state.onFocusDescription 
+                            !!this.state.onFocusDescription 
                             && styles.descriptionFocused
                         ]}
                         onFocus = {() => this.setState({onFocusDescription: true})}
@@ -108,15 +133,35 @@ class CreateInvitation extends Component {
                         numberOfLines = {4}
                         onChangeText={(description) => this.setState({description})}
                         editable = {true}
-                        placeholder = "Que estas para hacer hoy?"
+                        placeholder = {this.state.placeholderDescription}
                         autoCorrect={false}
                         underlineColorAndroid="transparent"
                     />
                 </View>
                 {this.renderType()}
+                <DatePicker 
+                    onChangeDueDate={this.onChangeDueDate}/>
+                <TypeInvitation 
+                    onChangeTypeInvitation={this.onChangeTypeInvitation} />
+                {
+                    this.state.typeInvitation !== "OPEN_INVITATION" &&
+                    <Quota 
+                        onChangeQuota={this.onChangeQuota}/>
+                }
+                {
+                    this.state.typeInvitation !== "OPEN_INVITATION" &&
+                    <InvitedUsers 
+                        onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                }
             </ScrollView>
         );
     }
 }
 
-export default connect(null, { })(CreateInvitation);
+function mapStateToProps(state, props) {
+    return {
+        user: state.authReducer.user
+    }
+}
+
+export default connect(mapStateToProps, { createNewInvitation })(CreateInvitation);
