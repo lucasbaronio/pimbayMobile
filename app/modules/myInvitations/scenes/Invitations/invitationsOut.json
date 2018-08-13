@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "invitationId": 1,
+        "invitationDescription": "Estoy para meter noche",
+        "userInvitedId": 3, 
+        "userInvitedName": "alvaro.scelza", 
+        "userInvitedPhoto": "http://i64.tinypic.com/t6rout.jpg",
+        "userCreatorId": 1,
+        "userCreatorName": "Nano.delafuente",
+        "userCreatorPhoto": "https://serving.photos.photobox.com/12478522aeb344eebb8e8007f5cdbe10c8a1fb94236b2a6971ae4f090efc2b3907d8884f1b93c1f368dc2623.jpg",
+        "description": "Noche en Jackson Bar, venis?", 
+        "creationDate": "2018-08-04",
+        "dueDate": "2018-08-05T23:00:00.00Z"
+    },
+    {
+        "id": 2,
+        "invitationId": null,
+        "invitationDescription": "",
+        "userInvitedId": 3, 
+        "userInvitedName": "baronio7", 
+        "userInvitedPhoto": "http://i67.tinypic.com/21llnht.jpg",
+        "userCreatorId": 1,
+        "userCreatorName": "Nano.delafuente",
+        "userCreatorPhoto": "https://serving.photos.photobox.com/12478522aeb344eebb8e8007f5cdbe10c8a1fb94236b2a6971ae4f090efc2b3907d8884f1b93c1f368dc2623.jpg",
+        "description": "Estoy para juntarnos a tomar unos mates, estas?", 
+        "creationDate": "2018-08-04",
+        "dueDate": "2018-08-05T23:00:00.00Z"
+    }   
+]
