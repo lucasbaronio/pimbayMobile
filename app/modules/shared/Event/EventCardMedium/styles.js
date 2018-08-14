@@ -5,12 +5,21 @@ const { fontSize, color, windowWidth } = theme;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: windowWidth,
+        width: windowWidth * 0.75,
+        flexDirection: "column", 
+        justifyContent: "flex-start", 
+        margin: 15,
+        // borderWidth: 0.5,
+        // borderColor: color.grey,
+        // borderRadius: 10,
     },
-    card: {
-        borderWidth: 0,
-        borderColor: color.transparent,
-
+    image: {
+        height: 150, 
+        borderRadius: 10, 
+        backgroundColor: color.grey,
+        borderWidth: 0.5,
+        borderColor: color.grey,
+        borderRadius: 10,
     },
     button: {
         borderColor: "transparent",
@@ -37,7 +46,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     realizationDate: {
-        fontSize: fontSize.text3,
+        fontSize: fontSize.text4,
         marginRight: 10,
         marginLeft: 5,
         color: color.blood

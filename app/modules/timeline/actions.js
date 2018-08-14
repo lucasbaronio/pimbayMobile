@@ -15,6 +15,18 @@ export function getEventsOrInvitations(start, errorCB) {
     };
 }
 
+export function getEvents(start, errorCB) {
+    return (dispatch) => {
+        (start === 0)
+        ? dispatch({type: t.LOADING_EVENT_LIST})
+        : dispatch({type: t.LOADING_FOOTER_EVENT_LIST})
+        api.getEvents(start, function (success, data, error) {
+            if (success) dispatch({type: t.EVENT_LIST_AVAILABLE, data});
+            else if (error) errorCB(error)
+        });
+    };
+}
+
 export function getContextActionList(errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING_CONTEXT_ACTION_LIST});

@@ -17,11 +17,11 @@ class LocationButton extends React.Component {
 
         return (
             <TouchableOpacity onPress={this._onPressButton}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={styles.container}>
                     <Entypo name="location" size={20} color="green" />
-                    <Text>
-                        {(place.length > 20) 
-                        ? place.substring(0, 20) + '...' 
+                    <Text style={styles.text}>
+                        {(place.length > 25) 
+                        ? place.substring(0, 25) + '...' 
                         : place}
                     </Text>
                 </View>

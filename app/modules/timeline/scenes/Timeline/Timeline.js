@@ -12,7 +12,7 @@ import { API_EVENT_SIZE } from '../../constants';
 
 import styles, { color } from "./styles";
 import ContextActionList from "../../components/ContextActionList";
-// import EventCard from "../../../shared/Event/EventCard";
+import EventList from "../../components/EventList";
 import EventCardMedium from "../../../shared/Event/EventCardMedium";
 import InvitationCard from "../../../shared/InvitationCard";
 import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
@@ -45,9 +45,12 @@ class Timeline extends React.Component {
 
     renderHeader = () => {
         return (
-            <ContextActionList 
-                timeline={true}
-                onPressContextAction={this.onPressContextAction}/>
+            <View>
+                <ContextActionList 
+                    timeline={true}
+                    onPressContextAction={this.onPressContextAction} />
+                <EventList />
+            </View>
         )
     }
 
@@ -61,12 +64,12 @@ class Timeline extends React.Component {
         }else{
             return (
                 <View style={styles.container}>
-                    <TextInput
+                    {/* <TextInput
                         style={styles.createInvitationTextInput}
                         onFocus={this.goToCreateInvitation}
                         placeholder={"Que estas para hacer hoy?"}
                         placeholderTextColor={color.black}
-                    />
+                    /> */}
                     <FlatList
                         ref='listRef'
                         data={this.props.eventsOrInvitations}

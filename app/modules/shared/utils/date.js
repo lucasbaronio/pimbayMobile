@@ -48,5 +48,5 @@ export const getFormalDate = (dateString) => {
     var minutes = date.getMinutes();
     var dayOfWeek = days[ date.getDay() ];
     var month = months[ date.getMonth() ];
-    return dayOfWeek + ', ' + date.getDate() + ' ' + month + ', ' + hours + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
+    return `${dayOfWeek}, ${date.getDate()} ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
 }
