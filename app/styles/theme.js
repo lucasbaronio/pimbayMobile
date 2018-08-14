@@ -28,15 +28,22 @@ const fontSize = {
     text1: normalize(18),
     text2: normalize(16),
     text3: normalize(14),
-    text4: normalize(10),
+    text4: normalize(12),
+    text5: normalize(10),
 }
 
 const fontFamily = {
-    extrabold: "RobotoExtraBold",
-    bold: "RobotoBold",
-    medium: "RobotoMedium",
-    regular: "RobotoRegular",
-    light: "RobotoLight"
+    // extrabold: "RobotoExtraBold",
+    // bold: "RobotoBold",
+    // medium: "RobotoMedium",
+    // regular: "RobotoRegular",
+    // light: "RobotoLight"
+
+    extrabold: "SFProTextHeavy",
+    bold: "SFProTextBold",
+    medium: "SFProTextMedium",
+    regular: "SFProTextRegular",
+    light: "SFProTextLight"
 }
 
 const padding = 8;
@@ -50,7 +57,7 @@ const tabColor = (Platform.OS === "ios") ? "rgba(73,75,76, .5)" : "rgba(255,255,
 const selectedTabColor = (Platform.OS === "ios") ? "rgb(73,75,76)" : "#fff";
 
 const tabIconStyle = { size: 21, color: tabColor, selected: selectedTabColor }
-const navTitleStyle = { fontSize: fontSize.regular , fontFamily: fontFamily.extrabold, color: color.black }
+const navTitleStyle = { fontSize: fontSize.text2 , fontFamily: fontFamily.bold, color: color.black }
 
 export {
     color,

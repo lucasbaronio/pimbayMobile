@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleForWhom: {
-        fontSize: fontSize.regular,
+        fontSize: fontSize.text2,
     }
 });
 

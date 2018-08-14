@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
 
-const { windowWidth } = theme;
+const { windowWidth, fontSize } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     userNameStyle: {
-        fontSize: 14, 
+        fontSize: fontSize.text3,
         fontWeight: 'bold',
         flex: 1, 
         marginLeft: 15
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         alignSelf:'center', 
         color: 'red', 
         flex: 1, 
-        fontSize: 14,
+        fontSize: fontSize.text3,
         marginRight: 10,
         textAlign: 'right'
     },
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     descriptionStyle: {
-        fontSize: 14
+        fontSize: fontSize.text3,
     },
     bottomSectionInvitationTimeline: {
         alignItems: 'flex-end', 

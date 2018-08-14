@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     titleHasQuota: {
-        fontSize: fontSize.regular,
+        fontSize: fontSize.text2,
     },
     switchHasQuota: {
         flex: 1,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     colorCurrentQuota: {
         color: "green",
-        fontSize: fontSize.regular,
+        fontSize: fontSize.text2,
     },
 });
 

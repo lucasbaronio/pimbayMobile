@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         marginTop: statusBarHeight,
     },
     buttonText: {
-        fontSize: fontSize.regular,
+        fontSize: fontSize.text4,
         color: color.black,
         fontFamily: fontFamily.medium
     },

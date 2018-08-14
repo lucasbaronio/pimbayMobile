@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleSelectInvitedUsers: {
-        fontSize: fontSize.regular,
+        fontSize: fontSize.text2,
     },
     body: {
         flex: 1,

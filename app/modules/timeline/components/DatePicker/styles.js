@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     titleTimerDueDate: {
-        fontSize: fontSize.regular,
+        fontSize: fontSize.text2,
     },
     timerDueDate: {
         color: color.red,
-        fontSize: fontSize.large,
+        fontSize: fontSize.title2,
         fontFamily: fontFamily.bold,
         textAlign: 'center',
         marginVertical: 5,

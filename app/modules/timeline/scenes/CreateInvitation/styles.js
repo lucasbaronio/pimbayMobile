@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { theme } from "../../index"
-const { padding, color } = theme;
+const { padding, color, fontSize } = theme;
 
 const styles = StyleSheet.create({
     container:{
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         borderColor: color.transparent,
         paddingHorizontal: 13,
         margin: 10,
-        fontSize: 17,
+        fontSize: fontSize.text2,
         color : color.black,
         backgroundColor: color.white,
     },
