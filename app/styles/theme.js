@@ -12,6 +12,8 @@ const color = {
     red: "red",
     blue: "#2196F3",
     light_blue: "#90CAF9",
+    orange: "#DE5134",
+    blood: "#AC1010",
     underlayColor: "#ddd",
     transparent: "transparent"
 }
@@ -19,7 +21,14 @@ const color = {
 const fontSize = {
     small: normalize(14),
     regular: normalize(17),
-    large: normalize(21)
+    large: normalize(21),
+
+    title1: normalize(22),
+    title2: normalize(20),
+    text1: normalize(18),
+    text2: normalize(16),
+    text3: normalize(14),
+    text4: normalize(10),
 }
 
 const fontFamily = {

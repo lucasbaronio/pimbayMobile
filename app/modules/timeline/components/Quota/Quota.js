@@ -2,15 +2,9 @@ import React from 'react';
 import { 
     View, Text, 
     Switch,
-    Platform, 
-    TouchableOpacity,
-    Button,
-    Alert
 } from 'react-native';
 import { Slider } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons';
-
-import { formatDateFromDate, formatTimeFromDate } from '../../utils/date';
 
 import styles from "./styles";
 

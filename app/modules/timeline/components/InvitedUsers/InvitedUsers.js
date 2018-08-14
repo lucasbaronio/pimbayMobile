@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import AvatarUser from "../../../shared/AvatarUser";
-import { convertUserArrayInArrayOfArrays } from "../../utils/lists";
+import { convertUserArrayInArrayOfArrays } from "../../../shared/utils/lists";
 
 import { Ionicons } from '@expo/vector-icons';
 import styles from "./styles";

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, TextInput } from 'react-native';
 
 import ContextActionList from '../../components/ContextActionList';
-import EventCardCreateInvitation from '../../../shared/EventCardInvitation/EventCardCreateInvitation';
+import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import TypeInvitation from '../../components/TypeInvitation/TypeInvitation';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';

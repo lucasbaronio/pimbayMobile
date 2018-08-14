@@ -10,7 +10,7 @@ import {
     Alert
 } from 'react-native';
 
-import { formatDateFromDate, formatTimeFromDate } from '../../utils/date';
+import { formatDateFromDate, formatTimeFromDate } from '../../../shared/utils/date';
 
 import styles from "./styles";
 
