@@ -43,7 +43,8 @@ const fontFamily = {
     bold: "SFProTextBold",
     medium: "SFProTextMedium",
     regular: "SFProTextRegular",
-    light: "SFProTextLight"
+    light: "SFProTextLight",
+    pimbay: "BoogalooRegular",
 }
 
 const padding = 8;

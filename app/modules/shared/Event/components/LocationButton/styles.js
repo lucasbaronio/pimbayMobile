@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: fontSize.text5,
+        marginLeft: 5
     },
 });
 

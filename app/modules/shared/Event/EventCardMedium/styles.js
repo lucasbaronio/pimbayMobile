@@ -9,9 +9,6 @@ const styles = StyleSheet.create({
         flexDirection: "column", 
         justifyContent: "flex-start", 
         margin: 15,
-        // borderWidth: 0.5,
-        // borderColor: color.grey,
-        // borderRadius: 10,
     },
     image: {
         height: 150, 
