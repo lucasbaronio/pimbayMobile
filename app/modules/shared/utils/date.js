@@ -1,5 +1,7 @@
-export const formatDateFromString = (dateString) => {
-    var date = new Date(dateString);
+import moment from 'moment';
+
+const formatDateFromString = (dateString) => {
+    var date = new Date(moment(dateString).format());
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
@@ -11,8 +13,8 @@ export const formatDateFromString = (dateString) => {
     return date.getDate() + "/" + month + "/" + date.getFullYear() + "  " + strTime;
 }
 
-export const formatFullDate = (dateString) => {
-    var date = new Date(dateString);
+const formatFullDate = (dateString) => {
+    var date = new Date(moment(dateString).format());
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
@@ -24,12 +26,12 @@ export const formatFullDate = (dateString) => {
     return date.getDate() + "/" + month + "/" + date.getFullYear() + "  " + strTime;
 }
 
-export const formatDateFromDate = (date) => {
+const formatDateFromDate = (date) => {
     var month = parseInt(date.getMonth(), 10)+1;
     return date.getDate() + "/" + month + "/" + date.getFullYear();
 }
 
-export const formatTimeFromDate = (date) => {
+const formatTimeFromDate = (date) => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
@@ -39,14 +41,22 @@ export const formatTimeFromDate = (date) => {
     return hours + ':' + minutes + ' ' + ampm;
 }
 
-export const getFormalDate = (dateString) => {
-    var days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sab'];
-    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+const getFormalDate = (dateString) => {
+    var days = ['DOM','LUN','MAR','MIÉ','JUE','VIE','SAB'];
+    var months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SET','OCT','NOV','DIC'];
 
-    var date = new Date(dateString);
+    var date = new Date(moment(dateString).format());
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var dayOfWeek = days[ date.getDay() ];
     var month = months[ date.getMonth() ];
     return `${dayOfWeek}, ${date.getDate()} ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
+}
+
+export {
+    formatDateFromString,
+    formatFullDate,
+    formatDateFromDate,
+    formatTimeFromDate,
+    getFormalDate,
 }

@@ -52,7 +52,8 @@ class EventCardMedium extends PureComponent {
                 </View>
                 <View style={styles.eventDetail}>
                     <Text style={styles.realizationDate}>
-                        {this.state.realizationDate}
+                        {/* {this.state.realizationDate} */}
+                        {getFormalDate(item.realizationDate)}
                     </Text>
                     <LocationButton place={item.place}/>
                 </View>
