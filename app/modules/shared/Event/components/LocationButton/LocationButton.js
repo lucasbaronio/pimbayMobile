@@ -1,6 +1,7 @@
 import React from 'react';
-import { Linking, View, TouchableOpacity, Text } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { Linking, View, TouchableOpacity, Text, Image } from 'react-native';
+// import { Entypo } from '@expo/vector-icons';
+import mapLocation from '../../../../../assets/icons/map-location.png';
 
 import styles from "./styles"
 import { connect } from "react-redux";
@@ -18,7 +19,10 @@ class LocationButton extends React.Component {
         return (
             <TouchableOpacity onPress={this._onPressButton}>
                 <View style={styles.container}>
-                    <Entypo name="location" size={20} color="green" />
+                    {/* <Entypo name="location" size={20} color="green" /> */}
+                    <Image 
+                        style={{width: 20, height: 20}}
+                        source={mapLocation} />
                     <Text style={styles.text}>
                         {(place.length > 25) 
                         ? place.substring(0, 25) + '...' 

@@ -4,7 +4,8 @@ import { Scene, Stack, Modal } from 'react-native-router-flux';
 import Invitations from '../../../modules/myInvitations/scenes/Invitations';
 
 // import { Foundation } from '@expo/vector-icons';
-import inOut from '../../../assets/icons/in-out2.png';
+import inOutFocused from '../../../assets/icons/in-out-selected.png';
+import inOut from '../../../assets/icons/in-out.png';
 
 export default (
     <Stack key="InvitationsInOutStack" title="Invitaciones" hideNavBar>
@@ -17,7 +18,7 @@ export default (
                 icon={({ focused }) => (
                     <Image 
                         style={ focused ? {width: 32, height: 32} : {width: 28, height: 28}}
-                        source={inOut} />
+                        source={focused ? inOutFocused : inOut} />
                     // <Foundation
                     //     size={28}
                     //     color={focused ? 'black' : 'grey'}
