@@ -8,15 +8,6 @@ import { getFormalDate } from "../../utils/date";
 
 class EventCardMedium extends PureComponent {
 
-    state = {
-        realizationDate: '',
-    }
-
-    componentDidMount() {
-        const { item } = this.props;
-        this.setState({ realizationDate: getFormalDate(item.realizationDate)});
-    }
-
     onInvitePress = () => {
         this.goToCreateInvitation({type: 'EVENT_INVITATION', eventInvitation: this.props.item});
     }
@@ -52,7 +43,6 @@ class EventCardMedium extends PureComponent {
                 </View>
                 <View style={styles.eventDetail}>
                     <Text style={styles.realizationDate}>
-                        {/* {this.state.realizationDate} */}
                         {getFormalDate(item.realizationDate)}
                     </Text>
                     <LocationButton place={item.place}/>

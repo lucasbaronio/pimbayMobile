@@ -58,15 +58,16 @@ export default class extends React.Component {
                             <Tabs
                                 hideNavBar
                                 key = "Home"
+                                showLabel={false}
                                 lazy = {true}
                                 tabBarPosition = 'bottom'
                                 tabStyle={ (Platform.OS === 'android') && { marginTop: Constants.statusBarHeight }}
                                 swipeEnabled={false}
                             >
                                 {require("./routesComponents/tabs/timeline").default}
-                                {require("./routesComponents/tabs/invitationIn").default}
+                                {require("./routesComponents/tabs/invitationInOut").default}
+                                {require("./routesComponents/tabs/createInvitation").default}
                                 {require("./routesComponents/tabs/chats").default}
-                                {require("./routesComponents/tabs/invitationOut").default}
                                 {require("./routesComponents/tabs/profile").default}
                             </Tabs>
                         </Stack>

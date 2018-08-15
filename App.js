@@ -31,6 +31,7 @@ export default class App extends Component {
             {SFProTextMedium: require('./app/assets/fonts/SFProText-Medium.ttf')},
             {SFProTextRegular: require('./app/assets/fonts/SFProText-Regular.ttf')},
             {SFProTextLight: require('./app/assets/fonts/SFProText-Light.ttf')},
+            {BoogalooRegular: require('./app/assets/fonts/Boogaloo-Regular.ttf')},
         ]);
 
         await Promise.all([...fontAssets]);
