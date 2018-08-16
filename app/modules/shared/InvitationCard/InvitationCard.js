@@ -32,102 +32,6 @@ class InvitationCard extends Component {
         Actions.push("CreateInvitation", props);
     }
 
-    renderTopSection = (item) => {
-        const { cardType } = this.props;
-        switch (cardType) {
-            case TIMELINE_INVITATION_CARD:
-                return this.renderTopSectionTimeline(item);
-            case RECEIVED_INVITATION_CARD:
-                return this.renderTopSectionReceived(item);
-            case SENT_INVITATION_CARD:
-                return this.renderTopSectionSent(item);
-        }
-    }
-
-    renderTopSectionTimeline = (item) => {
-        return(
-            <View style={styles.topSectionInvitation}>
-                <Avatar
-                    rounded
-                    small
-                    source={{uri: item.userPhoto}}
-                />
-                <Text style={styles.userNameStyle}>{item.userName}</Text>
-                <Text style={styles.dueDateStyle}>
-                    {
-                        (item.dueDate == null)
-                            ? ''
-                            : this.getDueTime(item.dueDate)
-                    }
-                </Text>
-            </View>
-        );
-    }
-
-    renderTopSectionReceived = (item) => {
-        return (<View></View>);
-    }
-
-    renderTopSectionSent = (item) => {
-        return (
-            <View style={styles.topSectionInvitation}>
-                <Avatar
-                    rounded
-                    small
-                    source={{uri: item.userCreatorPhoto}}
-                />
-                <Text> ---> </Text>
-                <Avatar
-                    rounded
-                    small
-                    source={{uri: item.userInvitedPhoto}}
-                />
-                <Text style={styles.userNameStyle}>{item.userInvitedName}</Text>
-                <Text style={styles.dueDateStyle}>
-                    {
-                        (item.dueDate == null)
-                            ? ''
-                            : this.getDueTime(item.dueDate)
-                    }
-                </Text>
-            </View>
-        );
-    }
-
-    renderBottomSection = () => {
-        const { cardType } = this.props;
-        switch (cardType) {
-            case TIMELINE_INVITATION_CARD:
-                return this.renderButtonsCardTimeline();
-            case RECEIVED_INVITATION_CARD:
-                return this.renderButtonsCardReceived();
-            case SENT_INVITATION_CARD:
-                return this.renderButtonsCardSent();
-            //default:
-                //return this.renderButtonsCardTimeline();
-        }
-    }
-
-    renderButtonsCardTimeline = () => {
-        return (<View style={styles.bottomSectionInvitationTimeline}>
-                    <ButtonElements
-                        title='Invitar'
-                        containerViewStyle={styles.containerButtonStyle}
-                        buttonStyle={styles.buttonStyle}
-                        onPress={this.onInvitePress}
-                    />
-                </View>);
-    }
-
-    renderButtonsCardReceived = () => {
-        return <ButtonElements
-                            title='Invitar'
-                            containerViewStyle={styles.containerButtonStyle}
-                            buttonStyle={styles.buttonStyle}
-                            onPress={this.onInvitePress}
-                />;
-    }
-
     renderButtonsCardSent = () => {
         return (<View style={styles.bottomSectionInvitationSent}>
                     <ButtonElements
@@ -148,6 +52,7 @@ class InvitationCard extends Component {
 
     render() {
         const { item } = this.props;
+        const { cardType } = this.props;
 
         return(
             <View>
