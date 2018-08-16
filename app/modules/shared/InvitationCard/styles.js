@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     dueDateStyle: {
+        marginLeft: 5,
         color: 'red', 
         fontSize: fontSize.text5,
     },
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     buttonView: {
+        alignSelf: 'flex-end',
         alignItems: "flex-end",
         justifyContent: "flex-end",
         marginBottom: 5

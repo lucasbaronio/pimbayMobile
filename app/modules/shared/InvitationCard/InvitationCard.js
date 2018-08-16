@@ -162,17 +162,24 @@ class InvitationCard extends Component {
                         <Text style={styles.userNameStyle}>{item.userName}</Text>
                     </View>
                     <View style={{flex: 2, justifyContent: 'center'}}>
-                        <View style={{alignSelf: 'center', marginRight: 15, marginTop: 10}}>
-                            <Text style={styles.descriptionStyle}>{item.description}</Text>  
+                        <View style={{flex: 2}}>    
+                            <View style={{alignSelf: 'center', marginRight: 15, marginTop: 10}}>
+                                <Text style={styles.descriptionStyle}>{item.description}</Text>  
+                            </View>
+                            <View style={{marginTop: 2, flexDirection: 'row'}}>
+                                <Image
+                                    style={{alignSelf: 'flex-start', height: 16, width: 16}} 
+                                    resizeMode='center'
+                                    source={require('../../../assets/icons/time-passing.png')} />
+                                <Text style={styles.dueDateStyle}>
+                                    {
+                                        (item.dueDate == null)
+                                            ? ''
+                                            : this.getDueTime(item.dueDate)
+                                    }
+                                </Text>
                         </View>
-                        <View style={{marginTop: 2}}>
-                            <Text style={styles.dueDateStyle}>
-                                {
-                                    (item.dueDate == null)
-                                        ? ''
-                                        : this.getDueTime(item.dueDate)
-                                }
-                            </Text>
+                        <View style={{flex: 1}}>    
                             <View style={styles.buttonView}>
                                 <ButtonElements
                                     backgroundColor='#DE5134'
@@ -180,6 +187,7 @@ class InvitationCard extends Component {
                                     buttonStyle={styles.button}
                                     title='ESTOY'
                                     fontSize={fontSize.text4} />
+                                </View>
                             </View>
                         </View>
                     </View>
