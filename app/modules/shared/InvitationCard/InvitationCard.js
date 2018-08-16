@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text} from 'react-native';
-import { Card, Button as ButtonElements, Avatar } from 'react-native-elements';
+import { View, Text, Image} from 'react-native';
+import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import moment from 'moment';
-import styles from "./styles";
+import styles, { fontSize, windowWidth } from "./styles";
 import { TIMELINE_INVITATION_CARD, RECEIVED_INVITATION_CARD, SENT_INVITATION_CARD } from "./constants"
 
 class InvitationCard extends Component {
@@ -150,16 +150,46 @@ class InvitationCard extends Component {
         const { item } = this.props;
 
         return(
-            <View style={styles.container}>
-                <Card containerStyle={{padding: 10}}>
-                    {this.renderTopSection(item)}
-
-                    <View style={styles.middleSectionInvitation}>
-                        <Text style={styles.descriptionStyle}>{item.description}</Text>  
+            <View>
+                <View style={styles.container}>
+                    <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
+                        <Avatar
+                            rounded
+                            large
+                            source={{uri: item.userPhoto}}
+                            containerStyle={{marginTop: 20}}
+                        />
+                        <Text style={styles.userNameStyle}>{item.userName}</Text>
                     </View>
-
-                    {this.renderBottomSection()}
-                </Card>
+                    <View style={{flex: 2, justifyContent: 'center'}}>
+                        <View style={{alignSelf: 'center', marginRight: 15, marginTop: 10}}>
+                            <Text style={styles.descriptionStyle}>{item.description}</Text>  
+                        </View>
+                        <View style={{marginTop: 2}}>
+                            <Text style={styles.dueDateStyle}>
+                                {
+                                    (item.dueDate == null)
+                                        ? ''
+                                        : this.getDueTime(item.dueDate)
+                                }
+                            </Text>
+                            <View style={styles.buttonView}>
+                                <ButtonElements
+                                    backgroundColor='#DE5134'
+                                    onPress={this.onInvitePress}
+                                    buttonStyle={styles.button}
+                                    title='ESTOY'
+                                    fontSize={fontSize.text4} />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        style={{alignSelf: 'flex-start', width: windowWidth}} 
+                        resizeMode='center'
+                        source={require('../../../assets/dividerOpenInvitation.png')} />
+                </View>
             </View>
         )
     }

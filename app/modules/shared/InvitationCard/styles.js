@@ -6,7 +6,10 @@ const { windowWidth, fontSize } = theme;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: windowWidth,
+        flexDirection: 'row',
+        width: windowWidth, 
+        justifyContent: 'flex-start',
+        //marginBottom: 10
     },
     topSectionInvitation: {
         alignItems: 'center',
@@ -14,25 +17,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     userNameStyle: {
-        fontSize: fontSize.text3,
+        fontSize: fontSize.text4,
         fontWeight: 'bold',
-        flex: 1, 
-        marginLeft: 15
+        flex: 1,
+        marginTop: 5, 
+        marginBottom: 20
     },
     dueDateStyle: {
-        alignSelf:'center', 
         color: 'red', 
-        flex: 1, 
-        fontSize: fontSize.text3,
-        marginRight: 10,
-        textAlign: 'right'
+        fontSize: fontSize.text5,
     },
     middleSectionInvitation: {
         flex: 1, 
         marginTop: 10
     },
     descriptionStyle: {
-        fontSize: fontSize.text3,
+        fontSize: fontSize.text3
     },
     bottomSectionInvitationTimeline: {
         alignItems: 'flex-end', 
@@ -55,7 +55,20 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         height: 40,
         width: 80
-    }
+    },
+    button: {
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 25,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+    },
+    buttonView: {
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
+        marginBottom: 5
+    },
 });
 
+export { fontSize, windowWidth };
 export default styles;
