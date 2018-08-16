@@ -61,7 +61,6 @@ export default class extends React.Component {
                                 showLabel={false}
                                 lazy = {true}
                                 tabBarPosition = 'bottom'
-                                tabStyle={ (Platform.OS === 'android') && { marginTop: Constants.statusBarHeight }}
                                 swipeEnabled={false}
                             >
                                 {require("./routesComponents/tabs/timeline").default}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Scene, Stack, Modal, Actions } from 'react-native-router-flux';
 import InvitationsOut from '../../../modules/home/scenes/InvitationsOut';
@@ -18,13 +18,18 @@ export default (
                 component={InvitationsOut}
                 icon={({ focused }) => (
                     <Avatar
-                        large
+                        // large={Platform.OS === 'ios'}
+                        // medium={Platform.OS === 'android'}
+                        height={Platform.OS === 'ios' ? 65 : 45}
+                        width={Platform.OS === 'ios' ? 55 : 45}
                         rounded
                         icon={{name: 'plus', type: 'material-community'}}
-                        overlayContainerStyle={{ backgroundColor: color.orange }}
+                        overlayContainerStyle={{ 
+                            backgroundColor: color.orange, 
+                            marginBottom: Platform.OS === 'ios' ? 10 : 0 
+                        }}
                         onPress={() => Actions.push("CreateInvitation")}
-                        // activeOpacity={0.7}
-                        // containerStyle={{marginbottom: 40}}
+                        activeOpacity={0.8}
                     />
                     // <Foundation
                     //     size={28}

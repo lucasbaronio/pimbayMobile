@@ -16,13 +16,13 @@ const { fontFamily, fontSize } = theme;
 
 export default (
     <Stack key="TimelineStack" title="Pimbay" hideNavBar
-        titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
     >
         <Modal>
             <Scene
                 initial
                 key={"Timeline"}
                 component={Timeline}
+                titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
                 renderRightButton={<SearchButton goToScreen='SearchTimeline'/>}
                 icon={({ focused }) => (
                     <Image 
