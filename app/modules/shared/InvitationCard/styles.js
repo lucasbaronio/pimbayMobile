@@ -9,12 +9,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: windowWidth, 
         justifyContent: 'flex-start',
-        //marginBottom: 10
     },
-    topSectionInvitation: {
-        alignItems: 'center',
+    userInfoSectionContainer: {
         flex: 1, 
-        flexDirection: 'row'
+        alignItems: 'center', 
+        justifyContent: 'center'
     },
     userNameStyle: {
         fontSize: fontSize.text4,
@@ -22,6 +21,10 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 5, 
         marginBottom: 20
+    },
+    invitationInfoSectionContainer: {
+        flex: 2, 
+        justifyContent: 'center'
     },
     dueDateStyle: {
         marginLeft: 5,
@@ -32,34 +35,13 @@ const styles = StyleSheet.create({
         color: color.grey, 
         fontSize: fontSize.text5,
     },
-    middleSectionInvitation: {
-        flex: 1, 
+    descriptionContainerStyle: {
+        alignSelf: 'center', 
+        marginRight: 15, 
         marginTop: 10
     },
     descriptionStyle: {
         fontSize: fontSize.text3
-    },
-    bottomSectionInvitationTimeline: {
-        alignItems: 'flex-end', 
-        flex: 1, 
-        marginTop: 10
-    },
-    bottomSectionInvitationSent: {
-        flexDirection: 'row',
-        alignItems: 'flex-start', 
-        flex: 1, 
-        marginTop: 10
-    },
-    containerButtonStyle: {
-        marginRight: 0
-    },
-    buttonStyle: {
-        backgroundColor: '#03A9F4',
-        borderColor: "transparent",
-        borderRadius: 5,
-        borderWidth: 0,
-        height: 40,
-        width: 80
     },
     button: {
         borderColor: "transparent",
@@ -75,6 +57,14 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5
     },
+    dividerImageStyle: {
+        alignSelf: 'flex-start', 
+        width: windowWidth
+    },
+    avatarBackground: {
+        backgroundColor: color.light_blue
+    }
+
 });
 
 export { fontSize, windowWidth };

@@ -3,10 +3,10 @@ import { View, Text, Image } from 'react-native';
 import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import moment from 'moment';
-import styles, { fontSize, windowWidth } from "./styles";
+import styles, { fontSize } from "./styles";
 import { TIMELINE_INVITATION_CARD, RECEIVED_INVITATION_CARD, SENT_INVITATION_CARD } from "./constants"
 import { getDueTime, getCreatedTime } from "../../shared/utils/date";
+import ContextAction from "../../shared/ContextAction";
 
 class InvitationCard extends Component {
 
@@ -16,24 +16,6 @@ class InvitationCard extends Component {
 
     goToCreateInvitation = (props) => {
         Actions.push("CreateInvitation", props);
-    }
-
-    renderButtonsCardSent = () => {
-        return (<View style={styles.bottomSectionInvitationSent}>
-            <ButtonElements
-                title='Finalizar'
-                containerViewStyle={styles.containerButtonStyle}
-                buttonStyle={styles.buttonStyle}
-                onPress={this.onInvitePress}
-            />
-            <ButtonElements
-                title='Ir al chat'
-                containerViewStyle={styles.containerButtonStyle}
-                buttonStyle={styles.buttonStyle}
-                onPress={this.onInvitePress}
-            />
-        </View>
-        );
     }
 
     renderDetailsInformation = (item) => {
@@ -66,14 +48,24 @@ class InvitationCard extends Component {
             </View>);
     }
 
-    render() {
-        const { item } = this.props;
-        const { cardType } = this.props;
-
-        return (
-            <View>
-                <View style={styles.container}>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    renderUserInfoSection = (item) => {
+        if (item.contextActionId == null) {
+            return (
+                <View style={styles.userInfoSectionContainer}>
+                    <Avatar
+                        rounded
+                        large
+                        source={{ uri: item.userPhoto }}
+                        containerStyle={{ marginTop: 20 }}
+                    />
+                    <Text style={styles.userNameStyle}>{item.userName}</Text>
+                </View>
+            );
+        } else {
+            const actionContext = this.getContextAction();
+            return (
+                <View style={styles.userInfoSectionContainer}>
+                    <View style={styles.userInfoSectionContainer}>
                         <Avatar
                             rounded
                             large
@@ -82,9 +74,41 @@ class InvitationCard extends Component {
                         />
                         <Text style={styles.userNameStyle}>{item.userName}</Text>
                     </View>
-                    <View style={{ flex: 2, justifyContent: 'center' }}>
+                    <Avatar
+                        small
+                        rounded
+                        source={(actionContext.image) ? { uri: actionContext.image } : null}
+                        icon={(actionContext.icon && actionContext.type) ? { name: actionContext.icon, type: actionContext.type } : null}
+                        overlayContainerStyle={styles.avatarBackground}
+                        containerStyle={{ top: 14, right: 20, position: 'absolute', height: 30, width: 30 }}
+                    />
+                    <Text style={{ right: 5, top: 0, fontSize: fontSize.text5, position: 'absolute' }}>{actionContext.title}</Text>
+                </View>
+            );
+        }
+    }
+
+    getContextAction = () => {
+        return {
+            id: "1",
+            title: "A tomar una",
+            icon: 'ios-beer',
+            type: 'ionicon',
+            image: null
+        }
+    }
+
+    render() {
+        const { item } = this.props;
+        const { cardType } = this.props;
+
+        return (
+            <View>
+                <View style={styles.container}>
+                    {this.renderUserInfoSection(item)}
+                    <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
-                            <View style={{ alignSelf: 'center', marginRight: 15, marginTop: 10 }}>
+                            <View style={styles.descriptionContainerStyle}>
                                 <Text style={styles.descriptionStyle}>{item.description}</Text>
                             </View>
                             {this.renderDetailsInformation(item)}
@@ -103,7 +127,7 @@ class InvitationCard extends Component {
                 </View>
                 <View>
                     <Image
-                        style={{ alignSelf: 'flex-start', width: windowWidth }}
+                        style={styles.dividerImageStyle}
                         resizeMode='center'
                         source={require('../../../assets/dividerOpenInvitation.png')} />
                 </View>

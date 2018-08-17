@@ -12,7 +12,7 @@
         "realizationDate": "2018-08-18T23:00:00.00-03:00",
         "dueDate": null,
         "dateCreated": "2018-08-17T17:43:00.00-03:00",
-        "contextActionId": null,
+        "contextActionId": 1,
         "eventId": null,
         "confirmedUsersIds": [],
         "sex": "BOTH",
