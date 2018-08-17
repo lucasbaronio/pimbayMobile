@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
 
-const { windowWidth, fontSize } = theme;
+const { windowWidth, fontSize, color } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -25,7 +25,11 @@ const styles = StyleSheet.create({
     },
     dueDateStyle: {
         marginLeft: 5,
-        color: 'red', 
+        color: color.blood, 
+        fontSize: fontSize.text5,
+    },
+    createdTimeStyle: {
+        color: color.grey, 
         fontSize: fontSize.text5,
     },
     middleSectionInvitation: {
