@@ -63,6 +63,19 @@ const styles = StyleSheet.create({
     },
     avatarBackground: {
         backgroundColor: color.light_blue
+    },
+    avatarContainerStyle: {
+        top: 14, 
+        right: 20, 
+        position: 'absolute', 
+        height: 30, 
+        width: 30
+    },
+    avatarTextStyle: {
+        right: 5, 
+        top: 0, 
+        fontSize: fontSize.text5, 
+        position: 'absolute'
     }
 
 });

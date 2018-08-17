@@ -6,7 +6,6 @@ import { Actions } from "react-native-router-flux";
 import styles, { fontSize } from "./styles";
 import { TIMELINE_INVITATION_CARD, RECEIVED_INVITATION_CARD, SENT_INVITATION_CARD } from "./constants"
 import { getDueTime, getCreatedTime } from "../../shared/utils/date";
-import ContextAction from "../../shared/ContextAction";
 
 class InvitationCard extends Component {
 
@@ -80,9 +79,9 @@ class InvitationCard extends Component {
                         source={(actionContext.image) ? { uri: actionContext.image } : null}
                         icon={(actionContext.icon && actionContext.type) ? { name: actionContext.icon, type: actionContext.type } : null}
                         overlayContainerStyle={styles.avatarBackground}
-                        containerStyle={{ top: 14, right: 20, position: 'absolute', height: 30, width: 30 }}
+                        containerStyle={styles.avatarContainerStyle}
                     />
-                    <Text style={{ right: 5, top: 0, fontSize: fontSize.text5, position: 'absolute' }}>{actionContext.title}</Text>
+                    <Text style={styles.avatarTextStyle}>{actionContext.title}</Text>
                 </View>
             );
         }
