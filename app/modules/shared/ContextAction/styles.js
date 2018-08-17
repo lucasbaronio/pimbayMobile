@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         margin: 5,
+        marginLeft: 5,
         maxWidth: 85,
     },
     avatar: {

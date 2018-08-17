@@ -52,5 +52,4 @@ class SelectUsersFromList extends React.Component {
 //     }
 // }
 
-// export default connect(mapStateToProps, { getEventsOrInvitations })(SearchTimeline);
 export default connect(null, { })(SelectUsersFromList);

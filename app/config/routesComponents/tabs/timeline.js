@@ -15,8 +15,7 @@ import * as theme from '../../../styles/theme';
 const { fontFamily, fontSize } = theme;
 
 export default (
-    <Stack key="TimelineStack" title="Pimbay" hideNavBar
-    >
+    <Stack key="TimelineStack" title="Pimbay" hideNavBar >
         <Modal>
             <Scene
                 initial

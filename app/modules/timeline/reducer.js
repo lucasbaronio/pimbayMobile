@@ -1,10 +1,10 @@
 import * as t from './actionTypes';
-import invitations from './scenes/Timeline/invitations.json';
+// import invitations from './scenes/Timeline/invitations.json';
 
 let initialState = {
     isLoading: false,
     isLoadingMore: false,
-    eventsOrInvitations: [],
+    invitations: [],
     isLoadingEvents: false,
     isLoadingMoreEvents: false,
     events: [],
@@ -14,27 +14,27 @@ let initialState = {
 
 const timelineReducer = (state = initialState, action) => {
     switch (action.type) {
-        case t.LOADING_HEADER_TIMELINE: {
-            const eventsOrInvitations = state.eventsOrInvitations;
+        case t.LOADING_INVITATION_LIST: {
+            const invitations = state.invitations;
 
-            if (eventsOrInvitations.length === 0) 
+            if (invitations.length === 0) 
                 return { ...state, isLoading: true }
 
             return state;
         }
 
-        case t.LOADING_FOOTER_TIMELINE: {
+        case t.LOADING_FOOTER_INVITATION_LIST: {
             return { ...state, isLoadingMore: true }
         }
 
-        case t.TIMELINE_AVAILABLE: {
+        case t.INVITATION_LIST_AVAILABLE: {
             let { data, start } = action;
-            let timelineOld = state.eventsOrInvitations;
-            let eventsOrInvitations = timelineOld;
-            if (start === 0)
-                eventsOrInvitations = eventsOrInvitations.concat(invitations)
-            eventsOrInvitations = eventsOrInvitations.concat(data);
-            return { ...state, eventsOrInvitations, isLoading: false, isLoadingMore: false };
+            let invitations = [];
+            if (start !== 0) {
+                invitations = state.invitations;
+            }
+            invitations = invitations.concat(data);
+            return { ...state, invitations, isLoading: false, isLoadingMore: false };
         }
 
         case t.LOADING_EVENT_LIST: {
@@ -51,10 +51,11 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.EVENT_LIST_AVAILABLE: {
-            let { data } = action;
-            // let timelineOld = state.eventsOrInvitations;
-            // let eventsOrInvitations = timelineOld;
-            let events = state.events;
+            let { data, start } = action;
+            let events = [];
+            if (start !== 0) {
+                events = state.events;
+            }
             events = events.concat(data);
             return { ...state, events, isLoadingEvents: false, isLoadingMoreEvents: false };
         }

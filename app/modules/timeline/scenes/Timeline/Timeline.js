@@ -1,19 +1,17 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator, TextInput } from 'react-native';
-import { Divider } from 'react-native-elements';
+import { View, FlatList, ActivityIndicator, Text } from 'react-native';
 
 import { connect } from 'react-redux';
 import { Actions } from "react-native-router-flux";
 
 import { actions as timeline } from "../../index";
-const { getEventsOrInvitations } = timeline;
+const { getInvitations } = timeline;
 
-import { API_EVENT_SIZE } from '../../constants';
+import { API_INVITATION_SIZE } from '../../constants';
 
-import styles, { color } from "./styles";
+import styles from "./styles";
 import ContextActionList from "../../components/ContextActionList";
 import EventList from "../../components/EventList";
-import EventCardMedium from "../../../shared/Event/EventCardMedium";
 import InvitationCard from "../../../shared/InvitationCard";
 import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 
@@ -24,15 +22,22 @@ class Timeline extends React.Component {
 
     componentDidMount() {
         const { start } = this.state;
-        this.props.getEventsOrInvitations(start, (error) => alert(error.message))
+        this.props.getInvitations(start, (error) => alert(error.message))
     }
 
     renderItem = ({item, index}) => {
-        return (item.type === "EVENT")
-        ? <EventCardMedium item={item}/>
-        : (item.type === "INVITATION")
-        ? <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
-        : console.log(item) && null
+        return (
+            <View>
+                {
+                    !!(index === 0) &&
+                    <Text style={styles.title}>
+                        Que estás para hacer hoy?
+                    </Text>
+                }
+                <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
+            </View>
+        )
+        
     }
 
     onPressContextAction = (item) => {
@@ -72,15 +77,15 @@ class Timeline extends React.Component {
                     /> */}
                     <FlatList
                         ref='listRef'
-                        data={this.props.eventsOrInvitations}
+                        data={this.props.invitations}
                         renderItem={this.renderItem}
-                        // initialNumToRender={5}
                         keyExtractor={(item, index) => index.toString()}
+                        onEndReachedThreshold={0.01}
                         onEndReached={() => {
                             if (!this.onEndReachedCalledDuringMomentum) {
                                 this.setState({
-                                    start: this.state.start + API_EVENT_SIZE
-                                }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
+                                    start: this.state.start + API_INVITATION_SIZE
+                                }, () => this.props.getInvitations(this.state.start, (error) => alert(error.message)))
                                 this.onEndReachedCalledDuringMomentum = true;
                             }
                         }}
@@ -105,8 +110,8 @@ function mapStateToProps(state, props) {
     return {
         isLoading: state.timelineReducer.isLoading,
         isLoadingMore: state.timelineReducer.isLoadingMore,
-        eventsOrInvitations: state.timelineReducer.eventsOrInvitations
+        invitations: state.timelineReducer.invitations
     }
 }
 
-export default connect(mapStateToProps, { getEventsOrInvitations })(Timeline);
+export default connect(mapStateToProps, { getInvitations })(Timeline);

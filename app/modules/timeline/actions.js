@@ -3,13 +3,25 @@ import * as t from './actionTypes';
 import * as api from './api';
 
 // errorCB -> errorCallback
-export function getEventsOrInvitations(start, errorCB) {
+// export function getEventsOrInvitations(start, errorCB) {
+//     return (dispatch) => {
+//         (start === 0)
+//         ? dispatch({type: t.LOADING_HEADER_TIMELINE})
+//         : dispatch({type: t.LOADING_FOOTER_TIMELINE})
+//         api.getEventsOrInvitations(start, function (success, data, error) {
+//             if (success) dispatch({type: t.TIMELINE_AVAILABLE, data, start});
+//             else if (error) errorCB(error)
+//         });
+//     };
+// }
+
+export function getInvitations(start, errorCB) {
     return (dispatch) => {
         (start === 0)
-        ? dispatch({type: t.LOADING_HEADER_TIMELINE})
-        : dispatch({type: t.LOADING_FOOTER_TIMELINE})
-        api.getEventsOrInvitations(start, function (success, data, error) {
-            if (success) dispatch({type: t.TIMELINE_AVAILABLE, data, start});
+        ? dispatch({type: t.LOADING_INVITATION_LIST})
+        : dispatch({type: t.LOADING_FOOTER_INVITATION_LIST})
+        api.getInvitations(start, function (success, data, error) {
+            if (success) dispatch({type: t.INVITATION_LIST_AVAILABLE, data, start});
             else if (error) errorCB(error)
         });
     };
@@ -21,7 +33,7 @@ export function getEvents(start, errorCB) {
         ? dispatch({type: t.LOADING_EVENT_LIST})
         : dispatch({type: t.LOADING_FOOTER_EVENT_LIST})
         api.getEvents(start, function (success, data, error) {
-            if (success) dispatch({type: t.EVENT_LIST_AVAILABLE, data});
+            if (success) dispatch({type: t.EVENT_LIST_AVAILABLE, data, start});
             else if (error) errorCB(error)
         });
     };

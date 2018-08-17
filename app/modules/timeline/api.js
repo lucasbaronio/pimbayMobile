@@ -1,15 +1,22 @@
 import { 
     API_EVENT, 
+    API_INVITATION,
     API_CONTEXT_ACTION_LIST,
     API_CREATE_INVITATION,
 } from './constants';
 import { get, post } from '../globalApi';
 
-export function getEventsOrInvitations(start, callback) {
-    get(`${API_EVENT}start=${start}`, callback);
+// export function getEventsOrInvitations(start, callback) {
+//     get(`${API_EVENT}start=${start}`, callback);
+// }
+
+export function getInvitations(start, callback) {
+    // get(`${API_INVITATION}start=${start}`, callback);
+    get(API_INVITATION, callback);
 }
 
 export function getEvents(start, callback) {
+    console.log(start);
     get(`${API_EVENT}start=${start}`, callback);
 }
 

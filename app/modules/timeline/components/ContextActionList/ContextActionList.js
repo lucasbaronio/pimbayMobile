@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, Button } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import { Card, Button as ButtonElements } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -96,6 +96,9 @@ class ContextActionList extends React.Component {
     render() {
         return(
             <View style={styles.container}>
+                <Text style={styles.title}>
+                    Estoy para
+                </Text>
                 <FlatList
                     horizontal
                     // data={this.props.contextActions}

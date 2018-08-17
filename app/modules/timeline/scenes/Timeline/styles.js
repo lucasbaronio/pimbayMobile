@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from "../../index"
-const { normalize, windowWidth, color } = theme;
+const { fontFamily, fontSize, windowWidth, color } = theme;
 
 export { color };
 
@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
         width: windowWidth,
         paddingVertical: 5,
         paddingHorizontal: 10,
+    },
+    title: {
+        fontFamily: fontFamily.bold,
+        fontSize: fontSize.text2,
+        marginLeft: 10
     }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 import { Card, Button as ButtonElements } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -44,12 +44,16 @@ class EventList extends React.Component {
         }else{
             return(
                 <View style={styles.container}>
+                    <Text style={styles.title}>
+                        Eventos de tu interés
+                    </Text>
                     <FlatList
                         horizontal
                         data={this.props.events}
                         showsHorizontalScrollIndicator={false}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
+                        onEndReachedThreshold={0.01}
                         onEndReached={() => {
                             if (!this.onEndReachedCalledDuringMomentum) {
                                 this.setState({
