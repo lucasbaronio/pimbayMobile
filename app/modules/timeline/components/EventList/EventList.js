@@ -23,7 +23,7 @@ class EventList extends React.Component {
     }
 
     onPressItem = (item) => {
-        this.props.onPressContextAction(item);
+        this.props.onPressEvent(item);
     };
 
     renderItem = ({item, index}) => {
