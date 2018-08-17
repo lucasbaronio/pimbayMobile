@@ -6,41 +6,9 @@ import { Actions } from "react-native-router-flux";
 import moment from 'moment';
 import styles, { fontSize, windowWidth } from "./styles";
 import { TIMELINE_INVITATION_CARD, RECEIVED_INVITATION_CARD, SENT_INVITATION_CARD } from "./constants"
+import { getDueTime, getCreatedTime } from "../../shared/utils/date";
 
 class InvitationCard extends Component {
-
-    getDueTime(dueDate) {
-        var dueDateParsed = moment(dueDate); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
-        var now = moment(new Date());
-        var diff = moment.duration(moment(dueDateParsed).diff(now));
-        var days = parseInt(diff.asDays());
-        var hours = parseInt(diff.asHours()); //it gives in miliseconds
-        hours = hours - days * 24;
-        var minutes = parseInt(diff.asMinutes());
-        minutes = minutes - (days * 24 * 60 + hours * 60);
-        if (days > 0) return days + "d " + hours + "h " + minutes + " min";
-        if (hours > 0) return hours + " h " + minutes + " min";
-        if (minutes > 0) return minutes + " min";
-        return "Vencido";
-    }
-
-    getCreatedTime(dateCreated) {
-        var dueDateParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
-        var now = moment(new Date());
-        var diff = moment.duration(moment(now).diff(dueDateParsed));
-        var days = parseInt(diff.asDays());
-        var hours = parseInt(diff.asHours()); //it gives in miliseconds
-        hours = hours - days * 24;
-        var minutes = parseInt(diff.asMinutes());
-        minutes = minutes - (days * 24 * 60 + hours * 60);
-        if (days > 1) return "El " + dueDateParsed.day() + " de " + dueDateParsed.month();
-        if (days == 1) return "Ayer";
-        if (hours > 1) return "Hace " + hours + " horas";
-        if (hours == 1) return "Hace " + hours + " hora";
-        if (minutes > 1) return "Hace " + minutes + " minutos";
-        if (minutes == 1) return "Hace " + minutes + " minuto";
-        if (minutes < 1) return "Ahora";
-    }
 
     onInvitePress = () => {
         this.goToCreateInvitation({ type: 'OPEN_INVITATION', openInvitation: this.props.item });
@@ -79,13 +47,13 @@ class InvitationCard extends Component {
     renderDetailsWithDueDate = (item) => {
         return (
             <View style={{ marginTop: 2, flexDirection: 'row' }}>
-                <Text style={styles.createdTimeStyle}>{this.getCreatedTime(item.dateCreated)}</Text>
+                <Text style={styles.createdTimeStyle}>{getCreatedTime(item.dateCreated)}</Text>
                 <Image
                     style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
                     resizeMode='center'
                     source={require('../../../assets/icons/time-passing.png')} />
                 <Text style={styles.dueDateStyle}>
-                    {this.getDueTime(item.dueDate)}
+                    {getDueTime(item.dueDate)}
                 </Text>
             </View>
         );
@@ -94,7 +62,7 @@ class InvitationCard extends Component {
     renderDetailsWithoutDueDate = (item) => {
         return (
             <View style={{ marginTop: 2, flexDirection: 'row' }}>
-                <Text style={styles.createdTimeStyle}>{this.getCreatedTime(item.dateCreated)}</Text>
+                <Text style={styles.createdTimeStyle}>{getCreatedTime(item.dateCreated)}</Text>
             </View>);
     }
 
