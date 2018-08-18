@@ -12,6 +12,6 @@ const invitationType = {
 }
 
 export {
-    type,
+    pimbayType,
     invitationType
 }

@@ -9,12 +9,15 @@ import { getFormalDate } from "../../utils/date";
 class EventCardMedium extends PureComponent {
 
     onInvitePress = () => {
-        this.goToCreateInvitation({type: 'EVENT_INVITATION', eventInvitation: this.props.item});
+        const { item } = this.props;
+        console.log(item);
+        this.props.onPressItem(item);
+        // this.goToCreateInvitation({type: 'EVENT_INVITATION', eventInvitation: this.props.item});
     }
 
-    goToCreateInvitation = (props) => {
-        Actions.push("CreateInvitation", props);
-    }
+    // goToCreateInvitation = (props) => {
+    //     Actions.push("CreateInvitation", props);
+    // }
 
     render() {
         const { item } = this.props;

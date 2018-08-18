@@ -53,8 +53,10 @@ class CreateInvitation extends Component {
             case pimbayType.SIMPLE:
                 return this.renderTextBox();
             case pimbayType.CONTEXT_ACTION:
+                console.log('CONTEXT_ACTION');
                 return this.renderContextActionList();
             case pimbayType.EVENT:
+                console.log('EVENT');
                 return this.renderEventInvitation();
         }
     }
@@ -97,9 +99,9 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        const { eventInvitation } = this.props;
+        const { event } = this.props;
         return (
-            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
+            <EventCardCreateInvitation eventInvitation={event}/>
         );
     }
 
