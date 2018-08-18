@@ -19,7 +19,7 @@ export default (
         <Modal>
             <Scene
                 initial
-                key={"Timeline"}
+                key="Timeline"
                 component={Timeline}
                 titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
                 renderRightButton={<SearchButton goToScreen='SearchTimeline'/>}

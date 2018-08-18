@@ -122,7 +122,6 @@ class CreateInvitation extends Component {
     }
 
     render() {
-
         return (
             <ScrollView style={styles.container}>
                 {this.renderType()}

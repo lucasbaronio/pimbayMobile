@@ -10,11 +10,11 @@ const { color } = theme;
 import { pimbayType } from '../../../modules/shared/constants';
 
 export default (
-    <Stack key="CreateInvitationStack" title="Crear Invitación" hideNavBar>
+    <Stack key="CreateSimpleInvitationStack" title="Crear Invitación" hideNavBar>
         <Modal>
             <Scene
                 // hideNavBar
-                key={"CreateInvitation"}
+                key={"CreateSimpleInvitation"}
                 title="Crear Invitación"
                 component={InvitationsOut}
                 icon={({ focused }) => (

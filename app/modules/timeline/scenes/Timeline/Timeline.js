@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, FlatList, ActivityIndicator, Text } from 'react-native';
+import { connectActionSheet } from '@expo/react-native-action-sheet';
 
 import { connect } from 'react-redux';
 import { Actions } from "react-native-router-flux";
@@ -16,6 +17,7 @@ import EventList from "../../components/EventList";
 import InvitationCard from "../../../shared/InvitationCard";
 import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 
+@connectActionSheet
 class Timeline extends React.Component {
     state = {
         start: 0,
@@ -39,15 +41,30 @@ class Timeline extends React.Component {
                 <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
             </View>
         )
-        
     }
 
+    onOpenActionSheet = (item) => {
+        
+        this.props.showActionSheetWithOptions({
+            options: ['Cancelar', 'Invitación Abierta', 'Invitación Dirigida'],
+            cancelButtonIndex: 0,
+            title: 'Crear Invitación - De que tipo?',
+            message: 'Abierta: Visible para todos en Pimbay.\nDirigida: Visible solo para usuarios invitados.'
+        },
+        (buttonIndex) => {
+            // Do something here depending on the button index selected
+        });
+      
+      }
+
     onPressContextAction = (item) => {
-        this.goToCreateInvitation({type: pimbayType.CONTEXT_ACTION, contextAction: item});
+        this.onOpenActionSheet(item);
+        // this.goToCreateInvitation({type: pimbayType.CONTEXT_ACTION, contextAction: item});
     }
 
     onPressEvent = (item) => {
-        this.goToCreateInvitation({type: pimbayType.EVENT, event: item});
+        this.onOpenActionSheet(item);
+        // this.goToCreateInvitation({type: pimbayType.EVENT, event: item});
     }
 
     goToCreateInvitation = (props) => {

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0-beta.53",
+    "@expo/react-native-action-sheet": "^1.0.2",
     "axios": "^0.18.0",
     "expo": "^27.0.1",
     "firebase": "^5.2.0",
