@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
         fontSize: fontSize.text5,
     },
     descriptionContainerStyle: {
-        alignSelf: 'center', 
         marginRight: 15, 
         marginTop: 10
     },

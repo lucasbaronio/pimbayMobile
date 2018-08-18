@@ -48,16 +48,17 @@ class InvitationCard extends Component {
     }
 
     renderUserInfoSection = (item) => {
+        const userInfo = this.getUserInfo(item.ownerId);
         if (item.contextActionId == null) {
             return (
                 <View style={styles.userInfoSectionContainer}>
                     <Avatar
                         rounded
                         large
-                        source={{ uri: item.userPhoto }}
+                        source={{ uri: userInfo.avatar }}
                         containerStyle={{ marginTop: 20 }}
                     />
-                    <Text style={styles.userNameStyle}>{item.userName}</Text>
+                    <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
                 </View>
             );
         } else {
@@ -68,10 +69,10 @@ class InvitationCard extends Component {
                         <Avatar
                             rounded
                             large
-                            source={{ uri: item.userPhoto }}
+                            source={{ uri: userInfo.avatar }}
                             containerStyle={{ marginTop: 20 }}
                         />
-                        <Text style={styles.userNameStyle}>{item.userName}</Text>
+                        <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
                     </View>
                     <Avatar
                         small
@@ -84,6 +85,57 @@ class InvitationCard extends Component {
                     <Text style={styles.avatarTextStyle}>{actionContext.title}</Text>
                 </View>
             );
+        }
+    }
+
+    getUserInfo = (ownerId) => {
+        switch (ownerId) {
+            case "DDM2AobexaNzHbRyjuYk":
+                return {
+                    id: "DDM2AobexaNzHbRyjuYk",
+                    userName: "alvaro.scelza",
+                    fullName: "Alvaro Rodriguez Scelza",
+                    gender: "MAN",
+                    mail: "alvarito@alvaro.com",
+                    avatar: "http://i64.tinypic.com/t6rout.jpg",
+                    birthdate: "16/08/92",
+                    creationDate: "16/08/18",
+                    deleted: false,
+                    biography: "El alvarito",
+                    interests: [],
+                    favoriteUsers: []
+                }
+            case "Iiz3cW33NF6XQ61EU69x":
+                console.log('aca?');
+                return {
+                    id: "Iiz3cW33NF6XQ61EU69x",
+                    userName: "mati_zalynas",
+                    fullName: "Matias Zalynas",
+                    gender: "MAN",
+                    mail: "mati@mail.com",
+                    avatar: "http://i64.tinypic.com/21abyp2.jpg",
+                    birthdate: "16/08/92",
+                    creationDate: "16/08/18",
+                    deleted: false,
+                    biography: "Mati",
+                    interests: [],
+                    favoriteUsers: []
+                }
+            default:
+                return {
+                    id: "aguscarrabs",
+                    userName: "aguscarrabs",
+                    fullName: "Agustin Carrabs",
+                    gender: "MAN",
+                    mail: "agus@mail.com",
+                    avatar: "http://i67.tinypic.com/2hog13b.jpg",
+                    birthdate: "16/08/92",
+                    creationDate: "16/08/18",
+                    deleted: false,
+                    biography: "agus",
+                    interests: [],
+                    favoriteUsers: []
+                }
         }
     }
 
