@@ -50,11 +50,11 @@ export default class App extends Component {
         }
         
         return (
-            <Provider store={store}>
-                <ActionSheetProvider>
-                    <Router/>
-                </ActionSheetProvider>
-            </Provider>
+            <ActionSheetProvider>
+                <Provider store={store}>
+                        <Router/>
+                </Provider>
+            </ActionSheetProvider>
         );
     }
 }

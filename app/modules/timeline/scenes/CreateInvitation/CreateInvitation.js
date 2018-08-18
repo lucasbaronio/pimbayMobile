@@ -31,17 +31,19 @@ class CreateInvitation extends Component {
     }
 
     componentWillMount() {
-        const { type } = this.props;
+        const { type, invitationType, item } = this.props;
         switch (type) {
             case pimbayType.CONTEXT_ACTION:
-                const { contextAction } = this.props;
-                this.setState({contextActionSelected: contextAction});
+                this.setState({
+                    contextActionSelected: item,
+                    invitationType
+                });
             break;
             case pimbayType.EVENT:
-                const { eventInvitation } = this.props;
                 this.setState({
-                    eventInvitation: eventInvitation, 
-                    placeholderDescription: "Comentario"
+                    eventInvitation: item, 
+                    placeholderDescription: "Comentario",
+                    invitationType
                 });
             break;
         }
@@ -99,9 +101,9 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        const { event } = this.props;
+        const { eventInvitation } = this.state;
         return (
-            <EventCardCreateInvitation eventInvitation={event}/>
+            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
         );
     }
 
@@ -127,8 +129,8 @@ class CreateInvitation extends Component {
                 {this.renderType()}
                 <DatePicker 
                     onChangeDueDate={this.onChangeDueDate}/>
-                <InvitationType 
-                    onChangeInvitationType={this.onChangeInvitationType} />
+                {/* <InvitationType 
+                    onChangeInvitationType={this.onChangeInvitationType} /> */}
                 {
                     this.state.invitationType !== invitationType.OPEN &&
                     <Quota 

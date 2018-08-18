@@ -44,10 +44,10 @@ export default (
                 renderLeftButton={<CloseButton />}
                 component={CreateInvitation} title="Crear Invitación" />
         </Modal>
-        <Scene key="SelectUsersFromList"
+        {/* <Scene key="SelectUsersFromList"
             hideNavBar={false}
             hideTabBar
             renderLeftButton={<BackButton />}
-            component={SelectUsersFromList} title="Seleccionar usuarios"/>
+            component={SelectUsersFromList} title="Seleccionar usuarios"/> */}
     </Stack>
 )

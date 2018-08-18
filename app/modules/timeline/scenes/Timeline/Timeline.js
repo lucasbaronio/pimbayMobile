@@ -9,7 +9,7 @@ import { actions as timeline } from "../../index";
 const { getInvitations } = timeline;
 
 import { API_INVITATION_SIZE } from '../../constants';
-import { pimbayType } from '../../../shared/constants';
+import { pimbayType, invitationType } from '../../../shared/constants';
 
 import styles from "./styles";
 import ContextActionList from "../../components/ContextActionList";
@@ -43,8 +43,7 @@ class Timeline extends React.Component {
         )
     }
 
-    onOpenActionSheet = (item) => {
-        
+    onOpenActionSheet = (item, type) => {
         this.props.showActionSheetWithOptions({
             options: ['Cancelar', 'Invitación Abierta', 'Invitación Dirigida'],
             cancelButtonIndex: 0,
@@ -52,18 +51,24 @@ class Timeline extends React.Component {
             message: 'Abierta: Visible para todos en Pimbay.\nDirigida: Visible solo para usuarios invitados.'
         },
         (buttonIndex) => {
-            // Do something here depending on the button index selected
+            this.goToCreateInvitation({
+                type: type, 
+                item: item,
+                invitationType: 
+                    (buttonIndex === 1) 
+                        ? invitationType.OPEN 
+                        : invitationType.DIRECTED
+            });
         });
-      
-      }
+    }
 
     onPressContextAction = (item) => {
-        this.onOpenActionSheet(item);
+        this.onOpenActionSheet(item, pimbayType.CONTEXT_ACTION);
         // this.goToCreateInvitation({type: pimbayType.CONTEXT_ACTION, contextAction: item});
     }
 
     onPressEvent = (item) => {
-        this.onOpenActionSheet(item);
+        this.onOpenActionSheet(item, pimbayType.EVENT);
         // this.goToCreateInvitation({type: pimbayType.EVENT, event: item});
     }
 
