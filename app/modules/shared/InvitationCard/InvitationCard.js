@@ -1,192 +1,132 @@
 import React, { Component } from 'react';
-import { View, Text, Image} from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import moment from 'moment';
-import styles, { fontSize, windowWidth } from "./styles";
+import styles, { fontSize } from "./styles";
 import { TIMELINE_INVITATION_CARD, RECEIVED_INVITATION_CARD, SENT_INVITATION_CARD } from "./constants"
+import { getDueTime, getCreatedTime } from "../../shared/utils/date";
 
 class InvitationCard extends Component {
 
-    getDueTime(dueDate) {
-        var dueDateParsed = moment(dueDate); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
-        var now = moment(new Date());
-        var diff = moment.duration(moment(dueDateParsed).diff(now));
-        var days = parseInt(diff.asDays()); 
-        var hours = parseInt(diff.asHours()); //it gives in miliseconds
-        hours = hours - days*24;
-        var minutes = parseInt(diff.asMinutes());
-        minutes = minutes - (days*24*60 + hours*60);
-        if (days > 0) return days + "d " + hours + "h " + minutes + " min";
-        if (hours > 0) return hours + " h " + minutes + " min";   
-        if (minutes > 0) return minutes + " min";
-        return "Vencido";
-    }
-
     onInvitePress = () => {
-        this.goToCreateInvitation({type: 'OPEN_INVITATION', openInvitation: this.props.item});
+        this.goToCreateInvitation({ type: 'OPEN_INVITATION', openInvitation: this.props.item });
     }
 
     goToCreateInvitation = (props) => {
         Actions.push("CreateInvitation", props);
     }
 
-    renderTopSection = (item) => {
-        const { cardType } = this.props;
-        switch (cardType) {
-            case TIMELINE_INVITATION_CARD:
-                return this.renderTopSectionTimeline(item);
-            case RECEIVED_INVITATION_CARD:
-                return this.renderTopSectionReceived(item);
-            case SENT_INVITATION_CARD:
-                return this.renderTopSectionSent(item);
+    renderDetailsInformation = (item) => {
+        if (item.dueDate == null) {
+            return this.renderDetailsWithoutDueDate(item);
+        } else {
+            return this.renderDetailsWithDueDate(item)
         }
     }
 
-    renderTopSectionTimeline = (item) => {
-        return(
-            <View style={styles.topSectionInvitation}>
-                <Avatar
-                    rounded
-                    small
-                    source={{uri: item.userPhoto}}
-                />
-                <Text style={styles.userNameStyle}>{item.userName}</Text>
-                <Text style={styles.dueDateStyle}>
-                    {
-                        (item.dueDate == null)
-                            ? ''
-                            : this.getDueTime(item.dueDate)
-                    }
-                </Text>
-            </View>
-        );
-    }
-
-    renderTopSectionReceived = (item) => {
-        return (<View></View>);
-    }
-
-    renderTopSectionSent = (item) => {
+    renderDetailsWithDueDate = (item) => {
         return (
-            <View style={styles.topSectionInvitation}>
-                <Avatar
-                    rounded
-                    small
-                    source={{uri: item.userCreatorPhoto}}
-                />
-                <Text> ---> </Text>
-                <Avatar
-                    rounded
-                    small
-                    source={{uri: item.userInvitedPhoto}}
-                />
-                <Text style={styles.userNameStyle}>{item.userInvitedName}</Text>
+            <View style={{ marginTop: 2, flexDirection: 'row' }}>
+                <Text style={styles.createdTimeStyle}>{getCreatedTime(item.dateCreated)}</Text>
+                <Image
+                    style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
+                    resizeMode='center'
+                    source={require('../../../assets/icons/time-passing.png')} />
                 <Text style={styles.dueDateStyle}>
-                    {
-                        (item.dueDate == null)
-                            ? ''
-                            : this.getDueTime(item.dueDate)
-                    }
+                    {getDueTime(item.dueDate)}
                 </Text>
             </View>
         );
     }
 
-    renderBottomSection = () => {
-        const { cardType } = this.props;
-        switch (cardType) {
-            case TIMELINE_INVITATION_CARD:
-                return this.renderButtonsCardTimeline();
-            case RECEIVED_INVITATION_CARD:
-                return this.renderButtonsCardReceived();
-            case SENT_INVITATION_CARD:
-                return this.renderButtonsCardSent();
-            //default:
-                //return this.renderButtonsCardTimeline();
+    renderDetailsWithoutDueDate = (item) => {
+        return (
+            <View style={{ marginTop: 2, flexDirection: 'row' }}>
+                <Text style={styles.createdTimeStyle}>{getCreatedTime(item.dateCreated)}</Text>
+            </View>);
+    }
+
+    renderUserInfoSection = (item) => {
+        if (item.contextActionId == null) {
+            return (
+                <View style={styles.userInfoSectionContainer}>
+                    <Avatar
+                        rounded
+                        large
+                        source={{ uri: item.userPhoto }}
+                        containerStyle={{ marginTop: 20 }}
+                    />
+                    <Text style={styles.userNameStyle}>{item.userName}</Text>
+                </View>
+            );
+        } else {
+            const actionContext = this.getContextAction();
+            return (
+                <View style={styles.userInfoSectionContainer}>
+                    <View style={styles.userInfoSectionContainer}>
+                        <Avatar
+                            rounded
+                            large
+                            source={{ uri: item.userPhoto }}
+                            containerStyle={{ marginTop: 20 }}
+                        />
+                        <Text style={styles.userNameStyle}>{item.userName}</Text>
+                    </View>
+                    <Avatar
+                        small
+                        rounded
+                        source={(actionContext.image) ? { uri: actionContext.image } : null}
+                        icon={(actionContext.icon && actionContext.type) ? { name: actionContext.icon, type: actionContext.type } : null}
+                        overlayContainerStyle={styles.avatarBackground}
+                        containerStyle={styles.avatarContainerStyle}
+                    />
+                    <Text style={styles.avatarTextStyle}>{actionContext.title}</Text>
+                </View>
+            );
         }
     }
 
-    renderButtonsCardTimeline = () => {
-        return (<View style={styles.bottomSectionInvitationTimeline}>
-                    <ButtonElements
-                        title='Invitar'
-                        containerViewStyle={styles.containerButtonStyle}
-                        buttonStyle={styles.buttonStyle}
-                        onPress={this.onInvitePress}
-                    />
-                </View>);
-    }
-
-    renderButtonsCardReceived = () => {
-        return <ButtonElements
-                            title='Invitar'
-                            containerViewStyle={styles.containerButtonStyle}
-                            buttonStyle={styles.buttonStyle}
-                            onPress={this.onInvitePress}
-                />;
-    }
-
-    renderButtonsCardSent = () => {
-        return (<View style={styles.bottomSectionInvitationSent}>
-                    <ButtonElements
-                        title='Finalizar'
-                        containerViewStyle={styles.containerButtonStyle}
-                        buttonStyle={styles.buttonStyle}
-                        onPress={this.onInvitePress}
-                    />
-                    <ButtonElements
-                        title='Ir al chat'
-                        containerViewStyle={styles.containerButtonStyle}
-                        buttonStyle={styles.buttonStyle}
-                        onPress={this.onInvitePress}
-                    />
-                </View>
-        );
+    getContextAction = () => {
+        return {
+            id: "1",
+            title: "A tomar una",
+            icon: 'ios-beer',
+            type: 'ionicon',
+            image: null
+        }
     }
 
     render() {
         const { item } = this.props;
+        const { cardType } = this.props;
 
-        return(
+        return (
             <View>
                 <View style={styles.container}>
-                    <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
-                        <Avatar
-                            rounded
-                            large
-                            source={{uri: item.userPhoto}}
-                            containerStyle={{marginTop: 20}}
-                        />
-                        <Text style={styles.userNameStyle}>{item.userName}</Text>
-                    </View>
-                    <View style={{flex: 2, justifyContent: 'center'}}>
-                        <View style={{alignSelf: 'center', marginRight: 15, marginTop: 10}}>
-                            <Text style={styles.descriptionStyle}>{item.description}</Text>  
-                        </View>
-                        <View style={{marginTop: 2}}>
-                            <Text style={styles.dueDateStyle}>
-                                {
-                                    (item.dueDate == null)
-                                        ? ''
-                                        : this.getDueTime(item.dueDate)
-                                }
-                            </Text>
-                            <View style={styles.buttonView}>
-                                <ButtonElements
-                                    backgroundColor='#DE5134'
-                                    onPress={this.onInvitePress}
-                                    buttonStyle={styles.button}
-                                    title='ESTOY'
-                                    fontSize={fontSize.text4} />
+                    {this.renderUserInfoSection(item)}
+                    <View style={styles.invitationInfoSectionContainer}>
+                        <View style={{ justifyContent: 'center' }}>
+                            <View style={styles.descriptionContainerStyle}>
+                                <Text style={styles.descriptionStyle}>{item.description}</Text>
+                            </View>
+                            {this.renderDetailsInformation(item)}
+                            <View>
+                                <View style={styles.buttonView}>
+                                    <ButtonElements
+                                        backgroundColor='#DE5134'
+                                        onPress={this.onInvitePress}
+                                        buttonStyle={styles.button}
+                                        title='ESTOY'
+                                        fontSize={fontSize.text4} />
+                                </View>
                             </View>
                         </View>
                     </View>
                 </View>
                 <View>
                     <Image
-                        style={{alignSelf: 'flex-start', width: windowWidth}} 
+                        style={styles.dividerImageStyle}
                         resizeMode='center'
                         source={require('../../../assets/dividerOpenInvitation.png')} />
                 </View>
@@ -195,4 +135,4 @@ class InvitationCard extends Component {
     }
 }
 
-export default connect(null, { })(InvitationCard);
+export default connect(null, {})(InvitationCard);

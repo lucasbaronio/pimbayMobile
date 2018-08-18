@@ -53,10 +53,48 @@ const getFormalDate = (dateString) => {
     return `${dayOfWeek}, ${date.getDate()} ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
 }
 
+const getDueTime = (dueDate) => {
+    var dueDateParsed = moment(dueDate); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
+    var now = moment(new Date());
+    var diff = moment.duration(moment(dueDateParsed).diff(now));
+    var days = parseInt(diff.asDays());
+    var hours = parseInt(diff.asHours()); //it gives in miliseconds
+    hours = hours - days * 24;
+    var minutes = parseInt(diff.asMinutes());
+    minutes = minutes - (days * 24 * 60 + hours * 60);
+    if (days > 0) return 'Caduca en ' + days + "d " + hours + "h " + minutes + " min";
+    if (hours > 0) return 'Caduca en ' + hours + " h " + minutes + " min";
+    if (minutes > 0) return 'Caduca en ' + minutes + " min";
+    return "Vencido";
+}
+
+const getCreatedTime = (dateCreated) => {
+    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+    
+    var dateCreatedParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
+    var now = moment(new Date());
+    var diff = moment.duration(moment(now).diff(dateCreatedParsed));
+    var days = parseInt(diff.asDays());
+    var hours = parseInt(diff.asHours()); //it gives in miliseconds
+    hours = hours - days * 24;
+    var minutes = parseInt(diff.asMinutes());
+    minutes = minutes - (days * 24 * 60 + hours * 60);
+    
+    if (days > 1) return months[dateCreatedParsed.month()] + " " + dateCreatedParsed.date() + " a las " + dateCreatedParsed.format('HH:mm');
+    if (days == 1) return "Ayer a las " + dateCreatedParsed.format('HH:mm');
+    if (hours > 1) return "Hace " + hours + " horas";
+    if (hours == 1) return "Hace " + hours + " hora";
+    if (minutes > 1) return "Hace " + minutes + " minutos";
+    if (minutes == 1) return "Hace " + minutes + " minuto";
+    if (minutes < 1) return "Ahora";
+}
+
 export {
     formatDateFromString,
     formatFullDate,
     formatDateFromDate,
     formatTimeFromDate,
     getFormalDate,
+    getDueTime,
+    getCreatedTime
 }

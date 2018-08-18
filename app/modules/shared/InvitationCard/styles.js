@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
 
-const { windowWidth, fontSize } = theme;
+const { windowWidth, fontSize, color } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -9,12 +9,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: windowWidth, 
         justifyContent: 'flex-start',
-        //marginBottom: 10
     },
-    topSectionInvitation: {
-        alignItems: 'center',
+    userInfoSectionContainer: {
         flex: 1, 
-        flexDirection: 'row'
+        alignItems: 'center', 
+        justifyContent: 'center'
     },
     userNameStyle: {
         fontSize: fontSize.text4,
@@ -23,38 +22,26 @@ const styles = StyleSheet.create({
         marginTop: 5, 
         marginBottom: 20
     },
+    invitationInfoSectionContainer: {
+        flex: 2, 
+        justifyContent: 'center'
+    },
     dueDateStyle: {
-        color: 'red', 
+        marginLeft: 5,
+        color: color.blood, 
         fontSize: fontSize.text5,
     },
-    middleSectionInvitation: {
-        flex: 1, 
+    createdTimeStyle: {
+        color: color.grey, 
+        fontSize: fontSize.text5,
+    },
+    descriptionContainerStyle: {
+        alignSelf: 'center', 
+        marginRight: 15, 
         marginTop: 10
     },
     descriptionStyle: {
         fontSize: fontSize.text3
-    },
-    bottomSectionInvitationTimeline: {
-        alignItems: 'flex-end', 
-        flex: 1, 
-        marginTop: 10
-    },
-    bottomSectionInvitationSent: {
-        flexDirection: 'row',
-        alignItems: 'flex-start', 
-        flex: 1, 
-        marginTop: 10
-    },
-    containerButtonStyle: {
-        marginRight: 0
-    },
-    buttonStyle: {
-        backgroundColor: '#03A9F4',
-        borderColor: "transparent",
-        borderRadius: 5,
-        borderWidth: 0,
-        height: 40,
-        width: 80
     },
     button: {
         borderColor: "transparent",
@@ -64,10 +51,33 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     buttonView: {
+        alignSelf: 'flex-end',
         alignItems: "flex-end",
         justifyContent: "flex-end",
+        marginTop: 5,
         marginBottom: 5
     },
+    dividerImageStyle: {
+        alignSelf: 'flex-start', 
+        width: windowWidth
+    },
+    avatarBackground: {
+        backgroundColor: color.light_blue
+    },
+    avatarContainerStyle: {
+        top: 14, 
+        right: 20, 
+        position: 'absolute', 
+        height: 30, 
+        width: 30
+    },
+    avatarTextStyle: {
+        right: 5, 
+        top: 0, 
+        fontSize: fontSize.text5, 
+        position: 'absolute'
+    }
+
 });
 
 export { fontSize, windowWidth };
