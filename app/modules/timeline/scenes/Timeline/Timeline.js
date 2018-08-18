@@ -8,6 +8,7 @@ import { actions as timeline } from "../../index";
 const { getInvitations } = timeline;
 
 import { API_INVITATION_SIZE } from '../../constants';
+import { pimbayType } from '../../../shared/constants';
 
 import styles from "./styles";
 import ContextActionList from "../../components/ContextActionList";
@@ -41,7 +42,11 @@ class Timeline extends React.Component {
     }
 
     onPressContextAction = (item) => {
-        this.goToCreateInvitation({type: 'CONTEXT_ACTION', contextAction: item});
+        this.goToCreateInvitation({type: pimbayType.CONTEXT_ACTION, contextAction: item});
+    }
+
+    onPressEvent = (item) => {
+        this.goToCreateInvitation({type: pimbayType.EVENT, event: item});
     }
 
     goToCreateInvitation = (props) => {
@@ -54,7 +59,7 @@ class Timeline extends React.Component {
                 <ContextActionList 
                     timeline={true}
                     onPressContextAction={this.onPressContextAction} />
-                <EventList />
+                <EventList onPressEvent={this.onPressEvent} />
             </View>
         )
     }

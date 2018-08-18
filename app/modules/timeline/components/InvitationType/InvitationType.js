@@ -11,17 +11,19 @@ import {
 import { ButtonGroup } from 'react-native-elements';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
-import { color } from '../../../../styles/theme';
+import { invitationType } from '../../../shared/constants';
+
+// import { color } from '../../../../styles/theme';
 import styles from "./styles";
 
-class TypeInvitation extends React.Component {
+class InvitationType extends React.Component {
 
     state = {
         selectedIndex: 0,
-        typeInvitationSelected: "OPEN_INVITATION"
+        invitationTypeSelected: invitationType.OPEN
     };
     componentWillMount() {
-        this.props.onChangeTypeInvitation({ typeInvitationSelected: this.state.typeInvitationSelected });
+        this.props.onChangeInvitationType({ invitationTypeSelected: this.state.invitationTypeSelected });
     }
 
     updateIndex = (selectedIndex) => {
@@ -29,10 +31,10 @@ class TypeInvitation extends React.Component {
         console.log(selectedIndex);
         switch (selectedIndex) {
             case 0:
-                this.props.onChangeTypeInvitation({ typeInvitationSelected: "OPEN_INVITATION" });
+                this.props.onChangeInvitationType({ invitationTypeSelected: invitationType.OPEN });
                 break;
             case 1:
-                this.props.onChangeTypeInvitation({ typeInvitationSelected: "DIRECTED_INVITATION" });
+                this.props.onChangeInvitationType({ invitationTypeSelected: invitationType.DIRECTED });
                 break;
         }
     }
@@ -69,4 +71,4 @@ class TypeInvitation extends React.Component {
     }
 }
 
-export default TypeInvitation;
+export default InvitationType;

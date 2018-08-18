@@ -3,10 +3,11 @@ import { ScrollView, View, Text, TextInput } from 'react-native';
 
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
-import TypeInvitation from '../../components/TypeInvitation/TypeInvitation';
+import InvitationType from '../../components/InvitationType/InvitationType';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import InvitedUsers from '../../components/InvitedUsers';
+import { pimbayType, invitationType } from '../../../shared/constants';
 
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -22,7 +23,7 @@ class CreateInvitation extends Component {
         contextActionSelected: null,
         eventInvitation: null,
         openInvitation: null,
-        typeInvitation: null,
+        invitationType: null,
         dueDate: null,
         quota: null,
         hasQuota: true,
@@ -32,15 +33,11 @@ class CreateInvitation extends Component {
     componentWillMount() {
         const { type } = this.props;
         switch (type) {
-            case 'OPEN_INVITATION':
-                const { openInvitation } = this.props;
-                this.setState({openInvitation: openInvitation});
-            break;
-            case 'CONTEXT_ACTION':
+            case pimbayType.CONTEXT_ACTION:
                 const { contextAction } = this.props;
                 this.setState({contextActionSelected: contextAction});
             break;
-            case 'EVENT_INVITATION':
+            case pimbayType.EVENT:
                 const { eventInvitation } = this.props;
                 this.setState({
                     eventInvitation: eventInvitation, 
@@ -53,13 +50,38 @@ class CreateInvitation extends Component {
     renderType = () => {
         const { type } = this.props;
         switch (type) {
-            case 'OPEN_INVITATION':
-                return this.renderOpenInvitation();
-            case 'CONTEXT_ACTION':
+            case pimbayType.SIMPLE:
+                return this.renderTextBox();
+            case pimbayType.CONTEXT_ACTION:
+                console.log('CONTEXT_ACTION');
                 return this.renderContextActionList();
-            case 'EVENT_INVITATION':
+            case pimbayType.EVENT:
+                console.log('EVENT');
                 return this.renderEventInvitation();
         }
+    }
+
+    renderTextBox = () => {
+        return (
+            <View style={styles.descriptionView}>
+                <TextInput
+                    style = {[
+                        styles.description, 
+                        !!this.state.onFocusDescription 
+                        && styles.descriptionFocused
+                    ]}
+                    onFocus = {() => this.setState({onFocusDescription: true})}
+                    onEndEditing = {() => this.setState({onFocusDescription: false})}
+                    multiline = {true}
+                    numberOfLines = {4}
+                    onChangeText={(description) => this.setState({description})}
+                    editable = {true}
+                    placeholder = {this.state.placeholderDescription}
+                    autoCorrect={false}
+                    underlineColorAndroid="transparent"
+                />
+            </View>
+        );
     }
 
     renderContextActionList = () => {
@@ -77,31 +99,14 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        const { eventInvitation } = this.props;
+        const { event } = this.props;
         return (
-            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
+            <EventCardCreateInvitation eventInvitation={event}/>
         );
     }
 
-    renderOpenInvitation = () => {
-        const { id, type, categories, userId, userName, userPhoto, description, date, dueDate } = this.props.openInvitation;
-        return (
-            <View>
-                <Text>{id}</Text>
-                <Text>{type}</Text>
-                <Text>{categories}</Text>
-                <Text>{userId}</Text>
-                <Text>{userName}</Text>
-                <Text>{userPhoto}</Text>
-                <Text>{description}</Text>
-                <Text>{date}</Text>
-                <Text>{dueDate}</Text>
-            </View>
-        );
-    }
-
-    onChangeTypeInvitation = ({typeInvitationSelected}) => {
-        this.setState({typeInvitation: typeInvitationSelected});
+    onChangeInvitationType = ({invitationTypeSelected}) => {
+        this.setState({invitationType: invitationTypeSelected});
     }
 
     onChangeDueDate = (dueDate) => {
@@ -120,36 +125,18 @@ class CreateInvitation extends Component {
 
         return (
             <ScrollView style={styles.container}>
-                <View style={styles.descriptionView}>
-                    <TextInput
-                        style = {[
-                            styles.description, 
-                            !!this.state.onFocusDescription 
-                            && styles.descriptionFocused
-                        ]}
-                        onFocus = {() => this.setState({onFocusDescription: true})}
-                        onEndEditing = {() => this.setState({onFocusDescription: false})}
-                        multiline = {true}
-                        numberOfLines = {4}
-                        onChangeText={(description) => this.setState({description})}
-                        editable = {true}
-                        placeholder = {this.state.placeholderDescription}
-                        autoCorrect={false}
-                        underlineColorAndroid="transparent"
-                    />
-                </View>
                 {this.renderType()}
                 <DatePicker 
                     onChangeDueDate={this.onChangeDueDate}/>
-                <TypeInvitation 
-                    onChangeTypeInvitation={this.onChangeTypeInvitation} />
+                <InvitationType 
+                    onChangeInvitationType={this.onChangeInvitationType} />
                 {
-                    this.state.typeInvitation !== "OPEN_INVITATION" &&
+                    this.state.invitationType !== invitationType.OPEN &&
                     <Quota 
                         onChangeQuota={this.onChangeQuota}/>
                 }
                 {
-                    this.state.typeInvitation !== "OPEN_INVITATION" &&
+                    this.state.invitationType !== invitationType.OPEN &&
                     <InvitedUsers 
                         onChangeInvitedUserList={this.onChangeInvitedUserList}/>
                 }
