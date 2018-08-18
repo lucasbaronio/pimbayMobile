@@ -6,6 +6,7 @@ import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvi
 import InvitationType from '../../components/InvitationType/InvitationType';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
+import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 import { pimbayType, invitationType } from '../../../shared/constants';
 
@@ -18,16 +19,16 @@ const { createNewInvitation } = createInvitation;
 class CreateInvitation extends Component {
     state = {
         description: "",
-        placeholderDescription: "Que estas para hacer hoy?",
+        placeholderDescription: "Estoy para ...",
         onFocusDescription: false,
         contextActionSelected: null,
         eventInvitation: null,
-        openInvitation: null,
         invitationType: null,
         dueDate: null,
         quota: null,
         hasQuota: true,
         invitedUsers: null,
+        targetUsers: null,
     }
 
     componentWillMount() {
@@ -38,14 +39,14 @@ class CreateInvitation extends Component {
                     contextActionSelected: item,
                     invitationType
                 });
-            break;
+                break;
             case pimbayType.EVENT:
                 this.setState({
                     eventInvitation: item, 
-                    placeholderDescription: "Comentario",
+                    // placeholderDescription: "Comentario",
                     invitationType
                 });
-            break;
+                break;
         }
     }
 
@@ -55,10 +56,8 @@ class CreateInvitation extends Component {
             case pimbayType.SIMPLE:
                 return this.renderTextBox();
             case pimbayType.CONTEXT_ACTION:
-                console.log('CONTEXT_ACTION');
                 return this.renderContextActionList();
             case pimbayType.EVENT:
-                console.log('EVENT');
                 return this.renderEventInvitation();
         }
     }
@@ -107,8 +106,12 @@ class CreateInvitation extends Component {
         );
     }
 
-    onChangeInvitationType = ({invitationTypeSelected}) => {
-        this.setState({invitationType: invitationTypeSelected});
+    // onChangeInvitationType = ({invitationTypeSelected}) => {
+    //     this.setState({invitationType: invitationTypeSelected});
+    // }
+
+    onChangeTargetUsers = ({target}) => {
+        this.setState({targetUsers: target});
     }
 
     onChangeDueDate = (dueDate) => {
@@ -124,6 +127,7 @@ class CreateInvitation extends Component {
     }
 
     render() {
+        const { type } = this.props;
         return (
             <ScrollView style={styles.container}>
                 {this.renderType()}
@@ -131,15 +135,17 @@ class CreateInvitation extends Component {
                     onChangeDueDate={this.onChangeDueDate}/>
                 {/* <InvitationType 
                     onChangeInvitationType={this.onChangeInvitationType} /> */}
+                <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                <Quota 
+                    onChangeQuota={this.onChangeQuota}/>
                 {
-                    this.state.invitationType !== invitationType.OPEN &&
-                    <Quota 
-                        onChangeQuota={this.onChangeQuota}/>
-                }
-                {
-                    this.state.invitationType !== invitationType.OPEN &&
+                    !!(this.state.invitationType !== invitationType.OPEN) &&
                     <InvitedUsers 
                         onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                }
+                {
+                    !!(type !== pimbayType.SIMPLE) &&
+                    this.renderTextBox()
                 }
             </ScrollView>
         );

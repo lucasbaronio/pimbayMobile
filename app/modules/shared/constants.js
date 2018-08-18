@@ -11,7 +11,14 @@ const invitationType = {
     DIRECTED: 'DIRECTED',
 }
 
+const targetUsers = {
+    BOTH: 'BOTH',
+    MAN: 'MAN',
+    WOMAN: 'WOMAN',
+}
+
 export {
     pimbayType,
-    invitationType
+    invitationType,
+    targetUsers
 }

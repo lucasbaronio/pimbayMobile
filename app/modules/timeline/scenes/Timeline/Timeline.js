@@ -51,6 +51,7 @@ class Timeline extends React.Component {
             message: 'Abierta: Visible para todos en Pimbay.\nDirigida: Visible solo para usuarios invitados.'
         },
         (buttonIndex) => {
+            if (buttonIndex > 0 && buttonIndex < 3)
             this.goToCreateInvitation({
                 type: type, 
                 item: item,

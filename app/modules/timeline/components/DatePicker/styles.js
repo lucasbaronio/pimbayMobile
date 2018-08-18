@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     timerDueDate: {
         color: color.red,
-        fontSize: fontSize.title2,
+        fontSize: fontSize.text2,
         fontFamily: fontFamily.bold,
         textAlign: 'center',
         marginVertical: 5,
