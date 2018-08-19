@@ -22,7 +22,7 @@ class Timeline extends React.Component {
 
     componentDidMount() {
         const { start } = this.state;
-        this.props.getInvitations(start, (error) => alert(error.message))
+        this.props.getInvitations(start, (error) => alert(error.message));
     }
 
     renderItem = ({item, index}) => {
