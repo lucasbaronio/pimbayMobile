@@ -18,7 +18,6 @@ import store from '../redux/store'
 import { checkLoginStatus } from "../modules/auth/actions";
 
 import { color, navTitleStyle } from "../styles/theme";
-import { Font } from 'expo';
 
 export default class extends React.Component {
     constructor() {
@@ -35,7 +34,6 @@ export default class extends React.Component {
         store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
             _this.setState({isReady: true, exist, isLoggedIn});
         }));
-        Font.loadAsync({'boogaloo-regular': require('../assets/fonts/Boogaloo-Regular.ttf')});
     }
 
     render() {

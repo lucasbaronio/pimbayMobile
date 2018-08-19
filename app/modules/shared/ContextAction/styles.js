@@ -22,11 +22,13 @@ const styles = StyleSheet.create({
         backgroundColor: theme.color.light_blue,
     },
     text: {
+        fontSize: theme.fontSize.text4,
         marginBottom: 5,
-        textAlign: 'center',
+        textAlign: 'center'
     },
     textSelected: {
-        fontWeight: 'bold',
+        fontSize: theme.fontSize.text4,
+        fontWeight: 'bold'
     }
 });
 
