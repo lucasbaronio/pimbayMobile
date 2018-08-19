@@ -28,11 +28,12 @@ class ContextAction extends React.PureComponent {
                 <View style={styles.container}>
                     <View style={styles.avatar}>
                         <Avatar
-                            large
+                            medium
                             rounded
                             overlayContainerStyle={colorAvatar}
                             source={(item.image) ? {uri: item.image} : null}
                             icon={(item.icon && item.type) ? {name: item.icon, type: item.type} : null}
+                            containerStyle={{marginLeft: 5, marginRight: 5}}
                         />
                     </View>
                     <View>
