@@ -28,7 +28,7 @@ class Timeline extends React.Component {
             <View>
                 {
                     !!(index === 0) &&
-                    <Text style={styles.title}>
+                    <Text style={styles.titleInvitationsSection}>
                         Que estás para hacer hoy?
                     </Text>
                 }
