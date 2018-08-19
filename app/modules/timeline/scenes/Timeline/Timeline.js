@@ -29,7 +29,6 @@ class Timeline extends React.Component {
     }
 
     renderItem = ({item, index}) => {
-        console.log(item);
         return (
             <View>
                 {

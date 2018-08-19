@@ -17,10 +17,16 @@ class Quota extends React.Component {
         maximumValue: 100,
     };
 
+    componentWillMount() {
+        const { quota, switchHasQuota } = this.state;
+        this.props.onChangeQuota({quota: switchHasQuota ? quota : null, hasQuota: switchHasQuota});
+    }
+
     onSwitchHasQuota = () => {
+        const { quota } = this.state;
         this.setState({
             switchHasQuota: !this.state.switchHasQuota
-        }, () => this.props.onChangeQuota({quota: null, hasQuota: false}));
+        }, () => this.props.onChangeQuota({quota: this.state.switchHasQuota ? quota : null, hasQuota: this.state.switchHasQuota}));
     }
 
     render() {

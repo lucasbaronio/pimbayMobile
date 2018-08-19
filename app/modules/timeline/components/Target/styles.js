@@ -15,12 +15,6 @@ const styles = StyleSheet.create({
     genderUsers: {
         flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'flex-start',
-        // alignItems: 'center',
-    },
-    titleGenderUsersView: {
-        flex: 1,
-        justifyContent: 'center',
     },
     genderUsersItems: {
         flex: 1,
@@ -29,34 +23,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5
     },
-    titleHasQuotaView: {
+    title: {
+        fontSize: fontSize.text2,
+    },
+    ageUsers: {
         flex: 1,
+        flexDirection: 'column',
+    },
+    ageUsersPicker: {
+        flex: 1,
+        flexDirection: 'row',
         justifyContent: 'center',
-    },
-    titleHasQuota: {
-        fontSize: fontSize.text2,
-    },
-    switchHasQuota: {
-        flex: 1,
-    },
-    bodyQuota: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 10,
-    },
-    sliderView: {
-        flex: 8,
-        marginHorizontal: 3,
-    },
-    textSliderView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 5
-    },
-    colorCurrentQuota: {
-        color: "green",
-        fontSize: fontSize.text2,
+        alignItems: 'center',
     },
 });
 

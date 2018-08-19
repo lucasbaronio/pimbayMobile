@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, TextInput } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
-import InvitationType from '../../components/InvitationType/InvitationType';
+// import InvitationType from '../../components/InvitationType/InvitationType';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 import { pimbayType, invitationType } from '../../../shared/constants';
 
+import { SaveButton } from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 
@@ -17,9 +19,9 @@ import { actions as createInvitation } from "../../index";
 const { createNewInvitation } = createInvitation;
 
 class CreateInvitation extends Component {
+
     state = {
         description: "",
-        placeholderDescription: "Estoy para ...",
         onFocusDescription: false,
         contextActionSelected: null,
         eventInvitation: null,
@@ -29,6 +31,8 @@ class CreateInvitation extends Component {
         hasQuota: true,
         invitedUsers: null,
         targetUsers: null,
+        minAge: null,
+        maxAge: null,
     }
 
     componentWillMount() {
@@ -42,12 +46,17 @@ class CreateInvitation extends Component {
                 break;
             case pimbayType.EVENT:
                 this.setState({
-                    eventInvitation: item, 
-                    // placeholderDescription: "Comentario",
+                    eventInvitation: item,
                     invitationType
                 });
                 break;
         }
+        Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
+    }
+
+    createInvitation = () => {
+        //TODO hacer que le pegue a la api.
+        alert('Save Details');
     }
 
     renderType = () => {
@@ -77,7 +86,7 @@ class CreateInvitation extends Component {
                     numberOfLines = {4}
                     onChangeText={(description) => this.setState({description})}
                     editable = {true}
-                    placeholder = {this.state.placeholderDescription}
+                    placeholder = "Estoy para ..."
                     autoCorrect={false}
                     underlineColorAndroid="transparent"
                 />
@@ -110,8 +119,8 @@ class CreateInvitation extends Component {
     //     this.setState({invitationType: invitationTypeSelected});
     // }
 
-    onChangeTargetUsers = ({target}) => {
-        this.setState({targetUsers: target});
+    onChangeTargetUsers = ({target, minAge, maxAge}) => {
+        this.setState({targetUsers: target, minAge, maxAge});
     }
 
     onChangeDueDate = (dueDate) => {

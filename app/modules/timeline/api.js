@@ -16,7 +16,6 @@ export function getInvitations(start, callback) {
 }
 
 export function getEvents(start, callback) {
-    console.log(start);
     get(`${API_EVENT}start=${start}`, callback);
 }
 
