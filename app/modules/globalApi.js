@@ -26,6 +26,7 @@ export function get(uri, callback) {
 //     password: userData.password,
 // }
 export function post(uri, body, callback) {
+    console.log(body);
     return fetch(uri, {
         method: 'post',
         headers: {
@@ -39,6 +40,7 @@ export function post(uri, body, callback) {
         if (response.ok) {
             return response.json();
         } else {
+            console.log(response);
             const error = new Error(response.statusText);
             error.response = response;
             throw error;
@@ -48,6 +50,7 @@ export function post(uri, body, callback) {
         callback(true, data, null)
     })
     .catch((error) => {
+        console.log(error);
         callback(false, null, error)
     });
 }

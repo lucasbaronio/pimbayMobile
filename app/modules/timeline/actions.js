@@ -49,7 +49,7 @@ export function getContextActionList(errorCB) {
     };
 }
 
-export function createInvitation(invitation, successCB, errorCB) {
+export function createNewInvitation(invitation, successCB, errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING_CREATE_INVITATION});
         api.createInvitation(invitation, function (success, data, error) {

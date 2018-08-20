@@ -33,6 +33,7 @@ class CreateInvitation extends Component {
         targetUsers: null,
         minAge: null,
         maxAge: null,
+        invitedUsers: []
     }
 
     componentWillMount() {
@@ -55,8 +56,32 @@ class CreateInvitation extends Component {
     }
 
     createInvitation = () => {
-        //TODO hacer que le pegue a la api.
-        alert('Save Details');
+        const { 
+            description, dueDate, 
+            invitationType, targetUsers, 
+            minAge, maxAge, invitedUsers, 
+            contextActionSelected,
+            eventInvitation } = this.state;
+        this.props.createNewInvitation({
+            description,
+            dueDate,
+            invitationType,
+            // gender: targetUsers,
+            // minAge,
+            // maxAge,
+            ownerId: 'DDM2AobexaNzHbRyjuYk',
+            contextActionId: contextActionSelected ? contextActionSelected.id : null,
+            eventId: eventInvitation ? eventInvitation.id : null,
+            invitedUsers: invitedUsers
+        }, this.onSuccess, this.onError);
+    }
+
+    onSuccess(){
+        Actions.pop();
+    }
+
+    onError(error){
+        alert(error.message)
     }
 
     renderType = () => {

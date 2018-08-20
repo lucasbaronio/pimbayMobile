@@ -10,7 +10,6 @@ import styles from "./styles"
 class NavButton extends React.Component {
     render() {
         const { name, type, size, color, onPress, buttonText, source } = this.props;
-        console.log(onPress);
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.wrapper}>

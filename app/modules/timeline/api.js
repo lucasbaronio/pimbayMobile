@@ -24,5 +24,5 @@ export function getContextActionList(callback) {
 }
 
 export function createInvitation(invitation, callback) {
-    post(`${API_CREATE_INVITATION}`, invitation, callback);
+    post(`${API_INVITATION}`, invitation, callback);
 }
