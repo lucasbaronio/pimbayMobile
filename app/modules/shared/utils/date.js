@@ -62,7 +62,7 @@ const getDueTime = (dueDate) => {
     hours = hours - days * 24;
     var minutes = parseInt(diff.asMinutes());
     minutes = minutes - (days * 24 * 60 + hours * 60);
-    if (days > 0) return 'Caduca en ' + days + "d " + hours + "h " + minutes + " min";
+    if (days > 0) return 'Caduca en ' + days + "d " + hours + "h ";
     if (hours > 0) return 'Caduca en ' + hours + " h " + minutes + " min";
     if (minutes > 0) return 'Caduca en ' + minutes + " min";
     return "Vencido";

@@ -9,7 +9,7 @@ import InvitationCard from "../../../shared/InvitationCard";
 import { SENT_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 import styles from "./styles"
 
-class Invitations extends Component {
+class InvitationsIn extends Component {
     constructor(props) {
         super(props);
     }
@@ -59,4 +59,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getInvitationsOut })(Invitations);
+export default connect(mapStateToProps, { getInvitationsOut })(InvitationsIn);
