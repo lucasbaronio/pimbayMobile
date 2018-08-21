@@ -62,7 +62,7 @@ const getDueTime = (dueDate) => {
     hours = hours - days * 24;
     var minutes = parseInt(diff.asMinutes());
     minutes = minutes - (days * 24 * 60 + hours * 60);
-    if (days > 0) return 'Caduca en ' + days + "d " + hours + "h " + minutes + " min";
+    if (days > 0) return 'Caduca en ' + days + "d " + hours + "h ";
     if (hours > 0) return 'Caduca en ' + hours + " h " + minutes + " min";
     if (minutes > 0) return 'Caduca en ' + minutes + " min";
     return "Vencido";
@@ -89,6 +89,27 @@ const getCreatedTime = (dateCreated) => {
     if (minutes < 1) return "Ahora";
 }
 
+const getInvSentTime = (dateCreated) => {
+    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+    
+    var dateCreatedParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
+    var now = moment(new Date());
+    var diff = moment.duration(moment(now).diff(dateCreatedParsed));
+    var days = parseInt(diff.asDays());
+    var hours = parseInt(diff.asHours()); //it gives in miliseconds
+    hours = hours - days * 24;
+    var minutes = parseInt(diff.asMinutes());
+    minutes = minutes - (days * 24 * 60 + hours * 60);
+    
+    if (days > 1) return "Enviada el " + dateCreatedParsed.date() + " " + months[dateCreatedParsed.month()] + " a las " + dateCreatedParsed.format('HH:mm');
+    if (days == 1) return "Enviada ayer a las " + dateCreatedParsed.format('HH:mm');
+    if (hours > 1) return "Enviada hace " + hours + " horas";
+    if (hours == 1) return "Enviada hace " + hours + " hora";
+    if (minutes > 1) return "Enviada hace " + minutes + " minutos";
+    if (minutes == 1) return "Enviada hace " + minutes + " minuto";
+    if (minutes < 1) return "Enviada ahora";
+}
+
 export {
     formatDateFromString,
     formatFullDate,
@@ -96,5 +117,6 @@ export {
     formatTimeFromDate,
     getFormalDate,
     getDueTime,
-    getCreatedTime
+    getCreatedTime,
+    getInvSentTime
 }
