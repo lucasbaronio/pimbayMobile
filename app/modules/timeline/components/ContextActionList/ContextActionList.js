@@ -3,8 +3,8 @@ import { View, FlatList, Text } from 'react-native';
 import { Card, Button as ButtonElements } from 'react-native-elements';
 import { connect } from 'react-redux';
 
-// import { actions as timeline } from "../../index";
-// const { getContextActionList } = timeline;
+import { actions as timeline } from "../../index";
+const { getContextActionList } = timeline;
 
 import ContextAction from "../../../shared/ContextAction";
 
@@ -67,9 +67,9 @@ class ContextActionList extends React.Component {
         selectedItem && this.onPressItem(selectedItem);
     }
 
-    // componentDidMount() {
-    //     this.props.getContextActionList((error) => alert(error.message))
-    // }
+    componentDidMount() {
+        this.props.getContextActionList((error) => alert(error.message))
+    }
 
     onPressItem = (item) => {
         if (this.props.timeline) {
@@ -101,8 +101,8 @@ class ContextActionList extends React.Component {
                 </Text>
                 <FlatList
                     horizontal
-                    // data={this.props.contextActions}
-                    data={contextActions}
+                    data={this.props.contextActions}
+                    // data={contextActions}
                     extraData={this.state}
                     showsHorizontalScrollIndicator={false}
                     renderItem={this.renderItem}
@@ -113,12 +113,12 @@ class ContextActionList extends React.Component {
     }
 }
 
-// function mapStateToProps(state, props) {
-//     return {
-//         isLoading: state.timelineReducer.isLoadingContextActionList,
-//         contextActions: state.timelineReducer.contextActions
-//     }
-// }
+function mapStateToProps(state, props) {
+    return {
+        isLoading: state.timelineReducer.isLoadingContextActionList,
+        contextActions: state.timelineReducer.contextActions
+    }
+}
 
-// export default connect(mapStateToProps, { getContextActionList })(ContextActionList);
-export default connect(null, {  })(ContextActionList);
+export default connect(mapStateToProps, { getContextActionList })(ContextActionList);
+// export default connect(null, {  })(ContextActionList);

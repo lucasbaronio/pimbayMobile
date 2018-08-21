@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput } from 'react-native';
+import { ScrollView, View, Alert, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
@@ -62,6 +62,10 @@ class CreateInvitation extends Component {
             minAge, maxAge, invitedUsers, 
             contextActionSelected,
             eventInvitation } = this.state;
+        if (!minAge || !maxAge) {
+            Alert.alert('Edades', "No se ha definido el rango de edades.");
+            return;
+        }
         this.props.createNewInvitation({
             description,
             dueDate,
@@ -81,7 +85,7 @@ class CreateInvitation extends Component {
     }
 
     onError(error){
-        alert(error.message)
+        Alert.alert("Oops", error.message);
     }
 
     renderType = () => {
@@ -173,7 +177,7 @@ class CreateInvitation extends Component {
                 <Quota 
                     onChangeQuota={this.onChangeQuota}/>
                 {
-                    !!(this.state.invitationType !== invitationType.OPEN) &&
+                    !!(this.props.invitationType !== invitationType.OPEN) &&
                     <InvitedUsers 
                         onChangeInvitedUserList={this.onChangeInvitedUserList}/>
                 }

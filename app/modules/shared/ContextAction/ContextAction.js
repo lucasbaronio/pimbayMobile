@@ -22,6 +22,7 @@ class ContextAction extends React.PureComponent {
         const colorAvatar = selected 
                 ? styles.avatarBackgroundSelected
                 : styles.avatarBackgroundNoSelected;
+        console.log(item);
 
         return(
             <TouchableOpacity onPress={this._onPressButton}>

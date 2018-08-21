@@ -40,7 +40,6 @@ export function BackButton() {
 }
 
 export function SaveButton({onPress}) {
-    console.log(onPress);
     return (
         <NavButton 
             onPress={onPress}
