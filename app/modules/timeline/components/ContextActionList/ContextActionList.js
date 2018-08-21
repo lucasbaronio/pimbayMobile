@@ -10,51 +10,6 @@ import ContextAction from "../../../shared/ContextAction";
 
 import styles from "./styles";
 
-const contextActions = [
-    {
-        id: "1",
-        title: "A tomar una",
-        icon: 'ios-beer',
-        type: 'ionicon',
-        image: null,
-    },
-    {
-        id: "2",
-        title: "Bici",
-        icon: 'bicycle',
-        type: 'font-awesome',
-        image: null,
-    },
-    {
-        id: "3",
-        title: "Cumpleaños Tomy",
-        icon: 'birthday-cake',
-        type: 'font-awesome',
-        image: null,
-    },
-    {
-        id: "4",
-        title: "Partido Futbol",
-        icon: 'ios-football',
-        type: 'ionicon',
-        image: null,
-    },
-    {
-        id: "5",
-        title: "Cine",
-        icon: 'popcorn',
-        type: 'material-community',
-        image: null,
-    },
-    {
-        id: "6",
-        title: "A comer",
-        icon: 'cutlery',
-        type: 'font-awesome',
-        image: null,
-    },
-]
-
 class ContextActionList extends React.Component {
 
     state = {
@@ -121,4 +76,3 @@ function mapStateToProps(state, props) {
 }
 
 export default connect(mapStateToProps, { getContextActionList })(ContextActionList);
-// export default connect(null, {  })(ContextActionList);
