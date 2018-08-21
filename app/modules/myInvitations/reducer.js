@@ -1,5 +1,5 @@
 import * as t from './actionTypes';
-import invitationsOutJson from './scenes/Invitations/invitationsOut.json';
+import invitationsOutJson from './scenes/InvitationsOut/invitationsOut';
 
 let initialState = {
     invitationsOut: []
