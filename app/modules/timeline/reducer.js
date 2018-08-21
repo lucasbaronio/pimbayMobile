@@ -3,6 +3,7 @@ import * as t from './actionTypes';
 
 let initialState = {
     isLoading: false,
+    isLoadingHeader: false,
     isLoadingMore: false,
     invitations: [],
     isLoadingEvents: false,
@@ -27,6 +28,10 @@ const timelineReducer = (state = initialState, action) => {
             return { ...state, isLoadingMore: true }
         }
 
+        case t.LOADING_HEADER: {
+            return { ...state, isLoadingHeader: true }
+        }
+
         case t.INVITATION_LIST_AVAILABLE: {
             let { data, start } = action;
             let invitations = [];
@@ -34,7 +39,21 @@ const timelineReducer = (state = initialState, action) => {
                 invitations = state.invitations;
             }
             invitations = invitations.concat(data);
-            return { ...state, invitations, isLoading: false, isLoadingMore: false };
+            return { 
+                ...state, invitations, 
+                isLoading: false, 
+                isLoadingMore: false,
+            };
+        }
+
+        case t.INVITATION_LIST_REFRESHED: {
+            let { data } = action;
+            let invitations = [];
+            invitations = invitations.concat(data);
+            return { 
+                ...state, invitations, 
+                isLoadingHeader: false,
+            };
         }
 
         case t.LOADING_EVENT_LIST: {
@@ -57,7 +76,11 @@ const timelineReducer = (state = initialState, action) => {
                 events = state.events;
             }
             events = events.concat(data);
-            return { ...state, events, isLoadingEvents: false, isLoadingMoreEvents: false };
+            return { 
+                ...state, events, 
+                isLoadingEvents: false, 
+                isLoadingMoreEvents: false,
+            };
         }
 
         case t.LOADING_CONTEXT_ACTION_LIST: {
@@ -67,7 +90,10 @@ const timelineReducer = (state = initialState, action) => {
         case t.CONTEXT_ACTION_LIST_AVAILABLE: {
             let { data } = action;
             let contextActions = data
-            return { ...state, contextActions, isLoadingContextActionList: false }
+            return { 
+                ...state, contextActions, 
+                isLoadingContextActionList: false,
+            }
         }
 
         default:

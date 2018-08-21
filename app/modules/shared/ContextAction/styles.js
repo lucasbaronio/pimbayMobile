@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         maxWidth: 85,
     },
+    overlay: {
+        opacity: 0.5,
+    },
     avatar: {
         marginBottom: 5,
     },

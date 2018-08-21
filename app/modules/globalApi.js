@@ -26,6 +26,7 @@ export function get(uri, callback) {
 //     password: userData.password,
 // }
 export function post(uri, body, callback) {
+    console.log(body);
     return fetch(uri, {
         method: 'post',
         headers: {
@@ -36,9 +37,7 @@ export function post(uri, body, callback) {
     })
     .then(response => {
         // if (response.status >= 200 && response.status < 300) {
-        if (response.ok) {
-            return response.json();
-        } else {
+        if (!response.ok) {
             const error = new Error(response.statusText);
             error.response = response;
             throw error;

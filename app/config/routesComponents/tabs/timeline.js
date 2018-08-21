@@ -6,7 +6,7 @@ import SearchTimeline from '../../../modules/timeline/scenes/SearchTimeline';
 import CreateInvitation from '../../../modules/timeline/scenes/CreateInvitation';
 import SelectUsersFromList from '../../../modules/timeline/scenes/SelectUsersFromList';
 
-import { SearchButton, CloseButton, BackButton } from '../buttons';
+import { SearchButton, CloseButton, BackButton, SaveButton } from '../buttons';
 // import { Entypo } from '@expo/vector-icons';
 
 import houseFocused from '../../../assets/icons/house-black.png';
@@ -19,7 +19,7 @@ export default (
         <Modal>
             <Scene
                 initial
-                key={"Timeline"}
+                key="Timeline"
                 component={Timeline}
                 titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
                 renderRightButton={<SearchButton goToScreen='SearchTimeline'/>}
@@ -42,6 +42,7 @@ export default (
                 // hideNavBar={false}
                 hideTabBar
                 renderLeftButton={<CloseButton />}
+                // renderRightButton={<SaveButton goToScreen='Timeline' />}
                 component={CreateInvitation} title="Crear Invitación" />
         </Modal>
         <Scene key="SelectUsersFromList"

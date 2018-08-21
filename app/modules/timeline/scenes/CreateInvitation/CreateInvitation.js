@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput } from 'react-native';
+import { ScrollView, View, Alert, TextInput } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
-import InvitationType from '../../components/InvitationType/InvitationType';
+// import InvitationType from '../../components/InvitationType/InvitationType';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
+import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 import { pimbayType, invitationType } from '../../../shared/constants';
 
+import { SaveButton } from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 
@@ -16,35 +19,79 @@ import { actions as createInvitation } from "../../index";
 const { createNewInvitation } = createInvitation;
 
 class CreateInvitation extends Component {
+
     state = {
         description: "",
-        placeholderDescription: "Que estas para hacer hoy?",
         onFocusDescription: false,
         contextActionSelected: null,
         eventInvitation: null,
-        openInvitation: null,
         invitationType: null,
         dueDate: null,
         quota: null,
         hasQuota: true,
         invitedUsers: null,
+        targetUsers: null,
+        minAge: null,
+        maxAge: null,
+        invitedUsers: []
     }
 
     componentWillMount() {
-        const { type } = this.props;
+        const { type, invitationType, item } = this.props;
         switch (type) {
             case pimbayType.CONTEXT_ACTION:
-                const { contextAction } = this.props;
-                this.setState({contextActionSelected: contextAction});
-            break;
-            case pimbayType.EVENT:
-                const { eventInvitation } = this.props;
                 this.setState({
-                    eventInvitation: eventInvitation, 
-                    placeholderDescription: "Comentario"
+                    contextActionSelected: item,
+                    invitationType
                 });
-            break;
+                break;
+            case pimbayType.EVENT:
+                this.setState({
+                    eventInvitation: item,
+                    invitationType
+                });
+                break;
+            case pimbayType.SIMPLE:
+                this.setState({
+                    invitationType
+                });
+                break;
         }
+        Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
+    }
+
+    createInvitation = () => {
+        const { 
+            description, dueDate, 
+            invitationType, targetUsers, 
+            minAge, maxAge, invitedUsers, 
+            contextActionSelected,
+            eventInvitation } = this.state;
+        if (!minAge || !maxAge) {
+            Alert.alert('Edades', "No se ha definido el rango de edades.");
+            return;
+        }
+        console.log(this.state);
+        this.props.createNewInvitation({
+            description,
+            dueDate,
+            invitationType,
+            // gender: targetUsers,
+            // minAge,
+            // maxAge,
+            ownerId: 'DDM2AobexaNzHbRyjuYk',
+            contextActionId: contextActionSelected ? contextActionSelected.id : null,
+            eventId: eventInvitation ? eventInvitation.id : null,
+            invitedUsers: invitedUsers
+        }, this.onSuccess, this.onError);
+    }
+
+    onSuccess(){
+        Actions.pop();
+    }
+
+    onError(error){
+        Alert.alert("Oops", error.message);
     }
 
     renderType = () => {
@@ -53,10 +100,8 @@ class CreateInvitation extends Component {
             case pimbayType.SIMPLE:
                 return this.renderTextBox();
             case pimbayType.CONTEXT_ACTION:
-                console.log('CONTEXT_ACTION');
                 return this.renderContextActionList();
             case pimbayType.EVENT:
-                console.log('EVENT');
                 return this.renderEventInvitation();
         }
     }
@@ -76,7 +121,7 @@ class CreateInvitation extends Component {
                     numberOfLines = {4}
                     onChangeText={(description) => this.setState({description})}
                     editable = {true}
-                    placeholder = {this.state.placeholderDescription}
+                    placeholder = "Estoy para ..."
                     autoCorrect={false}
                     underlineColorAndroid="transparent"
                 />
@@ -99,14 +144,18 @@ class CreateInvitation extends Component {
     }
 
     renderEventInvitation = () => {
-        const { event } = this.props;
+        const { eventInvitation } = this.state;
         return (
-            <EventCardCreateInvitation eventInvitation={event}/>
+            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
         );
     }
 
-    onChangeInvitationType = ({invitationTypeSelected}) => {
-        this.setState({invitationType: invitationTypeSelected});
+    // onChangeInvitationType = ({invitationTypeSelected}) => {
+    //     this.setState({invitationType: invitationTypeSelected});
+    // }
+
+    onChangeTargetUsers = ({target, minAge, maxAge}) => {
+        this.setState({targetUsers: target, minAge, maxAge});
     }
 
     onChangeDueDate = (dueDate) => {
@@ -122,23 +171,25 @@ class CreateInvitation extends Component {
     }
 
     render() {
-
+        const { type } = this.props;
         return (
             <ScrollView style={styles.container}>
                 {this.renderType()}
                 <DatePicker 
                     onChangeDueDate={this.onChangeDueDate}/>
-                <InvitationType 
-                    onChangeInvitationType={this.onChangeInvitationType} />
+                {/* <InvitationType 
+                    onChangeInvitationType={this.onChangeInvitationType} /> */}
+                <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                <Quota 
+                    onChangeQuota={this.onChangeQuota}/>
                 {
-                    this.state.invitationType !== invitationType.OPEN &&
-                    <Quota 
-                        onChangeQuota={this.onChangeQuota}/>
-                }
-                {
-                    this.state.invitationType !== invitationType.OPEN &&
+                    !!(this.props.invitationType !== invitationType.OPEN) &&
                     <InvitedUsers 
                         onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                }
+                {
+                    !!(type !== pimbayType.SIMPLE) &&
+                    this.renderTextBox()
                 }
             </ScrollView>
         );

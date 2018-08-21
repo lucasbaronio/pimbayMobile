@@ -16,7 +16,6 @@ export function getInvitations(start, callback) {
 }
 
 export function getEvents(start, callback) {
-    console.log(start);
     get(`${API_EVENT}start=${start}`, callback);
 }
 
@@ -25,5 +24,5 @@ export function getContextActionList(callback) {
 }
 
 export function createInvitation(invitation, callback) {
-    post(`${API_CREATE_INVITATION}`, invitation, callback);
+    post(`${API_INVITATION}`, invitation, callback);
 }

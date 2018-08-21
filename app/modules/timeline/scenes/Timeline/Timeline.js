@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator, Text } from 'react-native';
+import { View, FlatList, ActivityIndicator, Text, Platform, RefreshControl } from 'react-native';
+import { connectActionSheet } from '@expo/react-native-action-sheet';
 
 import { connect } from 'react-redux';
 import { Actions } from "react-native-router-flux";
 
 import { actions as timeline } from "../../index";
-const { getInvitations } = timeline;
+const { getInvitations, getInvitationsRefresh } = timeline;
 
 import { API_INVITATION_SIZE } from '../../constants';
-import { pimbayType } from '../../../shared/constants';
+import { pimbayType, invitationType } from '../../../shared/constants';
 
 import styles from "./styles";
 import ContextActionList from "../../components/ContextActionList";
@@ -16,6 +17,7 @@ import EventList from "../../components/EventList";
 import InvitationCard from "../../../shared/InvitationCard";
 import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
 
+@connectActionSheet
 class Timeline extends React.Component {
     state = {
         start: 0,
@@ -27,7 +29,6 @@ class Timeline extends React.Component {
     }
 
     renderItem = ({item, index}) => {
-        console.log(item);
         return (
             <View>
                 {
@@ -39,15 +40,52 @@ class Timeline extends React.Component {
                 <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
             </View>
         )
-        
+    }
+
+    onOpenActionSheet = (item, type) => {
+        this.props.showActionSheetWithOptions({
+            options: [
+                'Cancelar', 
+                'Invitación Abierta', 
+                // 'Invitación Dirigida'
+            ],
+            cancelButtonIndex: 0,
+            title: 'Crear Invitación - De que tipo?',
+            message: 'Abierta: Visible para todos en Pimbay.\nDirigida: Visible solo para usuarios invitados.'
+        },
+        (buttonIndex) => {
+            if (buttonIndex > 0 && buttonIndex < 3)
+            this.goToCreateInvitation({
+                type: type, 
+                item: item,
+                invitationType: 
+                    (buttonIndex === 1) 
+                        ? invitationType.OPEN 
+                        : invitationType.DIRECTED
+            });
+        });
     }
 
     onPressContextAction = (item) => {
-        this.goToCreateInvitation({type: pimbayType.CONTEXT_ACTION, contextAction: item});
+        if (Platform.OS === 'ios')
+            this.onOpenActionSheet(item, pimbayType.CONTEXT_ACTION)
+        else
+            this.goToCreateInvitation({
+                type: pimbayType.CONTEXT_ACTION, 
+                item: item,
+                invitationType: invitationType.OPEN
+            });
     }
 
     onPressEvent = (item) => {
-        this.goToCreateInvitation({type: pimbayType.EVENT, event: item});
+        if (Platform.OS === 'ios')
+            this.onOpenActionSheet(item, pimbayType.EVENT)
+        else
+            this.goToCreateInvitation({
+                type: pimbayType.EVENT, 
+                item: item,
+                invitationType: invitationType.OPEN
+            });
     }
 
     goToCreateInvitation = (props) => {
@@ -105,6 +143,12 @@ class Timeline extends React.Component {
                             );
                         }}
                         ListHeaderComponent={this.renderHeader}
+                        refreshControl={
+                            <RefreshControl
+                              refreshing={this.props.isLoadingHeader}
+                              onRefresh={() => this.props.getInvitationsRefresh((error) => alert(error.message))}
+                            />
+                          }
                     />
                 </View>
             );
@@ -115,9 +159,10 @@ class Timeline extends React.Component {
 function mapStateToProps(state, props) {
     return {
         isLoading: state.timelineReducer.isLoading,
+        isLoadingHeader: state.timelineReducer.isLoadingHeader,
         isLoadingMore: state.timelineReducer.isLoadingMore,
         invitations: state.timelineReducer.invitations
     }
 }
 
-export default connect(mapStateToProps, { getInvitations })(Timeline);
+export default connect(mapStateToProps, { getInvitations, getInvitationsRefresh })(Timeline);

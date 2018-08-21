@@ -1,6 +1,7 @@
 import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import NavButton from '../../components/NavButton';
+import tick from '../../assets/icons/tick.png';
 
 import { color } from "../../styles/theme";
 
@@ -35,5 +36,15 @@ export function BackButton() {
                    name={"ios-arrow-back"}
                    type={"ionicon"}
                    color={color.black}/>
+    )
+}
+
+export function SaveButton({onPress}) {
+    return (
+        <NavButton 
+            onPress={onPress}
+            // onPress={Actions.pop}
+            source={tick}
+            name={null} />
     )
 }

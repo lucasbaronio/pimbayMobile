@@ -161,7 +161,7 @@ class DatePicker extends React.Component {
         const { toggleDatePickerVisible, dayTimerDueDate, hoursTimerDueDate, minsTimerDueDate } = this.state;
         return(
             <View style={styles.container}>
-                <Text style={styles.titleTimerDueDate}>Invitación se vence en:</Text>
+                <Text style={styles.titleTimerDueDate}>Vencimiento de la invitación</Text>
                 <TouchableOpacity onPress={this.onPressTimerDueDate}>
                     <Text style={styles.timerDueDate}>
                         {(dayTimerDueDate > 0) && `${dayTimerDueDate} días, `}

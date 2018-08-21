@@ -12,15 +12,16 @@ const styles = StyleSheet.create({
         borderColor: color.transparent,
         paddingHorizontal: 13,
         margin: 10,
-        fontSize: fontSize.text2,
+        fontSize: fontSize.text3,
         color : color.black,
         backgroundColor: color.white,
-    },
-    descriptionFocused: {
-        minHeight: 70,
         borderColor: color.light_grey,
         borderWidth: 1,
         borderRadius: 15,
+        minHeight: 50,
+    },
+    descriptionFocused: {
+        minHeight: 70,
     },
     descriptionView: {
         flex: 1,

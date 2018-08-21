@@ -7,14 +7,14 @@ import InvitationsOut from '../../../modules/home/scenes/InvitationsOut';
 // import { Foundation } from '@expo/vector-icons';
 import * as theme from '../../../styles/theme';
 const { color } = theme;
-import { pimbayType } from '../../../modules/shared/constants';
+import { pimbayType, invitationType } from '../../../modules/shared/constants';
 
 export default (
-    <Stack key="CreateInvitationStack" title="Crear Invitación" hideNavBar>
+    <Stack key="CreateSimpleInvitationStack" title="Crear Invitación" hideNavBar>
         <Modal>
             <Scene
                 // hideNavBar
-                key={"CreateInvitation"}
+                key={"CreateSimpleInvitation"}
                 title="Crear Invitación"
                 component={InvitationsOut}
                 icon={({ focused }) => (
@@ -29,7 +29,10 @@ export default (
                             backgroundColor: color.orange, 
                             marginBottom: Platform.OS === 'ios' ? 10 : 0 
                         }}
-                        onPress={() => Actions.push("CreateInvitation", { type: pimbayType.SIMPLE })}
+                        onPress={() => Actions.push("CreateInvitation", { 
+                            type: pimbayType.SIMPLE,
+                            invitationType: invitationType.OPEN 
+                        })}
                         activeOpacity={0.8}
                     />
                     // <Foundation

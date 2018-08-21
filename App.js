@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Font, AppLoading } from 'expo';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 import Router from './app/config/routes';
 import store from './app/redux/store';
@@ -49,9 +50,11 @@ export default class App extends Component {
         }
         
         return (
-            <Provider store={store}>
-                <Router/>
-            </Provider>
+            <ActionSheetProvider>
+                <Provider store={store}>
+                        <Router/>
+                </Provider>
+            </ActionSheetProvider>
         );
     }
 }

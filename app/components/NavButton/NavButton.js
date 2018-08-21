@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 
 import {Icon} from 'react-native-elements'
 
@@ -9,20 +9,23 @@ import styles from "./styles"
 
 class NavButton extends React.Component {
     render() {
-        const { name, type, size, color, onPress, text, buttonText } = this.props;
-
+        const { name, type, size, color, onPress, buttonText, source } = this.props;
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.wrapper}>
                     {
-                        (!text) ?
+                        (name) ?
                             <Icon name={name}
                                   type={type}
                                   size={size}
                                   iconStyle={{height: size}}
-                                  color={color}/>
-                            :
-                            <Text>{buttonText}</Text>
+                                  color={color} />
+                            : (source) ?
+                                <Image 
+                                    style={{width: 28, height: 28}}
+                                    source={source} />
+                                :
+                                <Text>{buttonText}</Text>
                     }
                 </View>
             </TouchableOpacity>

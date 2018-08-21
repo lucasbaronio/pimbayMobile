@@ -27,6 +27,16 @@ export function getInvitations(start, errorCB) {
     };
 }
 
+export function getInvitationsRefresh(errorCB) {
+    return (dispatch) => {
+        dispatch({type: t.LOADING_HEADER});
+        api.getInvitations(0, function (success, data, error) {
+            if (success) dispatch({type: t.INVITATION_LIST_REFRESHED, data});
+            else if (error) errorCB(error)
+        });
+    };
+}
+
 export function getEvents(start, errorCB) {
     return (dispatch) => {
         (start === 0)
@@ -49,7 +59,7 @@ export function getContextActionList(errorCB) {
     };
 }
 
-export function createInvitation(invitation, successCB, errorCB) {
+export function createNewInvitation(invitation, successCB, errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING_CREATE_INVITATION});
         api.createInvitation(invitation, function (success, data, error) {

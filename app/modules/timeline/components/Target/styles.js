@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-// import { fontSize } from '../../../../styles/theme';
 const { normalize, color, fontSize, fontFamily, windowWidth } = theme;
 
 const styles = StyleSheet.create({
@@ -8,27 +7,30 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: color.grey,
         padding: 5,
         paddingHorizontal: 10
     },
-    titleTimerDueDate: {
-        fontSize: fontSize.text2,
+    genderUsers: {
+        flex: 1,
+        flexDirection: 'column',
     },
-    timerDueDate: {
-        color: color.red,
-        fontSize: fontSize.text2,
-        fontFamily: fontFamily.bold,
-        textAlign: 'center',
-        marginVertical: 5,
-    },
-    buttonAndroid: {
+    genderUsersItems: {
         flex: 1,
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
-    }
+        margin: 5
+    },
+    title: {
+        fontSize: fontSize.text2,
+    },
+    ageUsers: {
+        flex: 1,
+        flexDirection: 'column',
+    },
 });
 
+export { color };
 export default styles;

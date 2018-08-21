@@ -13,5 +13,4 @@ export const API_EVENT = `${API}event?size=${API_EVENT_SIZE}&`;
 export const API_INVITATION_SIZE = 10;
 // export const API_INVITATION = `${API}invitations?size=${API_EVENT_SIZE}&`;
 export const API_INVITATION = `${API}invitations`;
-export const API_CONTEXT_ACTION_LIST = `${API}contextAction`;
-export const API_CREATE_INVITATION = `${API}createInvitation`;
+export const API_CONTEXT_ACTION_LIST = `${API}context_actions`;
