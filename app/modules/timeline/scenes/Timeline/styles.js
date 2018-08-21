@@ -31,6 +31,12 @@ const styles = StyleSheet.create({
         fontFamily: fontFamily.bold,
         fontSize: fontSize.text2,
         marginLeft: 10
+    },
+    titleInvitationsSection: {
+        fontFamily: fontFamily.bold,
+        fontSize: fontSize.text2,
+        marginLeft: 10,
+        marginBottom: 10
     }
 });
 

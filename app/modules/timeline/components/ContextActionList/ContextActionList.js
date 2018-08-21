@@ -63,6 +63,7 @@ class ContextActionList extends React.Component {
                     showsHorizontalScrollIndicator={false}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => item.id}
+                    style={{marginLeft: 10}}
                 />
             </View>
         )

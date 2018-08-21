@@ -4,7 +4,6 @@ import { connectActionSheet } from '@expo/react-native-action-sheet';
 
 import { connect } from 'react-redux';
 import { Actions } from "react-native-router-flux";
-
 import { actions as timeline } from "../../index";
 const { getInvitations, getInvitationsRefresh } = timeline;
 
@@ -25,7 +24,7 @@ class Timeline extends React.Component {
 
     componentDidMount() {
         const { start } = this.state;
-        this.props.getInvitations(start, (error) => alert(error.message))
+        this.props.getInvitations(start, (error) => alert(error.message));
     }
 
     renderItem = ({item, index}) => {
@@ -33,11 +32,11 @@ class Timeline extends React.Component {
             <View>
                 {
                     !!(index === 0) &&
-                    <Text style={styles.title}>
+                    <Text style={styles.titleInvitationsSection}>
                         Que estás para hacer hoy?
                     </Text>
                 }
-                <InvitationCard item={item} cardType={ TIMELINE_INVITATION_CARD }/>
+                <InvitationCard item={item} cardType={TIMELINE_INVITATION_CARD} />
             </View>
         )
     }
@@ -95,7 +94,7 @@ class Timeline extends React.Component {
     renderHeader = () => {
         return (
             <View>
-                <ContextActionList 
+                <ContextActionList
                     timeline={true}
                     onPressContextAction={this.onPressContextAction} />
                 <EventList onPressEvent={this.onPressEvent} />
@@ -104,21 +103,15 @@ class Timeline extends React.Component {
     }
 
     render() {
-        if (this.props.isLoading){
-            return(
+        if (this.props.isLoading) {
+            return (
                 <View style={styles.activityIndicatorCenter}>
-                    <ActivityIndicator animating={true}/>
+                    <ActivityIndicator animating={true} />
                 </View>
             )
-        }else{
+        } else {
             return (
                 <View style={styles.container}>
-                    {/* <TextInput
-                        style={styles.createInvitationTextInput}
-                        onFocus={this.goToCreateInvitation}
-                        placeholder={"Que estas para hacer hoy?"}
-                        placeholderTextColor={color.black}
-                    /> */}
                     <FlatList
                         ref='listRef'
                         data={this.props.invitations}
@@ -136,10 +129,10 @@ class Timeline extends React.Component {
                         onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
                         ListFooterComponent={() => {
                             return (
-                              this.props.isLoadingMore &&
-                              <View style={styles.activityIndicatorBottom}>
-                                <ActivityIndicator size="small" />
-                              </View>
+                                this.props.isLoadingMore &&
+                                <View style={styles.activityIndicatorBottom}>
+                                    <ActivityIndicator size="small" />
+                                </View>
                             );
                         }}
                         ListHeaderComponent={this.renderHeader}
