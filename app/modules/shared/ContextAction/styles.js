@@ -15,11 +15,6 @@ const styles = StyleSheet.create({
     overlay: {
         opacity: 0.5,
     },
-    // selected: {
-    //     borderColor: color.light_grey,
-    //     borderWidth: 1,
-    //     borderRadius: 15,
-    // },
     avatar: {
         marginBottom: 5,
     },

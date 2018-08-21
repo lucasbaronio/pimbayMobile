@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator, Text, Platform } from 'react-native';
+import { View, FlatList, ActivityIndicator, Text, Platform, RefreshControl } from 'react-native';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 
 import { connect } from 'react-redux';
 import { Actions } from "react-native-router-flux";
 
 import { actions as timeline } from "../../index";
-const { getInvitations } = timeline;
+const { getInvitations, getInvitationsRefresh } = timeline;
 
 import { API_INVITATION_SIZE } from '../../constants';
 import { pimbayType, invitationType } from '../../../shared/constants';
@@ -143,6 +143,12 @@ class Timeline extends React.Component {
                             );
                         }}
                         ListHeaderComponent={this.renderHeader}
+                        refreshControl={
+                            <RefreshControl
+                              refreshing={this.props.isLoadingHeader}
+                              onRefresh={() => this.props.getInvitationsRefresh((error) => alert(error.message))}
+                            />
+                          }
                     />
                 </View>
             );
@@ -153,9 +159,10 @@ class Timeline extends React.Component {
 function mapStateToProps(state, props) {
     return {
         isLoading: state.timelineReducer.isLoading,
+        isLoadingHeader: state.timelineReducer.isLoadingHeader,
         isLoadingMore: state.timelineReducer.isLoadingMore,
         invitations: state.timelineReducer.invitations
     }
 }
 
-export default connect(mapStateToProps, { getInvitations })(Timeline);
+export default connect(mapStateToProps, { getInvitations, getInvitationsRefresh })(Timeline);

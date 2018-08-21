@@ -27,6 +27,16 @@ export function getInvitations(start, errorCB) {
     };
 }
 
+export function getInvitationsRefresh(errorCB) {
+    return (dispatch) => {
+        dispatch({type: t.LOADING_HEADER});
+        api.getInvitations(0, function (success, data, error) {
+            if (success) dispatch({type: t.INVITATION_LIST_REFRESHED, data});
+            else if (error) errorCB(error)
+        });
+    };
+}
+
 export function getEvents(start, errorCB) {
     return (dispatch) => {
         (start === 0)
