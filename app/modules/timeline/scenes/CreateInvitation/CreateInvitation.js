@@ -51,6 +51,11 @@ class CreateInvitation extends Component {
                     invitationType
                 });
                 break;
+            case pimbayType.SIMPLE:
+                this.setState({
+                    invitationType
+                });
+                break;
         }
         Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
     }
@@ -66,6 +71,7 @@ class CreateInvitation extends Component {
             Alert.alert('Edades', "No se ha definido el rango de edades.");
             return;
         }
+        console.log(this.state);
         this.props.createNewInvitation({
             description,
             dueDate,

@@ -37,10 +37,7 @@ export function post(uri, body, callback) {
     })
     .then(response => {
         // if (response.status >= 200 && response.status < 300) {
-        if (response.ok) {
-            return response.json();
-        } else {
-            console.log(response);
+        if (!response.ok) {
             const error = new Error(response.statusText);
             error.response = response;
             throw error;
@@ -50,7 +47,6 @@ export function post(uri, body, callback) {
         callback(true, data, null)
     })
     .catch((error) => {
-        console.log(error);
         callback(false, null, error)
     });
 }

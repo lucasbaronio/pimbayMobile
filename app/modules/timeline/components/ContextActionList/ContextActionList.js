@@ -43,6 +43,7 @@ class ContextActionList extends React.Component {
         return (
             <ContextAction 
                 item={item}
+                timeline={this.props.timeline}
                 onPressItem={this.onPressItem}
                 selected={!!this.state.selected.get(item.id)}/>
         )

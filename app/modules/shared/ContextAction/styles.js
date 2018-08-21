@@ -12,6 +12,14 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         maxWidth: 85,
     },
+    overlay: {
+        opacity: 0.5,
+    },
+    // selected: {
+    //     borderColor: color.light_grey,
+    //     borderWidth: 1,
+    //     borderRadius: 15,
+    // },
     avatar: {
         marginBottom: 5,
     },
