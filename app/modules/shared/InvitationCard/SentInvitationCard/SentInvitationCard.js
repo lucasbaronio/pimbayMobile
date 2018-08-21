@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
 import { Button as ButtonElements, Avatar, Icon } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
@@ -126,6 +126,7 @@ class SentInvitationCard extends Component {
         }
     }
 
+
     render() {
         const { item } = this.props;
         const userInfo = this.getUserInfo(item.invitedUsers[0]);
@@ -139,23 +140,19 @@ class SentInvitationCard extends Component {
                             <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={styles.buttonView}>
-                                    <Image source={require('../../../../assets/icons/letter-x.png')} style={{height: 15, width: 15 }} />
-                                    <ButtonElements
-                                        backgroundColor='transparent'
-                                        color='#DE5134'
-                                        title='FINALIZAR'
-                                        fontSize={fontSize.text5} />
-                                </View>
-                                <View style={styles.buttonView}>
-                                    <ButtonElements
-                                        backgroundColor='transparent'
-                                        color='#DE5134'
-                                        title='IR AL CHAT'
-                                        fontSize={fontSize.text5} />
-                                    <Image source={require('../../../../assets/icons/right-arrow.png')} style={{ height: 15, width: 15 }} />
-                                </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' , marginVertical: 15}}>
+                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Finalizar'); }}>
+                                    <View style={styles.buttonViewFinalizar}>
+                                        <Image source={require('../../../../assets/icons/letter-x.png')} style={{ height: 10, width: 10 }} />
+                                        <Text style={{ marginLeft: 10, backgroundColor: "transparent", fontSize: fontSize.text4, color: "#DE5134" }}>FINALIZAR</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
+                                    <View style={styles.buttonViewChat}>
+                                        <Text style={{ marginRight: 10, backgroundColor: "transparent", fontSize: fontSize.text4, color: "#DE5134" }}>IR AL CHAT</Text>
+                                        <Image source={require('../../../../assets/icons/right-arrow.png')} style={{ height: 10, width: 10 }} />
+                                    </View>
+                                </TouchableWithoutFeedback>
                             </View>
                         </View>
                     </View>
