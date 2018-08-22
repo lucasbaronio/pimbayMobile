@@ -20,7 +20,7 @@ class EventCardCreateInvitation extends PureComponent {
                         source={{ uri: image }}
                     />
                 </View>
-                <View style={{ flexDirection: 'column', justifyContent: 'center', marginHorizontal: 10 }}>
+                <View style={{ flexDirection: 'column', justifyContent: 'center', marginHorizontal: 10, flex: 2 }}>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.realizationDate}>{getFormalDate(realizationDate)}</Text>
                     <LocationButton place={place} />

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
-import { Button as ButtonElements, Avatar, Icon } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import styles, { fontSize } from "./styles";
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
-import { fontFamily } from '../../../../styles/theme';
 
 class SentInvitationCard extends Component {
 
@@ -40,7 +39,8 @@ class SentInvitationCard extends Component {
             </View>);
     }
 
-    renderUserPhotoSection = (userInfo) => {
+    renderUserPhotoSection = (invitedUsers) => {
+        const userInfo = this.getUserInfo(invitedUsers[0]);
         return (
             <View style={styles.userAvatarSectionContainer}>
                 <View style={styles.userAvatarSectionContainer}>
@@ -116,7 +116,6 @@ class SentInvitationCard extends Component {
                     favoriteUsers: []
                 }
             case "Iiz3cW33NF6XQ61EU69x":
-                console.log('aca?');
                 return {
                     id: "Iiz3cW33NF6XQ61EU69x",
                     userName: "mati_zalynas",
@@ -162,7 +161,7 @@ class SentInvitationCard extends Component {
     getEvent = (eventId) => {
         return {
             id: "0EzifiT6X4NR39g6nvde",
-            title: "Matias Agri",
+            title: "Matias Agri en Montevideo",
             type:"EVENT",
             realizationDate:"2018-07-26T01:00:00.000+0000",
             place: "Montevideo, Uruguay",
@@ -181,7 +180,7 @@ class SentInvitationCard extends Component {
         return (
             <View>
                 <View style={styles.container}>
-                    {this.renderUserPhotoSection(userInfo)}
+                    {this.renderUserPhotoSection(item.invitedUsers)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
