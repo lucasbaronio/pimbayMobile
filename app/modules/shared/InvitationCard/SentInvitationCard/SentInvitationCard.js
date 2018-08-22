@@ -4,6 +4,7 @@ import { Button as ButtonElements, Avatar, Icon } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import styles, { fontSize } from "./styles";
+import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
 import { fontFamily } from '../../../../styles/theme';
 
@@ -70,7 +71,7 @@ class SentInvitationCard extends Component {
                 const contextAction = this.getContextAction(contextActionId);
                 return (
                     <View style={styles.descriptionWithContextContainerStyle}>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{ alignItems: 'center' }}>
                             <Avatar
                                 small
                                 rounded
@@ -80,14 +81,16 @@ class SentInvitationCard extends Component {
                             />
                             <Text style={styles.avatarTextStyle}>{contextAction.title}</Text>
                         </View>
-                        <View style={{flex: 2}}>
+                        <View style={{ flex: 2 }}>
                             <Text style={styles.descriptionWithContextStyle}>{description}</Text>
                         </View>
                     </View>
                 );
             } else {
+                const event = this.getEvent(eventId);
                 return (
                     <View style={styles.descriptionContainerStyle}>
+                        <EventCardCreateInvitation eventInvitation={event} />
                         <Text style={styles.descriptionStyle}>Con evento</Text>
                     </View>
                 );
@@ -156,6 +159,20 @@ class SentInvitationCard extends Component {
         }
     }
 
+    getEvent = (eventId) => {
+        return {
+            id: "0EzifiT6X4NR39g6nvde",
+            title: "Matias Agri",
+            type:"EVENT",
+            realizationDate:"2018-07-26T01:00:00.000+0000",
+            place: "Montevideo, Uruguay",
+            image:"https://images.sk-static.com/images/media/profile_images/artists/9215129/huge_avatar",
+            categories: ["Musica","Concierto"], 
+            description: "Doors open: 22:00\nTour name: Por El Bien De Los Dos TOUR\nMatias Agri se presentará por primera vez en Uruguay. En un show acústico super intimo.\nCompra los ticket y enterate de todo en sus redes sociales :\nInstagram: @matiasagri\nTwitter: @matiasagri\nFacebook: /matiasagri",
+            dateCreated: null,
+            orderByDate: "2018-07-26T01:00:00.000+0000"
+        }
+    }
 
     render() {
         const { item } = this.props;
