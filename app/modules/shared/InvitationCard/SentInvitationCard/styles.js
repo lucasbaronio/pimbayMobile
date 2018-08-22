@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
-import { theme } from "../../../index"
+import { theme } from "../../../index";
 
-const { windowWidth, fontSize, color } = theme;
+const { windowWidth, fontSize, color, fontFamily } = theme;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
         width: windowWidth, 
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-start'
     },
     userAvatarSectionContainer: {
         flex: 1,
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     userNameStyle: {
         fontSize: fontSize.text4,
-        fontWeight: 'bold',
+        fontFamily: fontFamily.bold,
         flex: 1,
         marginTop: 20
     },
@@ -28,29 +28,48 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         color: color.blood, 
         fontSize: fontSize.text5,
+        fontFamily: fontFamily.regular
     },
     createdTimeStyle: {
         color: color.grey, 
         fontSize: fontSize.text5,
+        fontFamily: fontFamily.regular
     },
     descriptionContainerStyle: {
         marginRight: 15, 
         marginTop: 10
     },
+    descriptionWithContextContainerStyle: {
+        marginTop: 10,
+        flexDirection: 'row'
+    },
     descriptionStyle: {
-        fontSize: fontSize.text3
+        fontSize: fontSize.text4,
+        fontFamily: fontFamily.regular
+    },
+    descriptionWithContextStyle : {
+        marginRight: 15,
+        fontSize: fontSize.text4,
+        fontFamily: fontFamily.regular,
+        marginLeft: 10
     },
     button: {
         borderColor: "transparent",
         borderWidth: 0,
         borderRadius: 25,
         paddingVertical: 5,
-        paddingHorizontal: 20,
+        paddingHorizontal: 20
     },
-    buttonView: {
+    buttonViewFinalizar: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5
+    },
+    buttonViewChat: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+        marginRight: 20
     },
     dividerImageStyle: {
         alignSelf: 'flex-start', 
@@ -67,12 +86,9 @@ const styles = StyleSheet.create({
         width: 22
     },
     avatarTextStyle: {
-        right: 5, 
-        top: 0, 
-        fontSize: fontSize.text5, 
-        position: 'absolute'
+        fontSize: fontSize.text5,
+        fontFamily: fontFamily.regular
     }
-
 });
 
 export { fontSize, windowWidth };

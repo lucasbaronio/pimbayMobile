@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
 import { Button as ButtonElements, Avatar, Icon } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import styles, { fontSize } from "./styles";
+import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
 import { fontFamily } from '../../../../styles/theme';
 
@@ -58,11 +59,43 @@ class SentInvitationCard extends Component {
     }
 
     renderDescriptionInformation = (item) => {
-        return (
-            <View style={styles.descriptionContainerStyle}>
-                <Text style={styles.descriptionStyle}>{item.description}</Text>
-            </View>
-        );
+        const { contextActionId, eventId, description } = item;
+        if (contextActionId == null && eventId == null) {
+            return (
+                <View style={styles.descriptionContainerStyle}>
+                    <Text style={styles.descriptionStyle}>{description}</Text>
+                </View>
+            );
+        } else {
+            if (contextActionId != null) {
+                const contextAction = this.getContextAction(contextActionId);
+                return (
+                    <View style={styles.descriptionWithContextContainerStyle}>
+                        <View style={{ alignItems: 'center' }}>
+                            <Avatar
+                                small
+                                rounded
+                                source={(contextAction.image) ? { uri: contextAction.image } : null}
+                                icon={(contextAction.icon && contextAction.type) ? { name: contextAction.icon, type: contextAction.type } : null}
+                                overlayContainerStyle={styles.avatarBackground}
+                            />
+                            <Text style={styles.avatarTextStyle}>{contextAction.title}</Text>
+                        </View>
+                        <View style={{ flex: 2 }}>
+                            <Text style={styles.descriptionWithContextStyle}>{description}</Text>
+                        </View>
+                    </View>
+                );
+            } else {
+                const event = this.getEvent(eventId);
+                return (
+                    <View style={styles.descriptionContainerStyle}>
+                        <EventCardCreateInvitation eventInvitation={event} />
+                        <Text style={styles.descriptionStyle}>Con evento</Text>
+                    </View>
+                );
+            }
+        }
     }
 
     getUserInfo = (ownerId) => {
@@ -126,6 +159,21 @@ class SentInvitationCard extends Component {
         }
     }
 
+    getEvent = (eventId) => {
+        return {
+            id: "0EzifiT6X4NR39g6nvde",
+            title: "Matias Agri",
+            type:"EVENT",
+            realizationDate:"2018-07-26T01:00:00.000+0000",
+            place: "Montevideo, Uruguay",
+            image:"https://images.sk-static.com/images/media/profile_images/artists/9215129/huge_avatar",
+            categories: ["Musica","Concierto"], 
+            description: "Doors open: 22:00\nTour name: Por El Bien De Los Dos TOUR\nMatias Agri se presentará por primera vez en Uruguay. En un show acústico super intimo.\nCompra los ticket y enterate de todo en sus redes sociales :\nInstagram: @matiasagri\nTwitter: @matiasagri\nFacebook: /matiasagri",
+            dateCreated: null,
+            orderByDate: "2018-07-26T01:00:00.000+0000"
+        }
+    }
+
     render() {
         const { item } = this.props;
         const userInfo = this.getUserInfo(item.invitedUsers[0]);
@@ -139,23 +187,19 @@ class SentInvitationCard extends Component {
                             <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={styles.buttonView}>
-                                    <Image source={require('../../../../assets/icons/letter-x.png')} style={{height: 15, width: 15 }} />
-                                    <ButtonElements
-                                        backgroundColor='transparent'
-                                        color='#DE5134'
-                                        title='FINALIZAR'
-                                        fontSize={fontSize.text5} />
-                                </View>
-                                <View style={styles.buttonView}>
-                                    <ButtonElements
-                                        backgroundColor='transparent'
-                                        color='#DE5134'
-                                        title='IR AL CHAT'
-                                        fontSize={fontSize.text5} />
-                                    <Image source={require('../../../../assets/icons/right-arrow.png')} style={{ height: 15, width: 15 }} />
-                                </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
+                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Finalizar'); }}>
+                                    <View style={styles.buttonViewFinalizar}>
+                                        <Image source={require('../../../../assets/icons/letter-x.png')} style={{ height: 10, width: 10 }} />
+                                        <Text style={{ marginLeft: 10, backgroundColor: "transparent", fontSize: fontSize.text4, color: "#DE5134" }}>FINALIZAR</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
+                                    <View style={styles.buttonViewChat}>
+                                        <Text style={{ marginRight: 10, backgroundColor: "transparent", fontSize: fontSize.text4, color: "#DE5134" }}>IR AL CHAT</Text>
+                                        <Image source={require('../../../../assets/icons/right-arrow.png')} style={{ height: 10, width: 10 }} />
+                                    </View>
+                                </TouchableWithoutFeedback>
                             </View>
                         </View>
                     </View>
