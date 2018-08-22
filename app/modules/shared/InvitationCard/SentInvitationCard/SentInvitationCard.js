@@ -58,11 +58,41 @@ class SentInvitationCard extends Component {
     }
 
     renderDescriptionInformation = (item) => {
-        return (
-            <View style={styles.descriptionContainerStyle}>
-                <Text style={styles.descriptionStyle}>{item.description}</Text>
-            </View>
-        );
+        const { contextActionId, eventId, description } = item;
+        if (contextActionId == null && eventId == null) {
+            return (
+                <View style={styles.descriptionContainerStyle}>
+                    <Text style={styles.descriptionStyle}>{description}</Text>
+                </View>
+            );
+        } else {
+            if (contextActionId != null) {
+                const contextAction = this.getContextAction(contextActionId);
+                return (
+                    <View style={styles.descriptionWithContextContainerStyle}>
+                        <View style={{alignItems: 'center'}}>
+                            <Avatar
+                                small
+                                rounded
+                                source={(contextAction.image) ? { uri: contextAction.image } : null}
+                                icon={(contextAction.icon && contextAction.type) ? { name: contextAction.icon, type: contextAction.type } : null}
+                                overlayContainerStyle={styles.avatarBackground}
+                            />
+                            <Text style={styles.avatarTextStyle}>{contextAction.title}</Text>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Text style={styles.descriptionWithContextStyle}>{description}</Text>
+                        </View>
+                    </View>
+                );
+            } else {
+                return (
+                    <View style={styles.descriptionContainerStyle}>
+                        <Text style={styles.descriptionStyle}>Con evento</Text>
+                    </View>
+                );
+            }
+        }
     }
 
     getUserInfo = (ownerId) => {
@@ -140,7 +170,7 @@ class SentInvitationCard extends Component {
                             <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' , marginVertical: 15}}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
                                 <TouchableWithoutFeedback onPress={() => { Alert.alert('Finalizar'); }}>
                                     <View style={styles.buttonViewFinalizar}>
                                         <Image source={require('../../../../assets/icons/letter-x.png')} style={{ height: 10, width: 10 }} />
