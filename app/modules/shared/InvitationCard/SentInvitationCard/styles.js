@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row'
     },
+    descriptionWithEventStyle: {
+        marginTop: 10,
+        fontSize: fontSize.text4,
+        fontFamily: fontFamily.regular
+    },
     descriptionStyle: {
         fontSize: fontSize.text4,
         fontFamily: fontFamily.regular
