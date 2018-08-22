@@ -91,7 +91,7 @@ class SentInvitationCard extends Component {
                 return (
                     <View style={styles.descriptionContainerStyle}>
                         <EventCardCreateInvitation eventInvitation={event} />
-                        <Text style={styles.descriptionStyle}>Con evento</Text>
+                        <Text style={styles.descriptionWithEventStyle}>{description}</Text>
                     </View>
                 );
             }
