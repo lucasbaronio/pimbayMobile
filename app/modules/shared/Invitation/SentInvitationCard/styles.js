@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
         width: windowWidth, 
         justifyContent: 'flex-start'
     },
-    userAvatarSectionContainer: {
-        flex: 1,
-        alignItems: 'center'
-    },
+    // userAvatarSectionContainer: {
+    //     flex: 1,
+    //     alignItems: 'center'
+    // },
     userNameStyle: {
         fontSize: fontSize.text4,
         fontFamily: fontFamily.bold,

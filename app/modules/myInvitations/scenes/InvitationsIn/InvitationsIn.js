@@ -3,23 +3,20 @@ import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import { actions as invitationsActions } from "../../index";
-const { getInvitationsOut } = invitationsActions;
+const { getInvitationsIn } = invitationsActions;
 
-import InvitationCard from "../../../shared/InvitationCard";
-import { SENT_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
+import InvitationCard from "../../../shared/Invitation/InvitationCard";
+import { invitationCard } from "../../../shared/constants";
 import styles from "./styles"
 
 class InvitationsIn extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
-        this.props.getInvitationsOut();
+        this.props.getInvitationsIn();
     }
 
     renderItem = ({item, index}) => {
-        return <InvitationCard item={item} cardType={ SENT_INVITATION_CARD }/>
+        return <InvitationCard item={item} cardType={ invitationCard.SENT }/>
     }
 
     render() {
@@ -27,7 +24,7 @@ class InvitationsIn extends Component {
             <View style={styles.container}>
                 <FlatList
                         ref='listRef'
-                        data={this.props.invitationsOut}
+                        data={this.props.invitationsIn}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
                         //->onEndReached={() => {
@@ -55,8 +52,8 @@ class InvitationsIn extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        invitationsOut: state.invitationsReducer.invitationsOut
+        invitationsIn: state.invitationsReducer.invitationsIn
     }
 }
 
-export default connect(mapStateToProps, { getInvitationsOut })(InvitationsIn);
+export default connect(mapStateToProps, { getInvitationsIn })(InvitationsIn);

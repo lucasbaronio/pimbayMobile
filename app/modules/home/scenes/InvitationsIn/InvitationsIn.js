@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { actions as homeActions } from "../../index";
 const { getInvitationsOut } = homeActions;
 
-import InvitationCard from "../../../shared/InvitationCard";
+import InvitationCard from "../../../shared/Invitation/InvitationCard";
 import styles from "./styles"
 
 class InvitationsIn extends Component {

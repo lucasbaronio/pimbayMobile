@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { theme } from "../../index"
+import { theme } from "../../../index"
 
 const { windowWidth, fontSize, color } = theme;
 

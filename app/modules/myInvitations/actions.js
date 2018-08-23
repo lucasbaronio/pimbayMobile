@@ -6,3 +6,9 @@ export function getInvitationsOut() {
         dispatch({type: t.INVITATION_OUT_AVAILABLE})
     };
 }
+
+export function getInvitationsIn() {
+    return (dispatch) => {
+        dispatch({type: t.INVITATION_IN_AVAILABLE})
+    };
+}

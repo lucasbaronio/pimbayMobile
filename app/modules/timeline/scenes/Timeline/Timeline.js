@@ -13,8 +13,8 @@ import { pimbayType, invitationType } from '../../../shared/constants';
 import styles from "./styles";
 import ContextActionList from "../../components/ContextActionList";
 import EventList from "../../components/EventList";
-import InvitationCard from "../../../shared/InvitationCard";
-import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constants";
+import InvitationCard from "../../../shared/Invitation/InvitationCard";
+import { invitationCard } from "../../../shared/constants";
 
 @connectActionSheet
 class Timeline extends React.Component {
@@ -36,7 +36,7 @@ class Timeline extends React.Component {
                         Que estás para hacer hoy?
                     </Text>
                 }
-                <InvitationCard item={item} cardType={TIMELINE_INVITATION_CARD} />
+                <InvitationCard item={item} cardType={invitationCard.TIMELINE} />
             </View>
         )
     }

@@ -17,8 +17,15 @@ const targetUsers = {
     WOMAN: 'WOMAN',
 }
 
+const invitationCard = {
+    TIMELINE: 'timeline',
+    RECEIVED: 'received',
+    SENT: 'sent',
+}
+
 export {
     pimbayType,
     invitationType,
-    targetUsers
+    targetUsers,
+    invitationCard
 }
