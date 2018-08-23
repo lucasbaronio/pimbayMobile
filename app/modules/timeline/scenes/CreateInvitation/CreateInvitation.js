@@ -9,7 +9,7 @@ import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
-import { pimbayType, invitationType } from '../../../shared/constants';
+import { pimbayType, invitationType, contextActionSize } from '../../../shared/constants';
 
 import { SaveButton } from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
@@ -133,7 +133,8 @@ class CreateInvitation extends Component {
         const { contextActionSelected } = this.state;
         return (
             <ContextActionList 
-                timeline={false}
+                size={contextActionSize.MEDIUM}
+                selectable={true}
                 selectedItem={contextActionSelected}
                 onPressContextAction={this.onPressContextAction}/>
         );

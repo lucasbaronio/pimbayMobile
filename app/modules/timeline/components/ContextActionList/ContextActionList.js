@@ -27,23 +27,23 @@ class ContextActionList extends React.Component {
     }
 
     onPressItem = (item) => {
-        if (this.props.timeline) {
-            this.props.onPressContextAction(item);
-        } else {
+        const { selectable, onPressContextAction } = this.props;
+        if (selectable) {
             this.setState((state) => {
                 const selected = new Map();
                 selected.set(item.id, !selected.get(item.id));
                 return {selected, itemSelected: item};
             });
-            this.props.onPressContextAction(item);
         }
+        onPressContextAction(item);
     };
 
     renderItem = ({item, index}) => {
         return (
             <ContextAction 
                 item={item}
-                timeline={this.props.timeline}
+                size={this.props.size}
+                selectable={this.props.selectable}
                 onPressItem={this.onPressItem}
                 selected={!!this.state.selected.get(item.id)}/>
         )

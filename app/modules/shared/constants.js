@@ -23,9 +23,15 @@ const invitationCard = {
     SENT: 'sent',
 }
 
+const contextActionSize = {
+    SMALL: 'SMALL',
+    MEDIUM: 'MEDIUM'
+}
+
 export {
     pimbayType,
     invitationType,
     targetUsers,
-    invitationCard
+    invitationCard,
+    contextActionSize,
 }

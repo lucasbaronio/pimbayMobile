@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import styles, { fontSize } from "./styles";
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
+import ContextAction from '../../ContextAction';
 import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
 import UserPhotoSection from '../components/UserPhotoSection';
 
 // Borrar luego de que obtengamos la info de backend
 import { getContextAction, getEvent, getUserInfo } from '../backendInfoTmp';
+import { contextActionSize } from '../../constants';
 
 class SentInvitationCard extends Component {
 
@@ -75,7 +77,11 @@ class SentInvitationCard extends Component {
             const contextAction = getContextAction(contextActionId);
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
-                    <View style={{ alignItems: 'center' }}>
+                    <ContextAction 
+                        item={contextAction}
+                        size={contextActionSize.SMALL}
+                        selectable={false}/>
+                    {/* <View style={{ alignItems: 'center' }}>
                         <Avatar
                             small
                             rounded
@@ -84,7 +90,7 @@ class SentInvitationCard extends Component {
                             overlayContainerStyle={styles.avatarBackground}
                         />
                         <Text style={styles.avatarTextStyle}>{contextAction.title}</Text>
-                    </View>
+                    </View> */}
                     <View style={{ flex: 2 }}>
                         <Text style={styles.descriptionWithContextStyle}>{description}</Text>
                     </View>

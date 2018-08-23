@@ -79,5 +79,5 @@ const styles = StyleSheet.create({
 
 });
 
-export { fontSize, windowWidth };
+export { fontSize, windowWidth, color };
 export default styles;

@@ -1,16 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, color, windowWidth } = theme;
+const { fontSize, color, fontFamily } = theme;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        // justifyContent: 'flex-start',
         alignItems: 'center',
         margin: 5,
-        marginLeft: 5,
-        maxWidth: 85,
     },
     overlay: {
         opacity: 0.5,
@@ -19,19 +17,24 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     avatarBackgroundSelected: {
-        backgroundColor: theme.color.blue,
+        backgroundColor: color.blue,
     },
     avatarBackgroundNoSelected: {
-        backgroundColor: theme.color.light_blue,
+        backgroundColor: color.light_blue,
     },
     text: {
-        fontSize: theme.fontSize.text4,
-        marginBottom: 5,
+        fontFamily: fontFamily.regular,
         textAlign: 'center'
     },
+    textMedium: {
+        fontSize: fontSize.text4,
+    },
+    textSmall: {
+        fontSize: fontSize.text5,
+    },
     textSelected: {
-        fontSize: theme.fontSize.text4,
-        fontWeight: 'bold'
+        // fontWeight: 'bold'
+        fontFamily: fontFamily.bold,
     }
 });
 

@@ -8,7 +8,7 @@ import { actions as timeline } from "../../index";
 const { getInvitations, getInvitationsRefresh } = timeline;
 
 import { API_INVITATION_SIZE } from '../../constants';
-import { pimbayType, invitationType } from '../../../shared/constants';
+import { pimbayType, invitationType, contextActionSize } from '../../../shared/constants';
 
 import styles from "./styles";
 import ContextActionList from "../../components/ContextActionList";
@@ -95,7 +95,8 @@ class Timeline extends React.Component {
         return (
             <View>
                 <ContextActionList
-                    timeline={true}
+                    size={contextActionSize.MEDIUM}
+                    selectable={false}
                     onPressContextAction={this.onPressContextAction} />
                 <EventList onPressEvent={this.onPressEvent} />
             </View>
