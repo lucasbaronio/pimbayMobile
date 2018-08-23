@@ -10,7 +10,7 @@ const { getInvitations, getInvitationsRefresh } = timeline;
 import { API_INVITATION_SIZE } from '../../constants';
 import { pimbayType, invitationType } from '../../../shared/constants';
 
-import styles from "./styles";
+import styles, {actionSheetStyles} from "./styles";
 import ContextActionList from "../../components/ContextActionList";
 import EventList from "../../components/EventList";
 import InvitationCard from "../../../shared/InvitationCard";
@@ -18,18 +18,7 @@ import { TIMELINE_INVITATION_CARD } from "../../../shared/InvitationCard/constan
 import ActionSheet from 'react-native-actionsheet';
 import { theme } from "../../index";
 
-const actionSheetStyles = {
-    titleText: {
-        fontSize: theme.fontSize.text4,
-        fontFamily: theme.fontFamily.bold,
-        color: theme.color.black
-    },
-    messageText: {
-        fontSize: theme.fontSize.text5,
-        fontFamily: theme.fontFamily.regular,
-        color: theme.color.grey
-    }
-};
+
 
 @connectActionSheet
 class Timeline extends React.Component {
@@ -90,7 +79,7 @@ class Timeline extends React.Component {
         if (Platform.OS === 'ios') {
             this.onOpenActionSheet(item, pimbayType.CONTEXT_ACTION)
         } else {
-            this.setState({ actionSheetPimbayType: pimbayType.CONTEXT_ACTION, actionSheetItem: item });
+            this.setState({actionSheetPimbayType: pimbayType.CONTEXT_ACTION, actionSheetItem: item });
             this.showActionSheet();
         }
     }
