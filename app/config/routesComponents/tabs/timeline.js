@@ -38,6 +38,7 @@ export default (
                 renderLeftButton={<CloseButton />}
                 // renderRightButton={<SaveButton goToScreen='Timeline' />}
                 component={CreateInvitation} title="Crear Invitación" />
+
         </Modal>
         <Scene key="SelectUsersFromList"
             hideNavBar={false}
