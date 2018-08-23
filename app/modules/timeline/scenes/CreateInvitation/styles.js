@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
         flex: 1,
         maxHeight: 300,
     },
+    eventContainer: {
+        marginHorizontal: 10, 
+        marginVertical: 10
+    },
 });
 
 export default styles;

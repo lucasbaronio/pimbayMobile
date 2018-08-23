@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { actions as invitationsActions } from "../../index";
 const { getInvitationsIn } = invitationsActions;
 
-import InvitationCard from "../../../shared/Invitation/InvitationCard";
-import { invitationCard } from "../../../shared/constants";
-import styles from "./styles"
+// import InvitationCard from "../../../shared/Invitation/InvitationCard";
+import ReceivedInvitationCard from "../../../shared/Invitation/ReceivedInvitationCard";
+// import { invitationCard } from "../../../shared/constants";
+import styles from "./styles";
 
 class InvitationsIn extends Component {
 
@@ -16,7 +17,8 @@ class InvitationsIn extends Component {
     }
 
     renderItem = ({item, index}) => {
-        return <InvitationCard item={item} cardType={ invitationCard.SENT }/>
+        // return <InvitationCard item={item} cardType={ invitationCard.SENT }/>
+        return <ReceivedInvitationCard item={item} />
     }
 
     render() {
@@ -27,23 +29,23 @@ class InvitationsIn extends Component {
                         data={this.props.invitationsIn}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
-                        //->onEndReached={() => {
-                            //if (!this.onEndReachedCalledDuringMomentum) {
-                            //    this.setState({
-                            //        start: this.state.start + API_EVENT_SIZE
-                            //    }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
-                            //    this.onEndReachedCalledDuringMomentum = true;
-                            //}
-                        //}}
-                        //-> onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-                        //-> ListFooterComponent={() => {
-                          //  return (
-                            //  this.props.isLoadingMore &&
-                              //<View style={styles.activityIndicatorBottom}>
-                               // <ActivityIndicator size="small" />
-                              //</View>
-                            //);
-                        //}}
+                        // onEndReached={() => {
+                        //     if (!this.onEndReachedCalledDuringMomentum) {
+                        //        this.setState({
+                        //            start: this.state.start + API_EVENT_SIZE
+                        //        }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
+                        //        this.onEndReachedCalledDuringMomentum = true;
+                        //     }
+                        // }}
+                        // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+                        // ListFooterComponent={() => {
+                        //    return (
+                        //      this.props.isLoadingMore &&
+                        //       <View style={styles.activityIndicatorBottom}>
+                        //        <ActivityIndicator size="small" />
+                        //       </View>
+                        //     );
+                        // }}
                 />
             </View>
         );

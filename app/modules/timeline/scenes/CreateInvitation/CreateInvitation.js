@@ -147,7 +147,9 @@ class CreateInvitation extends Component {
     renderEventInvitation = () => {
         const { eventInvitation } = this.state;
         return (
-            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
+            <View style={styles.eventContainer}>
+                <EventCardCreateInvitation eventInvitation={eventInvitation}/>
+            </View>
         );
     }
 

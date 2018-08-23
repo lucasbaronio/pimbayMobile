@@ -110,6 +110,27 @@ const getInvSentTime = (dateCreated) => {
     if (minutes < 1) return "Enviada ahora";
 }
 
+const getInvReceivedTime = (dateCreated) => {
+    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+    
+    var dateCreatedParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
+    var now = moment(new Date());
+    var diff = moment.duration(moment(now).diff(dateCreatedParsed));
+    var days = parseInt(diff.asDays());
+    var hours = parseInt(diff.asHours()); //it gives in miliseconds
+    hours = hours - days * 24;
+    var minutes = parseInt(diff.asMinutes());
+    minutes = minutes - (days * 24 * 60 + hours * 60);
+    
+    if (days > 1) return "Recibida el " + dateCreatedParsed.date() + " " + months[dateCreatedParsed.month()] + " a las " + dateCreatedParsed.format('HH:mm');
+    if (days == 1) return "Recibida ayer a las " + dateCreatedParsed.format('HH:mm');
+    if (hours > 1) return "Recibida hace " + hours + " horas";
+    if (hours == 1) return "Recibida hace " + hours + " hora";
+    if (minutes > 1) return "Recibida hace " + minutes + " minutos";
+    if (minutes == 1) return "Recibida hace " + minutes + " minuto";
+    if (minutes < 1) return "Recibida ahora";
+}
+
 export {
     formatDateFromString,
     formatFullDate,
@@ -118,5 +139,6 @@ export {
     getFormalDate,
     getDueTime,
     getCreatedTime,
-    getInvSentTime
+    getInvSentTime,
+    getInvReceivedTime
 }

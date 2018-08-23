@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         fontSize: fontSize.text4, 
         color: color.orange
     },
-    buttonViewFinalize: {
+    buttonViewFinalizar: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5

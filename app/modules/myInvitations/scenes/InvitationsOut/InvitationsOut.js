@@ -9,9 +9,6 @@ import SentInvitationCard from "../../../shared/Invitation/SentInvitationCard";
 import styles from "./styles";
 
 class InvitationsOut extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.getInvitationsOut();

@@ -8,7 +8,7 @@
             "DDM2AobexaNzHbRyjuYk"
         ],
         "invitationType": "DIRECTED",
-        "dueDate": "2018-08-22T00:02:03.000+0000",
+        "dueDate": "2018-08-29T00:02:03.000+0000",
         "sex": null,
         "quota": 0,
         "minAge": 0,
@@ -52,7 +52,7 @@
             "DDM2AobexaNzHbRyjuYk"
         ],
         "invitationType": "DIRECTED",
-        "dueDate": "2018-08-22T00:02:03.000+0000",
+        "dueDate": "2018-08-23T17:02:03.000+0000",
         "sex": null,
         "quota": 0,
         "minAge": 0,
@@ -60,7 +60,7 @@
         "realizationDate": null,
         "eventId": "1",
         "description": "Estoy para ir a tomar una cerveza por ahi!",
-        "dateCreated": "2018-08-06T00:02:03.853+0000",
+        "dateCreated": "2018-08-22T00:02:03.853+0000",
         "type": "INVITATION",
         "confirmedUsersIds": null,
         "orderByDate": "2018-08-22T00:02:03.000+0000"
