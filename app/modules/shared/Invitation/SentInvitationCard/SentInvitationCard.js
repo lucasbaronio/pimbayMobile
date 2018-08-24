@@ -14,6 +14,7 @@ import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
 import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
+import publicEarth from '../../../../assets/icons/earth.png';
 
 // Borrar luego de que obtengamos la info de backend
 import { getContextAction, getEvent, getUserInfo } from '../backendInfoTmp';
@@ -64,10 +65,10 @@ class SentInvitationCard extends Component {
             const contextAction = getContextAction(contextActionId);
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
-                    <ContextAction 
+                    <ContextAction
                         item={contextAction}
                         size={contextActionSize.SMALL}
-                        selectable={false}/>
+                        selectable={false} />
                     <View style={{ flex: 2 }}>
                         <Text style={styles.descriptionWithContextStyle}>{description}</Text>
                     </View>
@@ -82,17 +83,47 @@ class SentInvitationCard extends Component {
         }
     }
 
+    renderUserPhotoSection = (item) => {
+        if (item.invitationType == 'OPEN') {
+            return <UserPhotoSection icon={publicEarth} isPublic={true} />
+        } else {
+            const userInfo = getUserInfo(item.invitedUsers[0]); //TODO implementar caso multiples usuarios
+            return <UserPhotoSection userAvatar={userInfo.avatar} icon={sentIcon} isPublic={false} />
+        }
+    }
+
+    renderUserNameIfDirected = (item) => {
+        if (item.invitationType == 'OPEN') {
+            return <Text style={styles.userNameStyle}>Invitación abierta</Text>
+        } else {
+            const userInfo = getUserInfo(item.invitedUsers[0]); //TODO implementar caso multiples usuarios
+            return <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+        }
+    }
+
+    renderGoToChatButton = (item) => {
+        if (item.invitationType != 'OPEN') {
+            return (
+                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
+                    <View style={styles.buttonViewChat}>
+                        <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
+                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
+                    </View>
+                </TouchableWithoutFeedback>
+            );
+        }
+    }
+
     render() {
         const { item } = this.props;
-        const userInfo = getUserInfo(item.invitedUsers[0]);
 
         return (
             <View>
                 <View style={styles.container}>
-                    <UserPhotoSection userAvatar={userInfo.avatar} icon={sentIcon} />
+                    {this.renderUserPhotoSection(item)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
-                            <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+                            {this.renderUserNameIfDirected(item)}
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
@@ -102,12 +133,7 @@ class SentInvitationCard extends Component {
                                         <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
-                                    <View style={styles.buttonViewChat}>
-                                        <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
-                                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-                                    </View>
-                                </TouchableWithoutFeedback>
+                                {this.renderGoToChatButton(item)}
                             </View>
                         </View>
                     </View>
