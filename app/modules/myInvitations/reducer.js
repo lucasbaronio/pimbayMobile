@@ -5,6 +5,9 @@ import invitationsInJson from './scenes/InvitationsIn/invitationsIn';
 let initialState = {
     invitationsOut: [],
     invitationsIn: [],
+    isLoadingOut: false,
+    isLoadingHeaderOut: false,
+    isLoadingMoreOut: false,
     isLoadingIn: false,
     isLoadingHeaderIn: false,
     isLoadingMoreIn: false,
@@ -12,15 +15,51 @@ let initialState = {
 
 const invitationsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case t.LOADING_INVITATION_OUT: {
+            const invitationsOut = state.invitationsOut;
+
+            if (invitationsOut.length === 0)
+                return { ...state, isLoadingOut: true }
+
+            return state;
+        }
+
+        case t.LOADING_FOOTER_INVITATION_OUT: {
+            return { ...state, isLoadingMoreOut: true }
+        }
+
+        case t.LOADING_HEADER_INVITATION_OUT: {
+            return { ...state, isLoadingHeaderOut: true }
+        }
+        
         case t.INVITATION_OUT_AVAILABLE: {
-            let invitationsOut = invitationsOutJson;
-            return { ...state, invitationsOut };
+            let { data, start } = action;
+            let invitationsOut = [];
+            if (start !== 0) {
+                invitations = state.invitations;
+            }
+            invitationsOut = invitationsOut.concat(data);
+            return {
+                ...state, invitationsOut,
+                isLoadingOut: false,
+                isLoadingMoreOut: false,
+            };
+        }
+
+        case t.INVITATION_OUT_REFRESHED: {
+            let { data } = action;
+            let invitationsOut = [];
+            invitationsOut = invitationsOut.concat(data);
+            return {
+                ...state, invitationsOut,
+                isLoadingHeaderOut: false,
+            };
         }
 
         case t.LOADING_INVITATION_IN: {
             const invitationsIn = state.invitationsIn;
 
-            if (invitationsIn.length === 0) 
+            if (invitationsIn.length === 0)
                 return { ...state, isLoadingIn: true }
 
             return state;
@@ -42,9 +81,9 @@ const invitationsReducer = (state = initialState, action) => {
             // }
             // invitationsIn = invitationsIn.concat(data);
             invitationsIn = invitationsIn.concat(invitationsInJson);
-            return { 
-                ...state, invitationsIn, 
-                isLoadingIn: false, 
+            return {
+                ...state, invitationsIn,
+                isLoadingIn: false,
                 isLoadingMoreIn: false,
             };
         }
@@ -54,8 +93,8 @@ const invitationsReducer = (state = initialState, action) => {
             let invitationsIn = [];
             // invitationsIn = invitationsIn.concat(data);
             invitationsIn = invitationsIn.concat(invitationsInJson);
-            return { 
-                ...state, invitationsIn, 
+            return {
+                ...state, invitationsIn,
                 isLoadingHeaderIn: false,
             };
         }
