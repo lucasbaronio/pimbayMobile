@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: color.white,
     },
+    activityIndicatorCenter: {
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: "center"
+    },
 });
 
 export default styles;

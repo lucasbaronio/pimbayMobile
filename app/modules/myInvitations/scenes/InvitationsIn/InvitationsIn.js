@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
 import { actions as invitationsActions } from "../../index";
-const { getInvitationsIn } = invitationsActions;
+const { getInvitationsIn, getInvitationsInRefresh } = invitationsActions;
 
-// import InvitationCard from "../../../shared/Invitation/InvitationCard";
 import ReceivedInvitationCard from "../../../shared/Invitation/ReceivedInvitationCard";
-// import { invitationCard } from "../../../shared/constants";
 import styles from "./styles";
 
 class InvitationsIn extends Component {
@@ -17,16 +15,23 @@ class InvitationsIn extends Component {
     }
 
     renderItem = ({item, index}) => {
-        // return <InvitationCard item={item} cardType={ invitationCard.SENT }/>
         return <ReceivedInvitationCard item={item} />
     }
 
     render() {
-        return (
-            <View style={styles.container}>
-                <FlatList
+        if (this.props.isLoading) {
+            return (
+                <View style={styles.activityIndicatorCenter}>
+                    <ActivityIndicator animating={true} />
+                </View>
+            )
+        } else {
+            const { invitationsIn, isLoadingHeader, getInvitationsInRefresh } = this.props;
+            return (
+                <View style={styles.container}>
+                    <FlatList
                         ref='listRef'
-                        data={this.props.invitationsIn}
+                        data={invitationsIn}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
                         // onEndReached={() => {
@@ -46,16 +51,26 @@ class InvitationsIn extends Component {
                         //       </View>
                         //     );
                         // }}
-                />
-            </View>
-        );
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={isLoadingHeader}
+                                onRefresh={() => getInvitationsInRefresh((error) => alert(error.message))}
+                            />
+                        }
+                    />
+                </View>
+            );
+        }
     }
 }
 
 function mapStateToProps(state, props) {
     return {
-        invitationsIn: state.invitationsReducer.invitationsIn
+        isLoading: state.timelineReducer.isLoadingIn,
+        isLoadingHeader: state.invitationsReducer.isLoadingHeaderIn,
+        isLoadingMore: state.timelineReducer.isLoadingMoreIn,
+        invitationsIn: state.invitationsReducer.invitationsIn,
     }
 }
 
-export default connect(mapStateToProps, { getInvitationsIn })(InvitationsIn);
+export default connect(mapStateToProps, { getInvitationsIn, getInvitationsInRefresh })(InvitationsIn);

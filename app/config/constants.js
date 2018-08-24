@@ -12,5 +12,10 @@ export const API_EVENT_SIZE = 10;
 export const API_EVENT = `${API}event?size=${API_EVENT_SIZE}&`;
 export const API_INVITATION_SIZE = 10;
 // export const API_INVITATION = `${API}invitations?size=${API_EVENT_SIZE}&`;
-export const API_INVITATION = `${API}invitations`;
+export const API_INVITATION = `${API}invitations/`;
 export const API_CONTEXT_ACTION_LIST = `${API}context_actions`;
+
+// Por ahora las dejamos iguales, luego descomentar la linea de abajo:
+// export const API_INVITATION_IN = ({userId}) => `${API_INVITATION}${userId}/received`;
+export const API_INVITATION_IN = ({userId}) => `${API_INVITATION}${userId}/sended`;
+export const API_INVITATION_OUT = ({userId}) => `${API_INVITATION}${userId}/sended`;
