@@ -3,7 +3,21 @@ import * as api from './api';
 
 export function getInvitationsOut() {
     return (dispatch) => {
-        dispatch({type: t.INVITATION_OUT_AVAILABLE})
+        dispatch({type: t.LOADING_INVITATION_OUT})
+        api.getInvitationsOut(function (success, data, error) {
+            if (success) dispatch({type: t.INVITATION_OUT_AVAILABLE, data});
+            else if (error) errorCB(error)
+        });
+    };
+}
+
+export function getInvitationsOutRefresh(errorCB) {
+    return (dispatch) => {
+        dispatch({type: t.LOADING_HEADER_INVITATION_OUT});
+        api.getInvitationsOut(function (success, data, error) {
+            if (success) dispatch({type: t.INVITATION_OUT_REFRESHED, data});
+            else if (error) errorCB(error)
+        });
     };
 }
 

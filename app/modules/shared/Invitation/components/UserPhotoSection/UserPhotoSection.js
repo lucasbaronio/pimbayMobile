@@ -8,9 +8,7 @@ import { getUserInfo } from '../../backendInfoTmp';
 
 class UserPhotoSection extends Component {
 
-    render() {
-        const { userAvatar, icon } = this.props;
-        // const userInfo = getUserInfo(userId);
+    renderUserPhotoSection = (userAvatar, icon) => {
         return (
             <View style={styles.container}>
                 <Avatar
@@ -22,7 +20,22 @@ class UserPhotoSection extends Component {
                 />
                 <Image source={icon} style={styles.iconSentStyle} />
             </View>
-        )
+        );
+    }
+
+    renderPublicPhotoSection = (icon) => {
+        return (
+            <View style={styles.container}>
+                <Image source={icon} style={{height: 45, width: 45, marginTop: 20}} />
+            </View>
+        );
+    }
+
+    render() {
+        const { userAvatar, icon, isPublic } = this.props;
+        // const userInfo = getUserInfo(userId);
+        if (isPublic) return this.renderPublicPhotoSection(icon);
+        else return this.renderUserPhotoSection(userAvatar, icon);
     }
 }
 

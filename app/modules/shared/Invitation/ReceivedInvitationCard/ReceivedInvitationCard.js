@@ -65,10 +65,10 @@ class ReceivedInvitationCard extends Component {
             const contextAction = getContextAction(contextActionId);
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
-                    <ContextAction 
+                    <ContextAction
                         item={contextAction}
                         size={contextActionSize.SMALL}
-                        selectable={false}/>
+                        selectable={false} />
                     <View style={{ flex: 2 }}>
                         <Text style={styles.descriptionWithContextStyle}>{description}</Text>
                     </View>
@@ -90,7 +90,7 @@ class ReceivedInvitationCard extends Component {
         return (
             <View>
                 <View style={styles.container}>
-                    <UserPhotoSection userAvatar={userInfo.avatar} icon={receivedIcon} />
+                    <UserPhotoSection userAvatar={userInfo.avatar} icon={receivedIcon} isPublic={false} />
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
