@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Alert, TextInput } from 'react-native';
+import { ScrollView, View, Alert, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
@@ -37,7 +37,7 @@ class CreateInvitation extends Component {
     }
 
     componentWillMount() {
-        const { type, invitationType, item } = this.props;
+        const { type, invitationType, item, isLoading } = this.props;
         switch (type) {
             case pimbayType.CONTEXT_ACTION:
                 this.setState({
@@ -61,6 +61,12 @@ class CreateInvitation extends Component {
     }
 
     createInvitation = () => {
+        Actions.refresh({ 
+            right: 
+                <View style={{flex: 1, marginRight: 15}}>
+                    <ActivityIndicator />
+                </View> 
+        });
         const { 
             description, dueDate, 
             invitationType, targetUsers, 
@@ -71,7 +77,6 @@ class CreateInvitation extends Component {
             Alert.alert('Edades', "No se ha definido el rango de edades.");
             return;
         }
-        console.log(this.state);
         this.props.createNewInvitation({
             description,
             dueDate,
@@ -87,10 +92,12 @@ class CreateInvitation extends Component {
     }
 
     onSuccess(){
+        Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
         Actions.pop();
     }
 
     onError(error){
+        Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
         Alert.alert("Oops", error.message);
     }
 
@@ -176,24 +183,30 @@ class CreateInvitation extends Component {
     render() {
         const { type } = this.props;
         return (
-            <ScrollView style={styles.container}>
-                {this.renderType()}
-                <DatePicker 
-                    onChangeDueDate={this.onChangeDueDate}/>
-                {/* <InvitationType 
-                    onChangeInvitationType={this.onChangeInvitationType} /> */}
-                <Target onChangeTargetUsers={this.onChangeTargetUsers} />
-                <Quota 
-                    onChangeQuota={this.onChangeQuota}/>
-                {
-                    !!(this.props.invitationType !== invitationType.OPEN) &&
-                    <InvitedUsers 
-                        onChangeInvitedUserList={this.onChangeInvitedUserList}/>
-                }
-                {
-                    !!(type !== pimbayType.SIMPLE) &&
-                    this.renderTextBox()
-                }
+            <ScrollView >
+                <KeyboardAvoidingView 
+                    behavior= {(Platform.OS === 'ios')? "position" : null} 
+                    keyboardVerticalOffset={Platform.select({ios: 84, android: 500})}
+                    style={styles.container} enabled >
+                    
+                    {this.renderType()}
+                    <DatePicker 
+                        onChangeDueDate={this.onChangeDueDate}/>
+                    {/* <InvitationType 
+                        onChangeInvitationType={this.onChangeInvitationType} /> */}
+                    <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                    <Quota 
+                        onChangeQuota={this.onChangeQuota}/>
+                    {
+                        !!(this.props.invitationType !== invitationType.OPEN) &&
+                        <InvitedUsers 
+                            onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                    }
+                    {
+                        !!(type !== pimbayType.SIMPLE) &&
+                        this.renderTextBox()
+                    }
+                </KeyboardAvoidingView>
             </ScrollView>
         );
     }
@@ -201,7 +214,7 @@ class CreateInvitation extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        user: state.authReducer.user
+        user: state.authReducer.user,
     }
 }
 

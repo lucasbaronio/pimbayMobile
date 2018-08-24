@@ -11,6 +11,7 @@ let initialState = {
     events: [],
     isLoadingContextActionList: false,
     contextActions: [],
+    isLoadingCreateInvitation: false
 };
 
 const timelineReducer = (state = initialState, action) => {
@@ -94,6 +95,10 @@ const timelineReducer = (state = initialState, action) => {
                 ...state, contextActions, 
                 isLoadingContextActionList: false,
             }
+        }
+
+        case t.LOADING_CREATE_INVITATION: {
+            return { ...state, isLoadingCreateInvitation: !state.isLoadingCreateInvitation }
         }
 
         default:

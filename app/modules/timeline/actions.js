@@ -63,8 +63,10 @@ export function createNewInvitation(invitation, successCB, errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING_CREATE_INVITATION});
         api.createInvitation(invitation, function (success, data, error) {
-            if (success) successCB();
-            else if (error) errorCB(error);
+            if (success) {
+                dispatch({type: t.LOADING_CREATE_INVITATION});
+                successCB();
+            } else if (error) errorCB(error);
         });
     };
 }
