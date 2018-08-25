@@ -14,12 +14,29 @@ import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
 import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
-import publicEarth from '../../../../assets/icons/earth.png';
+import publicEarth from '../../../../assets/icons/earthColor.png';
 
 // Borrar luego de que obtengamos la info de backend
-import { getContextAction, getEvent, getUserInfo } from '../backendInfoTmp';
+import { getContextAction, getEvent } from '../backendInfoTmp';
+import * as api from '../../../myInvitations/api';
 
 class SentInvitationCard extends Component {
+
+    state = {
+        isLoadingUser: true,
+        user: null
+    }
+
+    componentDidMount() {
+        const { item } = this.props;
+        let userId;
+        (item.invitationType == 'OPEN') ? userId = item.ownerId : item.invitedUsers[0]  //TODO multiple users, now it render only the first user in the list
+
+        api.getUserById(userId, function (success, data, error) {
+            if (success) this.setState({ isLoadingUser: false, user: data });
+            else if (error) errorCB(error);
+        }.bind(this));
+    }
 
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
@@ -84,20 +101,18 @@ class SentInvitationCard extends Component {
     }
 
     renderUserPhotoSection = (item) => {
-        if (item.invitationType == 'OPEN') {
-            return <UserPhotoSection icon={publicEarth} isPublic={true} />
-        } else {
-            const userInfo = getUserInfo(item.invitedUsers[0]); //TODO implementar caso multiples usuarios
-            return <UserPhotoSection userAvatar={userInfo.avatar} icon={sentIcon} isPublic={false} />
-        }
+        const isOpen = (item.invitationType == 'OPEN');
+        return <UserPhotoSection
+            userAvatar={(this.state.isLoadingUser) ? 'default' : this.state.user.avatar}
+            icon={(isOpen) ? publicEarth : sentIcon}
+        />
     }
 
     renderUserNameIfDirected = (item) => {
         if (item.invitationType == 'OPEN') {
             return <Text style={styles.userNameStyle}>Invitación abierta</Text>
         } else {
-            const userInfo = getUserInfo(item.invitedUsers[0]); //TODO implementar caso multiples usuarios
-            return <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+            return <Text style={styles.userNameStyle}>{(this.state.isLoadingUser) ? '' : this.state.user.userName}</Text>
         }
     }
 
