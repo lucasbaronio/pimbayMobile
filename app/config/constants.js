@@ -19,3 +19,6 @@ export const API_CONTEXT_ACTION_LIST = `${API}context_actions`;
 // export const API_INVITATION_IN = ({userId}) => `${API_INVITATION}${userId}/received`;
 export const API_INVITATION_IN = ({userId}) => `${API_INVITATION}${userId}/sended`;
 export const API_INVITATION_OUT = ({userId}) => `${API_INVITATION}${userId}/sended`;
+
+export const API_USER = `${API}user`;
+export const API_USER_BY_ID = ({userId}) => `${API_USER}?id=${userId}`;
