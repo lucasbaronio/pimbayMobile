@@ -3,6 +3,7 @@ import {
     API_INVITATION,
     API_CONTEXT_ACTION_LIST,
     API_CREATE_INVITATION,
+    API_GET_USER_BY_ID
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -25,4 +26,8 @@ export function getContextActionList(callback) {
 
 export function createInvitation(invitation, callback) {
     post(`${API_INVITATION}`, invitation, callback);
+}
+
+export function getUserById(userId, callback) {
+    get(API_GET_USER_BY_ID({userId}), callback);
 }
