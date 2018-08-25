@@ -1,4 +1,4 @@
-import React, { Component, ActivityIndicator } from 'react';
+import React, { Component, ActivityIndicator as LoadingIndicator } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
@@ -73,7 +73,7 @@ class InvitationCard extends Component {
         if (this.state.isLoadingUser) {
             return (
                 <View style={styles.userInfoSectionContainer}>
-                    {/*<ActivityIndicator />*/}
+                    {/* <LoadingIndicator animating={true}/> */}
                 </View>
             );
         }
