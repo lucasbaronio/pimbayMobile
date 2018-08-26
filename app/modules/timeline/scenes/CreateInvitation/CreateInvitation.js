@@ -98,7 +98,7 @@ class CreateInvitation extends Component {
             sex: targetUsers,
             minAge,
             maxAge,
-            ownerId: 'DDM2AobexaNzHbRyjuYk',
+            ownerId: '7idtcB9R1KNmaPTCfN9y',
             contextActionId: contextActionSelected ? contextActionSelected.id : null,
             eventId: eventInvitation ? eventInvitation.id : null,
             invitedUsers: this.getInvitedUsersIds()

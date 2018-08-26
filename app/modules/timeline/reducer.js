@@ -43,7 +43,6 @@ const timelineReducer = (state = initialState, action) => {
                 invitations = state.invitations;
             }
             invitations = invitations.concat(data);
-            console.log(invitations);
             return { 
                 ...state, invitations, 
                 isLoading: false, 
@@ -53,8 +52,9 @@ const timelineReducer = (state = initialState, action) => {
 
         case t.INVITATION_LIST_REFRESHED: {
             let { data } = action;
-            let invitations = [];
-            invitations = invitations.concat(data);
+            console.log(data);
+            let invitations = [].concat(data);
+            console.log(invitations);
             return { 
                 ...state, invitations, 
                 isLoadingHeader: false,

@@ -126,7 +126,7 @@ class InvitationCard extends Component {
                         rounded
                         source={
                             (this.state.isLoadingContextAction)
-                                ? 'default'
+                                ? null
                                 : (this.state.contextAction.image)
                                     ? { uri: this.state.contextAction.image }
                                     : null
