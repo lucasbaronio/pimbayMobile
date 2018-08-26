@@ -25,7 +25,9 @@ class ReceivedInvitationCard extends Component {
         isLoadingUser: true,
         user: null,
         isLoadingContextAction: true,
-        contextAction: null
+        contextAction: null,
+        isLoadingEvent: true,
+        event: null
     }
 
     componentDidMount() {
@@ -40,6 +42,13 @@ class ReceivedInvitationCard extends Component {
             api.getContextActionById(item.contextActionId, function (success, data, error) {
                 if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
                 else if (error) errorCB(error);
+            }.bind(this));
+        }
+
+        if (item.eventId) {
+            api.getEventById(item.eventId, function (success, data, error) {
+                if (success) this.setState({ isLoadingEvent: false, event: data });
+                else if (error) { console.log(error); errorCB(error) };
             }.bind(this));
         }
     }
@@ -78,13 +87,17 @@ class ReceivedInvitationCard extends Component {
     renderDescriptionInformation = (item) => {
         const { contextActionId, eventId, description } = item;
         if (eventId) {
-            const event = getEvent(eventId);
-            return (
-                <View style={styles.descriptionContainerStyle}>
-                    <EventCardCreateInvitation eventInvitation={event} />
-                    <Text style={styles.descriptionWithEventStyle}>{description}</Text>
-                </View>
-            );
+            if (this.state.isLoadingEvent) {
+                return <View style={styles.descriptionContainerStyle} />
+            } else {
+                const event = this.state.event;
+                return (
+                    <View style={styles.descriptionContainerStyle}>
+                        <EventCardCreateInvitation eventInvitation={event} />
+                        <Text style={styles.descriptionWithEventStyle}>{description}</Text>
+                    </View>
+                );
+            }
         } else if (contextActionId) {
             const contextAction = (this.state.isLoadingContextAction) ? { "title": '', "icon": null, "type": null, "image": 'default' } : this.state.contextAction;
             return (
