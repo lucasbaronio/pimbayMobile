@@ -18,8 +18,6 @@ import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
-
-
 class SentInvitationCard extends Component {
 
     state = {
