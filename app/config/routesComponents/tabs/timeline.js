@@ -4,6 +4,7 @@ import { Scene, Stack, Modal, Tabs } from 'react-native-router-flux';
 import Timeline from '../../../modules/timeline/scenes/Timeline';
 import SearchTimeline from '../../../modules/timeline/scenes/SearchTimeline';
 import CreateInvitation from '../../../modules/timeline/scenes/CreateInvitation';
+import withActionSheetInvitationHOC from '../../../modules/shared/withActionSheetInvitationHOC';
 import SelectUsersFromList from '../../../modules/timeline/scenes/SelectUsersFromList';
 import { SearchButton, CloseButton, BackButton } from '../buttons';
 import houseFocused from '../../../assets/icons/house-black.png';
@@ -20,7 +21,7 @@ export default (
                     initial
                     key="Timeline"
                     title={(Platform.OS === 'ios') ? "Pimbay" : null}
-                    component={Timeline}
+                    component={withActionSheetInvitationHOC(Timeline)}
                     titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
                     renderRightButton={<SearchButton goToScreen='SearchTimeline' />}
                     navigationBarTitleImage={(Platform.OS === 'ios') ? null : require('../../../assets/headerImg.png')}
