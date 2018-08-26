@@ -15,6 +15,8 @@ export const API_INVITATION_SIZE = 10;
 export const API_INVITATION = `${API}invitations/`;
 export const API_CONTEXT_ACTION_LIST = `${API}context_actions`;
 
+export const API_ALL_USERS = `${API}allUsers`;
+
 // Por ahora las dejamos iguales, luego descomentar la linea de abajo:
 // export const API_INVITATION_IN = ({userId}) => `${API_INVITATION}${userId}/received`;
 export const API_INVITATION_IN = ({userId}) => `${API_INVITATION}${userId}/sended`;

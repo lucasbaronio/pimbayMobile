@@ -30,9 +30,27 @@ export function CloseButton() {
     )
 }
 
+export function CloseButtonOnPress({onPress}) {
+    return (
+        <NavButton onPress={onPress}
+                   name={"md-close"}
+                   type={"ionicon"}
+                   color={color.black}/>
+    )
+}
+
 export function BackButton() {
     return (
         <NavButton onPress={Actions.pop}
+                   name={"ios-arrow-back"}
+                   type={"ionicon"}
+                   color={color.black}/>
+    )
+}
+
+export function BackButtonOnPress({onPress}) {
+    return (
+        <NavButton onPress={onPress}
                    name={"ios-arrow-back"}
                    type={"ionicon"}
                    color={color.black}/>
@@ -43,7 +61,6 @@ export function SaveButton({onPress}) {
     return (
         <NavButton 
             onPress={onPress}
-            // onPress={Actions.pop}
             source={tick}
             name={null} />
     )

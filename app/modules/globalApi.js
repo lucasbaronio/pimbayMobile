@@ -21,10 +21,6 @@ export function get(uri, callback) {
     });
 }
 
-// body: {
-//     email: userData.email,
-//     password: userData.password,
-// }
 export function post(uri, body, callback) {
     console.log(body);
     return fetch(uri, {
@@ -38,15 +34,18 @@ export function post(uri, body, callback) {
     .then(response => {
         // if (response.status >= 200 && response.status < 300) {
         if (!response.ok) {
+            // console.log(response);
             const error = new Error(response.statusText);
             error.response = response;
             throw error;
         }
     })
     .then(data => {
+        // console.log(data);
         callback(true, data, null)
     })
     .catch((error) => {
+        // console.log(error);
         callback(false, null, error)
     });
 }

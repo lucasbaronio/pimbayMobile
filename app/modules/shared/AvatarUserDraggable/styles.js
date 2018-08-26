@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, color, windowWidth } = theme;
+const { normalize, color, windowHeight } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -34,14 +34,7 @@ const styles = StyleSheet.create({
         height: 22, 
         width: 22
     },
-    inviteButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 50, 
-        height: 50, 
-        borderRadius: 25, 
-        backgroundColor: color.light_grey
-    }
 });
 
+export { windowHeight }
 export default styles;

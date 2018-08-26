@@ -53,7 +53,7 @@ class Timeline extends React.Component {
             options: [
                 'Cancelar',
                 'Invitación Abierta',
-                // 'Invitación Dirigida'
+                'Invitación Dirigida'
             ],
             cancelButtonIndex: 0,
             title: 'Crear Invitación - De que tipo?',

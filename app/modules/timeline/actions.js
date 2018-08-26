@@ -64,9 +64,39 @@ export function createNewInvitation(invitation, successCB, errorCB) {
         dispatch({type: t.LOADING_CREATE_INVITATION});
         api.createInvitation(invitation, function (success, data, error) {
             if (success) {
-                dispatch({type: t.LOADING_CREATE_INVITATION});
+                dispatch({type: t.CREATE_INVITATION_SUCCESS});
                 successCB();
             } else if (error) errorCB(error);
         });
+    };
+}
+
+export function cleanCreateInvitation() {
+    return (dispatch) => {
+        dispatch({type: t.CLEAN_CREATE_INVITATION});
+    };
+}
+
+export function getFavoriteUsers(successCB, errorCB) {
+    return (dispatch) => {
+        dispatch({type: t.LOADING_FAVORITE_USERS});
+        api.getFavoriteUsers(function (success, data, error) {
+            if (success) {
+                dispatch({type: t.FAVORITE_USERS_AVAILABLE, data});
+                successCB(data);
+            } else if (error) errorCB(error)
+        });
+    };
+}
+
+export function addUserToInvitedList(item) {
+    return (dispatch) => {
+        dispatch({type: t.ADD_USER_TO_INVITED_LIST, item});
+    };
+}
+
+export function removeUserFromInvitedList(item) {
+    return (dispatch) => {
+        dispatch({type: t.REMOVE_USER_FROM_INVITED_LIST, item});
     };
 }
