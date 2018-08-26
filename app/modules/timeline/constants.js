@@ -5,7 +5,8 @@ import {
     API_INVITATION_SIZE as apiInvitationSize,
     API_CONTEXT_ACTION_LIST as apiContextActionList,
     API_CREATE_INVITATION as apiCreateInvitation,
-    API_ALL_USERS as apiAllUsers
+    API_ALL_USERS as apiAllUsers,
+    API_USER_BY_ID as apiGetUserById
 } from "../../config/constants";
 
 export const NAME = 'timeline';
@@ -17,3 +18,4 @@ export const API_INVITATION_SIZE = apiInvitationSize;
 export const API_CONTEXT_ACTION_LIST = apiContextActionList;
 export const API_CREATE_INVITATION = apiCreateInvitation;
 export const API_ALL_USERS = apiAllUsers;
+export const API_GET_USER_BY_ID = apiGetUserById;

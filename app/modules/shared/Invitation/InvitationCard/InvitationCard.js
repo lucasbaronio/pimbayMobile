@@ -1,21 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, ActivityIndicator as LoadingIndicator } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import styles, { fontSize, color } from "./styles";
-// Comente este import y agregue el de abajo, ahi ya tenemos todas las constantes de la logica de negocio
-// import { TIMELINE_INVITATION_CARD, RECEIVED_INVITATION_CARD, SENT_INVITATION_CARD } from "./constants";
-// Se usa invitationCard.TIMELINE o invitationCard.SENT ...
 import { invitationCard, invitationType } from "../../constants";
 import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 import TimePassing from '../../../../assets/icons/time-passing.png';
 import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
+import * as api from '../../../timeline/api';
+
 // Borrar luego de que obtengamos la info de backend
 import { getContextAction, getUserInfo } from '../backendInfoTmp';
 
 class InvitationCard extends Component {
+
+    state = {
+        isLoadingUser: true,
+        user: null
+    }
+
+    componentDidMount() {
+        const { item } = this.props;
+
+        api.getUserById(item.ownerId, function (success, data, error) {
+            if (success) this.setState({ isLoadingUser: false, user: data });
+            else if (error) errorCB(error);        
+        }.bind(this));
+    }
 
     onInvitePress = () => {
         this.goToCreateInvitation({ type: invitationType.OPEN, openInvitation: this.props.item });
@@ -40,7 +53,6 @@ class InvitationCard extends Component {
                 <Image
                     style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
                     resizeMode='center'
-                    // source={require('../../../../assets/icons/time-passing.png')} />
                     source={TimePassing} />
                 <Text style={styles.dueDateStyle}>
                     {getDueTime(item.dueDate)}
@@ -57,7 +69,16 @@ class InvitationCard extends Component {
     }
 
     renderUserInfoSection = (item) => {
-        const userInfo = getUserInfo(item.ownerId);
+        //const userInfo = getUserInfo(item.ownerId);
+        if (this.state.isLoadingUser) {
+            return (
+                <View style={styles.userInfoSectionContainer}>
+                    {/* <LoadingIndicator animating={true}/> */}
+                </View>
+            );
+        }
+
+        const userInfo = this.state.user;
         if (item.contextActionId == null) {
             return (
                 <View style={styles.userInfoSectionContainer}>
@@ -99,7 +120,6 @@ class InvitationCard extends Component {
 
     render() {
         const { item } = this.props;
-        const { cardType } = this.props;
 
         return (
             <View>
@@ -128,7 +148,6 @@ class InvitationCard extends Component {
                     <Image
                         style={styles.dividerImageStyle}
                         resizeMode='center'
-                        // source={require('../../../../assets/dividerOpenInvitation.png')} />
                         source={DividerOpenInvitation} />
                 </View>
             </View>

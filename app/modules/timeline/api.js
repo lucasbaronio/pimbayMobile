@@ -3,6 +3,7 @@ import {
     API_INVITATION,
     API_CONTEXT_ACTION_LIST,
     API_ALL_USERS,
+    API_GET_USER_BY_ID
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -29,4 +30,8 @@ export function createInvitation(invitation, callback) {
 
 export function getFavoriteUsers(callback) {
     get(`${API_ALL_USERS}`, callback);
+}
+
+export function getUserById(userId, callback) {
+    get(API_GET_USER_BY_ID({userId}), callback);
 }

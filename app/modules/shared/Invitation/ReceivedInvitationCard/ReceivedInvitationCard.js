@@ -16,9 +16,24 @@ import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
 // Borrar luego de que obtengamos la info de backend
-import { getContextAction, getEvent, getUserInfo } from '../backendInfoTmp';
+import { getContextAction, getEvent } from '../backendInfoTmp';
+import * as api from '../../../myInvitations/api';
 
 class ReceivedInvitationCard extends Component {
+
+    state = {
+        isLoadingUser: true,
+        user: null
+    }
+
+    componentDidMount() {
+        const { item } = this.props;
+
+        api.getUserById(item.ownerId, function (success, data, error) {
+            if (success) this.setState({ isLoadingUser: false, user: data });
+            else if (error) errorCB(error);
+        }.bind(this));
+    }
 
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
@@ -65,10 +80,10 @@ class ReceivedInvitationCard extends Component {
             const contextAction = getContextAction(contextActionId);
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
-                    <ContextAction 
+                    <ContextAction
                         item={contextAction}
                         size={contextActionSize.SMALL}
-                        selectable={false}/>
+                        selectable={false} />
                     <View style={{ flex: 2 }}>
                         <Text style={styles.descriptionWithContextStyle}>{description}</Text>
                     </View>
@@ -85,15 +100,14 @@ class ReceivedInvitationCard extends Component {
 
     render() {
         const { item } = this.props;
-        const userInfo = getUserInfo(item.ownerId);
 
         return (
             <View>
                 <View style={styles.container}>
-                    <UserPhotoSection userAvatar={userInfo.avatar} icon={receivedIcon} />
+                    <UserPhotoSection userAvatar={(this.state.isLoadingUser) ? 'default' : this.state.user.avatar} icon={receivedIcon} isPublic={false} />
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
-                            <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+                            <Text style={styles.userNameStyle}>{(this.state.isLoadingUser) ? '' : this.state.user.userName}</Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>

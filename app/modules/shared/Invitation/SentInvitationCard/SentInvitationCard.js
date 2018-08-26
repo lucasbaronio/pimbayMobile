@@ -14,11 +14,29 @@ import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
 import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
+import publicEarth from '../../../../assets/icons/earthColor.png';
 
 // Borrar luego de que obtengamos la info de backend
-import { getContextAction, getEvent, getUserInfo } from '../backendInfoTmp';
+import { getContextAction, getEvent } from '../backendInfoTmp';
+import * as api from '../../../myInvitations/api';
 
 class SentInvitationCard extends Component {
+
+    state = {
+        isLoadingUser: true,
+        user: null
+    }
+
+    componentDidMount() {
+        const { item } = this.props;
+        let userId;
+        (item.invitationType == 'OPEN') ? userId = item.ownerId : item.invitedUsers[0]  //TODO multiple users, now it render only the first user in the list
+
+        api.getUserById(userId, function (success, data, error) {
+            if (success) this.setState({ isLoadingUser: false, user: data });
+            else if (error) errorCB(error);
+        }.bind(this));
+    }
 
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
@@ -64,10 +82,10 @@ class SentInvitationCard extends Component {
             const contextAction = getContextAction(contextActionId);
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
-                    <ContextAction 
+                    <ContextAction
                         item={contextAction}
                         size={contextActionSize.SMALL}
-                        selectable={false}/>
+                        selectable={false} />
                     <View style={{ flex: 2 }}>
                         <Text style={styles.descriptionWithContextStyle}>{description}</Text>
                     </View>
@@ -82,17 +100,45 @@ class SentInvitationCard extends Component {
         }
     }
 
+    renderUserPhotoSection = (item) => {
+        const isOpen = (item.invitationType == 'OPEN');
+        return <UserPhotoSection
+            userAvatar={(this.state.isLoadingUser) ? 'default' : this.state.user.avatar}
+            icon={(isOpen) ? publicEarth : sentIcon}
+        />
+    }
+
+    renderUserNameIfDirected = (item) => {
+        if (item.invitationType == 'OPEN') {
+            return <Text style={styles.userNameStyle}>Invitación abierta</Text>
+        } else {
+            return <Text style={styles.userNameStyle}>{(this.state.isLoadingUser) ? '' : this.state.user.userName}</Text>
+        }
+    }
+
+    renderGoToChatButton = (item) => {
+        if (item.invitationType != 'OPEN') {
+            return (
+                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
+                    <View style={styles.buttonViewChat}>
+                        <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
+                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
+                    </View>
+                </TouchableWithoutFeedback>
+            );
+        }
+    }
+
     render() {
         const { item } = this.props;
-        const userInfo = getUserInfo(item.invitedUsers[0]);
 
         return (
             <View>
                 <View style={styles.container}>
-                    <UserPhotoSection userAvatar={userInfo.avatar} icon={sentIcon} />
+                    {this.renderUserPhotoSection(item)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
-                            <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+                            {this.renderUserNameIfDirected(item)}
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
@@ -102,12 +148,7 @@ class SentInvitationCard extends Component {
                                         <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
-                                    <View style={styles.buttonViewChat}>
-                                        <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
-                                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-                                    </View>
-                                </TouchableWithoutFeedback>
+                                {this.renderGoToChatButton(item)}
                             </View>
                         </View>
                     </View>
