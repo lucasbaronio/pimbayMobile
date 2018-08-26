@@ -17,7 +17,7 @@ import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
 // Borrar luego de que obtengamos la info de backend
-import { getContextAction, getEvent } from '../backendInfoTmp';
+import { getEvent } from '../backendInfoTmp';
 import * as api from '../../../myInvitations/api';
 
 class SentInvitationCard extends Component {
@@ -39,7 +39,7 @@ class SentInvitationCard extends Component {
             else if (error) errorCB(error);
         }.bind(this));
 
-        if (item.contextActionId != null) {
+        if (item.contextActionId) {
             api.getContextActionById(item.contextActionId, function (success, data, error) {
                 if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
                 else if (error) errorCB(error);
@@ -88,7 +88,6 @@ class SentInvitationCard extends Component {
                 </View>
             );
         } else if (contextActionId) {
-            //const contextAction = getContextAction(contextActionId);
             const contextAction = (this.state.isLoadingContextAction) ? {"title": '', "icon": null, "type": null, "image": 'default'} : this.state.contextAction;
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
