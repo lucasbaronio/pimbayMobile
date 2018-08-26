@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
-import styles, { fontSize } from "./styles";
+
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import ContextAction from '../../ContextAction';
-import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
 import UserPhotoSection from '../components/UserPhotoSection';
+
 import { contextActionSize } from '../../constants';
+import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
+import * as api from '../../../myInvitations/api';
+import styles from "./styles";
 
 import sentIcon from '../../../../assets/icons/sentIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
@@ -16,9 +18,7 @@ import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
-// Borrar luego de que obtengamos la info de backend
-import { getEvent } from '../backendInfoTmp';
-import * as api from '../../../myInvitations/api';
+
 
 class SentInvitationCard extends Component {
 
@@ -26,7 +26,9 @@ class SentInvitationCard extends Component {
         isLoadingUser: true,
         user: null,
         isLoadingContextAction: true,
-        contextAction: null
+        contextAction: null,
+        isLoadingEvent: true,
+        event: null
     }
 
     componentDidMount() {
@@ -43,6 +45,13 @@ class SentInvitationCard extends Component {
             api.getContextActionById(item.contextActionId, function (success, data, error) {
                 if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
                 else if (error) errorCB(error);
+            }.bind(this));
+        }
+
+        if (item.eventId) {
+            api.getEventById(item.eventId, function (success, data, error) {
+                if (success) this.setState({ isLoadingEvent: false, event: data });
+                else if (error) { console.log(error); errorCB(error) };
             }.bind(this));
         }
     }
@@ -80,15 +89,19 @@ class SentInvitationCard extends Component {
     renderDescriptionInformation = (item) => {
         const { contextActionId, eventId, description } = item;
         if (eventId) {
-            const event = getEvent(eventId);
-            return (
-                <View style={styles.descriptionContainerStyle}>
-                    <EventCardCreateInvitation eventInvitation={event} />
-                    <Text style={styles.descriptionWithEventStyle}>{description}</Text>
-                </View>
-            );
+            if (this.state.isLoadingEvent) {
+                return <View style={styles.descriptionContainerStyle} />
+            } else {
+                const event = this.state.event;
+                return (
+                    <View style={styles.descriptionContainerStyle}>
+                        <EventCardCreateInvitation eventInvitation={event} />
+                        <Text style={styles.descriptionWithEventStyle}>{description}</Text>
+                    </View>
+                );
+            }
         } else if (contextActionId) {
-            const contextAction = (this.state.isLoadingContextAction) ? {"title": '', "icon": null, "type": null, "image": 'default'} : this.state.contextAction;
+            const contextAction = (this.state.isLoadingContextAction) ? { "title": '', "icon": null, "type": null, "image": 'default' } : this.state.contextAction;
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
                     <ContextAction
