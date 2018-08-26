@@ -24,7 +24,9 @@ class SentInvitationCard extends Component {
 
     state = {
         isLoadingUser: true,
-        user: null
+        user: null,
+        isLoadingContextAction: true,
+        contextAction: null
     }
 
     componentDidMount() {
@@ -36,6 +38,13 @@ class SentInvitationCard extends Component {
             if (success) this.setState({ isLoadingUser: false, user: data });
             else if (error) errorCB(error);
         }.bind(this));
+
+        if (item.contextActionId != null) {
+            api.getContextActionById(item.contextActionId, function (success, data, error) {
+                if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
+                else if (error) errorCB(error);
+            }.bind(this));
+        }
     }
 
     renderDetailsInformation = (item) => {
@@ -79,7 +88,8 @@ class SentInvitationCard extends Component {
                 </View>
             );
         } else if (contextActionId) {
-            const contextAction = getContextAction(contextActionId);
+            //const contextAction = getContextAction(contextActionId);
+            const contextAction = (this.state.isLoadingContextAction) ? {"title": '', "icon": null, "type": null, "image": 'default'} : this.state.contextAction;
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
                     <ContextAction
