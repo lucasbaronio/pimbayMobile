@@ -9,14 +9,14 @@ import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
-import { pimbayType, invitationType, contextActionSize } from '../../../shared/constants';
+import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
-import { SaveButton } from '../../../../config/routesComponents/buttons';
+import { SaveButton, CloseButtonOnPress} from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 
 import { actions as createInvitation } from "../../index";
-const { createNewInvitation } = createInvitation;
+const { createNewInvitation, cleanCreateInvitation } = createInvitation;
 
 class CreateInvitation extends Component {
 
@@ -29,15 +29,13 @@ class CreateInvitation extends Component {
         dueDate: null,
         quota: null,
         hasQuota: true,
-        invitedUsers: null,
         targetUsers: null,
         minAge: null,
         maxAge: null,
-        invitedUsers: []
     }
 
     componentWillMount() {
-        const { type, invitationType, item, isLoading } = this.props;
+        const { type, invitationType, item } = this.props;
         switch (type) {
             case pimbayType.CONTEXT_ACTION:
                 this.setState({
@@ -57,7 +55,15 @@ class CreateInvitation extends Component {
                 });
                 break;
         }
-        Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
+        Actions.refresh({ 
+            right: <SaveButton onPress={this.createInvitation} />,
+            left: <CloseButtonOnPress onPress={this.cleanCreateInvitation} />,
+        });
+    }
+
+    cleanCreateInvitation = () => {
+        this.props.cleanCreateInvitation();
+        Actions.pop();
     }
 
     createInvitation = () => {
@@ -70,24 +76,32 @@ class CreateInvitation extends Component {
         const { 
             description, dueDate, 
             invitationType, targetUsers, 
-            minAge, maxAge, invitedUsers, 
+            minAge, maxAge, 
             contextActionSelected,
             eventInvitation } = this.state;
-        if (!minAge || !maxAge) {
+        const { createNewInvitation, invitedUsers } = this.props;
+        console.log(invitationType);
+        if (invitationType === invType.OPEN && (!minAge || !maxAge)) {
+            Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
             Alert.alert('Edades', "No se ha definido el rango de edades.");
             return;
         }
-        this.props.createNewInvitation({
+        if (invitationType !== invType.OPEN && invitedUsers.length === 0) {
+            Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
+            Alert.alert('Usuarios invitados', "No se han elegido los usuarios invitados.");
+            return;
+        } 
+        createNewInvitation({
             description,
             dueDate,
             invitationType,
-            // gender: targetUsers,
-            // minAge,
-            // maxAge,
+            sex: targetUsers,
+            minAge,
+            maxAge,
             ownerId: 'DDM2AobexaNzHbRyjuYk',
             contextActionId: contextActionSelected ? contextActionSelected.id : null,
             eventId: eventInvitation ? eventInvitation.id : null,
-            invitedUsers: invitedUsers
+            invitedUsers: this.getInvitedUsersIds()
         }, this.onSuccess, this.onError);
     }
 
@@ -99,6 +113,15 @@ class CreateInvitation extends Component {
     onError(error){
         Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
         Alert.alert("Oops", error.message);
+    }
+
+    getInvitedUsersIds = () => {
+        const { invitedUsers } = this.props;
+        var invitedUsersIds = [];
+        for(var i = 0; i < invitedUsers.length; i++) {
+            invitedUsersIds[i] = invitedUsers[i].id;
+        }
+        return invitedUsersIds;
     }
 
     renderType = () => {
@@ -176,10 +199,6 @@ class CreateInvitation extends Component {
         this.setState({quota, hasQuota})
     }
 
-    onChangeInvitedUserList = (invitedUsers) => {
-        this.setState({invitedUsers})
-    }
-
     render() {
         const { type } = this.props;
         return (
@@ -188,17 +207,20 @@ class CreateInvitation extends Component {
                     behavior= {(Platform.OS === 'ios')? "position" : null} 
                     keyboardVerticalOffset={Platform.select({ios: 84, android: 500})}
                     style={styles.container} enabled >
-                    
+
                     {this.renderType()}
                     <DatePicker 
                         onChangeDueDate={this.onChangeDueDate}/>
                     {/* <InvitationType 
                         onChangeInvitationType={this.onChangeInvitationType} /> */}
-                    <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                    {
+                        !!(this.props.invitationType === invType.OPEN) &&
+                        <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                    }
                     <Quota 
                         onChangeQuota={this.onChangeQuota}/>
                     {
-                        !!(this.props.invitationType !== invitationType.OPEN) &&
+                        !!(this.props.invitationType !== invType.OPEN) &&
                         <InvitedUsers 
                             onChangeInvitedUserList={this.onChangeInvitedUserList}/>
                     }
@@ -215,7 +237,11 @@ class CreateInvitation extends Component {
 function mapStateToProps(state, props) {
     return {
         user: state.authReducer.user,
+        invitedUsers: state.timelineReducer.invitedUsers
     }
 }
 
-export default connect(mapStateToProps, { createNewInvitation })(CreateInvitation);
+export default connect(mapStateToProps, { 
+    createNewInvitation, 
+    cleanCreateInvitation 
+})(CreateInvitation);

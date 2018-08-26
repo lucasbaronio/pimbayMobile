@@ -12,5 +12,11 @@ export const LOADING_HEADER = 'timeline/LOADING_HEADER';
 export const INVITATION_LIST_REFRESHED = 'timeline/INVITATION_LIST_REFRESHED';
 
 export const LOADING_CREATE_INVITATION = 'createInvitation/LOADING_CREATE_INVITATION';
+export const CREATE_INVITATION_SUCCESS = 'createInvitation/CREATE_INVITATION_SUCCESS';
+export const CLEAN_CREATE_INVITATION = 'createInvitation/CLEAN_CREATE_INVITATION';
+export const LOADING_FAVORITE_USERS = 'createInvitation/LOADING_FAVORITE_USERS';
+export const FAVORITE_USERS_AVAILABLE = 'createInvitation/FAVORITE_USERS_AVAILABLE';
+export const ADD_USER_TO_INVITED_LIST = 'createInvitation/ADD_USER_TO_INVITED_LIST';
+export const REMOVE_USER_FROM_INVITED_LIST = 'createInvitation/REMOVE_USER_FROM_INVITED_LIST';
 
 // export const LOGGED_OUT = logged_out;

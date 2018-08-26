@@ -11,7 +11,10 @@ let initialState = {
     events: [],
     isLoadingContextActionList: false,
     contextActions: [],
-    isLoadingCreateInvitation: false
+    isLoadingCreateInvitation: false,
+    isLoadingFavoriteUsers: false,
+    favoriteUsers: [],
+    invitedUsers: []
 };
 
 const timelineReducer = (state = initialState, action) => {
@@ -98,7 +101,50 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.LOADING_CREATE_INVITATION: {
-            return { ...state, isLoadingCreateInvitation: !state.isLoadingCreateInvitation }
+            return { ...state, isLoadingCreateInvitation: true }
+        }
+
+        case t.CREATE_INVITATION_SUCCESS: {
+            return { 
+                ...state, 
+                isLoadingCreateInvitation: false,
+                invitedUsers: []
+            }
+        }
+
+        case t.CLEAN_CREATE_INVITATION: {
+            return { 
+                ...state, 
+                isLoadingCreateInvitation: false,
+                invitedUsers: []
+            }
+        }
+
+        case t.LOADING_FAVORITE_USERS: {
+            return { ...state, isLoadingFavoriteUsers: true }
+        }
+
+        case t.FAVORITE_USERS_AVAILABLE: {
+            let { data } = action;
+            let favoriteUsers = data
+            return { 
+                ...state, favoriteUsers, 
+                isLoadingFavoriteUsers: false,
+            }
+        }
+
+        case t.ADD_USER_TO_INVITED_LIST: {
+            let { item } = action;
+            let invitedUsers = state.invitedUsers.concat(item);
+            
+            return { ...state, invitedUsers }
+        }
+
+        case t.REMOVE_USER_FROM_INVITED_LIST: {
+            let { item } = action;
+            
+            return { ...state, 
+                invitedUsers: state.invitedUsers.filter(user => user.id !== item.id) }
         }
 
         default:
