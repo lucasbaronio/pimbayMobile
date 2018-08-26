@@ -2,26 +2,6 @@ import {StyleSheet} from 'react-native';
 import {theme} from "../../index"
 const { fontFamily, fontSize, windowWidth, color } = theme;
 
-const actionSheetStyles = {
-    titleText: {
-        fontSize: theme.fontSize.text4,
-        fontFamily: theme.fontFamily.bold,
-        color: theme.color.black
-    },
-    messageText: {
-        fontSize: theme.fontSize.text5,
-        fontFamily: theme.fontFamily.regular,
-        color: theme.color.grey
-    },
-    buttonText: {
-        fontSize: theme.fontSize.text4,
-        fontFamily: theme.fontFamily.regular,
-        color: theme.color.orange
-    }
-};
-
-export { color, actionSheetStyles };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -58,4 +38,5 @@ const styles = StyleSheet.create({
     }
 });
 
+export { color };
 export default styles;

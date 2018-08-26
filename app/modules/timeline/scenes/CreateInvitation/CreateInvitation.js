@@ -204,11 +204,15 @@ class CreateInvitation extends Component {
         return (
             <ScrollView >
                 <KeyboardAvoidingView 
-                    behavior= {(Platform.OS === 'ios')? "position" : null} 
+                    behavior= {(Platform.OS === 'ios')? "padding" : null} 
                     keyboardVerticalOffset={Platform.select({ios: 84, android: 500})}
                     style={styles.container} enabled >
 
                     {this.renderType()}
+                    {
+                        !!(type !== pimbayType.SIMPLE) &&
+                        this.renderTextBox()
+                    }
                     <DatePicker 
                         onChangeDueDate={this.onChangeDueDate}/>
                     {/* <InvitationType 
@@ -223,10 +227,6 @@ class CreateInvitation extends Component {
                         !!(this.props.invitationType !== invType.OPEN) &&
                         <InvitedUsers 
                             onChangeInvitedUserList={this.onChangeInvitedUserList}/>
-                    }
-                    {
-                        !!(type !== pimbayType.SIMPLE) &&
-                        this.renderTextBox()
                     }
                 </KeyboardAvoidingView>
             </ScrollView>
