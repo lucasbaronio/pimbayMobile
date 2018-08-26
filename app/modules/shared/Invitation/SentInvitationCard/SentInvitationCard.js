@@ -30,7 +30,7 @@ class SentInvitationCard extends Component {
     componentDidMount() {
         const { item } = this.props;
         let userId;
-        (item.invitationType == 'OPEN') ? userId = item.ownerId : item.invitedUsers[0]  //TODO multiple users, now it render only the first user in the list
+        (item.invitationType == 'OPEN') ? userId = item.ownerId : userId = item.invitedUsers[0]  //TODO multiple users, now it render only the first user in the list
 
         api.getUserById(userId, function (success, data, error) {
             if (success) this.setState({ isLoadingUser: false, user: data });
