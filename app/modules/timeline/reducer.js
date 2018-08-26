@@ -43,6 +43,7 @@ const timelineReducer = (state = initialState, action) => {
                 invitations = state.invitations;
             }
             invitations = invitations.concat(data);
+            console.log(invitations);
             return { 
                 ...state, invitations, 
                 isLoading: false, 
