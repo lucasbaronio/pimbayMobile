@@ -1,24 +1,25 @@
-import React, { Component, ActivityIndicator as LoadingIndicator } from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Button as ButtonElements, Avatar } from 'react-native-elements';
-import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import styles, { fontSize, color } from "./styles";
-import { invitationCard, invitationType } from "../../constants";
-import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
-import TimePassing from '../../../../assets/icons/time-passing.png';
-import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
+import { connect } from "react-redux";
 
+import { invitationType } from "../../constants";
+import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 import * as api from '../../../timeline/api';
 
-// Borrar luego de que obtengamos la info de backend
-import { getContextAction, getUserInfo } from '../backendInfoTmp';
+import styles, { fontSize, color } from "./styles";
+
+import TimePassing from '../../../../assets/icons/time-passing.png';
+import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
 class InvitationCard extends Component {
 
     state = {
         isLoadingUser: true,
-        user: null
+        user: null,
+        isLoadingContextAction: true,
+        contextAction: null
     }
 
     componentDidMount() {
@@ -26,8 +27,15 @@ class InvitationCard extends Component {
 
         api.getUserById(item.ownerId, function (success, data, error) {
             if (success) this.setState({ isLoadingUser: false, user: data });
-            else if (error) errorCB(error);        
+            else if (error) errorCB(error);
         }.bind(this));
+
+        if (item.contextActionId != null) {
+            api.getContextActionById(item.contextActionId, function (success, data, error) {
+                if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
+                else if (error) errorCB(error);
+            }.bind(this));
+        }
     }
 
     onInvitePress = () => {
@@ -69,7 +77,6 @@ class InvitationCard extends Component {
     }
 
     renderUserInfoSection = (item) => {
-        //const userInfo = getUserInfo(item.ownerId);
         if (this.state.isLoadingUser) {
             return (
                 <View style={styles.userInfoSectionContainer}>
@@ -92,7 +99,6 @@ class InvitationCard extends Component {
                 </View>
             );
         } else {
-            const actionContext = getContextAction();
             return (
                 <View style={styles.userInfoSectionContainer}>
                     <View style={styles.userInfoSectionContainer}>
@@ -107,12 +113,28 @@ class InvitationCard extends Component {
                     <Avatar
                         small
                         rounded
-                        source={(actionContext.image) ? { uri: actionContext.image } : null}
-                        icon={(actionContext.icon && actionContext.type) ? { name: actionContext.icon, type: actionContext.type } : null}
+                        source={
+                            (this.state.isLoadingContextAction)
+                                ? 'default'
+                                : (this.state.contextAction.image)
+                                    ? { uri: this.state.contextAction.image }
+                                    : null
+                        }
+                        icon={
+                            (this.state.isLoadingContextAction)
+                                ? null
+                                : (this.state.contextAction.icon && this.state.contextAction.type)
+                                    ? { name: this.state.contextAction.icon, type: this.state.contextAction.type }
+                                    : null
+                        }
                         overlayContainerStyle={styles.avatarBackground}
                         containerStyle={styles.avatarContainerStyle}
                     />
-                    <Text style={styles.avatarTextStyle}>{actionContext.title}</Text>
+                    <Text style={styles.avatarTextStyle}>
+                        {
+                            (this.state.isLoadingContextAction) ? '' : this.state.contextAction.title
+                        }
+                    </Text>
                 </View>
             );
         }

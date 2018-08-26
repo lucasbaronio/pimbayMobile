@@ -3,6 +3,7 @@ import {
     API_INVITATIONS_PAGINATION,
     API_INVITATION,
     API_CONTEXT_ACTION,
+    API_GET_CONTEXT_ACTION_BY_ID,
     API_GET_ALL_USERS,
     API_GET_USER_BY_ID
 } from './constants';
@@ -22,6 +23,10 @@ export function getEvents(start, callback) {
 
 export function getContextActionList(callback) {
     get(API_CONTEXT_ACTION, callback);
+}
+
+export function getContextActionById(contextActionId, callback) {
+    get(API_GET_CONTEXT_ACTION_BY_ID({contextActionId}), callback);
 }
 
 export function createInvitation(invitation, callback) {
