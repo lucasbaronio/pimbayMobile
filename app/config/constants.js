@@ -39,8 +39,8 @@ export const API_EVENT_BY_ID = ({eventId}) => `${API_EVENT}/${eventId}`;
 export const API_INVITATION_SIZE = 10;
 export const API_INVITATION = `${API}invitations`;
 export const API_INVITATIONS_PAGINATION = ({start}) => `${API_INVITATION}?limit=${API_INVITATION_SIZE}&offset=${start}`;
-export const API_INVITATIONS_IN = ({userId}) => `${API_INVITATION}/${userId}/sended`;
-export const API_INVITATIONS_OUT = ({userId}) => `${API_INVITATION}/${userId}/received`;
+export const API_INVITATIONS_IN = ({userId}) => `${API_INVITATION}/${userId}/received`;
+export const API_INVITATIONS_OUT = ({userId}) => `${API_INVITATION}/${userId}/sended`;
 // ------------------------------------
 
 
