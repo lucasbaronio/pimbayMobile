@@ -4,6 +4,8 @@ import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
 
+import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
+
 import { invitationType } from "../../constants";
 import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 import * as api from '../../../timeline/api';
@@ -19,7 +21,9 @@ class InvitationCard extends Component {
         isLoadingUser: true,
         user: null,
         isLoadingContextAction: true,
-        contextAction: null
+        contextAction: null,
+        isLoadingEvent: true,
+        event: null
     }
 
     componentDidMount() {
@@ -30,10 +34,17 @@ class InvitationCard extends Component {
             else if (error) errorCB(error);
         }.bind(this));
 
-        if (item.contextActionId != null) {
+        if (item.contextActionId) {
             api.getContextActionById(item.contextActionId, function (success, data, error) {
                 if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
                 else if (error) errorCB(error);
+            }.bind(this));
+        }
+
+        if (item.eventId) {
+            api.getEventById(item.eventId, function (success, data, error) {
+                if (success) this.setState({ isLoadingEvent: false, event: data });
+                else if (error) { console.log(error); errorCB(error) };
             }.bind(this));
         }
     }
@@ -149,6 +160,13 @@ class InvitationCard extends Component {
                     {this.renderUserInfoSection(item)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
+                            {
+                                (item.eventId)
+                                    ? (!this.state.isLoadingEvent)
+                                        ? <EventCardCreateInvitation eventInvitation={this.state.event} />
+                                        : null
+                                    : null
+                            }
                             <View style={styles.descriptionContainerStyle}>
                                 <Text style={styles.descriptionStyle}>{item.description}</Text>
                             </View>
