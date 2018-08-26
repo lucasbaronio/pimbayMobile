@@ -9,7 +9,7 @@ import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
-import { pimbayType, invitationType, contextActionSize } from '../../../shared/constants';
+import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
 import { SaveButton, CloseButtonOnPress} from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
@@ -79,12 +79,19 @@ class CreateInvitation extends Component {
             minAge, maxAge, 
             contextActionSelected,
             eventInvitation } = this.state;
-        if (!minAge || !maxAge) {
+        const { createNewInvitation, invitedUsers } = this.props;
+        console.log(invitationType);
+        if (invitationType === invType.OPEN && (!minAge || !maxAge)) {
+            Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
             Alert.alert('Edades', "No se ha definido el rango de edades.");
             return;
         }
-        console.log(this.props.invitedUsers);
-        this.props.createNewInvitation({
+        if (invitationType !== invType.OPEN && invitedUsers.length === 0) {
+            Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
+            Alert.alert('Usuarios invitados', "No se han elegido los usuarios invitados.");
+            return;
+        } 
+        createNewInvitation({
             description,
             dueDate,
             invitationType,
@@ -206,11 +213,14 @@ class CreateInvitation extends Component {
                         onChangeDueDate={this.onChangeDueDate}/>
                     {/* <InvitationType 
                         onChangeInvitationType={this.onChangeInvitationType} /> */}
-                    <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                    {
+                        !!(this.props.invitationType === invType.OPEN) &&
+                        <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                    }
                     <Quota 
                         onChangeQuota={this.onChangeQuota}/>
                     {
-                        !!(this.props.invitationType !== invitationType.OPEN) &&
+                        !!(this.props.invitationType !== invType.OPEN) &&
                         <InvitedUsers 
                             onChangeInvitedUserList={this.onChangeInvitedUserList}/>
                     }
