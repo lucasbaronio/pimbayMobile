@@ -31,7 +31,7 @@ const invitationsReducer = (state = initialState, action) => {
         case t.LOADING_HEADER_INVITATION_OUT: {
             return { ...state, isLoadingHeaderOut: true }
         }
-        
+
         case t.INVITATION_OUT_AVAILABLE: {
             let { data, start } = action;
             let invitationsOut = [];
@@ -74,13 +74,13 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_IN_AVAILABLE: {
-            // let { data, start } = action;
+            let { data, start } = action;
             let invitationsIn = [];
-            // if (start !== 0) {
-            //     invitations = state.invitations;
-            // }
-            // invitationsIn = invitationsIn.concat(data);
-            invitationsIn = invitationsIn.concat(invitationsInJson);
+            if (start !== 0) {
+                invitations = state.invitations;
+            }
+            invitationsIn = invitationsIn.concat(data);
+            //invitationsIn = invitationsIn.concat(invitationsInJson);
             return {
                 ...state, invitationsIn,
                 isLoadingIn: false,
@@ -91,8 +91,8 @@ const invitationsReducer = (state = initialState, action) => {
         case t.INVITATION_IN_REFRESHED: {
             let { data } = action;
             let invitationsIn = [];
-            // invitationsIn = invitationsIn.concat(data);
-            invitationsIn = invitationsIn.concat(invitationsInJson);
+            invitationsIn = invitationsIn.concat(data);
+            //invitationsIn = invitationsIn.concat(invitationsInJson);
             return {
                 ...state, invitationsIn,
                 isLoadingHeaderIn: false,
