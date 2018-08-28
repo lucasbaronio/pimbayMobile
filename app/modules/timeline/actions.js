@@ -21,8 +21,9 @@ export function getInvitations(start, errorCB) {
         ? dispatch({type: t.LOADING_INVITATION_LIST})
         : dispatch({type: t.LOADING_FOOTER_INVITATION_LIST})
         api.getInvitations(start, function (success, data, error) {
-            if (success) dispatch({type: t.INVITATION_LIST_AVAILABLE, data, start});
-            else if (error) errorCB(error)
+            if (success) {
+                dispatch({type: t.INVITATION_LIST_AVAILABLE, data, start});
+            } else if (error) errorCB(error)
         });
     };
 }
@@ -100,3 +101,31 @@ export function removeUserFromInvitedList(item) {
         dispatch({type: t.REMOVE_USER_FROM_INVITED_LIST, item});
     };
 }
+
+export function getUserById(userId, errorCB) {
+    return (dispatch) => {
+        api.getUserById(userId, function (success, data, error) {
+            if (success) dispatch({ type: t.ADD_USER, data });
+            else if (error) errorCB(error);
+        });
+    };
+}
+
+export function getContextActionById(contextActionId, errorCB) {
+    return (dispatch) => {
+        api.getContextActionById(contextActionId, function (success, data, error) {
+            if (success) dispatch({ type: t.ADD_CONTEXT_ACTION, data });
+            else if (error) errorCB(error);
+        });
+    };
+}
+
+export function getEventById(eventId, errorCB) {
+    return (dispatch) => {
+        api.getEventById(eventId, function (success, data, error) {
+            if (success) dispatch({ type: t.ADD_EVENT, data });
+            else if (error) errorCB(error);
+        });
+    };
+}
+

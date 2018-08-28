@@ -3,6 +3,7 @@
     "name": "Pimbay",
     "icon": "./app/assets/pimbay.png",
     "version": "1.0.0",
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "orientation": "portrait"
   }
 }

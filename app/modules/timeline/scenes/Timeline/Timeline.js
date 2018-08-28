@@ -101,7 +101,11 @@ class Timeline extends React.Component {
                         refreshControl={
                             <RefreshControl
                                 refreshing={this.props.isLoadingHeader}
-                                onRefresh={() => this.props.getInvitationsRefresh((error) => alert(error.message))}
+                                onRefresh={() => {
+                                    this.setState({
+                                        start: 0
+                                    }, () => this.props.getInvitationsRefresh((error) => alert(error.message)))
+                                }}
                             />
                         }
                     />

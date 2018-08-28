@@ -1,7 +1,7 @@
 import * as t from './actionTypes';
 import * as api from './api';
 
-export function getInvitationsOut() {
+export function getInvitationsOut(errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING_INVITATION_OUT})
         api.getInvitationsOut(function (success, data, error) {

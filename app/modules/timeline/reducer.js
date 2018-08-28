@@ -14,7 +14,10 @@ let initialState = {
     isLoadingCreateInvitation: false,
     isLoadingFavoriteUsers: false,
     favoriteUsers: [],
-    invitedUsers: []
+    invitedUsers: [],
+    users: [],
+    eventsFromInvitations: [],
+    contextActionsFromInvitations: []
 };
 
 const timelineReducer = (state = initialState, action) => {
@@ -43,7 +46,7 @@ const timelineReducer = (state = initialState, action) => {
                 invitations = state.invitations;
             }
             invitations = invitations.concat(data);
-            return { 
+            return {
                 ...state, invitations, 
                 isLoading: false, 
                 isLoadingMore: false,
@@ -146,6 +149,52 @@ const timelineReducer = (state = initialState, action) => {
             
             return { ...state, 
                 invitedUsers: state.invitedUsers.filter(user => user.id !== item.id) }
+        }
+
+
+        case t.ADD_USER: {
+            let { data } = action;
+            let users = state.users;
+            let exist = false;
+            for (var i = 0; i < users.length && !exist; i++) {
+                if (users[i].id === data.id) {
+                    users[i] = data;
+                    exist = true;
+                }
+            }
+            if (!exist) users.push(data);
+
+            return { ...state, users }
+        }
+
+        case t.ADD_CONTEXT_ACTION: {
+            let { data } = action;
+            let { contextActionsFromInvitations } = state;
+            let exist = false;
+            for (var i = 0; i < contextActionsFromInvitations.length && !exist; i++) {
+                if (contextActionsFromInvitations[i].id === data.id) {
+                    contextActionsFromInvitations[i] = data;
+                    exist = true;
+                }
+            }
+            if (!exist) contextActionsFromInvitations.push(data);
+
+            return { ...state, contextActionsFromInvitations }
+        }
+
+        case t.ADD_EVENT: {
+            let { data } = action;
+            let { eventsFromInvitations } = state;
+            let exist = false;
+            for (var i = 0; i < eventsFromInvitations.length && !exist; i++) {
+                if (eventsFromInvitations[i].id === data.id) {
+                    eventsFromInvitations[i] = data;
+                    exist = true;
+                }
+            }
+            if (!exist) eventsFromInvitations.push(data);
+
+            return { ...state, eventsFromInvitations }
         }
 
         default:

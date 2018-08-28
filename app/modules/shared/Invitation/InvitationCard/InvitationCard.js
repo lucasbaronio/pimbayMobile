@@ -8,7 +8,9 @@ import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvi
 
 import { invitationType } from "../../constants";
 import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
-import * as api from '../../../timeline/api';
+
+import { actions as timeline } from "../../../timeline/index";
+const { getUserById, getContextActionById, getEventById } = timeline;
 
 import styles, { fontSize, color } from "./styles";
 
@@ -17,35 +19,17 @@ import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 
 class InvitationCard extends Component {
 
-    state = {
-        isLoadingUser: true,
-        user: null,
-        isLoadingContextAction: true,
-        contextAction: null,
-        isLoadingEvent: true,
-        event: null
-    }
-
-    componentDidMount() {
+    componentWillMount() {
         const { item } = this.props;
 
-        api.getUserById(item.ownerId, function (success, data, error) {
-            if (success) this.setState({ isLoadingUser: false, user: data });
-            else if (error) errorCB(error);
-        }.bind(this));
+        this.props.getUserById(item.ownerId, (error) => alert(error.message));
 
         if (item.contextActionId) {
-            api.getContextActionById(item.contextActionId, function (success, data, error) {
-                if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
-                else if (error) errorCB(error);
-            }.bind(this));
+            this.props.getContextActionById(item.contextActionId, (error) => alert(error.message));
         }
 
         if (item.eventId) {
-            api.getEventById(item.eventId, function (success, data, error) {
-                if (success) this.setState({ isLoadingEvent: false, event: data });
-                else if (error) { console.log(error); errorCB(error) };
-            }.bind(this));
+            this.props.getEventById(item.eventId, (error) => alert(error.message));
         }
     }
 
@@ -80,33 +64,27 @@ class InvitationCard extends Component {
         );
     }
 
-    renderDetailsWithoutDueDate = (item) => {
+    renderDetailsWithoutDueDate = () => {
+        const { item } = this.props;
         return (
             <View style={{ marginTop: 2, flexDirection: 'row' }}>
                 <Text style={styles.createdTimeStyle}>{getCreatedTime(item.dateCreated)}</Text>
             </View>);
     }
 
-    renderUserInfoSection = (item) => {
-        if (this.state.isLoadingUser) {
-            return (
-                <View style={styles.userInfoSectionContainer}>
-                    {/* <LoadingIndicator animating={true}/> */}
-                </View>
-            );
-        }
-
-        const userInfo = this.state.user;
-        if (item.contextActionId == null) {
+    renderUserInfoSection = () => {
+        const { owner, contextAction } = this.props;
+        // if (!item) return null;
+        if (!contextAction) {
             return (
                 <View style={styles.userInfoSectionContainer}>
                     <Avatar
                         rounded
                         large
-                        source={{ uri: userInfo.avatar }}
+                        source={owner ? { uri: owner.avatar } : null}
                         containerStyle={{ marginTop: 20 }}
                     />
-                    <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+                    <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>
                 </View>
             );
         } else {
@@ -116,26 +94,21 @@ class InvitationCard extends Component {
                         <Avatar
                             rounded
                             large
-                            source={{ uri: userInfo.avatar }}
+                            source={owner ? { uri: owner.avatar } : null}
                             containerStyle={{ marginTop: 20 }}
                         />
-                        <Text style={styles.userNameStyle}>{userInfo.userName}</Text>
+                        <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>
                     </View>
                     <Avatar
                         small
                         rounded
-                        source={
-                            (this.state.isLoadingContextAction)
-                                ? null
-                                : (this.state.contextAction.image)
-                                    ? { uri: this.state.contextAction.image }
+                        source={ contextAction.image
+                                    ? { uri: contextAction.image }
                                     : null
                         }
                         icon={
-                            (this.state.isLoadingContextAction)
-                                ? null
-                                : (this.state.contextAction.icon && this.state.contextAction.type)
-                                    ? { name: this.state.contextAction.icon, type: this.state.contextAction.type }
+                                (contextAction.icon && contextAction.type)
+                                    ? { name: contextAction.icon, type: contextAction.type }
                                     : null
                         }
                         overlayContainerStyle={styles.avatarBackground}
@@ -143,7 +116,7 @@ class InvitationCard extends Component {
                     />
                     <Text style={styles.avatarTextStyle}>
                         {
-                            (this.state.isLoadingContextAction) ? '' : this.state.contextAction.title
+                            contextAction.title
                         }
                     </Text>
                 </View>
@@ -152,20 +125,17 @@ class InvitationCard extends Component {
     }
 
     render() {
-        const { item } = this.props;
+        const { item, event } = this.props;
 
         return (
             <View>
                 <View style={styles.container}>
-                    {this.renderUserInfoSection(item)}
+                    {this.renderUserInfoSection()}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
                             {
-                                (item.eventId)
-                                    ? (!this.state.isLoadingEvent)
-                                        ? <EventCardCreateInvitation eventInvitation={this.state.event} />
-                                        : null
-                                    : null
+                                !!event &&
+                                <EventCardCreateInvitation eventInvitation={event} />
                             }
                             <View style={styles.descriptionContainerStyle}>
                                 <Text style={styles.descriptionStyle}>{item.description}</Text>
@@ -195,4 +165,24 @@ class InvitationCard extends Component {
     }
 }
 
-export default connect(null, {})(InvitationCard);
+function mapStateToProps(state, props) {
+    const { item } = props;
+    console.log(state);
+    return {
+        owner: state.timelineReducer.users.filter(user => user.id === props.item.ownerId)[0],
+        contextAction: item.contextActionId
+            ? state.timelineReducer.contextActionsFromInvitations
+                .filter(contextAction => contextAction.id === item.contextActionId)[0]
+            : null,
+        event: item.eventId
+            ? state.timelineReducer.eventsFromInvitations
+                .filter(event => event.id === item.eventId)[0]
+            : null,
+    }
+}
+
+export default connect(mapStateToProps, {
+    getUserById,
+    getContextActionById,
+    getEventById
+})(InvitationCard);
