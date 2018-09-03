@@ -11,5 +11,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export { color };
+export { color, fontSize, fontFamily};
 export default styles;

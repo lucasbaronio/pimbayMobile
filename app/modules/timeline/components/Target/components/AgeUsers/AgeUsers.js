@@ -7,7 +7,7 @@ import { Badge } from 'react-native-elements';
 // import { FontAwesome } from '@expo/vector-icons';
 
 import { targetUsers } from '../../../../../shared/constants';
-import styles, { color } from "./styles";
+import styles, { color, fontSize, fontFamily } from "./styles";
 
 class AgeUsers extends React.Component {
 
@@ -15,11 +15,8 @@ class AgeUsers extends React.Component {
         rankAges: [],
         minAge: null,
         minAge: null,
+        allSelected: false,
     };
-
-    // componentWillMount() {
-
-    // }
 
     componentDidMount() {
         var ages = ['18-22','23-27','28-32','33-37','+38'];
@@ -87,6 +84,25 @@ class AgeUsers extends React.Component {
         }
     }
 
+    onAllSelected = () => {
+        const { rankAges, allSelected } = this.state;
+        var rankAgesCopy = rankAges;
+        for(i = 0; i < rankAgesCopy.length; i++) {
+            rankAgesCopy[i].selected = !allSelected;
+        }
+        var minAge, maxAge = null;
+        if (!allSelected) {
+            minAge = rankAgesCopy[0].minAge;
+            maxAge = rankAgesCopy[rankAgesCopy.length - 1].maxAge;
+        }
+        this.setState({
+            rankAges: rankAgesCopy,
+            minAge,
+            maxAge,
+            allSelected: !allSelected
+        }, () => this.props.onChangeRankAges({minAge, maxAge}));
+    }
+
     renderItem = ({key, value, selected}) => {
         return (
             <Badge 
@@ -96,16 +112,27 @@ class AgeUsers extends React.Component {
                     marginHorizontal: 1,
                     marginVertical: 5
                 }}
-                textStyle={{ color: selected ? color.white : color.black}}
+                textStyle={{ 
+                    color: selected ? color.white : color.black, 
+                    fontSize: fontSize.text4,
+                    fontFamily: key === -1 ? fontFamily.bold : fontFamily.regular
+                }}
                 value={value}
-                onPress={() => this.onChangeItemSelected(key)} />
+                onPress={() => key === -1 ? this.onAllSelected() : this.onChangeItemSelected(key)} />
         );
     }
 
     render() {
-        const { rankAges } = this.state;
+        const { rankAges, allSelected } = this.state;
         return(
             <View style={styles.container}>
+                {
+                    this.renderItem({
+                        key: -1,
+                        value: "Todos",
+                        selected: allSelected
+                    })
+                }
                 {
                     rankAges.map((item) => (
                         this.renderItem({

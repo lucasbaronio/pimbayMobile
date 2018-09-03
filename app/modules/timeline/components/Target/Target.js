@@ -4,7 +4,6 @@ import {
     Picker,
 } from 'react-native';
 import { Badge } from 'react-native-elements';
-// import { FontAwesome } from '@expo/vector-icons';
 
 import { targetUsers } from '../../../shared/constants';
 import styles, { color } from "./styles";
