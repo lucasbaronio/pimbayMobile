@@ -4,7 +4,6 @@ import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
-// import InvitationType from '../../components/InvitationType/InvitationType';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
