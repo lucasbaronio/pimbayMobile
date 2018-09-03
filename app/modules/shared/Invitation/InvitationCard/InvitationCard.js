@@ -167,7 +167,6 @@ class InvitationCard extends Component {
 
 function mapStateToProps(state, props) {
     const { item } = props;
-    console.log(state);
     return {
         owner: state.timelineReducer.users.filter(user => user.id === props.item.ownerId)[0],
         contextAction: item.contextActionId

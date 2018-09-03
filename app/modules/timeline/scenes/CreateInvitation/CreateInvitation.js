@@ -4,7 +4,6 @@ import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
-// import InvitationType from '../../components/InvitationType/InvitationType';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
@@ -80,7 +79,6 @@ class CreateInvitation extends Component {
             contextActionSelected,
             eventInvitation } = this.state;
         const { createNewInvitation, invitedUsers } = this.props;
-        console.log(invitationType);
         if (invitationType === invType.OPEN && (!minAge || !maxAge)) {
             Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
             Alert.alert('Edades', "No se ha definido el rango de edades.");
@@ -90,7 +88,8 @@ class CreateInvitation extends Component {
             Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
             Alert.alert('Usuarios invitados', "No se han elegido los usuarios invitados.");
             return;
-        } 
+        }
+        console.log(minAge, maxAge);
         createNewInvitation({
             description,
             dueDate,
@@ -183,10 +182,6 @@ class CreateInvitation extends Component {
         );
     }
 
-    // onChangeInvitationType = ({invitationTypeSelected}) => {
-    //     this.setState({invitationType: invitationTypeSelected});
-    // }
-
     onChangeTargetUsers = ({target, minAge, maxAge}) => {
         this.setState({targetUsers: target, minAge, maxAge});
     }
@@ -215,8 +210,6 @@ class CreateInvitation extends Component {
                     }
                     <DatePicker 
                         onChangeDueDate={this.onChangeDueDate}/>
-                    {/* <InvitationType 
-                        onChangeInvitationType={this.onChangeInvitationType} /> */}
                     {
                         !!(this.props.invitationType === invType.OPEN) &&
                         <Target onChangeTargetUsers={this.onChangeTargetUsers} />
