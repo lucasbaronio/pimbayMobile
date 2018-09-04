@@ -13,6 +13,7 @@ import {
 import { formatDateFromDate, formatTimeFromDate } from '../../../shared/utils/date';
 
 import styles from "./styles";
+import ActionModal from '../ActionSheetDatePicker/ActionModal';
 
 class DatePicker extends React.Component {
 
@@ -59,18 +60,39 @@ class DatePicker extends React.Component {
     }
 
     renderDatePickerIOS = () => {
+        const { toggleDatePickerVisible } = this.state;
         return (
-            <View style={styles.datePickerIOS}>
-                <DatePickerIOS
-                    date={this.state.dueDate}
-                    onDateChange={(newDate) => {
-                        this.setState({
-                            dueDate: newDate
-                        }, () => this.calculateTimerDueDate())
-                    }}
-                    minimumDate={new Date()}
-                    minuteInterval={10}
-                />
+            // <View style={styles.datePickerIOS}>
+            //     <DatePickerIOS
+            //         date={this.state.dueDate}
+            //         onDateChange={(newDate) => {
+            //             this.setState({
+            //                 dueDate: newDate
+            //             }, () => this.calculateTimerDueDate())
+            //         }}
+            //         minimumDate={new Date()}
+            //         minuteInterval={10}
+            //     />
+            // </View>
+            <View>
+                <ActionModal 
+                    modalVisible={Platform.OS === 'ios' && toggleDatePickerVisible} 
+                    onCancel={this.onPressTimerDueDate}
+                    buttonText="Aceptar"
+                >
+                    <View style={styles.datePickerIOS}>
+                        <DatePickerIOS 
+                            date={this.state.dueDate} 
+                            onDateChange={(newDate) => {
+                                this.setState({
+                                    dueDate: newDate
+                                }, () => this.calculateTimerDueDate())
+                            }}
+                            minimumDate={new Date()}
+                            minuteInterval={10}
+                        />
+                    </View>
+                </ActionModal>
             </View>
         );
     }
@@ -169,7 +191,10 @@ class DatePicker extends React.Component {
                         {minsTimerDueDate} mins
                     </Text>
                 </TouchableOpacity>
-                {!!toggleDatePickerVisible && this.renderDatePicker()}
+                {
+                    !!toggleDatePickerVisible && 
+                    this.renderDatePicker()
+                }
             </View>
         )
     }

@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-// import { fontSize } from '../../../../styles/theme';
 const { normalize, color, fontSize, fontFamily, windowWidth } = theme;
 
 const styles = StyleSheet.create({
@@ -28,6 +27,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    datePickerIOS: {
+        backgroundColor: 'white', 
+        marginBottom: 10, 
+        borderRadius: 5
     }
 });
 
