@@ -6,6 +6,7 @@ import SearchTimeline from '../../../modules/timeline/scenes/SearchTimeline';
 import CreateInvitation from '../../../modules/timeline/scenes/CreateInvitation';
 import withActionSheetInvitationHOC from '../../../modules/shared/withActionSheetInvitationHOC';
 import SelectUsersFromList from '../../../modules/timeline/scenes/SelectUsersFromList';
+import EventDetail from '../../../modules/eventDetail/scenes/EventDetail';
 import { SearchButton, CloseButton, BackButton } from '../buttons';
 import houseFocused from '../../../assets/icons/house-black.png';
 import house from '../../../assets/icons/house.png';
@@ -41,6 +42,10 @@ export default (
                     renderLeftButton={<CloseButton />}
                     // renderRightButton={<SaveButton goToScreen='Timeline' />}
                     component={CreateInvitation} title="Crear Invitación" />
+                <Scene key="EventDetail"
+                    hideTabBar
+                    // renderLeftButton={<CloseButton />}
+                    component={EventDetail} title="Detalle del evento" />
 
             </Modal>
             <Scene key="SelectUsersFromList"

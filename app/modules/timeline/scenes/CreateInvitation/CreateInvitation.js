@@ -10,7 +10,7 @@ import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
-import { SaveButton, CloseButtonOnPress} from '../../../../config/routesComponents/buttons';
+import { SaveButton, CloseButtonOnPress } from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 
@@ -54,7 +54,7 @@ class CreateInvitation extends Component {
                 });
                 break;
         }
-        Actions.refresh({ 
+        Actions.refresh({
             right: <SaveButton onPress={this.createInvitation} />,
             left: <CloseButtonOnPress onPress={this.cleanCreateInvitation} />,
         });
@@ -66,16 +66,16 @@ class CreateInvitation extends Component {
     }
 
     createInvitation = () => {
-        Actions.refresh({ 
-            right: 
-                <View style={{flex: 1, marginRight: 15}}>
+        Actions.refresh({
+            right:
+                <View style={{ flex: 1, marginRight: 15 }}>
                     <ActivityIndicator />
-                </View> 
+                </View>
         });
-        const { 
-            description, dueDate, 
-            invitationType, targetUsers, 
-            minAge, maxAge, 
+        const {
+            description, dueDate,
+            invitationType, targetUsers,
+            minAge, maxAge,
             contextActionSelected,
             eventInvitation } = this.state;
         const { createNewInvitation, invitedUsers } = this.props;
@@ -104,12 +104,12 @@ class CreateInvitation extends Component {
         }, this.onSuccess, this.onError);
     }
 
-    onSuccess(){
+    onSuccess() {
         Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
         Actions.pop();
     }
 
-    onError(error){
+    onError(error) {
         Actions.refresh({ right: <SaveButton onPress={this.createInvitation} /> });
         Alert.alert("Oops", error.message);
     }
@@ -117,7 +117,7 @@ class CreateInvitation extends Component {
     getInvitedUsersIds = () => {
         const { invitedUsers } = this.props;
         var invitedUsersIds = [];
-        for(var i = 0; i < invitedUsers.length; i++) {
+        for (var i = 0; i < invitedUsers.length; i++) {
             invitedUsersIds[i] = invitedUsers[i].id;
         }
         return invitedUsersIds;
@@ -139,18 +139,18 @@ class CreateInvitation extends Component {
         return (
             <View style={styles.descriptionView}>
                 <TextInput
-                    style = {[
-                        styles.description, 
-                        !!this.state.onFocusDescription 
+                    style={[
+                        styles.description,
+                        !!this.state.onFocusDescription
                         && styles.descriptionFocused
                     ]}
-                    onFocus = {() => this.setState({onFocusDescription: true})}
-                    onEndEditing = {() => this.setState({onFocusDescription: false})}
-                    multiline = {true}
-                    numberOfLines = {4}
-                    onChangeText={(description) => this.setState({description})}
-                    editable = {true}
-                    placeholder = "Estoy para ..."
+                    onFocus={() => this.setState({ onFocusDescription: true })}
+                    onEndEditing={() => this.setState({ onFocusDescription: false })}
+                    multiline={true}
+                    numberOfLines={4}
+                    onChangeText={(description) => this.setState({ description })}
+                    editable={true}
+                    placeholder="Estoy para ..."
                     autoCorrect={false}
                     underlineColorAndroid="transparent"
                 />
@@ -161,46 +161,46 @@ class CreateInvitation extends Component {
     renderContextActionList = () => {
         const { contextActionSelected } = this.state;
         return (
-            <ContextActionList 
+            <ContextActionList
                 size={contextActionSize.MEDIUM}
                 selectable={true}
                 selectedItem={contextActionSelected}
-                onPressContextAction={this.onPressContextAction}/>
+                onPressContextAction={this.onPressContextAction} />
         );
     }
 
     onPressContextAction = (item) => {
-        this.setState({contextActionSelected: item});
+        this.setState({ contextActionSelected: item });
     }
 
     renderEventInvitation = () => {
         const { eventInvitation } = this.state;
         return (
             <View style={styles.eventContainer}>
-                <EventCardCreateInvitation eventInvitation={eventInvitation}/>
+                <EventCardCreateInvitation eventInvitation={eventInvitation} />
             </View>
         );
     }
 
-    onChangeTargetUsers = ({target, minAge, maxAge}) => {
-        this.setState({targetUsers: target, minAge, maxAge});
+    onChangeTargetUsers = ({ target, minAge, maxAge }) => {
+        this.setState({ targetUsers: target, minAge, maxAge });
     }
 
     onChangeDueDate = (dueDate) => {
-        this.setState({dueDate: dueDate});
+        this.setState({ dueDate: dueDate });
     }
 
-    onChangeQuota = ({quota, hasQuota}) => {
-        this.setState({quota, hasQuota})
+    onChangeQuota = ({ quota, hasQuota }) => {
+        this.setState({ quota, hasQuota })
     }
 
     render() {
         const { type } = this.props;
         return (
             <ScrollView >
-                <KeyboardAvoidingView 
-                    behavior= {(Platform.OS === 'ios')? "padding" : null} 
-                    keyboardVerticalOffset={Platform.select({ios: 84, android: 500})}
+                <KeyboardAvoidingView
+                    behavior={(Platform.OS === 'ios') ? "padding" : null}
+                    keyboardVerticalOffset={Platform.select({ ios: 84, android: 500 })}
                     style={styles.container} enabled >
 
                     {this.renderType()}
@@ -208,18 +208,18 @@ class CreateInvitation extends Component {
                         !!(type !== pimbayType.SIMPLE) &&
                         this.renderTextBox()
                     }
-                    <DatePicker 
-                        onChangeDueDate={this.onChangeDueDate}/>
+                    <DatePicker
+                        onChangeDueDate={this.onChangeDueDate} />
                     {
                         !!(this.props.invitationType === invType.OPEN) &&
                         <Target onChangeTargetUsers={this.onChangeTargetUsers} />
                     }
-                    <Quota 
-                        onChangeQuota={this.onChangeQuota}/>
+                    <Quota
+                        onChangeQuota={this.onChangeQuota} />
                     {
                         !!(this.props.invitationType !== invType.OPEN) &&
-                        <InvitedUsers 
-                            onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                        <InvitedUsers
+                            onChangeInvitedUserList={this.onChangeInvitedUserList} />
                     }
                 </KeyboardAvoidingView>
             </ScrollView>
@@ -234,7 +234,7 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { 
-    createNewInvitation, 
-    cleanCreateInvitation 
+export default connect(mapStateToProps, {
+    createNewInvitation,
+    cleanCreateInvitation
 })(CreateInvitation);
