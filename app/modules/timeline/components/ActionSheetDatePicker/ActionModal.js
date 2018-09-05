@@ -4,52 +4,60 @@ import {
   View, 
   StyleSheet, 
   TouchableOpacity,
-  Text
+  TouchableWithoutFeedback
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import Button from './Button';
-// import FadeInView from './FadeInView';
-// import { BlurView } from 'expo';
-// import Overlay from 'react-native-modal-overlay';
 
+const AnimatableTouchableWithoutFeedback = Animatable.createAnimatableComponent(TouchableWithoutFeedback);
 
 class ActionModal extends React.Component {
 
   state = {
-    toggleVisible: false
+    visible: this.props.visible,
+    animationType: this.props.animationType,
+    overlayAnimationType: 'fadeIn'
+  };
+
+  componentWillReceiveProps (newProps) {
+    this.setState({visible: newProps.visible, animationType: newProps.animationType});
   }
 
-  componentWillMount() {
-    const { modalVisible } = this.props;
-    this.setState({toggleVisible: modalVisible});
+  _hideModal = () => {
+    const {animationOutType, animationDuration, onClose} = this.props;
+    this.setState({animationType: animationOutType, overlayAnimationType: animationOutType});
+    let timer = setTimeout(() => {
+      onClose();
+      clearTimeout(timer);
+      this.setState({overlayAnimationType: 'fadeIn'});
+    }, animationDuration - 100);
   }
+
+  _stopPropagation = (e) => e.stopPropagation()
 
   render() {
     return (
-      <FadeInView visible={this.props.modalVisible}>
-      {/* <Overlay visible={this.state.toggleVisible}
-        closeOnTouchOutside={true} animationType="zoomIn"
-        onClose={() => this.setState({toggleVisible: false}, this.props.onCancel())}
-        containerStyle={{backgroundColor: 'rgba(37, 8, 10, 0.78)'}}
-        childrenWrapperStyle={{backgroundColor: "transparent"}}
-        animationDuration={500}> */}
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.props.modalVisible}
-          onRequestClose={this.props.onCancel}>
-          <View 
-            style={styles.modalContainer}
-            >
-            <TouchableOpacity style={styles.container} onPress={this.props.onCancel}></TouchableOpacity>
-            {this.props.children}
-            <Button onPress={this.props.onCancel} text={this.props.buttonText || "Cancel"} />
-          </View>
-        </Modal>
-      {/* </Overlay> */}
-      </FadeInView>
-      
+      <Modal
+        transparent
+        visible={this.props.modalVisible}
+        onRequestClose={this._hideModal}
+        animationType='slide'>
+        <TouchableWithoutFeedback onPress={this._hideModal}>
+          <Animatable.View animation={this.state.overlayAnimationType} duration={500} easing={null}
+              style={[styles.modalContainer, {backgroundColor: 'rgba(0, 0, 0, 0.50)'}]} 
+              useNativeDriver>
+            <AnimatableTouchableWithoutFeedback animation={this.state.animationType} easing={null}
+              duration={500} onPress={this._stopPropagation} useNativeDriver>
+              <View style={styles.modalContainer}>
+                <TouchableOpacity style={styles.container} onPress={this.props.onCancel}></TouchableOpacity>
+                {this.props.children}
+                <Button onPress={this.props.onCancel} text={this.props.buttonText || "Cancel"} />
+              </View>
+            </AnimatableTouchableWithoutFeedback>
+          </Animatable.View>
+        </TouchableWithoutFeedback>
+      </Modal>
     );
   }
 }

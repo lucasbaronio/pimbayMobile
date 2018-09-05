@@ -21,14 +21,14 @@ var styles = StyleSheet.create({
   buttonText: {
     color: '#0069d5',
     alignSelf: 'center',
-    fontSize: 18
+    fontSize: 20
   },
   button: {
-    height: 36,
+    height: 55,
     backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 1,
-    borderRadius: 6,
+    borderRadius: 10,
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'

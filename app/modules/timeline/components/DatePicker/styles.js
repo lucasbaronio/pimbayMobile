@@ -28,11 +28,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    datePickerIOS: {
+    datePickerIOSContainer: {
         backgroundColor: 'white', 
+        borderRadius: 10,
         marginBottom: 10, 
-        borderRadius: 5
-    }
+    },
+    datePickerIOSTitle: {
+        marginVertical: 10,
+        textAlign: "center",
+        color: 'rgba(0, 0, 0, 0.70)'
+    },
 });
 
 export default styles;

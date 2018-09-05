@@ -62,25 +62,16 @@ class DatePicker extends React.Component {
     renderDatePickerIOS = () => {
         const { toggleDatePickerVisible } = this.state;
         return (
-            // <View style={styles.datePickerIOS}>
-            //     <DatePickerIOS
-            //         date={this.state.dueDate}
-            //         onDateChange={(newDate) => {
-            //             this.setState({
-            //                 dueDate: newDate
-            //             }, () => this.calculateTimerDueDate())
-            //         }}
-            //         minimumDate={new Date()}
-            //         minuteInterval={10}
-            //     />
-            // </View>
             <View>
                 <ActionModal 
                     modalVisible={Platform.OS === 'ios' && toggleDatePickerVisible} 
                     onCancel={this.onPressTimerDueDate}
                     buttonText="Aceptar"
                 >
-                    <View style={styles.datePickerIOS}>
+                    <View style={styles.datePickerIOSContainer}>
+                        <Text style={styles.datePickerIOSTitle}>
+                            Fecha de vencimiento:
+                        </Text>
                         <DatePickerIOS 
                             date={this.state.dueDate} 
                             onDateChange={(newDate) => {
