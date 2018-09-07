@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
         flex: 1, 
         flexDirection: "row", 
         justifyContent: "flex-start",
+        backgroundColor: color.white,
+        padding: 10,
+        marginBottom: 10
     },
     image: {
         width: 110, 

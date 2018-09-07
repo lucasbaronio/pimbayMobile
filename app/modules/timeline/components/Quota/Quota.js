@@ -2,9 +2,12 @@ import React from 'react';
 import { 
     View, Text, 
     Switch,
+    Image,
+    TouchableOpacity,
+    Picker
 } from 'react-native';
-import { Slider } from 'react-native-elements'
-import { FontAwesome } from '@expo/vector-icons';
+import ActionModal from '../ActionSheetDatePicker/ActionModal';
+import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
 import styles from "./styles";
 
@@ -12,14 +15,26 @@ class Quota extends React.Component {
 
     state = {
         switchHasQuota: true,
+        toggleQuotaPickerVisible: false,
         quota: 10,
+        possibleQuota: [],
         minimumValue: 1,
         maximumValue: 100,
     };
 
     componentWillMount() {
+        this.loadPossibleQuota();
         const { quota, switchHasQuota } = this.state;
         this.props.onChangeQuota({quota: switchHasQuota ? quota : null, hasQuota: switchHasQuota});
+    }
+
+    loadPossibleQuota = () => {
+        const { minimumValue, maximumValue } = this.state;
+        var possibleQuota = []
+        for (var i = minimumValue; i <= maximumValue; i++) {
+            possibleQuota.push(i);
+        }
+        this.setState({possibleQuota});
     }
 
     onSwitchHasQuota = () => {
@@ -29,54 +44,81 @@ class Quota extends React.Component {
         }, () => this.props.onChangeQuota({quota: this.state.switchHasQuota ? quota : null, hasQuota: this.state.switchHasQuota}));
     }
 
+    renderQuotaPicker = () => {
+        const { toggleQuotaPickerVisible } = this.state;
+        return (
+            <View>
+                <ActionModal 
+                    modalVisible={toggleQuotaPickerVisible} 
+                    onCancel={this.onPressTogglePicker}
+                    buttonText="Aceptar"
+                >
+                    <View style={styles.pickerContainer}>
+                        <Text style={styles.pickerTitle}>
+                            Elija el cupo limite de la invitación:
+                        </Text>
+                        <Picker
+                            // style={{width: 100}}
+                            selectedValue={this.state.quota}
+                            onValueChange={(quota) => this.setState({ quota }, 
+                                this.props.onChangeQuota({
+                                    quota: this.state.quota, hasQuota: true
+                                })
+                            )}
+                        >
+                            {
+                                this.state.possibleQuota.map((item, index) => {
+                                    return <Picker.Item label={item.toString()} value={item} key={index} />
+                                })
+                            }
+                        </Picker>
+                    </View>
+                </ActionModal>
+            </View>
+        );
+    }
+
+    onPressTogglePicker = () => {
+        this.setState({
+            toggleQuotaPickerVisible: !this.state.toggleQuotaPickerVisible
+        })
+    }
+
     render() {
         return(
             <View style={styles.container}>
                 <View style={styles.headerQuota}>
-                    <View style={styles.titleHasQuotaView}>
-                        <Text style={styles.titleHasQuota}>Con cupo limite?</Text>
+                    <View>
+                        <Text style={styles.text}>Con cupo limite?</Text>
                     </View>
                     <View>
                         <Switch
-                            style={styles.switchHasQuota}
                             onValueChange={this.onSwitchHasQuota}
                             value={this.state.switchHasQuota}/>
                     </View>
                 </View>
-                <View style={styles.bodyQuota}>
+                {
+                    !!this.state.switchHasQuota &&
                     <View>
-                        <FontAwesome name="user" size={32} 
-                            color={this.state.switchHasQuota ? "black" : "grey"} />
+                        <View>
+                            <Image
+                                style={styles.dividerImageStyle}
+                                // resizeMode='center'
+                                source={DividerOpenInvitation} />
+                        </View>
+                        <TouchableOpacity 
+                            onPress={this.onPressTogglePicker} 
+                            style={styles.chooseQuotaView}>
+                            
+                            <Text style={styles.text}>Cupo limite de invitados</Text>
+                            <Text style={styles.text}>{this.state.quota}</Text>
+                        </TouchableOpacity>
+                        {
+                            !!this.state.toggleQuotaPickerVisible && 
+                            this.renderQuotaPicker()
+                        }
                     </View>
-                    <View style={styles.sliderView}>
-                        <Slider
-                            style={{ flex: 1, alignSelf: 'stretch' }}
-                            disabled={!this.state.switchHasQuota}
-                            maximumValue={this.state.maximumValue}
-                            minimumValue={this.state.minimumValue}
-                            thumbTintColor={(this.state.switchHasQuota) ? "#2196F3" : "#90CAF9" }
-                            step={1}
-                            value={this.state.quota}
-                            onValueChange={(quota) => this.setState({quota})} 
-                            onSlidingComplete={() => this.props.onChangeQuota({
-                                quota: this.state.quota, hasQuota: true
-                            })} />
-                    </View>
-                    <View>
-                    <FontAwesome name="users" size={32} 
-                            color={this.state.switchHasQuota ? "black" : "grey"} />
-                    </View>
-                </View>
-                <View style={styles.textSliderView}>
-                    <Text>{this.state.minimumValue}</Text>
-                    {
-                        !!this.state.switchHasQuota &&
-                        <Text style={styles.colorCurrentQuota}>
-                            {this.state.quota + ' personas'}
-                        </Text>
-                    }
-                    <Text>{this.state.maximumValue}</Text>
-                </View>
+                }
             </View>
         )
     }

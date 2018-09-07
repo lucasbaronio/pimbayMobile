@@ -7,11 +7,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: color.grey,
+        // borderTopWidth: 1,
+        // borderBottomWidth: 1,
+        // borderColor: color.grey,
+        backgroundColor: color.white,
         padding: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginBottom: 10
     },
     titleTimerDueDate: {
         fontSize: fontSize.text2,
