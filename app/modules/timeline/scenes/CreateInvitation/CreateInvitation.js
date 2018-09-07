@@ -5,12 +5,13 @@ import { Actions } from 'react-native-router-flux';
 import ContextActionList from '../../components/ContextActionList';
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import DatePicker from '../../components/DatePicker/DatePicker';
+import RealizationDatePicker from '../../components/RealizationDatePicker/RealizationDatePicker';
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
-import { SaveButton, CloseButtonOnPress} from '../../../../config/routesComponents/buttons';
+import { CloseButtonOnPress} from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 import { Button } from 'react-native-elements';
@@ -26,6 +27,7 @@ class CreateInvitation extends Component {
         contextActionSelected: null,
         eventInvitation: null,
         invitationType: null,
+        realizationDate: null,
         dueDate: null,
         quota: null,
         hasQuota: true,
@@ -180,6 +182,10 @@ class CreateInvitation extends Component {
         this.setState({dueDate: dueDate});
     }
 
+    onChangeRealizationDate = (realizationDate) => {
+        this.setState({ realizationDate });
+    }
+
     onChangeQuota = ({quota, hasQuota}) => {
         this.setState({quota, hasQuota})
     }
@@ -199,7 +205,19 @@ class CreateInvitation extends Component {
                             !!(type !== pimbayType.SIMPLE) &&
                             this.renderTextBox()
                         }
+                        <RealizationDatePicker 
+                            eventDate={
+                                this.props.type === pimbayType.EVENT 
+                                    ? this.state.eventInvitation.realizationDate
+                                    : null
+                            }
+                            onChangeRealizationDate={this.onChangeRealizationDate}/>
                         <DatePicker 
+                            eventDate={
+                                this.props.type === pimbayType.EVENT 
+                                    ? this.state.eventInvitation.realizationDate
+                                    : null
+                            }
                             onChangeDueDate={this.onChangeDueDate}/>
                         {
                             !!(this.props.invitationType === invType.OPEN) &&
