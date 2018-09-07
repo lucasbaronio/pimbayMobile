@@ -47,7 +47,7 @@ class EventCardMedium extends PureComponent {
                         <Text style={styles.realizationDate}>
                             {getFormalDate(item.realizationDate)}
                         </Text>
-                        <LocationButton place={item.place} />
+                        <LocationButton place={item.place} ellipsizeText={true} />
                     </View>
                 </TouchableWithoutFeedback>
             </View>

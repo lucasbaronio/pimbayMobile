@@ -8,7 +8,9 @@ const { getEvent } = eventDetailActions;
 import { connect } from 'react-redux';
 import styles from './styles';
 import { theme } from "../../index";
-const { fontSize, color, windowWidth } = theme;
+const { fontSize, color, windowWidth, windowHeight } = theme;
+import LocationButton from "../../shared/Event/components/LocationButton";
+const ASPECT_RATIO = windowWidth / windowHeight;
 
 class EventDetail extends Component {
 
@@ -17,16 +19,18 @@ class EventDetail extends Component {
     }
 
     render() {
+        const latitude = -34.9076753;
+        const longitude = -56.2011147;
         const { title, realizationDate, place, image, categories, description } = this.props.item;
         return (
             <ScrollView style={{ bakgroundColor: color.white }}>
                 <View>
                     <Image source={{ uri: image }} style={{ height: 200, width: windowWidth, alignSelf: 'stretch' }}></Image>
                 </View>
-                <View style={{ bakgroundColor: color.white }}>
-                    <Text style={{ bakgroundColor: color.white }}>{title}</Text>
-                    <Text style={{ bakgroundColor: color.white }}>{realizationDate}</Text>
-                    <Text style={{ bakgroundColor: color.white }}>{place}</Text>
+                <View style={{ bakgroundColor: color.white, padding: 10 }}>
+                    <Text style={{ fontSize: theme.fontSize.text1, fontFamily: theme.fontFamily.bold, marginBottom: 5 }}>{title}</Text>
+                    <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.regular, marginBottom: 5 }}>{realizationDate}</Text>
+                    <LocationButton place={place} ellipsizeText={false}/>
                 </View>
                 <View style={{ height: 1, bakgroundColor: color.grey }} />
                 <View>
@@ -42,12 +46,17 @@ class EventDetail extends Component {
 
                             style={{ margin: 20, height: 250, width: (windowWidth - 40) }}
                             initialRegion={{
-                                latitude: 37.78825,
-                                longitude: -122.4324,
-                                latitudeDelta: 0.0922,
-                                longitudeDelta: 0.0421,
+                                latitude: latitude,
+                                longitude: longitude,
+                                latitudeDelta: 0.004757,
+                                longitudeDelta: 0.006866,
                             }}
-                        />
+                        >
+                            <MapView.Marker
+                                coordinate={{ latitude: latitude, longitude: longitude }}
+                                title={place}
+                            />
+                        </MapView>
                     </View>
                 </View>
             </ScrollView>
