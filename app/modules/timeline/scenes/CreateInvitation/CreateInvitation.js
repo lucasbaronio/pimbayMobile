@@ -9,6 +9,8 @@ import RealizationDatePicker from '../../components/RealizationDatePicker/Realiz
 import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
+
+import { constants } from '../../index';
 import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
 import { CloseButtonOnPress } from '../../../../config/routesComponents/buttons';
@@ -98,7 +100,7 @@ class CreateInvitation extends Component {
             sex: targetUsers,
             minAge,
             maxAge,
-            ownerId: '7idtcB9R1KNmaPTCfN9y',
+            ownerId: constants.USER_ID,
             contextActionId: contextActionSelected ? contextActionSelected.id : null,
             eventId: eventInvitation ? eventInvitation.id : null,
             invitedUsers: this.getInvitedUsersIds()
