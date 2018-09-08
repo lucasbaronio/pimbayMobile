@@ -1,6 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { padding, color, fontSize, fontFamily, statusBarHeight, windowWidth, windowHeight } = theme;
+const { color, windowWidth } = theme;
 
 export const colorBackgroundHeader = color.white;
 

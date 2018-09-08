@@ -7,9 +7,9 @@ const formatDateFromString = (dateString) => {
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
-    var month = parseInt(date.getMonth(), 10)+1;
+    var month = parseInt(date.getMonth(), 10) + 1;
     return date.getDate() + "/" + month + "/" + date.getFullYear() + "  " + strTime;
 }
 
@@ -20,14 +20,14 @@ const formatFullDate = (dateString) => {
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
-    var month = parseInt(date.getMonth(), 10)+1;
+    var month = parseInt(date.getMonth(), 10) + 1;
     return date.getDate() + "/" + month + "/" + date.getFullYear() + "  " + strTime;
 }
 
 const formatDateFromDate = (date) => {
-    var month = parseInt(date.getMonth(), 10)+1;
+    var month = parseInt(date.getMonth(), 10) + 1;
     return date.getDate() + "/" + month + "/" + date.getFullYear();
 }
 
@@ -37,31 +37,31 @@ const formatTimeFromDate = (date) => {
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     return hours + ':' + minutes + ' ' + ampm;
 }
 
 const getFormalDate = (dateString) => {
-    var days = ['DOM','LUN','MAR','MIÉ','JUE','VIE','SAB'];
-    var months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SET','OCT','NOV','DIC'];
+    var days = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SAB'];
+    var months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SET', 'OCT', 'NOV', 'DIC'];
 
     var date = new Date(moment(dateString).format());
     var hours = date.getHours();
     var minutes = date.getMinutes();
-    var dayOfWeek = days[ date.getDay() ];
-    var month = months[ date.getMonth() ];
+    var dayOfWeek = days[date.getDay()];
+    var month = months[date.getMonth()];
     return `${dayOfWeek}, ${date.getDate()} ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
 }
 
 const getCompleteFormalDate = (dateString) => {
-    var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'];
-    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    var days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado'];
+    var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     var date = new Date(moment(dateString).format());
     var hours = date.getHours();
     var minutes = date.getMinutes();
-    var dayOfWeek = days[ date.getDay() ];
-    var month = months[ date.getMonth() ];
+    var dayOfWeek = days[date.getDay()];
+    var month = months[date.getMonth()];
     return `${dayOfWeek}, ${date.getDate()} de ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
 }
 
@@ -81,8 +81,8 @@ const getDueTime = (dueDate) => {
 }
 
 const getCreatedTime = (dateCreated) => {
-    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
-    
+    var months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
+
     var dateCreatedParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
     var now = moment(new Date());
     var diff = moment.duration(moment(now).diff(dateCreatedParsed));
@@ -91,7 +91,7 @@ const getCreatedTime = (dateCreated) => {
     hours = hours - days * 24;
     var minutes = parseInt(diff.asMinutes());
     minutes = minutes - (days * 24 * 60 + hours * 60);
-    
+
     if (days > 1) return months[dateCreatedParsed.month()] + " " + dateCreatedParsed.date() + " a las " + dateCreatedParsed.format('HH:mm');
     if (days == 1) return "Ayer a las " + dateCreatedParsed.format('HH:mm');
     if (hours > 1) return "Hace " + hours + " horas";
@@ -102,8 +102,8 @@ const getCreatedTime = (dateCreated) => {
 }
 
 const getInvSentTime = (dateCreated) => {
-    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
-    
+    var months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
+
     var dateCreatedParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
     var now = moment(new Date());
     var diff = moment.duration(moment(now).diff(dateCreatedParsed));
@@ -112,7 +112,7 @@ const getInvSentTime = (dateCreated) => {
     hours = hours - days * 24;
     var minutes = parseInt(diff.asMinutes());
     minutes = minutes - (days * 24 * 60 + hours * 60);
-    
+
     if (days > 1) return "Enviada el " + dateCreatedParsed.date() + " " + months[dateCreatedParsed.month()] + " a las " + dateCreatedParsed.format('HH:mm');
     if (days == 1) return "Enviada ayer a las " + dateCreatedParsed.format('HH:mm');
     if (hours > 1) return "Enviada hace " + hours + " horas";
@@ -123,8 +123,8 @@ const getInvSentTime = (dateCreated) => {
 }
 
 const getInvReceivedTime = (dateCreated) => {
-    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
-    
+    var months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
+
     var dateCreatedParsed = moment(dateCreated); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
     var now = moment(new Date());
     var diff = moment.duration(moment(now).diff(dateCreatedParsed));
@@ -133,7 +133,7 @@ const getInvReceivedTime = (dateCreated) => {
     hours = hours - days * 24;
     var minutes = parseInt(diff.asMinutes());
     minutes = minutes - (days * 24 * 60 + hours * 60);
-    
+
     if (days > 1) return "Recibida el " + dateCreatedParsed.date() + " " + months[dateCreatedParsed.month()] + " a las " + dateCreatedParsed.format('HH:mm');
     if (days == 1) return "Recibida ayer a las " + dateCreatedParsed.format('HH:mm');
     if (hours > 1) return "Recibida hace " + hours + " horas";

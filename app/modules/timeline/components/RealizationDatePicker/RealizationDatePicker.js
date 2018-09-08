@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-    View, Text, 
-    DatePickerIOS, 
-    DatePickerAndroid, 
-    TimePickerAndroid, 
-    Platform, 
+import {
+    View, Text,
+    DatePickerIOS,
+    DatePickerAndroid,
+    TimePickerAndroid,
+    Platform,
     TouchableOpacity,
     Button, Image,
     Alert, Switch
@@ -30,28 +30,28 @@ class RealizationDatePicker extends React.Component {
         const { eventDate } = this.props;
         if (eventDate) {
             var eventDateConverted = new Date(moment(eventDate).format());
-            this.setState({realizationDate: eventDateConverted});
+            this.setState({ realizationDate: eventDateConverted });
             this.props.onChangeRealizationDate(eventDateConverted);
         } else {
             var realizationDate = this.state.realizationDate;
             realizationDate.setHours(realizationDate.getHours() + 3);
-            this.setState({realizationDate: realizationDate});
+            this.setState({ realizationDate: realizationDate });
             this.props.onChangeRealizationDate(realizationDate);
         }
     }
 
     renderDatePicker = () => {
         return (Platform.OS === 'ios')
-        ? this.renderDatePickerIOS()
-        : this.renderButtonAndroid() 
+            ? this.renderDatePickerIOS()
+            : this.renderButtonAndroid()
     }
 
     renderDatePickerIOS = () => {
         const { toggleDatePickerVisible } = this.state;
         return (
             <View>
-                <ActionModal 
-                    modalVisible={Platform.OS === 'ios' && toggleDatePickerVisible} 
+                <ActionModal
+                    modalVisible={Platform.OS === 'ios' && toggleDatePickerVisible}
                     onCancel={this.onPressRealizationDatePicker}
                     buttonText="Aceptar"
                 >
@@ -59,11 +59,11 @@ class RealizationDatePicker extends React.Component {
                         <Text style={styles.datePickerIOSTitle}>
                             Cuando se hace?
                         </Text>
-                        <DatePickerIOS 
-                            date={this.state.realizationDate} 
+                        <DatePickerIOS
+                            date={this.state.realizationDate}
                             onDateChange={(newDate) => {
                                 this.setState({
-                                    realizationDate: newDate 
+                                    realizationDate: newDate
                                 }, this.props.onChangeRealizationDate(newDate))
                             }}
                             minimumDate={new Date()}
@@ -78,14 +78,14 @@ class RealizationDatePicker extends React.Component {
     renderButtonAndroid = () => {
         return (
             <View style={styles.buttonAndroid}>
-                <View style={{flex: 1, margin: 5}}>
+                <View style={{ flex: 1, margin: 5 }}>
                     <Button
                         onPress={this.renderDatePickerAndroid}
                         title={formatDateFromDate(this.state.realizationDate)}
                         color={color.orange}
                     />
                 </View>
-                <View style={{flex: 1, margin: 5}}>
+                <View style={{ flex: 1, margin: 5 }}>
                     <Button
                         onPress={this.renderTimePickerAndroid}
                         title={formatTimeFromDate(this.state.realizationDate)}
@@ -111,10 +111,10 @@ class RealizationDatePicker extends React.Component {
                 const mins = realizationDate.getMinutes();
                 var newRealizationDate = new Date(year, month, day, hours, mins);
                 this.setState({
-                    realizationDate: newRealizationDate 
+                    realizationDate: newRealizationDate
                 }, this.props.onChangeRealizationDate(newRealizationDate));
             }
-        } catch ({code, message}) {
+        } catch ({ code, message }) {
             console.warn('No podemos abrir el DatePicker', message);
         }
     }
@@ -135,7 +135,7 @@ class RealizationDatePicker extends React.Component {
                 var newRealizationDate = new Date(year, month, day, hour, minute);
                 if (newRealizationDate > realizationDate) {
                     this.setState({
-                        realizationDate: newRealizationDate 
+                        realizationDate: newRealizationDate
                     }, this.props.onChangeRealizationDate(newRealizationDate))
                 } else {
                     Alert.alert(
@@ -144,7 +144,7 @@ class RealizationDatePicker extends React.Component {
                     )
                 }
             }
-        } catch ({code, message}) {
+        } catch ({ code, message }) {
             console.warn('No podemos abrir el TimePicker', message);
         }
     }
@@ -161,10 +161,10 @@ class RealizationDatePicker extends React.Component {
         this.setState({
             switchToEventDate: !this.state.switchToEventDate
         }, () => this.props.onChangeRealizationDate(
-                this.state.switchToEventDate 
+            this.state.switchToEventDate
                 ? new Date(moment(eventDate).format())
                 : realizationDate
-            )
+        )
         );
     }
 
@@ -172,11 +172,11 @@ class RealizationDatePicker extends React.Component {
         const { toggleDatePickerVisible, realizationDate } = this.state;
         return (
             <View>
-                <TouchableOpacity 
-                    style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}
+                <TouchableOpacity
+                    style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}
                     onPress={this.onPressRealizationDatePicker}>
                     <Text style={styles.text}>Seleccione una fecha: </Text>
-                    <View style={{flex: 1, justifyContent: 'center'}}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <Text style={styles.realizationDate}>
                             {
                                 getFormalDate(realizationDate)
@@ -185,7 +185,7 @@ class RealizationDatePicker extends React.Component {
                     </View>
                 </TouchableOpacity>
                 {
-                    !!toggleDatePickerVisible && 
+                    !!toggleDatePickerVisible &&
                     this.renderDatePicker()
                 }
             </View>
@@ -194,40 +194,40 @@ class RealizationDatePicker extends React.Component {
 
     render() {
         const { eventDate } = this.props;
-        return(
+        return (
             <View style={styles.container}>
                 <Text style={styles.titleRealizationDate}>Cuando se hace?</Text>
                 {
-                    !!eventDate 
-                    ? <View>
-                        <View style={styles.toEventDate}>
-                            <View>
-                                <Text style={[
-                                    styles.text, 
-                                    !this.state.switchToEventDate && styles.textDisable
-                                ]}>
-                                    Misma fecha del evento ({getFormalDate(eventDate)})
-                                </Text>
-                            </View>
-                            <View>
-                                <Switch
-                                    onValueChange={this.onSwitchToEventDate}
-                                    value={this.state.switchToEventDate}/>
-                            </View>
-                        </View>
-                        {
-                            !this.state.switchToEventDate &&
-                            <View>
+                    !!eventDate
+                        ? <View>
+                            <View style={styles.toEventDate}>
                                 <View>
-                                    <Image
-                                        style={styles.dividerImageStyle}
-                                        source={DividerOpenInvitation} />
+                                    <Text style={[
+                                        styles.text,
+                                        !this.state.switchToEventDate && styles.textDisable
+                                    ]}>
+                                        Misma fecha del evento ({getFormalDate(eventDate)})
+                                </Text>
                                 </View>
-                                {this.renderRealizationDate()}
+                                <View>
+                                    <Switch
+                                        onValueChange={this.onSwitchToEventDate}
+                                        value={this.state.switchToEventDate} />
+                                </View>
                             </View>
-                        }
-                    </View>
-                    : this.renderRealizationDate()
+                            {
+                                !this.state.switchToEventDate &&
+                                <View>
+                                    <View>
+                                        <Image
+                                            style={styles.dividerImageStyle}
+                                            source={DividerOpenInvitation} />
+                                    </View>
+                                    {this.renderRealizationDate()}
+                                </View>
+                            }
+                        </View>
+                        : this.renderRealizationDate()
                 }
             </View>
         )

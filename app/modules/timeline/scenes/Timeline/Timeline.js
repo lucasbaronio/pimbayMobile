@@ -53,7 +53,7 @@ class Timeline extends React.Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", {props: this.props, item});
+        Actions.push("EventDetail", { props: this.props, item });
     }
 
     renderHeader = () => {

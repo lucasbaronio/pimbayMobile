@@ -14,7 +14,7 @@ class InvitationsIn extends Component {
         this.props.getInvitationsIn();
     }
 
-    renderItem = ({item, index}) => {
+    renderItem = ({ item, index }) => {
         return <ReceivedInvitationCard item={item} />
     }
 
@@ -34,23 +34,6 @@ class InvitationsIn extends Component {
                         data={invitationsIn}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
-                        // onEndReached={() => {
-                        //     if (!this.onEndReachedCalledDuringMomentum) {
-                        //        this.setState({
-                        //            start: this.state.start + API_EVENT_SIZE
-                        //        }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
-                        //        this.onEndReachedCalledDuringMomentum = true;
-                        //     }
-                        // }}
-                        // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-                        // ListFooterComponent={() => {
-                        //    return (
-                        //      this.props.isLoadingMore &&
-                        //       <View style={styles.activityIndicatorBottom}>
-                        //        <ActivityIndicator size="small" />
-                        //       </View>
-                        //     );
-                        // }}
                         refreshControl={
                             <RefreshControl
                                 refreshing={isLoadingHeader}

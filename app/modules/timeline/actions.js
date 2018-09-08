@@ -1,4 +1,3 @@
-
 import * as t from './actionTypes';
 import * as api from './api';
 
@@ -18,11 +17,11 @@ import * as api from './api';
 export function getInvitations(start, errorCB) {
     return (dispatch) => {
         (start === 0)
-        ? dispatch({type: t.LOADING_INVITATION_LIST})
-        : dispatch({type: t.LOADING_FOOTER_INVITATION_LIST})
+            ? dispatch({ type: t.LOADING_INVITATION_LIST })
+            : dispatch({ type: t.LOADING_FOOTER_INVITATION_LIST })
         api.getInvitations(start, function (success, data, error) {
             if (success) {
-                dispatch({type: t.INVITATION_LIST_AVAILABLE, data, start});
+                dispatch({ type: t.INVITATION_LIST_AVAILABLE, data, start });
             } else if (error) errorCB(error)
         });
     };
@@ -30,9 +29,9 @@ export function getInvitations(start, errorCB) {
 
 export function getInvitationsRefresh(errorCB) {
     return (dispatch) => {
-        dispatch({type: t.LOADING_HEADER});
+        dispatch({ type: t.LOADING_HEADER });
         api.getInvitations(0, function (success, data, error) {
-            if (success) dispatch({type: t.INVITATION_LIST_REFRESHED, data});
+            if (success) dispatch({ type: t.INVITATION_LIST_REFRESHED, data });
             else if (error) errorCB(error)
         });
     };
@@ -41,10 +40,10 @@ export function getInvitationsRefresh(errorCB) {
 export function getEvents(start, errorCB) {
     return (dispatch) => {
         (start === 0)
-        ? dispatch({type: t.LOADING_EVENT_LIST})
-        : dispatch({type: t.LOADING_FOOTER_EVENT_LIST})
+            ? dispatch({ type: t.LOADING_EVENT_LIST })
+            : dispatch({ type: t.LOADING_FOOTER_EVENT_LIST })
         api.getEvents(start, function (success, data, error) {
-            if (success) dispatch({type: t.EVENT_LIST_AVAILABLE, data, start});
+            if (success) dispatch({ type: t.EVENT_LIST_AVAILABLE, data, start });
             else if (error) errorCB(error)
         });
     };
@@ -52,9 +51,9 @@ export function getEvents(start, errorCB) {
 
 export function getContextActionList(errorCB) {
     return (dispatch) => {
-        dispatch({type: t.LOADING_CONTEXT_ACTION_LIST});
+        dispatch({ type: t.LOADING_CONTEXT_ACTION_LIST });
         api.getContextActionList(function (success, data, error) {
-            if (success) dispatch({type: t.CONTEXT_ACTION_LIST_AVAILABLE, data});
+            if (success) dispatch({ type: t.CONTEXT_ACTION_LIST_AVAILABLE, data });
             else if (error) errorCB(error)
         });
     };
@@ -62,10 +61,10 @@ export function getContextActionList(errorCB) {
 
 export function createNewInvitation(invitation, successCB, errorCB) {
     return (dispatch) => {
-        dispatch({type: t.LOADING_CREATE_INVITATION});
+        dispatch({ type: t.LOADING_CREATE_INVITATION });
         api.createInvitation(invitation, function (success, data, error) {
             if (success) {
-                dispatch({type: t.CREATE_INVITATION_SUCCESS});
+                dispatch({ type: t.CREATE_INVITATION_SUCCESS });
                 successCB();
             } else if (error) errorCB(error);
         });
@@ -74,16 +73,16 @@ export function createNewInvitation(invitation, successCB, errorCB) {
 
 export function cleanCreateInvitation() {
     return (dispatch) => {
-        dispatch({type: t.CLEAN_CREATE_INVITATION});
+        dispatch({ type: t.CLEAN_CREATE_INVITATION });
     };
 }
 
 export function getFavoriteUsers(successCB, errorCB) {
     return (dispatch) => {
-        dispatch({type: t.LOADING_FAVORITE_USERS});
+        dispatch({ type: t.LOADING_FAVORITE_USERS });
         api.getFavoriteUsers(function (success, data, error) {
             if (success) {
-                dispatch({type: t.FAVORITE_USERS_AVAILABLE, data});
+                dispatch({ type: t.FAVORITE_USERS_AVAILABLE, data });
                 successCB(data);
             } else if (error) errorCB(error)
         });
@@ -92,13 +91,13 @@ export function getFavoriteUsers(successCB, errorCB) {
 
 export function addUserToInvitedList(item) {
     return (dispatch) => {
-        dispatch({type: t.ADD_USER_TO_INVITED_LIST, item});
+        dispatch({ type: t.ADD_USER_TO_INVITED_LIST, item });
     };
 }
 
 export function removeUserFromInvitedList(item) {
     return (dispatch) => {
-        dispatch({type: t.REMOVE_USER_FROM_INVITED_LIST, item});
+        dispatch({ type: t.REMOVE_USER_FROM_INVITED_LIST, item });
     };
 }
 
@@ -128,4 +127,3 @@ export function getEventById(eventId, errorCB) {
         });
     };
 }
-

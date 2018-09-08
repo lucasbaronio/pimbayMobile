@@ -16,15 +16,15 @@ class ContextAction extends React.PureComponent {
     render() {
         const { item, size, selectable, selected } = this.props;
         const colorAvatar = !selectable
+            ? styles.avatarBackgroundSelected
+            : selected
                 ? styles.avatarBackgroundSelected
-                : selected
-                    ? styles.avatarBackgroundSelected
-                    : styles.avatarBackgroundNoSelected
+                : styles.avatarBackgroundNoSelected
         const text = size === contextActionSize.MEDIUM
-                ? styles.textMedium
-                : styles.textSmall
+            ? styles.textMedium
+            : styles.textSmall
 
-        return(
+        return (
             <TouchableOpacity onPress={this._onPressButton}>
                 <View style={[styles.container, { maxWidth: (size === contextActionSize.MEDIUM) ? 80 : 40 }]}>
                     <View style={styles.avatar}>
@@ -34,9 +34,9 @@ class ContextAction extends React.PureComponent {
                             rounded
                             avatarStyle={selectable && !selected && styles.overlay}
                             overlayContainerStyle={colorAvatar}
-                            source={(item.image) ? {uri: item.image} : null}
+                            source={(item.image) ? { uri: item.image } : null}
                             containerStyle={{ marginHorizontal: 5 }}
-                            icon={(item.icon && item.type) ? {name: item.icon, type: item.type} : null}
+                            icon={(item.icon && item.type) ? { name: item.icon, type: item.type } : null}
                         />
                     </View>
                     <View>
@@ -50,4 +50,4 @@ class ContextAction extends React.PureComponent {
     }
 }
 
-export default connect(null, { })(ContextAction);
+export default connect(null, {})(ContextAction);

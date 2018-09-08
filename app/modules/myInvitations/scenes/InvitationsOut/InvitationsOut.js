@@ -14,7 +14,7 @@ class InvitationsOut extends Component {
         this.props.getInvitationsOut();
     }
 
-    renderItem = ({item, index}) => {
+    renderItem = ({ item, index }) => {
         return <SentInvitationCard item={item} />
     }
 
@@ -22,27 +22,10 @@ class InvitationsOut extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                        ref='listRef'
-                        data={this.props.invitationsOut}
-                        renderItem={this.renderItem}
-                        keyExtractor={(item, index) => index.toString()}
-                        //->onEndReached={() => {
-                            //if (!this.onEndReachedCalledDuringMomentum) {
-                            //    this.setState({
-                            //        start: this.state.start + API_EVENT_SIZE
-                            //    }, () => this.props.getEventsOrInvitations(this.state.start, (error) => alert(error.message)))
-                            //    this.onEndReachedCalledDuringMomentum = true;
-                            //}
-                        //}}
-                        //-> onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-                        //-> ListFooterComponent={() => {
-                          //  return (
-                            //  this.props.isLoadingMore &&
-                              //<View style={styles.activityIndicatorBottom}>
-                               // <ActivityIndicator size="small" />
-                              //</View>
-                            //);
-                        //}}
+                    ref='listRef'
+                    data={this.props.invitationsOut}
+                    renderItem={this.renderItem}
+                    keyExtractor={(item, index) => index.toString()}
                 />
             </View>
         );

@@ -1,6 +1,4 @@
 import * as t from './actionTypes';
-import invitationsOutJson from './scenes/InvitationsOut/invitationsOut';
-import invitationsInJson from './scenes/InvitationsIn/invitationsIn';
 
 let initialState = {
     invitationsOut: [],
@@ -92,7 +90,6 @@ const invitationsReducer = (state = initialState, action) => {
             let { data } = action;
             let invitationsIn = [];
             invitationsIn = invitationsIn.concat(data);
-            //invitationsIn = invitationsIn.concat(invitationsInJson);
             return {
                 ...state, invitationsIn,
                 isLoadingHeaderIn: false,

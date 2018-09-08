@@ -1,14 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, color, fontSize, fontFamily, windowWidth } = theme;
+const { color, fontSize, windowWidth } = theme;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        // borderBottomWidth: 1,
-        // borderColor: color.grey,
         backgroundColor: color.white,
         padding: 5,
         paddingHorizontal: 10,
@@ -33,12 +31,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     dividerImageStyle: {
-        alignSelf: 'flex-start', 
+        alignSelf: 'flex-start',
         width: windowWidth,
         height: 1,
         marginVertical: 3,
         marginLeft: 30
-    },
+    }
 });
 
 export { color };

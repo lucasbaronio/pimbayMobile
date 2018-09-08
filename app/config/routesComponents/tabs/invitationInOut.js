@@ -21,7 +21,7 @@ export default (
             showLabel={true}
             lazy={true}
             tabBarPosition='top'
-            labelStyle={{fontFamily: fontFamily.medium}}
+            labelStyle={{ fontFamily: fontFamily.medium }}
             swipeEnabled={true}
             icon={({ focused }) => (
                 <Image

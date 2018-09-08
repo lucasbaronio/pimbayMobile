@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
-import { Actions } from 'react-native-router-flux';
+import { View, ActivityIndicator } from 'react-native';
 import GridView from 'react-native-super-grid';
 
 import { connect } from 'react-redux';
@@ -28,20 +26,20 @@ class SelectUsersFromList extends React.Component {
         var favoriteUsers = [].concat(data);
         const { invitedUsers } = this.props;
         console.log(invitedUsers);
-        for(var i = 0; i < invitedUsers.length; i++) {
-            for(var j = 0; j < favoriteUsers.length; j++) {
+        for (var i = 0; i < invitedUsers.length; i++) {
+            for (var j = 0; j < favoriteUsers.length; j++) {
                 if (invitedUsers[i].id === favoriteUsers[j].id)
                     favoriteUsers[j].selected = true;
             }
         }
 
-        this.setState({favoriteUsers});
+        this.setState({ favoriteUsers });
     }
 
     renderItem = (item) => {
         return (
-            <AvatarUser 
-                item={item} 
+            <AvatarUser
+                item={item}
                 selectable={true}
                 onSelectUser={this.onSelectUser}
                 onDeselectUser={this.onDeselectUser}
@@ -56,7 +54,7 @@ class SelectUsersFromList extends React.Component {
                 favoriteUsers[i].selected = true;
             }
         }
-        this.setState({favoriteUsers});
+        this.setState({ favoriteUsers });
 
         const { addUserToInvitedList } = this.props;
         addUserToInvitedList(item);
@@ -69,7 +67,7 @@ class SelectUsersFromList extends React.Component {
                 favoriteUsers[i].selected = false;
             }
         }
-        this.setState({favoriteUsers});
+        this.setState({ favoriteUsers });
 
         const { removeUserFromInvitedList } = this.props;
         removeUserFromInvitedList(item);
@@ -104,8 +102,8 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { 
-    addUserToInvitedList, 
+export default connect(mapStateToProps, {
+    addUserToInvitedList,
     removeUserFromInvitedList,
     getFavoriteUsers
 })(SelectUsersFromList);

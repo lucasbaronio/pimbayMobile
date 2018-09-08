@@ -1,5 +1,4 @@
 import * as t from './actionTypes';
-// import invitations from './scenes/Timeline/invitations.json';
 
 let initialState = {
     isLoading: false,
@@ -25,7 +24,7 @@ const timelineReducer = (state = initialState, action) => {
         case t.LOADING_INVITATION_LIST: {
             const invitations = state.invitations;
 
-            if (invitations.length === 0) 
+            if (invitations.length === 0)
                 return { ...state, isLoading: true }
 
             return state;
@@ -47,8 +46,8 @@ const timelineReducer = (state = initialState, action) => {
             }
             invitations = invitations.concat(data);
             return {
-                ...state, invitations, 
-                isLoading: false, 
+                ...state, invitations,
+                isLoading: false,
                 isLoadingMore: false,
             };
         }
@@ -56,8 +55,8 @@ const timelineReducer = (state = initialState, action) => {
         case t.INVITATION_LIST_REFRESHED: {
             let { data } = action;
             let invitations = [].concat(data);
-            return { 
-                ...state, invitations, 
+            return {
+                ...state, invitations,
                 isLoadingHeader: false,
             };
         }
@@ -65,7 +64,7 @@ const timelineReducer = (state = initialState, action) => {
         case t.LOADING_EVENT_LIST: {
             const events = state.events;
 
-            if (events.length === 0) 
+            if (events.length === 0)
                 return { ...state, isLoadingEvents: true }
 
             return state;
@@ -82,9 +81,9 @@ const timelineReducer = (state = initialState, action) => {
                 events = state.events;
             }
             events = events.concat(data);
-            return { 
-                ...state, events, 
-                isLoadingEvents: false, 
+            return {
+                ...state, events,
+                isLoadingEvents: false,
                 isLoadingMoreEvents: false,
             };
         }
@@ -96,8 +95,8 @@ const timelineReducer = (state = initialState, action) => {
         case t.CONTEXT_ACTION_LIST_AVAILABLE: {
             let { data } = action;
             let contextActions = data
-            return { 
-                ...state, contextActions, 
+            return {
+                ...state, contextActions,
                 isLoadingContextActionList: false,
             }
         }
@@ -107,16 +106,16 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.CREATE_INVITATION_SUCCESS: {
-            return { 
-                ...state, 
+            return {
+                ...state,
                 isLoadingCreateInvitation: false,
                 invitedUsers: []
             }
         }
 
         case t.CLEAN_CREATE_INVITATION: {
-            return { 
-                ...state, 
+            return {
+                ...state,
                 isLoadingCreateInvitation: false,
                 invitedUsers: []
             }
@@ -129,8 +128,8 @@ const timelineReducer = (state = initialState, action) => {
         case t.FAVORITE_USERS_AVAILABLE: {
             let { data } = action;
             let favoriteUsers = data
-            return { 
-                ...state, favoriteUsers, 
+            return {
+                ...state, favoriteUsers,
                 isLoadingFavoriteUsers: false,
             }
         }
@@ -138,15 +137,17 @@ const timelineReducer = (state = initialState, action) => {
         case t.ADD_USER_TO_INVITED_LIST: {
             let { item } = action;
             let invitedUsers = state.invitedUsers.concat(item);
-            
+
             return { ...state, invitedUsers }
         }
 
         case t.REMOVE_USER_FROM_INVITED_LIST: {
             let { item } = action;
-            
-            return { ...state, 
-                invitedUsers: state.invitedUsers.filter(user => user.id !== item.id) }
+
+            return {
+                ...state,
+                invitedUsers: state.invitedUsers.filter(user => user.id !== item.id)
+            }
         }
 
 

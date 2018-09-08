@@ -1,6 +1,6 @@
 import React from 'react';
-import { 
-    View, 
+import {
+    View,
     Text,
     Image
 } from 'react-native';
@@ -26,45 +26,45 @@ class Target extends React.Component {
     onChangeTargetUsers = (target) => {
         this.setState({
             target
-        }, () => this.props.onChangeTargetUsers({...this.state}));
+        }, () => this.props.onChangeTargetUsers({ ...this.state }));
     }
 
-    onChangeRankAges = ({minAge, maxAge}) => {
+    onChangeRankAges = ({ minAge, maxAge }) => {
         this.setState({
             minAge,
             maxAge
-        }, () => this.props.onChangeTargetUsers({...this.state}));
+        }, () => this.props.onChangeTargetUsers({ ...this.state }));
     }
 
     render() {
         const { target } = this.state;
-        return(
+        return (
             <View style={styles.container}>
                 <View style={styles.genderUsers}>
                     <Text style={styles.title}>Público objetivo</Text>
                     <View style={styles.genderUsersItems}>
-                        <Badge 
-                            containerStyle={{ 
+                        <Badge
+                            containerStyle={{
                                 backgroundColor: target === targetUsers.BOTH ? color.orange : color.white,
                                 marginHorizontal: 5
                             }}
-                            textStyle={{ color: target === targetUsers.BOTH ? color.white : color.black}}
+                            textStyle={{ color: target === targetUsers.BOTH ? color.white : color.black }}
                             value='Ambos'
                             onPress={() => this.onChangeTargetUsers(targetUsers.BOTH)} />
-                        <Badge 
-                            containerStyle={{ 
+                        <Badge
+                            containerStyle={{
                                 backgroundColor: target === targetUsers.MAN ? color.orange : color.white,
                                 marginHorizontal: 5
                             }}
-                            textStyle={{ color: target === targetUsers.MAN ? color.white : color.black}}
+                            textStyle={{ color: target === targetUsers.MAN ? color.white : color.black }}
                             value='Hombres'
                             onPress={() => this.onChangeTargetUsers(targetUsers.MAN)} />
-                        <Badge 
-                            containerStyle={{ 
+                        <Badge
+                            containerStyle={{
                                 backgroundColor: target === targetUsers.WOMAN ? color.orange : color.white,
                                 marginHorizontal: 5
                             }}
-                            textStyle={{ color: target === targetUsers.WOMAN ? color.white : color.black}}
+                            textStyle={{ color: target === targetUsers.WOMAN ? color.white : color.black }}
                             value='Mujeres'
                             onPress={() => this.onChangeTargetUsers(targetUsers.WOMAN)} />
                     </View>

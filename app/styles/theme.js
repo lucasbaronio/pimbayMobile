@@ -34,12 +34,6 @@ const fontSize = {
 }
 
 const fontFamily = {
-    // extrabold: "RobotoExtraBold",
-    // bold: "RobotoBold",
-    // medium: "RobotoMedium",
-    // regular: "RobotoRegular",
-    // light: "RobotoLight"
-
     extrabold: "SFProTextHeavy",
     bold: "SFProTextBold",
     medium: "SFProTextMedium",
@@ -59,7 +53,7 @@ const tabColor = (Platform.OS === "ios") ? "rgba(73,75,76, .5)" : "rgba(255,255,
 const selectedTabColor = (Platform.OS === "ios") ? "rgb(73,75,76)" : "#fff";
 
 const tabIconStyle = { size: 21, color: tabColor, selected: selectedTabColor }
-const navTitleStyle = { fontSize: fontSize.text2 , fontFamily: fontFamily.bold, color: color.black }
+const navTitleStyle = { fontSize: fontSize.text2, fontFamily: fontFamily.bold, color: color.black }
 
 export {
     color,

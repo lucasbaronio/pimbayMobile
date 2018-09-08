@@ -4,37 +4,34 @@ const { fontSize, color, fontFamily } = theme;
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'flex-start',
         alignItems: 'center',
-        margin: 5,
+        margin: 5
     },
     overlay: {
-        opacity: 0.5,
+        opacity: 0.5
     },
     avatar: {
-        marginBottom: 5,
+        marginBottom: 5
     },
     avatarBackgroundSelected: {
-        backgroundColor: color.blue,
+        backgroundColor: color.blue
     },
     avatarBackgroundNoSelected: {
-        backgroundColor: color.light_blue,
+        backgroundColor: color.light_blue
     },
     text: {
         fontFamily: fontFamily.regular,
         textAlign: 'center'
     },
     textMedium: {
-        fontSize: fontSize.text4,
+        fontSize: fontSize.text4
     },
     textSmall: {
-        fontSize: fontSize.text5,
+        fontSize: fontSize.text5
     },
     textSelected: {
-        // fontWeight: 'bold'
-        fontFamily: fontFamily.bold,
+        fontFamily: fontFamily.bold
     }
 });
 

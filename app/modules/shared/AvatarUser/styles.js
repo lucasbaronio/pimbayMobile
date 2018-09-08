@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, color, windowWidth } = theme;
+const { color } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -28,18 +28,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     icon: {
-        top: -5, 
-        left: 35, 
-        position: 'absolute', 
-        height: 22, 
+        top: -5,
+        left: 35,
+        position: 'absolute',
+        height: 22,
         width: 22
     },
     inviteButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 50, 
-        height: 50, 
-        borderRadius: 25, 
+        width: 50,
+        height: 50,
+        borderRadius: 25,
         backgroundColor: color.light_grey
     }
 });

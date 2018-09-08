@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {theme} from "../../index"
+import { StyleSheet } from 'react-native';
+import { theme } from "../../index"
 const { fontFamily, fontSize, windowWidth, color } = theme;
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     activityIndicatorBottom: {
-        flex: 1, 
+        flex: 1,
         marginVertical: 20
     },
     createInvitationTextInput: {

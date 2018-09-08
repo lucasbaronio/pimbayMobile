@@ -3,22 +3,22 @@ export function get(uri, callback) {
     return fetch(uri/*, {
         headers: { Authorization: `Bearer ${accessToken}`},
     }*/)
-    .then(response => {
-        // if (response.status >= 200 && response.status < 300) {
-        if (response.ok) {
-            return response.json();
-        } else {
-            const error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-        }
-    })
-    .then(data => {
-        callback(true, data, null)
-    })
-    .catch((error) => {
-        callback(false, null, error)
-    });
+        .then(response => {
+            // if (response.status >= 200 && response.status < 300) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                const error = new Error(response.statusText);
+                error.response = response;
+                throw error;
+            }
+        })
+        .then(data => {
+            callback(true, data, null)
+        })
+        .catch((error) => {
+            callback(false, null, error)
+        });
 }
 
 export function post(uri, body, callback) {
@@ -31,22 +31,22 @@ export function post(uri, body, callback) {
         },
         body: JSON.stringify(body),
     })
-    .then(response => {
-        // if (response.status >= 200 && response.status < 300) {
-        if (!response.ok) {
-            // console.log(response);
-            const error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-        }
-    })
-    .then(data => {
-        // console.log(data);
-        callback(true, data, null)
-    })
-    .catch((error) => {
-        // console.log(error);
-        callback(false, null, error)
-    });
+        .then(response => {
+            // if (response.status >= 200 && response.status < 300) {
+            if (!response.ok) {
+                // console.log(response);
+                const error = new Error(response.statusText);
+                error.response = response;
+                throw error;
+            }
+        })
+        .then(data => {
+            // console.log(data);
+            callback(true, data, null)
+        })
+        .catch((error) => {
+            // console.log(error);
+            callback(false, null, error)
+        });
 }
 

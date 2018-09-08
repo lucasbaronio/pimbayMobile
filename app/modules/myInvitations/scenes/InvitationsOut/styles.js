@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {theme} from "../../../index"
-const { normalize, windowWidth, color } = theme;
+import { StyleSheet } from 'react-native';
+import { theme } from "../../../index"
+const { color } = theme;
 
 export { color };
 
