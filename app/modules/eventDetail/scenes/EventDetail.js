@@ -4,6 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { MapView } from 'expo';
 import { actions as eventDetailActions } from "../index";
 const { getEvent } = eventDetailActions;
+import { getCompleteFormalDate } from "../../shared/utils/date";
 
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -14,6 +15,13 @@ const ASPECT_RATIO = windowWidth / windowHeight;
 
 class EventDetail extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            showMore: false
+        }
+    }
+
     componentWillMount() {
         console.log(this.props);
     }
@@ -22,29 +30,53 @@ class EventDetail extends Component {
         const latitude = -34.9076753;
         const longitude = -56.2011147;
         const { title, realizationDate, place, image, categories, description } = this.props.item;
+
         return (
-            <ScrollView style={{ bakgroundColor: color.white }}>
+            <ScrollView style={{ backgroundColor: color.white }}>
                 <View>
                     <Image source={{ uri: image }} style={{ height: 200, width: windowWidth, alignSelf: 'stretch' }}></Image>
                 </View>
-                <View style={{ bakgroundColor: color.white, padding: 10 }}>
+                <View style={{ padding: 10 }}>
                     <Text style={{ fontSize: theme.fontSize.text1, fontFamily: theme.fontFamily.bold, marginBottom: 5 }}>{title}</Text>
-                    <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.regular, marginBottom: 5 }}>{realizationDate}</Text>
-                    <LocationButton place={place} ellipsizeText={false}/>
+                    <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.regular, marginBottom: 5 }}>{getCompleteFormalDate(realizationDate)}</Text>
+                    <LocationButton place={place} ellipsizeText={false} />
                 </View>
-                <View style={{ height: 1, bakgroundColor: color.grey }} />
-                <View>
-                    <Text>Detalles</Text>
-                    <Text>{description}</Text>
+                <View
+                    style={{
+                        marginTop: 5,
+                        marginBottom: 5,
+                        borderBottomColor: theme.color.grey,
+                        borderBottomWidth: 0.25,
+                    }}
+                />
+                <View style={{ paddingHorizontal: 10 }}>
+                    <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.bold, marginBottom: 5 }}>Detalles</Text>
+                    <View>
+                        <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.regular }}>
+                            {
+                                (this.state.showMore)
+                                    ? description
+                                    : description.substring(0, 200) + '...'
+                            }
+                        </Text>
+                        <Text
+                            style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.regular, color: color.grey }}
+                            onPress={() => this.setState({ showMore: !this.state.showMore })}
+                        >
+                            {
+                                (this.state.showMore)
+                                    ? "Ver menos"
+                                    : "Ver más"
+                            }
+                        </Text>
+                    </View>
                 </View>
-                <View style={{ height: 1, bakgroundColor: color.grey }} />
-                <View>
-                    <Text>Mapa</Text>
-                    <Text>{place}</Text>
+                <View style={{ padding: 10 }}>
+                    <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.bold, marginBottom: 5 }}>Mapa</Text>
+                    <Text style={{ fontSize: theme.fontSize.text4, fontFamily: theme.fontFamily.bold, marginLeft: 5, marginBottom: 5 }}>{place}</Text>
                     <View pointerEvents="none">
                         <MapView
-
-                            style={{ margin: 20, height: 250, width: (windowWidth - 40) }}
+                            style={{ marginHorizontal: 5, height: 250, width: (windowWidth - 30) }}
                             initialRegion={{
                                 latitude: latitude,
                                 longitude: longitude,
