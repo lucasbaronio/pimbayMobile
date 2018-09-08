@@ -65,6 +65,10 @@ class CreateInvitation extends Component {
         }
     }
 
+    onPressViewEvent = (item) => {
+        Actions.push("EventDetail", { props: this.props, item });
+    }
+
     cleanCreateInvitation = () => {
         this.props.cleanCreateInvitation();
         Actions.pop();
@@ -171,7 +175,7 @@ class CreateInvitation extends Component {
     renderEventInvitation = () => {
         const { eventInvitation } = this.state;
         return (
-            <EventCardCreateInvitation eventInvitation={eventInvitation} />
+            <EventCardCreateInvitation eventInvitation={eventInvitation} onPressViewEvent={this.onPressViewEvent} />
         );
     }
 

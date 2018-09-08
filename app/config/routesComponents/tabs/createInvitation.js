@@ -1,6 +1,5 @@
 import React from 'react';
 import { Scene, Stack, Modal } from 'react-native-router-flux';
-
 import { CreateInvitationButton } from '../buttons';
 
 export default (
