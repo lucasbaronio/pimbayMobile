@@ -9,61 +9,61 @@ import ActionSheet from 'react-native-actionsheet';
 import { color, fontSize, fontFamily } from "../../styles/theme";
 import { pimbayType, invitationType } from '../../modules/shared/constants';
 
-export function AddButton({goToScreen}) {
+export function AddButton({ goToScreen }) {
     return (
         <NavButton onPress={() => Actions.push(goToScreen)}
-                   name={"plus"} type={"entypo"}
-                   color={color.black}/>
+            name={"plus"} type={"entypo"}
+            color={color.black} />
     )
 }
 
-export function SearchButton({goToScreen}) {
+export function SearchButton({ goToScreen }) {
     return (
         <NavButton onPress={() => Actions.push(goToScreen)}
-                    name={"search"} type={"Feather"}
-                    color={color.black}/>
+            name={"search"} type={"Feather"}
+            color={color.black} />
     )
 }
 
 export function CloseButton() {
     return (
         <NavButton onPress={Actions.pop}
-                   name={"md-close"}
-                   type={"ionicon"}
-                   color={color.black}/>
+            name={"md-close"}
+            type={"ionicon"}
+            color={color.black} />
     )
 }
 
-export function CloseButtonOnPress({onPress}) {
+export function CloseButtonOnPress({ onPress }) {
     return (
         <NavButton onPress={onPress}
-                   name={"md-close"}
-                   type={"ionicon"}
-                   color={color.black}/>
+            name={"md-close"}
+            type={"ionicon"}
+            color={color.black} />
     )
 }
 
 export function BackButton() {
     return (
         <NavButton onPress={Actions.pop}
-                   name={"ios-arrow-back"}
-                   type={"ionicon"}
-                   color={color.black}/>
+            name={"ios-arrow-back"}
+            type={"ionicon"}
+            color={color.black} />
     )
 }
 
-export function BackButtonOnPress({onPress}) {
+export function BackButtonOnPress({ onPress }) {
     return (
         <NavButton onPress={onPress}
-                   name={"ios-arrow-back"}
-                   type={"ionicon"}
-                   color={color.black}/>
+            name={"ios-arrow-back"}
+            type={"ionicon"}
+            color={color.black} />
     )
 }
 
-export function SaveButton({onPress}) {
+export function SaveButton({ onPress }) {
     return (
-        <NavButton 
+        <NavButton
             onPress={onPress}
             source={tick}
             name={null} />
@@ -77,10 +77,10 @@ export function CreateInvitationButton() {
                 height={Platform.OS === 'ios' ? 65 : 45}
                 width={Platform.OS === 'ios' ? 55 : 45}
                 rounded
-                icon={{name: 'plus', type: 'material-community'}}
-                overlayContainerStyle={{ 
-                    backgroundColor: color.orange, 
-                    marginBottom: Platform.OS === 'ios' ? 10 : 0 
+                icon={{ name: 'plus', type: 'material-community' }}
+                overlayContainerStyle={{
+                    backgroundColor: color.orange,
+                    marginBottom: Platform.OS === 'ios' ? 10 : 0
                 }}
                 onPress={() => this.ActionSheet.show()}
                 activeOpacity={0.8} />
@@ -90,7 +90,7 @@ export function CreateInvitationButton() {
                 message={'Abierta: Visible para todos en Pimbay.\nDirigida: Visible solo para usuarios invitados.'}
                 options={['Invitación Abierta', 'Invitación Dirigida', 'Cancelar']}
                 cancelButtonIndex={2}
-                onPress={(index) => { 
+                onPress={(index) => {
                     if (index == 0 || index == 1) {
                         Actions.push("CreateInvitation", {
                             type: pimbayType.SIMPLE,
