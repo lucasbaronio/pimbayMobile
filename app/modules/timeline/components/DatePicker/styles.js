@@ -40,6 +40,25 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: 'rgba(0, 0, 0, 0.70)'
     },
+    dividerImageStyle: {
+        alignSelf: 'flex-start', 
+        width: windowWidth,
+        height: 1,
+        marginTop: 5,
+        marginLeft: 30
+    },
+    text: {
+        fontSize: fontSize.text4,
+    },
+    textDisable: {
+        color: color.grey
+    },
+    toEventDate: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 });
 
 export default styles;

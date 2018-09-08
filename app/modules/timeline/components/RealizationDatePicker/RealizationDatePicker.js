@@ -13,8 +13,8 @@ import {
 import { formatDateFromDate, formatTimeFromDate } from '../../../shared/utils/date';
 
 import styles, { color } from "./styles";
-import moment from 'moment';
 import ActionModal from '../ActionSheetDatePicker/ActionModal';
+import moment from 'moment';
 import { getFormalDate } from '../../../shared/utils/date';
 import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
@@ -64,7 +64,7 @@ class RealizationDatePicker extends React.Component {
                             onDateChange={(newDate) => {
                                 this.setState({
                                     realizationDate: newDate 
-                                }, this.props.onChangeRealizationDate(this.state.realizationDate))
+                                }, this.props.onChangeRealizationDate(newDate))
                             }}
                             minimumDate={new Date()}
                             minuteInterval={15}
@@ -112,7 +112,7 @@ class RealizationDatePicker extends React.Component {
                 var newRealizationDate = new Date(year, month, day, hours, mins);
                 this.setState({
                     realizationDate: newRealizationDate 
-                }, this.props.onChangeRealizationDate(this.state.realizationDate));
+                }, this.props.onChangeRealizationDate(newRealizationDate));
             }
         } catch ({code, message}) {
             console.warn('No podemos abrir el DatePicker', message);
@@ -136,7 +136,7 @@ class RealizationDatePicker extends React.Component {
                 if (newRealizationDate > realizationDate) {
                     this.setState({
                         realizationDate: newRealizationDate 
-                    }, this.props.onChangeRealizationDate(this.state.realizationDate))
+                    }, this.props.onChangeRealizationDate(newRealizationDate))
                 } else {
                     Alert.alert(
                         'Fecha de realización',
@@ -206,7 +206,7 @@ class RealizationDatePicker extends React.Component {
                                     styles.text, 
                                     !this.state.switchToEventDate && styles.textDisable
                                 ]}>
-                                    Misma fecha que el evento ({getFormalDate(eventDate)})
+                                    Misma fecha del evento ({getFormalDate(eventDate)})
                                 </Text>
                             </View>
                             <View>

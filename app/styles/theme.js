@@ -29,6 +29,7 @@ const fontSize = {
     text2: normalize(16),
     text3: normalize(14),
     text4: normalize(12),
+    text45: normalize(11),
     text5: normalize(10),
 }
 

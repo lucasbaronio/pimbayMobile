@@ -74,7 +74,7 @@ class CreateInvitation extends Component {
         const { 
             description, dueDate, 
             invitationType, targetUsers, 
-            minAge, maxAge, 
+            minAge, maxAge, realizationDate,
             contextActionSelected,
             eventInvitation } = this.state;
         const { createNewInvitation, invitedUsers } = this.props;
@@ -89,6 +89,7 @@ class CreateInvitation extends Component {
         createNewInvitation({
             description,
             dueDate,
+            realizationDate,
             invitationType,
             sex: targetUsers,
             minAge,
