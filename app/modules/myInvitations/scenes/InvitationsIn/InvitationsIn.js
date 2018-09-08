@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-
+import { Actions } from 'react-native-router-flux';
 import { actions as invitationsActions } from "../../index";
 const { getInvitationsIn, getInvitationsInRefresh } = invitationsActions;
 
@@ -14,8 +14,12 @@ class InvitationsIn extends Component {
         this.props.getInvitationsIn();
     }
 
+    onPressViewEvent = (item) => {
+        Actions.push("EventDetail", { props: this.props, item });
+    }
+
     renderItem = ({ item, index }) => {
-        return <ReceivedInvitationCard item={item} />
+        return <ReceivedInvitationCard item={item} onPressViewEvent={this.onPressViewEvent}/>
     }
 
     render() {

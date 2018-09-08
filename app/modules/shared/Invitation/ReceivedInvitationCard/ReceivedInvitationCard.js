@@ -93,7 +93,7 @@ class ReceivedInvitationCard extends Component {
                 const event = this.state.event;
                 return (
                     <View style={styles.descriptionContainerStyle}>
-                        <EventCardCreateInvitation eventInvitation={event} />
+                        <EventCardCreateInvitation eventInvitation={event} onPressViewEvent={this.onPressViewEvent}/>
                         <Text style={styles.descriptionWithEventStyle}>{description}</Text>
                     </View>
                 );
@@ -119,6 +119,10 @@ class ReceivedInvitationCard extends Component {
             );
         }
     }
+
+    onPressViewEvent = (item) => {
+        this.props.onPressViewEvent(item);
+    };
 
     render() {
         const { item } = this.props;

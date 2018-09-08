@@ -3,6 +3,7 @@ import { Image } from 'react-native';
 import { Scene, Stack, Modal, Tabs } from 'react-native-router-flux';
 import InvitationsIn from '../../../modules/myInvitations/scenes/InvitationsIn';
 import InvitationsOut from '../../../modules/myInvitations/scenes/InvitationsOut';
+import EventDetail from '../../../modules/eventDetail/EventDetail';
 import inOutFocused from '../../../assets/icons/in-out-selected.png';
 import inOut from '../../../assets/icons/in-out.png';
 import { fontFamily, statusBarHeight } from '../../../styles/theme';
@@ -38,6 +39,9 @@ export default (
                         title="Recibidas"
                         component={InvitationsIn}
                     />
+                    <Scene key="EventDetail"
+                        hideTabBar
+                        component={EventDetail} title="Detalle del evento" />
                 </Modal>
             </Stack>
 
@@ -49,6 +53,9 @@ export default (
                         title="Enviadas"
                         component={InvitationsOut}
                     />
+                    <Scene key="EventDetail"
+                        hideTabBar
+                        component={EventDetail} title="Detalle del evento" />
                 </Modal>
             </Stack>
         </Tabs>
