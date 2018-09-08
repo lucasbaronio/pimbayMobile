@@ -50,5 +50,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export { fontSize };
+export { fontSize, color };
 export default styles;

@@ -7,7 +7,7 @@ import CreateInvitation from '../../../modules/timeline/scenes/CreateInvitation'
 import withActionSheetInvitationHOC from '../../../modules/shared/withActionSheetInvitationHOC';
 import SelectUsersFromList from '../../../modules/timeline/scenes/SelectUsersFromList';
 import EventDetail from '../../../modules/eventDetail/EventDetail';
-import { SearchButton, BackButton } from '../buttons';
+import { SearchButton, BackButton, CloseButton } from '../buttons';
 import houseFocused from '../../../assets/icons/house-black.png';
 import house from '../../../assets/icons/house.png';
 import * as theme from '../../../styles/theme';
@@ -43,6 +43,7 @@ export default (
                     component={CreateInvitation} title="Invitación" />
                 <Scene key="EventDetail"
                     hideTabBar
+                    renderLeftButton={<CloseButton />}
                     component={EventDetail} title="Detalle del evento" />
             </Modal>
             <Scene key="SelectUsersFromList"
