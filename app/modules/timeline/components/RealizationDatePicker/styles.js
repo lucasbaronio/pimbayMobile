@@ -7,19 +7,16 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        // borderTopWidth: 1,
-        // borderBottomWidth: 1,
-        // borderColor: color.grey,
         backgroundColor: color.white,
         padding: 5,
         paddingHorizontal: 10,
         marginBottom: 10
     },
-    titleTimerDueDate: {
+    titleRealizationDate: {
         fontSize: fontSize.text2,
     },
-    timerDueDate: {
-        color: color.red,
+    realizationDate: {
+        color: color.blue,
         fontSize: fontSize.text2,
         fontFamily: fontFamily.bold,
         textAlign: 'center',
@@ -61,4 +58,5 @@ const styles = StyleSheet.create({
     },
 });
 
+export { color };
 export default styles;

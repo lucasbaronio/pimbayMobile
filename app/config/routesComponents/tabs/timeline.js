@@ -38,9 +38,8 @@ export default (
                     component={SearchTimeline} title="Buscar" />
                 <Scene key="CreateInvitation"
                     hideTabBar
-                    renderLeftButton={<CloseButton />}
-                    // renderRightButton={<SaveButton goToScreen='Timeline' />}
-                    component={CreateInvitation} title="Crear Invitación" />
+                    renderLeftButton={null}
+                    component={CreateInvitation} title="Invitación" />
 
             </Modal>
             <Scene key="SelectUsersFromList"

@@ -1,13 +1,15 @@
 import React from 'react';
 import { 
-    View, Text, 
-    Picker,
+    View, 
+    Text,
+    Image
 } from 'react-native';
 import { Badge } from 'react-native-elements';
 
 import { targetUsers } from '../../../shared/constants';
 import styles, { color } from "./styles";
 import AgeUsers from './components/AgeUsers';
+import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
 class Target extends React.Component {
 
@@ -66,6 +68,12 @@ class Target extends React.Component {
                             value='Mujeres'
                             onPress={() => this.onChangeTargetUsers(targetUsers.WOMAN)} />
                     </View>
+                </View>
+                <View>
+                    <Image
+                        style={styles.dividerImageStyle}
+                        // resizeMode='center'
+                        source={DividerOpenInvitation} />
                 </View>
                 <View style={styles.ageUsers}>
                     <Text style={styles.title}>Edad</Text>

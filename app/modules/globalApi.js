@@ -22,7 +22,7 @@ export function get(uri, callback) {
 }
 
 export function post(uri, body, callback) {
-    console.log(body);
+    // console.log(body);
     return fetch(uri, {
         method: 'post',
         headers: {
