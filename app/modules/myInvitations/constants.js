@@ -1,4 +1,4 @@
-import { 
+import {
     API_INVITATIONS_IN as apiInvitationsIn,
     API_INVITATIONS_OUT as apiInvitationsOut,
     API_USER_BY_ID as apiGetUserById,
