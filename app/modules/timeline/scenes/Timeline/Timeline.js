@@ -33,7 +33,7 @@ class Timeline extends React.Component {
                         Que estás para hacer hoy?
                     </Text>
                 }
-                <InvitationCard item={item} cardType={invitationCard.TIMELINE} />
+                <InvitationCard item={item} cardType={invitationCard.TIMELINE} onPressViewEvent={this.onPressViewEvent}/>
             </View>
         )
     }

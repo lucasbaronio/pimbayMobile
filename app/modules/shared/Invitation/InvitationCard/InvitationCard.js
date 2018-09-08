@@ -41,6 +41,10 @@ class InvitationCard extends Component {
         Actions.push("CreateInvitation", props);
     }
 
+    onPressViewEvent = (item) => {
+        this.props.onPressViewEvent(item);
+    };
+
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
             return this.renderDetailsWithoutDueDate(item);
@@ -135,7 +139,7 @@ class InvitationCard extends Component {
                         <View style={{ justifyContent: 'center' }}>
                             {
                                 !!event &&
-                                <EventCardCreateInvitation eventInvitation={event} />
+                                <EventCardCreateInvitation eventInvitation={event} onPressViewEvent={this.onPressViewEvent}/>
                             }
                             <View style={styles.descriptionContainerStyle}>
                                 <Text style={styles.descriptionStyle}>{item.description}</Text>
