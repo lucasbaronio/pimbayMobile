@@ -11,7 +11,7 @@ import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
-import { CloseButtonOnPress} from '../../../../config/routesComponents/buttons';
+import { CloseButtonOnPress } from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 import { Button } from 'react-native-elements';
@@ -38,10 +38,10 @@ class CreateInvitation extends Component {
 
     componentWillMount() {
         const { type, invitationType, item } = this.props;
-        Actions.refresh({ 
-            title: invitationType === invType.OPEN 
-                    ? "Invitación Abierta"
-                    : "Invitación Dirigida",
+        Actions.refresh({
+            title: invitationType === invType.OPEN
+                ? "Invitación Abierta"
+                : "Invitación Dirigida",
             left: <CloseButtonOnPress onPress={this.cleanCreateInvitation} />,
         });
         switch (type) {
@@ -71,9 +71,9 @@ class CreateInvitation extends Component {
     }
 
     createInvitation = () => {
-        const { 
-            description, dueDate, 
-            invitationType, targetUsers, 
+        const {
+            description, dueDate,
+            invitationType, targetUsers,
             minAge, maxAge, realizationDate,
             contextActionSelected,
             eventInvitation } = this.state;
@@ -101,11 +101,11 @@ class CreateInvitation extends Component {
         }, this.onSuccess, this.onError);
     }
 
-    onSuccess(){
+    onSuccess() {
         Actions.pop();
     }
 
-    onError(error){
+    onError(error) {
         Alert.alert("Oops", error.message);
     }
 
@@ -171,7 +171,7 @@ class CreateInvitation extends Component {
     renderEventInvitation = () => {
         const { eventInvitation } = this.state;
         return (
-            <EventCardCreateInvitation eventInvitation={eventInvitation}/>
+            <EventCardCreateInvitation eventInvitation={eventInvitation} />
         );
     }
 
@@ -187,18 +187,18 @@ class CreateInvitation extends Component {
         this.setState({ realizationDate });
     }
 
-    onChangeQuota = ({quota, hasQuota}) => {
-        this.setState({quota, hasQuota})
+    onChangeQuota = ({ quota, hasQuota }) => {
+        this.setState({ quota, hasQuota })
     }
 
     render() {
         const { type, isLoading } = this.props;
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <ScrollView style={styles.container}>
-                    <KeyboardAvoidingView 
-                        behavior= {(Platform.OS === 'ios')? "padding" : null} 
-                        keyboardVerticalOffset={Platform.select({ios: 84, android: 500})}
+                    <KeyboardAvoidingView
+                        behavior={(Platform.OS === 'ios') ? "padding" : null}
+                        keyboardVerticalOffset={Platform.select({ ios: 84, android: 500 })}
                         enabled >
 
                         {this.renderType()}
@@ -206,46 +206,46 @@ class CreateInvitation extends Component {
                             !!(type !== pimbayType.SIMPLE) &&
                             this.renderTextBox()
                         }
-                        <RealizationDatePicker 
+                        <RealizationDatePicker
                             eventDate={
-                                this.props.type === pimbayType.EVENT 
+                                this.props.type === pimbayType.EVENT
                                     ? this.state.eventInvitation.realizationDate
                                     : null
                             }
-                            onChangeRealizationDate={this.onChangeRealizationDate}/>
-                        <DatePicker 
+                            onChangeRealizationDate={this.onChangeRealizationDate} />
+                        <DatePicker
                             eventDate={
-                                this.props.type === pimbayType.EVENT 
+                                this.props.type === pimbayType.EVENT
                                     ? this.state.eventInvitation.realizationDate
                                     : null
                             }
-                            onChangeDueDate={this.onChangeDueDate}/>
+                            onChangeDueDate={this.onChangeDueDate} />
                         {
                             !!(this.props.invitationType === invType.OPEN) &&
                             <Target onChangeTargetUsers={this.onChangeTargetUsers} />
                         }
-                        <Quota 
-                            onChangeQuota={this.onChangeQuota}/>
+                        <Quota
+                            onChangeQuota={this.onChangeQuota} />
                         {
                             !!(this.props.invitationType !== invType.OPEN) &&
-                            <InvitedUsers 
-                                onChangeInvitedUserList={this.onChangeInvitedUserList}/>
+                            <InvitedUsers
+                                onChangeInvitedUserList={this.onChangeInvitedUserList} />
                         }
                     </KeyboardAvoidingView>
                 </ScrollView>
                 {
                     !!isLoading
-                    ? <View style={styles.loadingCreateInvitation}>
-                        <ActivityIndicator color="white" />
-                    </View>
-                    : <Button
-                        raised
-                        title="Crear Invitación"
-                        borderRadius={4}
-                        containerViewStyle={styles.createInvitationContainer}
-                        buttonStyle={styles.createInvitationButton}
-                        textStyle={styles.createInvitationText}
-                        onPress={this.createInvitation}/>
+                        ? <View style={styles.loadingCreateInvitation}>
+                            <ActivityIndicator color="white" />
+                        </View>
+                        : <Button
+                            raised
+                            title="Crear Invitación"
+                            borderRadius={4}
+                            containerViewStyle={styles.createInvitationContainer}
+                            buttonStyle={styles.createInvitationButton}
+                            textStyle={styles.createInvitationText}
+                            onPress={this.createInvitation} />
                 }
             </View>
         );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Header } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
@@ -28,7 +28,7 @@ class SearchTimeline extends React.Component {
     renderSearchBar() {
         return (
             <View style={styles.searchView}>
-                <SearchBarApp 
+                <SearchBarApp
                     onChangeText={this.onChangeText}
                     onClearText={this.onClearText}
                     placeholder={"Buscar..."} />
@@ -71,4 +71,4 @@ class SearchTimeline extends React.Component {
 // }
 
 // export default connect(mapStateToProps, { getEventsOrInvitations })(SearchTimeline);
-export default connect(null, { })(SearchTimeline);
+export default connect(null, {})(SearchTimeline);

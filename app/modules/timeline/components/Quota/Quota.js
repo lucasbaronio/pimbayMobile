@@ -1,6 +1,6 @@
 import React from 'react';
-import { 
-    View, Text, 
+import {
+    View, Text,
     Switch,
     Image,
     TouchableOpacity,
@@ -25,7 +25,7 @@ class Quota extends React.Component {
     componentWillMount() {
         this.loadPossibleQuota();
         const { quota, switchHasQuota } = this.state;
-        this.props.onChangeQuota({quota: switchHasQuota ? quota : null, hasQuota: switchHasQuota});
+        this.props.onChangeQuota({ quota: switchHasQuota ? quota : null, hasQuota: switchHasQuota });
     }
 
     loadPossibleQuota = () => {
@@ -34,22 +34,22 @@ class Quota extends React.Component {
         for (var i = minimumValue; i <= maximumValue; i++) {
             possibleQuota.push(i);
         }
-        this.setState({possibleQuota});
+        this.setState({ possibleQuota });
     }
 
     onSwitchHasQuota = () => {
         const { quota } = this.state;
         this.setState({
             switchHasQuota: !this.state.switchHasQuota
-        }, () => this.props.onChangeQuota({quota: this.state.switchHasQuota ? quota : null, hasQuota: this.state.switchHasQuota}));
+        }, () => this.props.onChangeQuota({ quota: this.state.switchHasQuota ? quota : null, hasQuota: this.state.switchHasQuota }));
     }
 
     renderQuotaPicker = () => {
         const { toggleQuotaPickerVisible } = this.state;
         return (
             <View>
-                <ActionModal 
-                    modalVisible={toggleQuotaPickerVisible} 
+                <ActionModal
+                    modalVisible={toggleQuotaPickerVisible}
                     onCancel={this.onPressTogglePicker}
                     buttonText="Aceptar"
                 >
@@ -60,7 +60,7 @@ class Quota extends React.Component {
                         <Picker
                             // style={{width: 100}}
                             selectedValue={this.state.quota}
-                            onValueChange={(quota) => this.setState({ quota }, 
+                            onValueChange={(quota) => this.setState({ quota },
                                 this.props.onChangeQuota({
                                     quota: this.state.quota, hasQuota: true
                                 })
@@ -85,7 +85,7 @@ class Quota extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <View style={styles.container}>
                 <View style={styles.headerQuota}>
                     <View>
@@ -94,7 +94,7 @@ class Quota extends React.Component {
                     <View>
                         <Switch
                             onValueChange={this.onSwitchHasQuota}
-                            value={this.state.switchHasQuota}/>
+                            value={this.state.switchHasQuota} />
                     </View>
                 </View>
                 {
@@ -106,15 +106,15 @@ class Quota extends React.Component {
                                 // resizeMode='center'
                                 source={DividerOpenInvitation} />
                         </View>
-                        <TouchableOpacity 
-                            onPress={this.onPressTogglePicker} 
+                        <TouchableOpacity
+                            onPress={this.onPressTogglePicker}
                             style={styles.chooseQuotaView}>
-                            
+
                             <Text style={styles.text}>Cupo limite de invitados</Text>
                             <Text style={styles.text}>{this.state.quota}</Text>
                         </TouchableOpacity>
                         {
-                            !!this.state.toggleQuotaPickerVisible && 
+                            !!this.state.toggleQuotaPickerVisible &&
                             this.renderQuotaPicker()
                         }
                     </View>

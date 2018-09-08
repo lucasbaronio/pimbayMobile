@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  Text, 
-  TouchableOpacity, 
+import {
+  Text,
+  TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 

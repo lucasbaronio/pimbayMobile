@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, fontSize, windowWidth } = theme;
+const { fontSize } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -31,9 +31,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-    },
-    
-
+    }
 });
 
 export default styles;

@@ -1,10 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import { Card, Button as ButtonElements } from 'react-native-elements';
-import { connect } from 'react-redux';
-
-// import { actions as timeline } from "../../index";
-// const { getContextActionList } = timeline;
 import { Actions } from 'react-native-router-flux';
 
 import AvatarUser from "../../../shared/AvatarUser";
@@ -56,7 +51,7 @@ class InvitedUsers extends React.Component {
 
     componentWillMount() {
         const newUserList = convertUserArrayInArrayOfArrays(invitedUser, 4);
-        this.setState({newUserList});
+        this.setState({ newUserList });
     }
 
     // onPressAvatar = (item) => {
@@ -88,7 +83,7 @@ class InvitedUsers extends React.Component {
 
     renderRow = (row) => {
         return row.map((item) =>
-            <AvatarUser 
+            <AvatarUser
                 key={item.id}
                 item={item}
                 // onPressAvatar={this.onPressAvatar}
@@ -109,9 +104,9 @@ class InvitedUsers extends React.Component {
     render() {
         const { newUserList } = this.state;
 
-        return(
+        return (
             <TouchableOpacity style={styles.container} onPress={this.onPressView}>
-                
+
                 <View style={styles.header}>
                     <View style={styles.titleSelectInvitedUsersView}>
                         <Text style={styles.titleSelectInvitedUsers}>

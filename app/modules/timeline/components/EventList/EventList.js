@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
-import { Card, Button as ButtonElements } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 import { actions as timeline } from "../../index";

@@ -9,7 +9,7 @@ import styles from "./styles";
 
 class InvitedUsers extends React.Component {
 
-    renderItem = ({item, index}) => {
+    renderItem = ({ item, index }) => {
         return (
             <AvatarUser item={item} />
         )
@@ -17,12 +17,12 @@ class InvitedUsers extends React.Component {
 
     renderHeader = () => {
         return (
-            <AvatarUser 
+            <AvatarUser
                 onPressInviteButtom={this.onPressInviteButtom}
-                item={{ 
-                    avatar: "../../../assets/icons/adduser.png", 
-                    userName: "Invitar", 
-                    fullName: "Invitar" 
+                item={{
+                    avatar: "../../../assets/icons/adduser.png",
+                    userName: "Invitar",
+                    fullName: "Invitar"
                 }} />
         )
     }
@@ -34,7 +34,7 @@ class InvitedUsers extends React.Component {
     render() {
         const { invitedUsers } = this.props;
         console.log(invitedUsers);
-        return(
+        return (
             <View style={styles.container}>
                 <Text style={styles.title}>
                     Mis invitados
@@ -46,7 +46,7 @@ class InvitedUsers extends React.Component {
                     showsHorizontalScrollIndicator={false}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => item.id}
-                    style={{marginLeft: 10}}
+                    style={{ marginLeft: 10 }}
                     ListHeaderComponent={this.renderHeader}
                 />
             </View>
@@ -60,4 +60,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { })(InvitedUsers);
+export default connect(mapStateToProps, {})(InvitedUsers);

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { normalize, color, fontSize, fontFamily, windowWidth } = theme;
+const { color, fontSize } = theme;
 
 const styles = StyleSheet.create({
     container: {
