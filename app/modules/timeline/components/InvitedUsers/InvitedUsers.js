@@ -1,14 +1,9 @@
 import React from 'react';
-import { View, FlatList, Text, TouchableOpacity } from 'react-native';
-// import { Card, Button as ButtonElements } from 'react-native-elements';
+import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-// import { actions as timeline } from "../../index";
-// const { getContextActionList } = timeline;
 import { Actions } from 'react-native-router-flux';
-
 import AvatarUser from "../../../shared/AvatarUser";
-import AddUser from "../../../../assets/icons/adduser.png";
 
 import styles from "./styles";
 

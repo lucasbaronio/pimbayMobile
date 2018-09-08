@@ -4,11 +4,11 @@ import { Scene, Stack, Modal } from 'react-native-router-flux';
 import { CreateInvitationButton } from '../buttons';
 
 export default (
-    <Stack key="CreateSimpleInvitationStack" title="Crear Invitación" hideNavBar>
+    <Stack key="CreateSimpleInvitationStack" hideNavBar>
         <Modal>
             <Scene
                 key={"CreateSimpleInvitation"}
-                title="Crear Invitación"
+                title="Invitación"
                 component={React.Component}
                 icon={() => <CreateInvitationButton />}
             />

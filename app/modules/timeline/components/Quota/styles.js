@@ -7,10 +7,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderColor: color.grey,
+        // borderBottomWidth: 1,
+        // borderColor: color.grey,
+        backgroundColor: color.white,
         padding: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginBottom: 10
     },
     headerQuota: {
         flex: 1,
@@ -18,34 +20,30 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    titleHasQuotaView: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    titleHasQuota: {
+    text: {
         fontSize: fontSize.text2,
     },
-    switchHasQuota: {
-        flex: 1,
-    },
-    bodyQuota: {
-        flex: 1,
+    chooseQuotaView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 10,
+        marginVertical: 5
     },
-    sliderView: {
-        flex: 8,
-        marginHorizontal: 3,
+    pickerContainer: {
+        backgroundColor: 'white', 
+        borderRadius: 10,
+        marginBottom: 10, 
     },
-    textSliderView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 5
+    pickerTitle: {
+        marginVertical: 10,
+        textAlign: "center",
+        color: 'rgba(0, 0, 0, 0.70)'
     },
-    colorCurrentQuota: {
-        color: "green",
-        fontSize: fontSize.text2,
+    dividerImageStyle: {
+        alignSelf: 'flex-start', 
+        width: windowWidth,
+        height: 1,
+        marginTop: 5,
+        marginLeft: 30
     },
 });
 

@@ -7,10 +7,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderColor: color.grey,
+        // borderBottomWidth: 1,
+        // borderColor: color.grey,
+        backgroundColor: color.white,
         padding: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginBottom: 10
     },
     genderUsers: {
         flex: 1,
@@ -29,6 +31,13 @@ const styles = StyleSheet.create({
     ageUsers: {
         flex: 1,
         flexDirection: 'column',
+    },
+    dividerImageStyle: {
+        alignSelf: 'flex-start', 
+        width: windowWidth,
+        height: 1,
+        marginVertical: 3,
+        marginLeft: 30
     },
 });
 

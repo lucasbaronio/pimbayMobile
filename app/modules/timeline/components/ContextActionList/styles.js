@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { fontFamily, fontSize, windowWidth } = theme;
+const { fontFamily, fontSize, color } = theme;
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10
+        paddingTop: 10,
+        backgroundColor: color.white,
+        marginBottom: 10
     },
     title: {
         fontFamily: fontFamily.bold,

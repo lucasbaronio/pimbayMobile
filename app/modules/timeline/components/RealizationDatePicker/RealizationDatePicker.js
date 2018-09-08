@@ -12,20 +12,17 @@ import {
 
 import { formatDateFromDate, formatTimeFromDate } from '../../../shared/utils/date';
 
-import styles from "./styles";
+import styles, { color } from "./styles";
 import ActionModal from '../ActionSheetDatePicker/ActionModal';
 import moment from 'moment';
 import { getFormalDate } from '../../../shared/utils/date';
 import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
-class DatePicker extends React.Component {
+class RealizationDatePicker extends React.Component {
 
     state = {
-        dueDate: new Date(),
+        realizationDate: new Date(),
         toggleDatePickerVisible: false,
-        dayTimerDueDate: 0,
-        hoursTimerDueDate: 1,
-        minsTimerDueDate: 0,
         switchToEventDate: true,
     };
 
@@ -33,34 +30,13 @@ class DatePicker extends React.Component {
         const { eventDate } = this.props;
         if (eventDate) {
             var eventDateConverted = new Date(moment(eventDate).format());
-            this.setState({dueDate: eventDateConverted});
-            this.props.onChangeDueDate(eventDateConverted);
+            this.setState({realizationDate: eventDateConverted});
+            this.props.onChangeRealizationDate(eventDateConverted);
         } else {
-            var dueDate = this.state.dueDate;
-            dueDate.setHours(dueDate.getHours() + 1);
-            this.setState({dueDate: dueDate});
-            this.props.onChangeDueDate(dueDate);
-        }
-    }
-
-    calculateTimerDueDate = () => {
-        const { dueDate } = this.state;
-        var seconds = Math.floor((dueDate - (new Date()))/1000);
-        var minutes = Math.floor(seconds/60);
-        var hours = Math.floor(minutes/60);
-        var days = Math.floor(hours/24);
-
-        hours = hours-(days*24);
-        minutes = minutes-(days*24*60)-(hours*60);
-        seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
-
-        if (days >= 0) {
-            this.setState({
-                dayTimerDueDate: days,
-                hoursTimerDueDate: hours,
-                minsTimerDueDate: minutes,
-            });
-            this.props.onChangeDueDate(dueDate);
+            var realizationDate = this.state.realizationDate;
+            realizationDate.setHours(realizationDate.getHours() + 3);
+            this.setState({realizationDate: realizationDate});
+            this.props.onChangeRealizationDate(realizationDate);
         }
     }
 
@@ -76,22 +52,22 @@ class DatePicker extends React.Component {
             <View>
                 <ActionModal 
                     modalVisible={Platform.OS === 'ios' && toggleDatePickerVisible} 
-                    onCancel={this.onPressTimerDueDate}
+                    onCancel={this.onPressRealizationDatePicker}
                     buttonText="Aceptar"
                 >
                     <View style={styles.datePickerIOSContainer}>
                         <Text style={styles.datePickerIOSTitle}>
-                            Fecha de vencimiento:
+                            Cuando se hace?
                         </Text>
                         <DatePickerIOS 
-                            date={this.state.dueDate} 
+                            date={this.state.realizationDate} 
                             onDateChange={(newDate) => {
                                 this.setState({
-                                    dueDate: newDate
-                                }, () => this.calculateTimerDueDate())
+                                    realizationDate: newDate 
+                                }, this.props.onChangeRealizationDate(newDate))
                             }}
                             minimumDate={new Date()}
-                            minuteInterval={10}
+                            minuteInterval={15}
                         />
                     </View>
                 </ActionModal>
@@ -105,17 +81,15 @@ class DatePicker extends React.Component {
                 <View style={{flex: 1, margin: 5}}>
                     <Button
                         onPress={this.renderDatePickerAndroid}
-                        title={formatDateFromDate(this.state.dueDate)}
-                        color="#841584"
-                        accessibilityLabel="Learn more about this purple button"
+                        title={formatDateFromDate(this.state.realizationDate)}
+                        color={color.orange}
                     />
                 </View>
                 <View style={{flex: 1, margin: 5}}>
                     <Button
                         onPress={this.renderTimePickerAndroid}
-                        title={formatTimeFromDate(this.state.dueDate)}
-                        color="#841584"
-                        accessibilityLabel="Learn more about this purple button"
+                        title={formatTimeFromDate(this.state.realizationDate)}
+                        color={color.orange}
                     />
                 </View>
             </View>
@@ -126,19 +100,19 @@ class DatePicker extends React.Component {
         try {
             const { action, year, month, day } = await DatePickerAndroid.open({
                 // Month 0 is January.
-                date: this.state.dueDate,
+                date: this.state.realizationDate,
                 minDate: new Date(),
                 mode: 'spinner'
             });
             if (action !== DatePickerAndroid.dismissedAction) {
                 // Selected year, month (0-11), day
-                const { dueDate } = this.state;
-                const hours = dueDate.getHours();
-                const mins = dueDate.getMinutes();
-                var newDueDate = new Date(year, month, day, hours, mins);
+                const { realizationDate } = this.state;
+                const hours = realizationDate.getHours();
+                const mins = realizationDate.getMinutes();
+                var newRealizationDate = new Date(year, month, day, hours, mins);
                 this.setState({
-                    dueDate: newDueDate
-                }, () => this.calculateTimerDueDate());
+                    realizationDate: newRealizationDate 
+                }, this.props.onChangeRealizationDate(newRealizationDate));
             }
         } catch ({code, message}) {
             console.warn('No podemos abrir el DatePicker', message);
@@ -147,26 +121,26 @@ class DatePicker extends React.Component {
 
     renderTimePickerAndroid = async () => {
         try {
-            const {action, hour, minute} = await TimePickerAndroid.open({
-                hour: this.state.dueDate.getHours(),
-                minute: this.state.dueDate.getMinutes(),
+            const { action, hour, minute } = await TimePickerAndroid.open({
+                hour: this.state.realizationDate.getHours(),
+                minute: this.state.realizationDate.getMinutes(),
                 is24Hour: true,
             });
             if (action !== TimePickerAndroid.dismissedAction) {
                 // Selected hour (0-23), minute (0-59)
-                const { dueDate } = this.state;
-                const year = dueDate.getFullYear();
-                const month = dueDate.getMonth();
-                const day = dueDate.getDate();
-                var newDueDate = new Date(year, month, day, hour, minute);
-                if (newDueDate > dueDate) {
+                const { realizationDate } = this.state;
+                const year = realizationDate.getFullYear();
+                const month = realizationDate.getMonth();
+                const day = realizationDate.getDate();
+                var newRealizationDate = new Date(year, month, day, hour, minute);
+                if (newRealizationDate > realizationDate) {
                     this.setState({
-                        dueDate: newDueDate
-                    }, () => this.calculateTimerDueDate());
+                        realizationDate: newRealizationDate 
+                    }, this.props.onChangeRealizationDate(newRealizationDate))
                 } else {
                     Alert.alert(
-                        'Fecha de vencimiento',
-                        'La fecha de vencimiento no puede ser anterior a la actual.',
+                        'Fecha de realización',
+                        'La fecha de realización no puede ser anterior a la actual.',
                     )
                 }
             }
@@ -175,38 +149,38 @@ class DatePicker extends React.Component {
         }
     }
 
-    onPressTimerDueDate = () => {
+    onPressRealizationDatePicker = () => {
         this.setState({
             toggleDatePickerVisible: !this.state.toggleDatePickerVisible
         })
     }
 
     onSwitchToEventDate = () => {
-        const { dueDate } = this.state;
+        const { realizationDate } = this.state;
         const { eventDate } = this.props;
         this.setState({
             switchToEventDate: !this.state.switchToEventDate
-        }, () => this.props.onChangeDueDate(
+        }, () => this.props.onChangeRealizationDate(
                 this.state.switchToEventDate 
                 ? new Date(moment(eventDate).format())
-                : dueDate
+                : realizationDate
             )
         );
     }
 
-    renderDueDate = () => {
-        const { toggleDatePickerVisible, dayTimerDueDate, hoursTimerDueDate, minsTimerDueDate } = this.state;
+    renderRealizationDate = () => {
+        const { toggleDatePickerVisible, realizationDate } = this.state;
         return (
             <View>
                 <TouchableOpacity 
                     style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}
-                    onPress={this.onPressTimerDueDate}>
-                    <Text style={styles.text}>Luego de: </Text>
+                    onPress={this.onPressRealizationDatePicker}>
+                    <Text style={styles.text}>Seleccione una fecha: </Text>
                     <View style={{flex: 1, justifyContent: 'center'}}>
-                        <Text style={styles.timerDueDate}>
-                            {(dayTimerDueDate > 0) && `${dayTimerDueDate} días, `}
-                            {(hoursTimerDueDate > 0) && `${hoursTimerDueDate} hrs, `}
-                            {minsTimerDueDate} mins
+                        <Text style={styles.realizationDate}>
+                            {
+                                getFormalDate(realizationDate)
+                            }
                         </Text>
                     </View>
                 </TouchableOpacity>
@@ -222,7 +196,7 @@ class DatePicker extends React.Component {
         const { eventDate } = this.props;
         return(
             <View style={styles.container}>
-                <Text style={styles.titleTimerDueDate}>Cuando se vence?</Text>
+                <Text style={styles.titleRealizationDate}>Cuando se hace?</Text>
                 {
                     !!eventDate 
                     ? <View>
@@ -232,7 +206,7 @@ class DatePicker extends React.Component {
                                     styles.text, 
                                     !this.state.switchToEventDate && styles.textDisable
                                 ]}>
-                                    El mismo día del evento ({getFormalDate(eventDate)})
+                                    Misma fecha del evento ({getFormalDate(eventDate)})
                                 </Text>
                             </View>
                             <View>
@@ -249,15 +223,15 @@ class DatePicker extends React.Component {
                                         style={styles.dividerImageStyle}
                                         source={DividerOpenInvitation} />
                                 </View>
-                                {this.renderDueDate()}
+                                {this.renderRealizationDate()}
                             </View>
                         }
                     </View>
-                    : this.renderDueDate()
+                    : this.renderRealizationDate()
                 }
             </View>
         )
     }
 }
 
-export default DatePicker;
+export default RealizationDatePicker;
