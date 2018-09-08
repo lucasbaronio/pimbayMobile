@@ -1,4 +1,3 @@
-
 const pimbayType = {
     EVENT: 'EVENT',
     INVITATION: 'INVITATION',

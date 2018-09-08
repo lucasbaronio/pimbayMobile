@@ -32,9 +32,9 @@ const withActionSheetInvitationHOC = WrappedComponent =>
             actionSheetPimbayType: null,
             actionSheetItem: null
         }
-        
-        showActionSheet = ({...actionSheetStates}) => {
-            this.setState({...actionSheetStates}, () => this.ActionSheet.show());
+
+        showActionSheet = ({ ...actionSheetStates }) => {
+            this.setState({ ...actionSheetStates }, () => this.ActionSheet.show());
         }
 
         onPressActionSheetAndroid = (index) => {
@@ -56,7 +56,7 @@ const withActionSheetInvitationHOC = WrappedComponent =>
 
         render() {
             return (
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                     <WrappedComponent
                         {...this.props}
                         showActionSheet={this.showActionSheet}
@@ -74,5 +74,5 @@ const withActionSheetInvitationHOC = WrappedComponent =>
             );
         }
     };
-  
+
 export default withActionSheetInvitationHOC;

@@ -13,7 +13,7 @@ class AvatarUser extends React.PureComponent {
 
     componentWillMount() {
         const { item } = this.props;
-        this.setState({selectedToggle: item.selected});
+        this.setState({ selectedToggle: item.selected });
     }
 
     onPress = () => {
@@ -27,7 +27,7 @@ class AvatarUser extends React.PureComponent {
         }
     }
 
-    renderAvatar = ({item, initials}) => {
+    renderAvatar = ({ item, initials }) => {
         if (item.avatar && item.avatar.startsWith('../')) {
             return (
                 <View style={styles.inviteButton}>
@@ -43,11 +43,11 @@ class AvatarUser extends React.PureComponent {
                     medium
                     rounded
                     title={(!item.avatar) ? initials : null}
-                    source={(item.avatar) ? {uri: item.avatar} : null}
+                    source={(item.avatar) ? { uri: item.avatar } : null}
                 />
             )
         }
-        
+
     }
 
     render() {
@@ -59,7 +59,7 @@ class AvatarUser extends React.PureComponent {
             <TouchableOpacity onPress={this.onPress}>
                 <View style={styles.container}>
                     <View style={styles.avatar}>
-                        {this.renderAvatar({item, initials})}
+                        {this.renderAvatar({ item, initials })}
                         {
                             !!this.state.selectedToggle &&
                             <Ionicons name="ios-checkmark-circle" size={22} color="green" style={styles.icon} />
