@@ -53,6 +53,18 @@ const getFormalDate = (dateString) => {
     return `${dayOfWeek}, ${date.getDate()} ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
 }
 
+const getCompleteFormalDate = (dateString) => {
+    var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sabado'];
+    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+    var date = new Date(moment(dateString).format());
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var dayOfWeek = days[ date.getDay() ];
+    var month = months[ date.getMonth() ];
+    return `${dayOfWeek}, ${date.getDate()} de ${month}, ${hours}` + (minutes !== 0 ? `:${minutes} ` : ' ') + 'hs';
+}
+
 const getDueTime = (dueDate) => {
     var dueDateParsed = moment(dueDate); //current format YYYY-MM-DDTHH:mm:ss.SSSSZ
     var now = moment(new Date());
@@ -137,6 +149,7 @@ export {
     formatDateFromDate,
     formatTimeFromDate,
     getFormalDate,
+    getCompleteFormalDate,
     getDueTime,
     getCreatedTime,
     getInvSentTime,

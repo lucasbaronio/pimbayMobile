@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, FlatList, ActivityIndicator, Text, RefreshControl } from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { actions as timeline } from "../../index";
 const { getInvitations, getInvitationsRefresh } = timeline;
@@ -41,15 +41,19 @@ class Timeline extends React.Component {
     onPressContextAction = (item) => {
         this.props.showActionSheet({
             actionSheetPimbayType: pimbayType.CONTEXT_ACTION,
-            actionSheetItem: item 
+            actionSheetItem: item
         });
     }
 
     onPressEvent = (item) => {
         this.props.showActionSheet({
             actionSheetPimbayType: pimbayType.EVENT,
-            actionSheetItem: item 
+            actionSheetItem: item
         });
+    }
+
+    onPressViewEvent = (item) => {
+        Actions.push("EventDetail", {props: this.props, item});
     }
 
     renderHeader = () => {
@@ -59,7 +63,7 @@ class Timeline extends React.Component {
                     size={contextActionSize.MEDIUM}
                     selectable={false}
                     onPressContextAction={this.onPressContextAction} />
-                <EventList onPressEvent={this.onPressEvent} />
+                <EventList onPressEvent={this.onPressEvent} onPressViewEvent={this.onPressViewEvent} />
             </View>
         )
     }

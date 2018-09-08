@@ -26,23 +26,28 @@ class EventList extends React.Component {
         this.props.onPressEvent(item);
     };
 
-    renderItem = ({item, index}) => {
+    onPressViewEvent = (item) => {
+        this.props.onPressViewEvent(item);
+    };
+
+    renderItem = ({ item, index }) => {
         return (
-            <EventCardMedium 
+            <EventCardMedium
                 item={item}
-                onPressItem={this.onPressItem} />
+                onPressItem={this.onPressItem}
+                onPressViewEvent={this.onPressViewEvent} />
         )
     }
 
     render() {
-        if (this.props.isLoading){
-            return(
+        if (this.props.isLoading) {
+            return (
                 <View style={styles.activityIndicatorCenter}>
-                    <ActivityIndicator animating={true}/>
+                    <ActivityIndicator animating={true} />
                 </View>
             )
-        }else{
-            return(
+        } else {
+            return (
                 <View style={styles.container}>
                     <Text style={styles.title}>
                         Eventos de tu interés
@@ -65,10 +70,10 @@ class EventList extends React.Component {
                         onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
                         ListFooterComponent={() => {
                             return (
-                            this.props.isLoadingMore &&
-                            <View style={styles.activityIndicatorBottom}>
-                                <ActivityIndicator size="small" />
-                            </View>
+                                this.props.isLoadingMore &&
+                                <View style={styles.activityIndicatorBottom}>
+                                    <ActivityIndicator size="small" />
+                                </View>
                             );
                         }}
                     />

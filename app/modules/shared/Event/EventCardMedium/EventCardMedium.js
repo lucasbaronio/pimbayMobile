@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
-import { View, Text, Image, ImageBackground } from 'react-native';
-import { Card, Button as ButtonElements } from 'react-native-elements';
-import { Actions } from "react-native-router-flux";
+import { View, Text, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import { Button as ButtonElements } from 'react-native-elements';
 import LocationButton from "../components/LocationButton";
 import styles, { fontSize } from "./styles";
 import { getFormalDate } from "../../utils/date";
@@ -10,23 +9,22 @@ class EventCardMedium extends PureComponent {
 
     onInvitePress = () => {
         const { item } = this.props;
-        console.log(item);
         this.props.onPressItem(item);
-        // this.goToCreateInvitation({type: 'EVENT_INVITATION', eventInvitation: this.props.item});
     }
 
-    // goToCreateInvitation = (props) => {
-    //     Actions.push("CreateInvitation", props);
-    // }
+    onPressViewEvent = () => {
+        const { item } = this.props;
+        this.props.onPressViewEvent(item);
+    }
 
     render() {
         const { item } = this.props;
 
-        return(
-            <View style={styles.container}>
-                <View>
-                    <ImageBackground 
-                        source={{uri: item.image}} 
+        return (
+            <View style={styles.container} >
+                <TouchableWithoutFeedback onPress={this.onPressViewEvent}>
+                    <ImageBackground
+                        source={{ uri: item.image }}
                         imageStyle={{ borderRadius: 10 }}
                         style={styles.image} >
                         <View style={styles.buttonView}>
@@ -38,18 +36,20 @@ class EventCardMedium extends PureComponent {
                                 fontSize={fontSize.text4} />
                         </View>
                     </ImageBackground>
-                </View>
-                <View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.onPressViewEvent}>
                     <Text style={styles.title}>
                         {item.title}
                     </Text>
-                </View>
-                <View style={styles.eventDetail}>
-                    <Text style={styles.realizationDate}>
-                        {getFormalDate(item.realizationDate)}
-                    </Text>
-                    <LocationButton place={item.place}/>
-                </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback style={styles.eventDetail} onPress={this.onPressViewEvent}>
+                    <View style={styles.eventDetail}>
+                        <Text style={styles.realizationDate}>
+                            {getFormalDate(item.realizationDate)}
+                        </Text>
+                        <LocationButton place={item.place} ellipsizeText={true} />
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
         )
     }
