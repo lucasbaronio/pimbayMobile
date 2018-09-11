@@ -7,6 +7,8 @@ export const FIREBASE_MESSAGING_SENDER_ID = "619978772784";
 
 export const FACEBOOK_APP_ID = '197787241068265';
 
+export const USER_ID = '7idtcB9R1KNmaPTCfN9y';
+
 export const API = 'https://api-pimbay.appspot.com/';
 
 export const API_EVENT_SIZE = 10;

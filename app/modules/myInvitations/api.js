@@ -3,16 +3,17 @@ import {
     API_INVITATIONS_OUT,
     API_GET_USER_BY_ID,
     API_GET_CONTEXT_ACTION_BY_ID,
-    API_GET_EVENT_BY_ID
+    API_GET_EVENT_BY_ID,
+    USER_ID
 } from './constants';
 import { get } from '../globalApi';
 
 export function getInvitationsIn(/*userId, */callback) {
-    get(API_INVITATIONS_IN({ userId: "7idtcB9R1KNmaPTCfN9y" }), callback);
+    get(API_INVITATIONS_IN({ userId: USER_ID }), callback);
 }
 
 export function getInvitationsOut(/*userId, */callback) {
-    get(API_INVITATIONS_OUT({ userId: "7idtcB9R1KNmaPTCfN9y" }), callback);
+    get(API_INVITATIONS_OUT({ userId: USER_ID }), callback);
 }
 
 export function getUserById(userId, callback) {
