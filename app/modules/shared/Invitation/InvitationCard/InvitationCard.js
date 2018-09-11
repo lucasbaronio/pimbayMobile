@@ -20,17 +20,17 @@ import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 class InvitationCard extends Component {
 
     componentWillMount() {
-        const { item } = this.props;
+        // const { item } = this.props;
 
-        this.props.getUserById(item.ownerId, (error) => alert(error.message));
+        // this.props.getUserById(item.ownerId, (error) => alert(error.message));
 
-        if (item.contextActionId) {
-            this.props.getContextActionById(item.contextActionId, (error) => alert(error.message));
-        }
+        // if (item.contextActionId) {
+        //     this.props.getContextActionById(item.contextActionId, (error) => alert(error.message));
+        // }
 
-        if (item.eventId) {
-            this.props.getEventById(item.eventId, (error) => alert(error.message));
-        }
+        // if (item.eventId) {
+        //     this.props.getEventById(item.eventId, (error) => alert(error.message));
+        // }
     }
 
     onInvitePress = () => {
@@ -172,7 +172,7 @@ class InvitationCard extends Component {
 function mapStateToProps(state, props) {
     const { item } = props;
     return {
-        owner: state.timelineReducer.users.filter(user => user.id === props.item.ownerId)[0],
+        owner: state.timelineReducer.users.filter(user => user.id === item.ownerId)[0],
         contextAction: item.contextActionId
             ? state.timelineReducer.contextActionsFromInvitations
                 .filter(contextAction => contextAction.id === item.contextActionId)[0]
@@ -184,8 +184,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, {
-    getUserById,
-    getContextActionById,
-    getEventById
-})(InvitationCard);
+export default connect(mapStateToProps, { })(InvitationCard);

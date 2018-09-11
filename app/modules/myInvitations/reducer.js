@@ -3,6 +3,9 @@ import * as t from './actionTypes';
 let initialState = {
     invitationsOut: [],
     invitationsIn: [],
+    users: [],
+    eventsFromInvitations: [],
+    contextActionsFromInvitations: [],
     isLoadingOut: false,
     isLoadingHeaderOut: false,
     isLoadingMoreOut: false,
@@ -32,13 +35,26 @@ const invitationsReducer = (state = initialState, action) => {
 
         case t.INVITATION_OUT_AVAILABLE: {
             let { data, start } = action;
-            let invitationsOut = [];
-            if (start !== 0) {
-                invitations = state.invitations;
+            let invitationsOutData = [], 
+                contextActionsData = [],
+                usersData = [],
+                eventData = [];
+            for (var i = 0; i < data.length; i++) {
+                const { invitation, context_action, user, event } = data[i];
+                if(context_action) contextActionsData.push(context_action);
+                if(event) eventData.push(event);
+                usersData.push(user);
+                invitationsOutData.push(invitation);
             }
-            invitationsOut = invitationsOut.concat(data);
+            let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
+            let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
+            let users = state.users.concat(usersData);
+            let invitationsOut = (start !== 0) ? state.invitationsOut : [];
+            invitationsOut = invitationsOut.concat(invitationsOutData);
             return {
                 ...state, invitationsOut,
+                users, eventsFromInvitations,
+                contextActionsFromInvitations,
                 isLoadingOut: false,
                 isLoadingMoreOut: false,
             };
@@ -46,10 +62,25 @@ const invitationsReducer = (state = initialState, action) => {
 
         case t.INVITATION_OUT_REFRESHED: {
             let { data } = action;
-            let invitationsOut = [];
-            invitationsOut = invitationsOut.concat(data);
+            let invitationsOutData = [],
+                contextActionsData = [],
+                usersData = [],
+                eventData = [];
+            for (var i = 0; i < data.length; i++) {
+                const { invitation, context_action, user, event } = data[i];
+                if(context_action) contextActionsData.push(context_action);
+                if(event) eventData.push(event);
+                usersData.push(user);
+                invitationsOutData.push(invitation);
+            }
+            let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
+            let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
+            let users = state.users.concat(usersData);
+            let invitationsOut = [].concat(invitationsOutData);
             return {
                 ...state, invitationsOut,
+                users, eventsFromInvitations,
+                contextActionsFromInvitations,
                 isLoadingHeaderOut: false,
             };
         }
@@ -73,14 +104,26 @@ const invitationsReducer = (state = initialState, action) => {
 
         case t.INVITATION_IN_AVAILABLE: {
             let { data, start } = action;
-            let invitationsIn = [];
-            if (start !== 0) {
-                invitations = state.invitations;
+            let invitationsInData = [], 
+                contextActionsData = [],
+                usersData = [],
+                eventData = [];
+            for (var i = 0; i < data.length; i++) {
+                const { invitation, context_action, user, event } = data[i];
+                if(context_action) contextActionsData.push(context_action);
+                if(event) eventData.push(event);
+                usersData.push(user);
+                invitationsInData.push(invitation);
             }
-            invitationsIn = invitationsIn.concat(data);
-            //invitationsIn = invitationsIn.concat(invitationsInJson);
+            let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
+            let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
+            let users = state.users.concat(usersData);
+            let invitationsIn = (start !== 0) ? state.invitationsIn : [];
+            invitationsIn = invitationsIn.concat(invitationsInData);
             return {
                 ...state, invitationsIn,
+                users, eventsFromInvitations,
+                contextActionsFromInvitations,
                 isLoadingIn: false,
                 isLoadingMoreIn: false,
             };
@@ -88,12 +131,43 @@ const invitationsReducer = (state = initialState, action) => {
 
         case t.INVITATION_IN_REFRESHED: {
             let { data } = action;
-            let invitationsIn = [];
-            invitationsIn = invitationsIn.concat(data);
+            let invitationsInData = [],
+                contextActionsData = [],
+                usersData = [],
+                eventData = [];
+            for (var i = 0; i < data.length; i++) {
+                const { invitation, context_action, user, event } = data[i];
+                if(context_action) contextActionsData.push(context_action);
+                if(event) eventData.push(event);
+                usersData.push(user);
+                invitationsInData.push(invitation);
+            }
+            let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
+            let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
+            let users = state.users.concat(usersData);
+            let invitationsIn = [].concat(invitationsInData);
             return {
                 ...state, invitationsIn,
+                users, eventsFromInvitations,
+                contextActionsFromInvitations,
                 isLoadingHeaderIn: false,
             };
+        }
+
+        case t.ADD_USER: {
+            let { data } = action;
+            console.log(data);
+            let users = state.users;
+            let exist = false;
+            for (var i = 0; i < users.length && !exist; i++) {
+                if (users[i].id === data.id) {
+                    users[i] = data;
+                    exist = true;
+                }
+            }
+            if (!exist) users.push(data);
+
+            return { ...state, users }
         }
 
         default:

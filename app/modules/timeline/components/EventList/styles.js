@@ -4,7 +4,7 @@ const { fontFamily, fontSize } = theme;
 
 const styles = StyleSheet.create({
     container: {
-        // height: 120
+        marginBottom: 10
     },
     activityIndicatorCenter: {
         flex: 1,

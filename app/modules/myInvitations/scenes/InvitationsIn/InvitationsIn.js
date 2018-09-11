@@ -53,9 +53,9 @@ class InvitationsIn extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        isLoading: state.timelineReducer.isLoadingIn,
+        isLoading: state.invitationsReducer.isLoadingIn,
         isLoadingHeader: state.invitationsReducer.isLoadingHeaderIn,
-        isLoadingMore: state.timelineReducer.isLoadingMoreIn,
+        isLoadingMore: state.invitationsReducer.isLoadingMoreIn,
         invitationsIn: state.invitationsReducer.invitationsIn,
     }
 }

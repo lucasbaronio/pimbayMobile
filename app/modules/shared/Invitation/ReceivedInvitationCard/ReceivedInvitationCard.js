@@ -15,43 +15,7 @@ import letterX from '../../../../assets/icons/letter-x.png';
 import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
-// Borrar luego de que obtengamos la info de backend
-import { getEvent } from '../backendInfoTmp';
-import * as api from '../../../myInvitations/api';
-
 class ReceivedInvitationCard extends Component {
-
-    state = {
-        isLoadingUser: true,
-        user: null,
-        isLoadingContextAction: true,
-        contextAction: null,
-        isLoadingEvent: true,
-        event: null
-    }
-
-    componentDidMount() {
-        const { item } = this.props;
-
-        api.getUserById(item.ownerId, function (success, data, error) {
-            if (success) this.setState({ isLoadingUser: false, user: data });
-            else if (error) errorCB(error);
-        }.bind(this));
-
-        if (item.contextActionId) {
-            api.getContextActionById(item.contextActionId, function (success, data, error) {
-                if (success) this.setState({ isLoadingContextAction: false, contextAction: data });
-                else if (error) errorCB(error);
-            }.bind(this));
-        }
-
-        if (item.eventId) {
-            api.getEventById(item.eventId, function (success, data, error) {
-                if (success) this.setState({ isLoadingEvent: false, event: data });
-                else if (error) { console.log(error); errorCB(error) };
-            }.bind(this));
-        }
-    }
 
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
@@ -85,21 +49,15 @@ class ReceivedInvitationCard extends Component {
     }
 
     renderDescriptionInformation = (item) => {
-        const { contextActionId, eventId, description } = item;
-        if (eventId) {
-            if (this.state.isLoadingEvent) {
-                return <View style={styles.descriptionContainerStyle} />
-            } else {
-                const event = this.state.event;
-                return (
-                    <View style={styles.descriptionContainerStyle}>
-                        <EventCardCreateInvitation eventInvitation={event} onPressViewEvent={this.onPressViewEvent}/>
-                        <Text style={styles.descriptionWithEventStyle}>{description}</Text>
-                    </View>
-                );
-            }
-        } else if (contextActionId) {
-            const contextAction = (this.state.isLoadingContextAction) ? { "title": '', "icon": null, "type": null, "image": 'default' } : this.state.contextAction;
+        const { event, contextAction } = this.props;
+        if (event) {
+            return (
+                <View style={styles.descriptionContainerStyle}>
+                    <EventCardCreateInvitation eventInvitation={event} onPressViewEvent={this.onPressViewEvent}/>
+                    <Text style={styles.descriptionWithEventStyle}>{item.description}</Text>
+                </View>
+            );
+        } else if (contextAction) {
             return (
                 <View style={styles.descriptionWithContextContainerStyle}>
                     <ContextAction
@@ -107,14 +65,14 @@ class ReceivedInvitationCard extends Component {
                         size={contextActionSize.SMALL}
                         selectable={false} />
                     <View style={{ flex: 2 }}>
-                        <Text style={styles.descriptionWithContextStyle}>{description}</Text>
+                        <Text style={styles.descriptionWithContextStyle}>{item.description}</Text>
                     </View>
                 </View>
             );
         } else {
             return (
                 <View style={styles.descriptionContainerStyle}>
-                    <Text style={styles.descriptionStyle}>{description}</Text>
+                    <Text style={styles.descriptionStyle}>{item.description}</Text>
                 </View>
             );
         }
@@ -125,15 +83,19 @@ class ReceivedInvitationCard extends Component {
     };
 
     render() {
-        const { item } = this.props;
+        const { item, owner } = this.props;
 
         return (
             <View>
                 <View style={styles.container}>
-                    <UserPhotoSection userAvatar={(this.state.isLoadingUser) ? 'default' : this.state.user.avatar} icon={receivedIcon} isPublic={false} />
+                    <UserPhotoSection 
+                        userAvatar={owner.avatar} 
+                        icon={receivedIcon} isPublic={false} />
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
-                            <Text style={styles.userNameStyle}>{(this.state.isLoadingUser) ? '' : this.state.user.userName}</Text>
+                            <Text style={styles.userNameStyle}>
+                                {owner.userName}
+                                </Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
@@ -164,4 +126,19 @@ class ReceivedInvitationCard extends Component {
     }
 }
 
-export default connect(null, {})(ReceivedInvitationCard);
+function mapStateToProps(state, props) {
+    const { item } = props;
+    return {
+        owner: state.invitationsReducer.users.filter(user => user.id === item.ownerId)[0],
+        contextAction: item.contextActionId
+            ? state.invitationsReducer.contextActionsFromInvitations
+                .filter(contextAction => contextAction.id === item.contextActionId)[0]
+            : null,
+        event: item.eventId
+            ? state.invitationsReducer.eventsFromInvitations
+                .filter(event => event.id === item.eventId)[0]
+            : null,
+    }
+}
+
+export default connect(mapStateToProps, { })(ReceivedInvitationCard);

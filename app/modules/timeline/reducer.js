@@ -40,13 +40,35 @@ const timelineReducer = (state = initialState, action) => {
 
         case t.INVITATION_LIST_AVAILABLE: {
             let { data, start } = action;
-            let invitations = [];
+            let invitations = [],
+                users = [],
+                eventsFromInvitations = [],
+                contextActionsFromInvitations = [];
             if (start !== 0) {
+                users = state.users;
+                eventsFromInvitations = state.eventsFromInvitations;
+                contextActionsFromInvitations = state.contextActionsFromInvitations;
                 invitations = state.invitations;
             }
-            invitations = invitations.concat(data);
+            let invitationsData = [], 
+                contextActionsData = [],
+                usersData = [],
+                eventData = [];
+            for (var i = 0; i < data.length; i++) {
+                const { invitation, context_action, user, event } = data[i];
+                if(context_action) contextActionsData.push(context_action);
+                if(event) eventData.push(event);
+                usersData.push(user);
+                invitationsData.push(invitation);
+            }
+            eventsFromInvitations = eventsFromInvitations.concat(eventData);
+            contextActionsFromInvitations = contextActionsFromInvitations.concat(contextActionsData);
+            users = users.concat(usersData);
+            invitations = invitations.concat(invitationsData);
             return {
                 ...state, invitations,
+                users, eventsFromInvitations,
+                contextActionsFromInvitations,
                 isLoading: false,
                 isLoadingMore: false,
             };
@@ -54,9 +76,25 @@ const timelineReducer = (state = initialState, action) => {
 
         case t.INVITATION_LIST_REFRESHED: {
             let { data } = action;
-            let invitations = [].concat(data);
+            let invitationsData = [],
+                contextActionsData = [],
+                usersData = [],
+                eventData = [];
+            for (var i = 0; i < data.length; i++) {
+                const { invitation, context_action, user, event } = data[i];
+                if(context_action) contextActionsData.push(context_action);
+                if(event) eventData.push(event);
+                usersData.push(user);
+                invitationsData.push(invitation);
+            }
+            let eventsFromInvitations = [].concat(eventData);
+            let contextActionsFromInvitations = [].concat(contextActionsData);
+            let users = [].concat(usersData);
+            let invitations = [].concat(invitationsData);
             return {
                 ...state, invitations,
+                users, eventsFromInvitations,
+                contextActionsFromInvitations,
                 isLoadingHeader: false,
             };
         }

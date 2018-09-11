@@ -46,12 +46,12 @@ class EventCardMedium extends PureComponent {
                     activeOpacity={0.9}
                     style={styles.eventDetail} 
                     onPress={this.onPressViewEvent}>
-                    <View style={styles.eventDetail}>
+                    {/* <View style={styles.eventDetail}> */}
                         <Text style={styles.realizationDate}>
                             {getFormalDate(item.realizationDate)}
                         </Text>
                         <LocationButton place={item.place} ellipsizeText={true} />
-                    </View>
+                    {/* </View> */}
                 </TouchableOpacity>
             </View>
         )

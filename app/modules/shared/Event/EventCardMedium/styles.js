@@ -34,13 +34,15 @@ const styles = StyleSheet.create({
     title: {
         fontSize: fontSize.text2,
         fontWeight: 'bold',
-        margin: 5,
+        marginTop: 5,
+        marginHorizontal: 5
     },
     eventDetail: {
         flex: 1, 
         flexDirection: "row", 
         justifyContent: "flex-start", 
         alignItems: "center",
+        height: 30
     },
     realizationDate: {
         fontSize: fontSize.text4,
