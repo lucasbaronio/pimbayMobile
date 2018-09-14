@@ -42,7 +42,6 @@ export function getInvitationsInRefresh(errorCB) {
 }
 
 export function getUserById(userId, errorCB) {
-    console.log(userId);
     return (dispatch) => {
         api.getUserById(userId, function (success, data, error) {
             if (success) dispatch({ type: t.ADD_USER, data });

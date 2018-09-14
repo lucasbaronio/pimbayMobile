@@ -42,11 +42,11 @@ export function post(uri, body, callback) {
         })
         .then(data => {
             // console.log(data);
-            callback(true, data, null)
+            callback && callback(true, data, null)
         })
         .catch((error) => {
             // console.log(error);
-            callback(false, null, error)
+            callback && callback(false, null, error)
         });
 }
 

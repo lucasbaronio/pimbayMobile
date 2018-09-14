@@ -22,10 +22,8 @@ class SelectUsersFromList extends React.Component {
     }
 
     onSuccess = (data) => {
-        console.log(data);
         var favoriteUsers = [].concat(data);
         const { invitedUsers } = this.props;
-        console.log(invitedUsers);
         for (var i = 0; i < invitedUsers.length; i++) {
             for (var j = 0; j < favoriteUsers.length; j++) {
                 if (invitedUsers[i].id === favoriteUsers[j].id)

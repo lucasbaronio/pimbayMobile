@@ -33,7 +33,6 @@ class InvitedUsers extends React.Component {
 
     render() {
         const { invitedUsers } = this.props;
-        console.log(invitedUsers);
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>

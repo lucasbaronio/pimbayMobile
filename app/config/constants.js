@@ -28,3 +28,5 @@ export const API_CONTEXT_ACTION_BY_ID = ({ contextActionId }) => `${API_CONTEXT_
 export const API_USER = `${API}users`;
 export const API_GET_ALL_USERS = `${API}all-users`;
 export const API_USER_BY_ID = ({ userId }) => `${API_USER}/${userId}`;
+
+export const API_PUSH_NOTIFICATION = `${API}users/token`;

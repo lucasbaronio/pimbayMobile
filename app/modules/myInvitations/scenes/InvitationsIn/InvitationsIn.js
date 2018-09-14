@@ -14,6 +14,10 @@ class InvitationsIn extends Component {
         this.props.getInvitationsIn();
     }
 
+    // componentWillReceiveProps(nextProps) {
+    //     this.props.getInvitationsInRefresh((error) => alert(error.message));
+    // }
+
     onPressViewEvent = (item) => {
         Actions.push("EventDetail", { props: this.props, item });
     }

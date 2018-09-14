@@ -156,7 +156,6 @@ const invitationsReducer = (state = initialState, action) => {
 
         case t.ADD_USER: {
             let { data } = action;
-            console.log(data);
             let users = state.users;
             let exist = false;
             for (var i = 0; i < users.length && !exist; i++) {
