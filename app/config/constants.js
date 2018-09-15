@@ -22,6 +22,10 @@ export const API_INVITATIONS_PAGINATION = ({ start }) => `${API_INVITATION}?limi
 export const API_INVITATIONS_IN = ({ userId }) => `${API_INVITATION}/${userId}/received`;
 export const API_INVITATIONS_OUT = ({ userId }) => `${API_INVITATION}/${userId}/sended`;
 
+// Cambiar esto cuando terminen los de backend
+export const API_CONFIRM_INVITATION = ({ invitationId, userId }) => `${API_INVITATION}/${userId}/received`;
+export const API_REJECT_INVITATION = ({ invitationId, userId }) => `${API_INVITATION}/${userId}/sended`;
+
 export const API_CONTEXT_ACTION = `${API}context-actions`;
 export const API_CONTEXT_ACTION_BY_ID = ({ contextActionId }) => `${API_CONTEXT_ACTION}/${contextActionId}`;
 

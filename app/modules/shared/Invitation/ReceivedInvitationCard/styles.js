@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
         fontSize: fontSize.text4, 
         color: color.orange
     },
-    buttonViewFinalizar: {
+    buttonViewReject: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5
     },
-    buttonViewChat: {
+    buttonViewConfirm: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5,

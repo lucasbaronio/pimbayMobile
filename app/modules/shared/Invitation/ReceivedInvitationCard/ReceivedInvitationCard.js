@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import styles, { fontSize } from "./styles";
@@ -9,10 +9,14 @@ import { getDueTime, getInvReceivedTime } from "../../../shared/utils/date";
 import UserPhotoSection from '../components/UserPhotoSection';
 import { contextActionSize } from '../../constants';
 
+import { actions as invitationsActions } from "../../../myInvitations/index";
+const { confirmInvitation, rejectInvitation } = invitationsActions;
+
 import receivedIcon from '../../../../assets/icons/ReceivedIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
 import rightArrow from '../../../../assets/icons/right-arrow.png';
+import tick from '../../../../assets/icons/tick.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
 class ReceivedInvitationCard extends Component {
@@ -80,7 +84,22 @@ class ReceivedInvitationCard extends Component {
 
     onPressViewEvent = (item) => {
         this.props.onPressViewEvent(item);
-    };
+    }
+
+    onPressConfirm = () => {
+        const { item } = this.props;
+        this.props.confirmInvitation(item.id);
+    }
+
+    onPressReject = () => {
+        const { item } = this.props;
+        this.props.rejectInvitation(item.id);
+    }
+
+    onPressChat = () => {
+        const { item } = this.props;
+        Actions.push("Chats");
+    }
 
     render() {
         const { item, owner } = this.props;
@@ -99,18 +118,25 @@ class ReceivedInvitationCard extends Component {
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Rechazar'); }}>
-                                    <View style={styles.buttonViewFinalizar}>
-                                        <Image source={letterX} style={{ height: 10, width: 10 }} />
-                                        <Text style={[styles.button, { marginLeft: 10 }]}>RECHAZAR</Text>
+                                <TouchableOpacity onPress={this.onPressReject}>
+                                    {
+                                        !!item.iAmConfirmed &&
+                                        <View style={styles.buttonViewReject}>
+                                            <Image source={letterX} style={{ height: 10, width: 10 }} />
+                                            <Text style={[styles.button, { marginLeft: 10 }]}>RECHAZAR</Text>
+                                        </View>
+                                    }
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={item.iAmConfirmed ? this.onPressChat : this.onPressConfirm}>
+                                    <View style={styles.buttonViewConfirm}>
+                                        <Text style={[styles.button, { marginRight: 10 }]}>
+                                            {item.iAmConfirmed ? "IR AL CHAT" : "ESTOY"}
+                                        </Text>
+                                        <Image 
+                                            source={item.iAmConfirmed ? rightArrow : tick} 
+                                            style={{ height: 10, width: 10 }} />
                                     </View>
-                                </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Estoy'); }}>
-                                    <View style={styles.buttonViewChat}>
-                                        <Text style={[styles.button, { marginRight: 10 }]}>ESTOY</Text>
-                                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-                                    </View>
-                                </TouchableWithoutFeedback>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -141,4 +167,7 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { })(ReceivedInvitationCard);
+export default connect(mapStateToProps, { 
+    confirmInvitation, 
+    rejectInvitation 
+})(ReceivedInvitationCard);

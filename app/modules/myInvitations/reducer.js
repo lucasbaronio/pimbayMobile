@@ -34,7 +34,7 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_OUT_AVAILABLE: {
-            let { data, start } = action;
+            let { data, userId, start } = action;
             let invitationsOutData = [], 
                 contextActionsData = [],
                 usersData = [],
@@ -49,7 +49,11 @@ const invitationsReducer = (state = initialState, action) => {
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
             let users = state.users.concat(usersData);
-            let invitationsOut = (start !== 0) ? state.invitationsOut : [];
+
+            // Todavia no hay paginado
+            // let invitationsOut = (start !== 0) ? state.invitationsOut : [];
+            let invitationsOut = [];
+            
             invitationsOut = invitationsOut.concat(invitationsOutData);
             return {
                 ...state, invitationsOut,
@@ -113,12 +117,18 @@ const invitationsReducer = (state = initialState, action) => {
                 if(context_action) contextActionsData.push(context_action);
                 if(event) eventData.push(event);
                 usersData.push(user);
-                invitationsInData.push(invitation);
+                // let iAmConfirmed = invitation.confirmedUsers.indexOf(userId) > -1;
+                let iAmConfirmed = invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1);
+                invitationsInData.push({ ...invitation, iAmConfirmed });
             }
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
             let users = state.users.concat(usersData);
-            let invitationsIn = (start !== 0) ? state.invitationsIn : [];
+
+            // Todavia no hay paginado
+            // let invitationsIn = (start !== 0) ? state.invitationsIn : [];
+            let invitationsIn = [];
+
             invitationsIn = invitationsIn.concat(invitationsInData);
             return {
                 ...state, invitationsIn,
@@ -140,7 +150,9 @@ const invitationsReducer = (state = initialState, action) => {
                 if(context_action) contextActionsData.push(context_action);
                 if(event) eventData.push(event);
                 usersData.push(user);
-                invitationsInData.push(invitation);
+                // let iAmConfirmed = invitation.confirmedUsers.indexOf(userId) > -1;
+                let iAmConfirmed = invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1);
+                invitationsInData.push({ ...invitation, iAmConfirmed });
             }
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
@@ -167,6 +179,48 @@ const invitationsReducer = (state = initialState, action) => {
             if (!exist) users.push(data);
 
             return { ...state, users }
+        }
+
+        case t.INVITATION_CONFIRMED: {
+            let { data, userId, invitationId } = action;
+
+            let invitationsIn = state.invitationsIn.map((invitation, index) =>
+                invitation.id === invitationId 
+                    ? { 
+                        ...invitation, 
+                        iAmConfirmed: true,
+                        confirmedUsersIds: invitation.confirmedUsersIds
+                                ? invitation.confirmedUsersIds.concat([userId])
+                                : [].concat([userId])
+                        // confirmedUsers: invitation.confirmedUsers.concat([userId])
+                    }
+                    : invitation
+            );
+            
+            return { ...state, invitationsIn }
+        }
+
+        case t.INVITATION_REJECTED: {
+            let { data, userId, invitationId } = action;
+            
+            let invitationsIn = state.invitationsIn.map((invitation, index) =>
+                invitation.id === invitationId 
+                    ? { 
+                        ...invitation, 
+                        iAmConfirmed: false,
+                        confirmedUsersIds: (invitation.confirmedUsersIds.indexOf(userId) > -1)
+                            ? invitation.confirmedUsersIds.slice(0, invitation.confirmedUsersIds.indexOf(userId))
+                                .concat(invitation.confirmedUsersIds.slice(invitation.confirmedUsersIds.indexOf(userId) + 1))
+                            : invitation.confirmedUsersIds,
+                        // confirmedUsers: (invitation.confirmedUsers.indexOf(userId) > -1)
+                        //     ? invitation.confirmedUsers.slice(0, invitation.confirmedUsers.indexOf(userId))
+                        //         .concat(invitation.confirmedUsers.slice(invitation.confirmedUsers.indexOf(userId) + 1))
+                        //     : invitation.confirmedUsers
+                    }
+                    : invitation
+            )
+
+            return { ...state, invitationsIn }
         }
 
         default:

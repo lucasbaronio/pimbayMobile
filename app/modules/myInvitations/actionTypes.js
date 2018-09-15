@@ -9,3 +9,5 @@ export const LOADING_HEADER_INVITATION_OUT = 'invitations/LOADING_HEADER_INVITAT
 export const INVITATION_IN_REFRESHED = 'invitations/INVITATION_IN_REFRESHED';
 export const INVITATION_OUT_REFRESHED = 'invitations/INVITATION_OUT_REFRESHED';
 export const ADD_USER = 'invitations/ADD_USER';
+export const INVITATION_CONFIRMED = 'invitations/INVITATION_CONFIRMED';
+export const INVITATION_REJECTED = 'invitations/INVITATION_REJECTED';
