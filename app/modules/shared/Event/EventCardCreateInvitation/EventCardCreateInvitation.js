@@ -13,11 +13,12 @@ class EventCardCreateInvitation extends PureComponent {
     }
 
     render() {
-        const { title, realizationDate, place, image } = this.props.eventInvitation;
+        const { backgroundColor, eventInvitation } = this.props;
+        const { title, realizationDate, place, image } = eventInvitation;
 
         return (
             <TouchableWithoutFeedback onPress={this.onPressViewEvent}>
-                <View style={styles.container}>
+                <View style={[styles.container, { backgroundColor: backgroundColor }]}>
                     <View>
                         <Image
                             style={styles.image}

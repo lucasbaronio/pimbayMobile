@@ -60,6 +60,7 @@ class AgeUsers extends React.Component {
             rankAges: rankAgesCopy,
             minAge,
             maxAge,
+            allSelected: false,
         }, () => this.props.onChangeRankAges({ minAge, maxAge }));
     }
 

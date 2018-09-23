@@ -24,10 +24,10 @@ export function getInvitationsOutRefresh(errorCB) {
 
 export function getInvitationsIn(errorCB) {
     return (dispatch) => {
-        dispatch({ type: t.LOADING_INVITATION_IN })
+        dispatch({ type: t.LOADING_INVITATION_IN });
         api.getInvitationsIn({ userId: USER_ID }, function (success, data, error) {
             if (success) dispatch({ type: t.INVITATION_IN_AVAILABLE, data, userId: USER_ID });
-            else if (error) errorCB(error)
+            else if (error) errorCB(error);
         });
     };
 }
@@ -37,7 +37,7 @@ export function getInvitationsInRefresh(errorCB) {
         dispatch({ type: t.LOADING_HEADER_INVITATION_IN });
         api.getInvitationsIn({ userId: USER_ID }, function (success, data, error) {
             if (success) dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId: USER_ID });
-            else if (error) errorCB(error)
+            else if (error) errorCB(error);
         });
     };
 }
@@ -53,20 +53,20 @@ export function getUserById(userId, errorCB) {
 
 export function confirmInvitation(invitationId, errorCB) {
     return (dispatch) => {
-        dispatch({ type: t.INVITATION_CONFIRMED, userId: USER_ID, invitationId });
-        // api.confirmInvitation({ invitationId, userId: USER_ID }, function (success, data, error) {
-        //     if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId: USER_ID, invitationId });
-        //     else if (error) errorCB(error);
-        // });
+        // dispatch({ type: t.INVITATION_CONFIRMED, userId: USER_ID, invitationId });
+        api.confirmInvitation({ invitationId, userId: USER_ID }, function (success, data, error) {
+            if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId: USER_ID, invitationId });
+            else if (error) errorCB(error);
+        });
     };
 }
 
 export function rejectInvitation(invitationId, errorCB) {
     return (dispatch) => {
-        dispatch({ type: t.INVITATION_REJECTED, userId: USER_ID, invitationId });
-        // api.rejectInvitation({ invitationId, userId: USER_ID }, function (success, data, error) {
-        //     if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId: USER_ID, invitationId });
-        //     else if (error) errorCB(error);
-        // });
+        // dispatch({ type: t.INVITATION_REJECTED, userId: USER_ID, invitationId });
+        api.rejectInvitation({ invitationId, userId: USER_ID }, function (success, data, error) {
+            if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId: USER_ID, invitationId });
+            else if (error) errorCB(error);
+        });
     };
 }

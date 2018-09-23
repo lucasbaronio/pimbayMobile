@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { actions as invitationsActions } from "../../index";
@@ -11,12 +11,12 @@ import styles from "./styles";
 class InvitationsIn extends Component {
 
     componentDidMount() {
-        this.props.getInvitationsIn();
+        this.props.getInvitationsIn(this.onError);
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     this.props.getInvitationsInRefresh((error) => alert(error.message));
-    // }
+    onError(error) {
+        Alert.alert("Oops", error.message);
+    }
 
     onPressViewEvent = (item) => {
         Actions.push("EventDetail", { props: this.props, item });

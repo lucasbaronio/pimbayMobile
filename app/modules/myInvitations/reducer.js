@@ -107,7 +107,7 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_IN_AVAILABLE: {
-            let { data, start } = action;
+            let { data, userId, start } = action;
             let invitationsInData = [], 
                 contextActionsData = [],
                 usersData = [],
@@ -119,7 +119,9 @@ const invitationsReducer = (state = initialState, action) => {
                 usersData.push(user);
                 // let iAmConfirmed = invitation.confirmedUsers.indexOf(userId) > -1;
                 let iAmConfirmed = invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1);
-                invitationsInData.push({ ...invitation, iAmConfirmed });
+                // let iAmOut = invitation.rejectededUsers.indexOf(userId) > -1;
+                let iAmOut = invitation.rejectedUsersIds && invitation.rejectedUsersIds.indexOf(userId) > -1;
+                invitationsInData.push({ ...invitation, iAmConfirmed, iAmOut });
             }
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
@@ -140,7 +142,7 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_IN_REFRESHED: {
-            let { data } = action;
+            let { data, userId } = action;
             let invitationsInData = [],
                 contextActionsData = [],
                 usersData = [],
@@ -152,7 +154,9 @@ const invitationsReducer = (state = initialState, action) => {
                 usersData.push(user);
                 // let iAmConfirmed = invitation.confirmedUsers.indexOf(userId) > -1;
                 let iAmConfirmed = invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1);
-                invitationsInData.push({ ...invitation, iAmConfirmed });
+                // let iAmOut = invitation.rejectededUsers.indexOf(userId) > -1;
+                let iAmOut = invitation.rejectedUsersIds && invitation.rejectedUsersIds.indexOf(userId) > -1;
+                invitationsInData.push({ ...invitation, iAmConfirmed, iAmOut });
             }
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
@@ -189,11 +193,26 @@ const invitationsReducer = (state = initialState, action) => {
                     ? { 
                         ...invitation, 
                         iAmConfirmed: true,
+                        iAmOut: false,
                         confirmedUsersIds: invitation.confirmedUsersIds
                                 ? invitation.confirmedUsersIds.concat([userId])
-                                : [].concat([userId])
-                        // confirmedUsers: invitation.confirmedUsers.concat([userId])
+                                : [].concat([userId]),
+                        // confirmedUsers: invitation.confirmedUsers.concat([userId]),
+                        // rejectedUsers: (invitation.rejectedUsers.indexOf(userId) > -1)
+                        //     ? invitation.rejectedUsers.slice(0, invitation.rejectedUsers.indexOf(userId))
+                        //         .concat(invitation.rejectedUsers.slice(invitation.rejectedUsers.indexOf(userId) + 1))
+                        //     : invitation.rejectedUsers,
+                        rejectedUsersIds: invitation.rejectedUsersIds && (invitation.rejectedUsersIds.indexOf(userId) > -1)
+                            ? invitation.rejectedUsersIds.slice(0, invitation.rejectedUsersIds.indexOf(userId))
+                                .concat(invitation.rejectedUsersIds.slice(invitation.rejectedUsersIds.indexOf(userId) + 1))
+                            : invitation.rejectedUsersIds,
                     }
+                // invitation.id === data.invitation.id 
+                //     ? {
+                //         ...data.invitation,
+                //         iAmConfirmed: true,
+                //         iAmOut: false
+                //     }
                     : invitation
             );
             
@@ -208,17 +227,22 @@ const invitationsReducer = (state = initialState, action) => {
                     ? { 
                         ...invitation, 
                         iAmConfirmed: false,
-                        confirmedUsersIds: (invitation.confirmedUsersIds.indexOf(userId) > -1)
+                        iAmOut: true,
+                        confirmedUsersIds: invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1)
                             ? invitation.confirmedUsersIds.slice(0, invitation.confirmedUsersIds.indexOf(userId))
                                 .concat(invitation.confirmedUsersIds.slice(invitation.confirmedUsersIds.indexOf(userId) + 1))
                             : invitation.confirmedUsersIds,
                         // confirmedUsers: (invitation.confirmedUsers.indexOf(userId) > -1)
                         //     ? invitation.confirmedUsers.slice(0, invitation.confirmedUsers.indexOf(userId))
                         //         .concat(invitation.confirmedUsers.slice(invitation.confirmedUsers.indexOf(userId) + 1))
-                        //     : invitation.confirmedUsers
+                        //     : invitation.confirmedUsers,
+                        // rejectedUsers: invitation.rejectedUsers.concat([userId]),
+                        rejectedUsersIds: invitation.rejectedUsersIds
+                            ? invitation.rejectedUsersIds.concat([userId])
+                            : [].concat([userId])
                     }
                     : invitation
-            )
+            );
 
             return { ...state, invitationsIn }
         }
