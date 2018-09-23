@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
         fontFamily: fontFamily.regular
     },
     createdTimeStyle: {
-        color: color.grey, 
         fontSize: fontSize.text5,
         fontFamily: fontFamily.regular
     },
@@ -59,12 +58,12 @@ const styles = StyleSheet.create({
         fontSize: fontSize.text4, 
         color: color.orange
     },
-    buttonViewFinalizar: {
+    buttonViewReject: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5
     },
-    buttonViewChat: {
+    buttonViewConfirm: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5,
@@ -81,7 +80,10 @@ const styles = StyleSheet.create({
         height: 22, 
         width: 22
     },
+    iAmOutBackgroundColor: {
+        backgroundColor: color.grey, 
+    }
 });
 
-export { fontSize, windowWidth };
+export { fontSize, windowWidth, color };
 export default styles;

@@ -5,6 +5,7 @@ import Timeline from '../../../modules/timeline/scenes/Timeline';
 import SearchTimeline from '../../../modules/timeline/scenes/SearchTimeline';
 import CreateInvitation from '../../../modules/timeline/scenes/CreateInvitation';
 import withActionSheetInvitationHOC from '../../../modules/shared/withActionSheetInvitationHOC';
+import withNotificationExpoHOC from '../../../modules/timeline/hocs/NotificationExpo/withNotificationExpoHOC';
 import SelectUsersFromList from '../../../modules/timeline/scenes/SelectUsersFromList';
 import EventDetail from '../../../modules/eventDetail/EventDetail';
 import { SearchButton, BackButton, CloseButton } from '../buttons';
@@ -22,7 +23,8 @@ export default (
                     initial
                     key="Timeline"
                     title={(Platform.OS === 'ios') ? "Pimbay" : null}
-                    component={withActionSheetInvitationHOC(Timeline)}
+                    // component={withActionSheetInvitationHOC(Timeline)}
+                    component={withNotificationExpoHOC(withActionSheetInvitationHOC(Timeline))}
                     titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
                     renderRightButton={<SearchButton goToScreen='SearchTimeline' />}
                     navigationBarTitleImage={(Platform.OS === 'ios') ? null : require('../../../assets/headerImg.png')}

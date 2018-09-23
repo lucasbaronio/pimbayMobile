@@ -34,7 +34,7 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_OUT_AVAILABLE: {
-            let { data, start } = action;
+            let { data, userId, start } = action;
             let invitationsOutData = [], 
                 contextActionsData = [],
                 usersData = [],
@@ -49,7 +49,11 @@ const invitationsReducer = (state = initialState, action) => {
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
             let users = state.users.concat(usersData);
-            let invitationsOut = (start !== 0) ? state.invitationsOut : [];
+
+            // Todavia no hay paginado
+            // let invitationsOut = (start !== 0) ? state.invitationsOut : [];
+            let invitationsOut = [];
+            
             invitationsOut = invitationsOut.concat(invitationsOutData);
             return {
                 ...state, invitationsOut,
@@ -103,7 +107,7 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_IN_AVAILABLE: {
-            let { data, start } = action;
+            let { data, userId, start } = action;
             let invitationsInData = [], 
                 contextActionsData = [],
                 usersData = [],
@@ -113,12 +117,20 @@ const invitationsReducer = (state = initialState, action) => {
                 if(context_action) contextActionsData.push(context_action);
                 if(event) eventData.push(event);
                 usersData.push(user);
-                invitationsInData.push(invitation);
+                // let iAmConfirmed = invitation.confirmedUsers.indexOf(userId) > -1;
+                let iAmConfirmed = invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1);
+                // let iAmOut = invitation.rejectededUsers.indexOf(userId) > -1;
+                let iAmOut = invitation.rejectedUsersIds && invitation.rejectedUsersIds.indexOf(userId) > -1;
+                invitationsInData.push({ ...invitation, iAmConfirmed, iAmOut });
             }
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
             let users = state.users.concat(usersData);
-            let invitationsIn = (start !== 0) ? state.invitationsIn : [];
+
+            // Todavia no hay paginado
+            // let invitationsIn = (start !== 0) ? state.invitationsIn : [];
+            let invitationsIn = [];
+
             invitationsIn = invitationsIn.concat(invitationsInData);
             return {
                 ...state, invitationsIn,
@@ -130,7 +142,7 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_IN_REFRESHED: {
-            let { data } = action;
+            let { data, userId } = action;
             let invitationsInData = [],
                 contextActionsData = [],
                 usersData = [],
@@ -140,7 +152,11 @@ const invitationsReducer = (state = initialState, action) => {
                 if(context_action) contextActionsData.push(context_action);
                 if(event) eventData.push(event);
                 usersData.push(user);
-                invitationsInData.push(invitation);
+                // let iAmConfirmed = invitation.confirmedUsers.indexOf(userId) > -1;
+                let iAmConfirmed = invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1);
+                // let iAmOut = invitation.rejectededUsers.indexOf(userId) > -1;
+                let iAmOut = invitation.rejectedUsersIds && invitation.rejectedUsersIds.indexOf(userId) > -1;
+                invitationsInData.push({ ...invitation, iAmConfirmed, iAmOut });
             }
             let eventsFromInvitations = state.eventsFromInvitations.concat(eventData);
             let contextActionsFromInvitations = state.contextActionsFromInvitations.concat(contextActionsData);
@@ -156,7 +172,6 @@ const invitationsReducer = (state = initialState, action) => {
 
         case t.ADD_USER: {
             let { data } = action;
-            console.log(data);
             let users = state.users;
             let exist = false;
             for (var i = 0; i < users.length && !exist; i++) {
@@ -168,6 +183,68 @@ const invitationsReducer = (state = initialState, action) => {
             if (!exist) users.push(data);
 
             return { ...state, users }
+        }
+
+        case t.INVITATION_CONFIRMED: {
+            let { data, userId, invitationId } = action;
+
+            let invitationsIn = state.invitationsIn.map((invitation, index) =>
+                invitation.id === invitationId 
+                    ? { 
+                        ...invitation, 
+                        iAmConfirmed: true,
+                        iAmOut: false,
+                        confirmedUsersIds: invitation.confirmedUsersIds
+                                ? invitation.confirmedUsersIds.concat([userId])
+                                : [].concat([userId]),
+                        // confirmedUsers: invitation.confirmedUsers.concat([userId]),
+                        // rejectedUsers: (invitation.rejectedUsers.indexOf(userId) > -1)
+                        //     ? invitation.rejectedUsers.slice(0, invitation.rejectedUsers.indexOf(userId))
+                        //         .concat(invitation.rejectedUsers.slice(invitation.rejectedUsers.indexOf(userId) + 1))
+                        //     : invitation.rejectedUsers,
+                        rejectedUsersIds: invitation.rejectedUsersIds && (invitation.rejectedUsersIds.indexOf(userId) > -1)
+                            ? invitation.rejectedUsersIds.slice(0, invitation.rejectedUsersIds.indexOf(userId))
+                                .concat(invitation.rejectedUsersIds.slice(invitation.rejectedUsersIds.indexOf(userId) + 1))
+                            : invitation.rejectedUsersIds,
+                    }
+                // invitation.id === data.invitation.id 
+                //     ? {
+                //         ...data.invitation,
+                //         iAmConfirmed: true,
+                //         iAmOut: false
+                //     }
+                    : invitation
+            );
+            
+            return { ...state, invitationsIn }
+        }
+
+        case t.INVITATION_REJECTED: {
+            let { data, userId, invitationId } = action;
+            
+            let invitationsIn = state.invitationsIn.map((invitation, index) =>
+                invitation.id === invitationId 
+                    ? { 
+                        ...invitation, 
+                        iAmConfirmed: false,
+                        iAmOut: true,
+                        confirmedUsersIds: invitation.confirmedUsersIds && (invitation.confirmedUsersIds.indexOf(userId) > -1)
+                            ? invitation.confirmedUsersIds.slice(0, invitation.confirmedUsersIds.indexOf(userId))
+                                .concat(invitation.confirmedUsersIds.slice(invitation.confirmedUsersIds.indexOf(userId) + 1))
+                            : invitation.confirmedUsersIds,
+                        // confirmedUsers: (invitation.confirmedUsers.indexOf(userId) > -1)
+                        //     ? invitation.confirmedUsers.slice(0, invitation.confirmedUsers.indexOf(userId))
+                        //         .concat(invitation.confirmedUsers.slice(invitation.confirmedUsers.indexOf(userId) + 1))
+                        //     : invitation.confirmedUsers,
+                        // rejectedUsers: invitation.rejectedUsers.concat([userId]),
+                        rejectedUsersIds: invitation.rejectedUsersIds
+                            ? invitation.rejectedUsersIds.concat([userId])
+                            : [].concat([userId])
+                    }
+                    : invitation
+            );
+
+            return { ...state, invitationsIn }
         }
 
         default:

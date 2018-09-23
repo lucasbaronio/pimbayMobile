@@ -19,22 +19,9 @@ import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 
 class InvitationCard extends Component {
 
-    componentWillMount() {
-        // const { item } = this.props;
-
-        // this.props.getUserById(item.ownerId, (error) => alert(error.message));
-
-        // if (item.contextActionId) {
-        //     this.props.getContextActionById(item.contextActionId, (error) => alert(error.message));
-        // }
-
-        // if (item.eventId) {
-        //     this.props.getEventById(item.eventId, (error) => alert(error.message));
-        // }
-    }
-
     onInvitePress = () => {
-        this.goToCreateInvitation({ type: invitationType.OPEN, openInvitation: this.props.item });
+        // Crear un metodo en actions para hacer un post al backend
+        // this.goToCreateInvitation({ type: invitationType.OPEN, openInvitation: this.props.item });
     }
 
     goToCreateInvitation = (props) => {

@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import styles, { fontSize } from "./styles";
+import styles, { color } from "./styles";
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import ContextAction from '../../ContextAction';
 import { getDueTime, getInvReceivedTime } from "../../../shared/utils/date";
 import UserPhotoSection from '../components/UserPhotoSection';
 import { contextActionSize } from '../../constants';
 
+import { actions as invitationsActions } from "../../../myInvitations/index";
+const { confirmInvitation, rejectInvitation } = invitationsActions;
+
 import receivedIcon from '../../../../assets/icons/ReceivedIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
 import rightArrow from '../../../../assets/icons/right-arrow.png';
+import tick from '../../../../assets/icons/tick.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
 class ReceivedInvitationCard extends Component {
@@ -28,7 +32,9 @@ class ReceivedInvitationCard extends Component {
     renderDetailsWithDueDate = (item) => {
         return (
             <View style={{ marginTop: 2, flexDirection: 'row' }}>
-                <Text style={styles.createdTimeStyle}>{getInvReceivedTime(item.dateCreated)}</Text>
+                <Text style={[styles.createdTimeStyle, { color: item.iAmOut ? color.white : color.grey}]}>
+                    {getInvReceivedTime(item.dateCreated)}
+                </Text>
                 <Image
                     style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
                     resizeMode='center'
@@ -53,7 +59,10 @@ class ReceivedInvitationCard extends Component {
         if (event) {
             return (
                 <View style={styles.descriptionContainerStyle}>
-                    <EventCardCreateInvitation eventInvitation={event} onPressViewEvent={this.onPressViewEvent}/>
+                    <EventCardCreateInvitation 
+                        backgroundColor={item.iAmOut ? color.grey : null}
+                        eventInvitation={event} 
+                        onPressViewEvent={this.onPressViewEvent}/>
                     <Text style={styles.descriptionWithEventStyle}>{item.description}</Text>
                 </View>
             );
@@ -80,14 +89,33 @@ class ReceivedInvitationCard extends Component {
 
     onPressViewEvent = (item) => {
         this.props.onPressViewEvent(item);
-    };
+    }
+
+    onPressConfirm = () => {
+        const { item } = this.props;
+        this.props.confirmInvitation(item.id, this.onError);
+    }
+
+    onPressReject = () => {
+        const { item } = this.props;
+        this.props.rejectInvitation(item.id, this.onError);
+    }
+
+    onError(error) {
+        Alert.alert("Intente mas tarde", error.message);
+    }
+
+    onPressChat = () => {
+        const { item } = this.props;
+        Actions.push("Chats");
+    }
 
     render() {
         const { item, owner } = this.props;
 
         return (
             <View>
-                <View style={styles.container}>
+                <View style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]}>
                     <UserPhotoSection 
                         userAvatar={owner.avatar} 
                         icon={receivedIcon} isPublic={false} />
@@ -95,22 +123,36 @@ class ReceivedInvitationCard extends Component {
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={styles.userNameStyle}>
                                 {owner.userName}
-                                </Text>
+                            </Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Rechazar'); }}>
-                                    <View style={styles.buttonViewFinalizar}>
-                                        <Image source={letterX} style={{ height: 10, width: 10 }} />
-                                        <Text style={[styles.button, { marginLeft: 10 }]}>RECHAZAR</Text>
+                                <TouchableOpacity onPress={this.onPressReject}>
+                                    {
+                                        !item.iAmOut &&
+                                        <View style={styles.buttonViewReject}>
+                                            <Image source={letterX} style={{ height: 10, width: 10 }} />
+                                            <Text style={[styles.button, { marginLeft: 10 }]}>
+                                                {item.iAmConfirmed ? "SALIR" : "RECHAZAR"}
+                                            </Text>
+                                        </View>
+                                    }
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={item.iAmConfirmed ? this.onPressChat : this.onPressConfirm}>
+                                    <View style={styles.buttonViewConfirm}>
+                                        <Text style={[styles.button, { marginRight: 10 }]}>
+                                            {item.iAmConfirmed 
+                                                ? "IR AL CHAT" 
+                                                : item.iAmOut
+                                                    ? "ME ARRIPENTI, QUIERO IR!"
+                                                    : "ESTOY"
+                                            }
+                                        </Text>
+                                        <Image 
+                                            source={item.iAmConfirmed ? rightArrow : tick} 
+                                            style={{ height: 10, width: 10 }} />
                                     </View>
-                                </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Estoy'); }}>
-                                    <View style={styles.buttonViewChat}>
-                                        <Text style={[styles.button, { marginRight: 10 }]}>ESTOY</Text>
-                                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-                                    </View>
-                                </TouchableWithoutFeedback>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -141,4 +183,7 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { })(ReceivedInvitationCard);
+export default connect(mapStateToProps, { 
+    confirmInvitation, 
+    rejectInvitation 
+})(ReceivedInvitationCard);

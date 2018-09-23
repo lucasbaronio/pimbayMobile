@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         flex: 1, 
         flexDirection: "row", 
         justifyContent: "flex-start",
-        backgroundColor: color.white,
+        // backgroundColor: color.white,
         padding: 10,
         marginBottom: 10
     },
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
         color: color.blood,
         marginBottom: 10
     }
-
 });
 
 export default styles;

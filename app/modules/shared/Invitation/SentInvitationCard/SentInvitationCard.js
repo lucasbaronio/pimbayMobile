@@ -167,7 +167,6 @@ class SentInvitationCard extends Component {
 
 function mapStateToProps(state, props) {
     const { item } = props;
-    console.log(item.invitationType, item.invitedUsers[0]);
     return {
         firstUserInvited: item.invitationType === invType.DIRECTED
             ? state.invitationsReducer.users.filter(user => user.id === item.invitedUsers[0])[0]

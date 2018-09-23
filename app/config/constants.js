@@ -22,9 +22,14 @@ export const API_INVITATIONS_PAGINATION = ({ start }) => `${API_INVITATION}?limi
 export const API_INVITATIONS_IN = ({ userId }) => `${API_INVITATION}/${userId}/received`;
 export const API_INVITATIONS_OUT = ({ userId }) => `${API_INVITATION}/${userId}/sended`;
 
+export const API_RESPONSE_INVITATION = ({ invitationId, userId }) => `${API_INVITATION}/${invitationId}/response?user=${userId}`;
+// export const API_REJECT_INVITATION = ({ invitationId, userId }) => `${API_INVITATION}/${userId}/sended`;
+
 export const API_CONTEXT_ACTION = `${API}context-actions`;
 export const API_CONTEXT_ACTION_BY_ID = ({ contextActionId }) => `${API_CONTEXT_ACTION}/${contextActionId}`;
 
 export const API_USER = `${API}users`;
 export const API_GET_ALL_USERS = `${API}all-users`;
 export const API_USER_BY_ID = ({ userId }) => `${API_USER}/${userId}`;
+
+export const API_PUSH_NOTIFICATION = `${API}users/token`;
