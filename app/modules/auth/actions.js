@@ -2,11 +2,10 @@ import * as t from './actionTypes';
 import * as api from './api';
 import { auth } from "../../config/firebase";
 
-import { AsyncStorage } from 'react-native';
-
-export function register(data, successCB, errorCB) {
+export function register(user, successCB, errorCB) {
     return (dispatch) => {
-        api.register(data, function (success, data, error) {
+        api.register(user, function (success, data, error) {
+            // console.log('register', data);
             if (success) {
                 dispatch({type: t.LOGGED_IN, data});
                 successCB(data);
@@ -16,9 +15,9 @@ export function register(data, successCB, errorCB) {
     };
 }
 
-export function createUser(user, successCB, errorCB) {
+export function finalizeCreateUser(user, successCB, errorCB) {
     return (dispatch) => {
-        api.createUser(user, function (success, data, error) {
+        api.updateUser(user, function (success, data, error) {
             if (success) {
                 dispatch({type: t.LOGGED_IN, data: user});
                 successCB();
@@ -48,6 +47,7 @@ export function resetPassword(data, successCB, errorCB) {
 }
 
 export function signOut(successCB, errorCB) {
+    console.log('entro');
     return (dispatch) => {
         api.signOut(function (success, data, error) {
             if (success) {
@@ -64,8 +64,9 @@ export function checkLoginStatus(callback) {
             let isLoggedIn = (user !== null);
 
             if (isLoggedIn){
-                api.getUser(user, function (success, { exists, user }, error) {
+                api.getLoggedUser(user, function (success, data, error) {
                     if (success) {
+                        const { exists, user } = data;
                         if (exists) dispatch({type: t.LOGGED_IN, data: user});
                         callback(exists, isLoggedIn);
                     }else if (error) {
@@ -76,7 +77,7 @@ export function checkLoginStatus(callback) {
                 });
             }else {
                 dispatch({type: t.LOGGED_OUT});
-                callback(false, isLoggedIn)
+                callback(false, isLoggedIn);
             }
         });
     };
@@ -86,7 +87,7 @@ export function signInWithFacebook(facebookToken, successCB, errorCB) {
     return (dispatch) => {
         api.signInWithFacebook(facebookToken, function (success, data, error) {
             if (success) {
-                if (data.exists) dispatch({type: t.LOGGED_IN, data: data.user});
+                if (data.hasUserName) dispatch({type: t.LOGGED_IN, data: data.user});
                 successCB(data);
             }else if (error) errorCB(error)
         });

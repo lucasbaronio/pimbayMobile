@@ -8,7 +8,7 @@ export default function notificationRouter({ notification, getInvitationsInRefre
             // switch (t.NEW_DIRECT_INVITATION) {
                 case t.NEW_DIRECT_INVITATION: {
                     getInvitationsInRefresh((error) => alert(error.message));
-                    Actions.push("InvitationsInOutStack");
+                    Actions.push("InvitationsInOut");
                     break;
                 }
         

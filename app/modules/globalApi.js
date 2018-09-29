@@ -22,36 +22,39 @@ export function get(uri, callback) {
 }
 
 export function post(uri, body, callback) {
-    // console.log(body);
+    // console.log("post-body", body);
     return fetch(uri, {
         method: 'post',
         headers: {
-            'Accept': 'application/json',
+            // 'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
     })
-        .then(response => {
-            // if (response.status >= 200 && response.status < 300) {
-            if (!response.ok) {
-                // console.log(response);
-                const error = new Error(response.statusText);
+        .then(
+            response => {
+                // console.log("post-response", response);
+                return response.json();
+            },
+            err => {
+                console.log(err);
+                const error = new Error(err);
                 error.response = response;
                 throw error;
             }
-        })
+        )
         .then(data => {
-            // console.log(data);
+            // console.log("post-data", data);
             callback && callback(true, data, null)
         })
         .catch((error) => {
-            // console.log(error);
+            // console.log("post-error", error);
             callback && callback(false, null, error)
         });
 }
 
 export function put(uri, body, callback) {
-    // console.log(body);
+    // console.log("put-body", body);
     return fetch(uri, {
         method: 'put',
         headers: {
@@ -60,16 +63,18 @@ export function put(uri, body, callback) {
         },
         body: JSON.stringify(body),
     })
-        .then(response => {
-            // if (response.status >= 200 && response.status < 300) {
-            // console.log(response);
-            if (!response.ok) {
-                // console.log(response);
-                const error = new Error(response.statusText);
+        .then(
+            response => {
+                // console.log("put-response", response);
+                return response.json();
+            },
+            err => {
+                console.log(err);
+                const error = new Error(err);
                 error.response = response;
                 throw error;
             }
-        })
+        )
         .then(data => {
             // console.log("data", data);
             callback && callback(true, data, null)

@@ -144,7 +144,7 @@ class ReceivedInvitationCard extends Component {
                                             {item.iAmConfirmed 
                                                 ? "IR AL CHAT" 
                                                 : item.iAmOut
-                                                    ? "ME ARRIPENTI, QUIERO IR!"
+                                                    ? "ME ARREPENTÍ, QUIERO IR!"
                                                     : "ESTOY"
                                             }
                                         </Text>

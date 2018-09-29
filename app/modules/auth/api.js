@@ -1,59 +1,55 @@
 import { auth, database, provider } from "../../config/firebase";
+import {
+    API_USER,
+    API_USER_BY_FIELD
+} from './constants';
+import { get, post } from '../globalApi';
 
 //Register the user using email and password
 export function register(data, callback) {
-    const { email, password, username } = data;
-    console.log(email, password, username);
+    const { email, password, username, fullName } = data;
+    console.log(email, password, username, fullName);
     auth.createUserWithEmailAndPassword(email, password)
-        .then((resp) => createUser({ username, uid:resp.user.uid }, callback))
+        .then((resp) => {
+            createUser({ 
+                mail: email,
+                fullName,
+                userName: username, 
+                // uid:resp.user.uid 
+            }, callback)
+        })
         .catch((error) => {
             console.log(error);
             callback(false, null, error);
         });
 }
 
-//Create the user object in realtime database
 export function createUser (user, callback) {
-    const userRef = database.ref().child('users');
+    post(API_USER, user, callback);
+}
 
-    userRef.child(user.uid).update({ ...user })
-        .then(() => callback(true, user, null))
-        .catch((error) => callback(false, null, {message: error}));
+export function updateUser ({ id, newUser }, callback) {
+    put(API_USER_BY_ID({ userId: id }), newUser, callback);
 }
 
 //Sign the user in with their email and password
 export function login(data, callback) {
     const { email, password } = data;
     auth.signInWithEmailAndPassword(email, password)
-        .then((resp) => getUser(resp.user, callback))
+        .then((resp) => getLoggedUser(resp.user.email, callback))
         .catch((error) => callback(false, null, error));
 }
 
-//Get the user object from the realtime database
-export function getUser(user, callback) {
-    database.ref('users').child(user.uid).once('value')
-        .then(function(snapshot) {
-
-            const exists = (snapshot.val() !== null);
-
-            //if the user exist in the DB, replace the user variable with the returned snapshot
-            if (exists) {
-                user = snapshot.val();
-                // userBD = snapshot.val();
-                // userNew = {
-                //     uid: userBD ? userBD.uid : null,
-                //     username: userBD ? userBD.username : null,
-                //     displayName: user.displayName,
-                //     email: user.email,
-                //     photoURL: user.photoURL
-                // }
-                // user = userNew
-            }
-
-            const data = { exists, user }
+export function getLoggedUser(email, callback) {
+    get(API_USER_BY_FIELD({ 
+        field: 'mail', 
+        value: email 
+    }), function (success, userBD, error) {
+        if (success) {
+            const data = { exists: (userBD != null), user: userBD };
             callback(true, data, null);
-        })
-        .catch(error => callback(false, null, error));
+        } else if (error) callback(true, { exists: false, user: null }, error)
+    });
 }
 
 //Send Password Reset Email
@@ -78,9 +74,36 @@ export function signOut (callback) {
 //Sign user in using Facebook
 export function signInWithFacebook (fbToken, callback) {
     const credential = provider.credential(fbToken);
-    auth.signInWithCredential(credential)
-    // auth.signInAndRetrieveDataWithCredential(credential)
-        .then((user) => getUser(user, callback))
+    // auth.signInWithCredential(credential)
+    //     .then((userFB) => {
+    auth.signInAndRetrieveDataWithCredential(credential)
+        .then((userCredential) => {
+            console.log('userFB', userCredential.user.email);
+            // callback(false, null, "Se ha producido un error, intente mas tarde.")
+
+            getLoggedUser(userCredential.user.email, function (success, data, error) {
+                console.log('success', success);
+                if (success) {
+                    const { exists, user } = data;
+                    if (exists) {
+                        console.log('user', user.username);
+                        if (user.username) callback(true, { hasUserName: true, user }, null);
+                        else callback(true, { hasUserName: false, user }, null);
+                    } else {
+                        console.log('createUser');
+                        createUser({ 
+                            mail: userCredential.user.email,
+                            fullName: userCredential.user.displayName,
+                            avatar: userCredential.user.photoURL,
+                        }, function (success, userCreated, error) {
+                            console.log('success', success);
+                            if (success) callback(true, { hasUserName: false, user: userCreated }, null)
+                            else callback(false, null, error ? error : "Se ha producido un error, intente mas tarde.")
+                        })
+                    }
+                } else callback(false, null, error ? error : "Se ha producido un error, intente mas tarde.")
+            })
+        })
         .catch((error) => {
             var errorCode = error.code;
             if (errorCode === 'auth/account-exists-with-different-credential') {

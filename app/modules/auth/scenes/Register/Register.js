@@ -19,6 +19,15 @@ const fields = [
         type: "email"
     },
     {
+        key: 'fullName',
+        label: "Nombre Completo",
+        placeholder: "Nombre Completo",
+        autoFocus: false,
+        secureTextEntry: false,
+        value: "",
+        type: "text"
+    },
+    {
         key: 'username',
         label: "Username",
         placeholder: "Usuario",
@@ -50,6 +59,8 @@ const fields = [
 const error = {
     general: "",
     email: "",
+    fullName: "",
+    username: "",
     password: "",
     confirm_password: ""
 }
