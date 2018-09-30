@@ -107,9 +107,16 @@ class Register extends React.Component {
                   showLabel={false}
                   onSubmit={this.onSubmit}
                   buttonTitle={"Crear cuenta"}
+                  isLoading={this.props.isLoading}
                   error={this.state.error}/>
         );
     }
 }
 
-export default connect(null, { register })(Register);
+function mapStateToProps(state, props) {
+    return {
+        isLoading: state.authReducer.isLoading
+    }
+}
+
+export default connect(mapStateToProps, { register })(Register);

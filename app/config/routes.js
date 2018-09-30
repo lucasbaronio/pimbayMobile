@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { Scene, Router, Stack, Modal, Tabs } from 'react-native-router-flux';
+import { Scene, Router, Stack, Modal, Tabs, Actions } from 'react-native-router-flux';
 
 import Splash from '../components/Splash/Splash';
 
@@ -40,8 +40,15 @@ import Profile from '../modules/home/scenes/Profile';
 import userFocused from '../assets/icons/user-black.png';
 import user from '../assets/icons/user.png';
 
+//Shared
+import { invitationType as invType } from '../modules/shared/constants';
+
+import { CloseButtonOnPress } from './routesComponents/buttons';
+
 import store from '../redux/store'
 import { checkLoginStatus } from "../modules/auth/actions";
+import { actions as createInvitation } from "../modules/timeline/index";
+const { cleanCreateInvitation } = createInvitation;
 
 import { color, navTitleStyle, fontFamily, fontSize, statusBarHeight } from "../styles/theme";
 
@@ -95,7 +102,6 @@ class RouterApp extends React.Component {
                                     initial
                                     key="Timeline"
                                     title={(Platform.OS === 'ios') ? "Pimbay" : null}
-                                    // component={withActionSheetInvitationHOC(Timeline)}
                                     component={withNotificationExpoHOC(withActionSheetInvitationHOC(Timeline))}
                                     titleStyle={{ fontFamily: fontFamily.pimbay, fontSize: fontSize.title1 }}
                                     renderRightButton={<SearchButton goToScreen='SearchTimeline' />}
@@ -107,51 +113,47 @@ class RouterApp extends React.Component {
                                             source={focused ? houseFocused : house} />
                                     )}
                                 />
-                                {/* {require("./routesComponents/tabs/timeline").default} */}
-                                {/* <Scene key="InvitationsInOut"> */}
-                                    <Tabs
-                                        tabBarStyle={{ marginTop: statusBarHeight, backgroundColor: '#ffffff' }}
-                                        activeTintColor='#000000'
-                                        inactiveTintColor='#000000'
+                                
+                                <Tabs
+                                    tabBarStyle={{ marginTop: statusBarHeight, backgroundColor: '#ffffff' }}
+                                    activeTintColor='#000000'
+                                    inactiveTintColor='#000000'
+                                    hideNavBar
+                                    indicatorStyle={{
+                                        backgroundColor: '#de5134'
+                                    }}
+                                    key="InvitationsInOut"
+                                    showLabel={true}
+                                    lazy={true}
+                                    tabBarPosition='top'
+                                    labelStyle={{ fontFamily: fontFamily.medium }}
+                                    swipeEnabled={true}
+                                    icon={({ focused }) => (
+                                        <Image
+                                            style={focused ? { width: 32, height: 32 } : { width: 28, height: 28 }}
+                                            source={focused ? inOutFocused : inOut} />
+                                    )}
+                                >
+                                    <Scene
                                         hideNavBar
-                                        indicatorStyle={{
-                                            backgroundColor: '#de5134'
-                                        }}
-                                        key="InvitationsInOut"
-                                        showLabel={true}
-                                        lazy={true}
-                                        tabBarPosition='top'
-                                        labelStyle={{ fontFamily: fontFamily.medium }}
-                                        swipeEnabled={true}
-                                        icon={({ focused }) => (
-                                            <Image
-                                                style={focused ? { width: 32, height: 32 } : { width: 28, height: 28 }}
-                                                source={focused ? inOutFocused : inOut} />
-                                        )}
-                                    >
-                                        <Scene
-                                            hideNavBar
-                                            key={"InvitationsIn"}
-                                            title="Recibidas"
-                                            component={InvitationsIn}
-                                        />
-                                        <Scene
-                                            hideNavBar
-                                            key={"InvitationsOut"}
-                                            title="Enviadas"
-                                            component={InvitationsOut}
-                                        />
-                                        
-                                    </Tabs>
-                                {/* </Scene> */}
-                                {/* {require("./routesComponents/tabs/invitationInOut").default} */}
+                                        key={"InvitationsIn"}
+                                        title="Recibidas"
+                                        component={InvitationsIn}
+                                    />
+                                    <Scene
+                                        hideNavBar
+                                        key={"InvitationsOut"}
+                                        title="Enviadas"
+                                        component={InvitationsOut}
+                                    />
+                                    
+                                </Tabs>
                                 <Scene
                                     key={"CreateSimpleInvitation"}
                                     title="Invitación"
                                     component={React.Component}
                                     icon={() => <CreateInvitationButton />}
                                 />
-                                {/* {require("./routesComponents/tabs/createInvitation").default} */}
                                 <Scene
                                     key={"Chats"}
                                     title="Chats"
@@ -162,7 +164,6 @@ class RouterApp extends React.Component {
                                             source={focused ? chatFocused : chat} />
                                     )}
                                 />
-                                {/* {require("./routesComponents/tabs/chats").default} */}
                                 <Scene
                                     key={"Profile"}
                                     title="Perfil"
@@ -173,29 +174,35 @@ class RouterApp extends React.Component {
                                             source={focused ? userFocused : user} />
                                     )}
                                 />
-                                {/* {require("./routesComponents/tabs/profile").default} */}
                             </Scene>
                         </Stack>
                     </Scene>
                     <Scene key="SearchTimeline"
                         hideNavBar
                         hideTabBar
-                        modal
                         component={SearchTimeline} title="Buscar" />
                     <Scene key="CreateInvitation"
                         hideTabBar
-                        modal
+                        onEnter={({ invitationType }) => {
+                            Actions.refresh({
+                                title: invitationType === invType.OPEN
+                                    ? "Invitación Abierta"
+                                    : "Invitación Dirigida",
+                                left: <CloseButtonOnPress onPress={() => {
+                                    cleanCreateInvitation();
+                                    Actions.pop();
+                                }} />,
+                            });
+                        }}
                         renderLeftButton={null}
                         component={CreateInvitation} title="Invitación" />
                     <Scene key="EventDetail"
                         hideTabBar
-                        modal
                         renderLeftButton={<CloseButton />}
                         component={EventDetail} title="Detalle del evento" />
                     <Scene key="SelectUsersFromList"
                         hideNavBar={false}
                         hideTabBar
-                        modal={false}
                         renderLeftButton={<BackButton />}
                         component={SelectUsersFromList} title="Seleccionar usuarios" />
                 </Modal>
@@ -210,4 +217,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { })(RouterApp);
+export default connect(mapStateToProps, {  })(RouterApp);

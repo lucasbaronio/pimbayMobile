@@ -1,6 +1,6 @@
 import { Permissions, Notifications } from 'expo';
 import { AsyncStorage } from "react-native"
-import { USER_ID, API_PUSH_NOTIFICATION } from '../../../../config/constants';
+import { API_PUSH_NOTIFICATION } from '../../../../config/constants';
 import { post } from '../../../globalApi';
 
 export default async function registerForPushNotificationsAsync() {

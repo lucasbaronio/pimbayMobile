@@ -5,8 +5,6 @@ import {
     API_CONTEXT_ACTION_BY_ID as apiGetContextActionById,
     API_EVENT_BY_ID as apiGetEventById,
     API_RESPONSE_INVITATION as apiResponseInvitation,
-    // API_REJECT_INVITATION as apiRejectInvitation,
-    USER_ID as userId
 } from "../../config/constants";
 
 export const NAME = 'invitation';
@@ -17,5 +15,3 @@ export const API_GET_USER_BY_ID = apiGetUserById;
 export const API_GET_CONTEXT_ACTION_BY_ID = apiGetContextActionById;
 export const API_GET_EVENT_BY_ID = apiGetEventById;
 export const API_RESPONSE_INVITATION = apiResponseInvitation;
-// export const API_REJECT_INVITATION = apiRejectInvitation;
-export const USER_ID = userId;

@@ -84,9 +84,16 @@ class Login extends React.Component {
                   onSubmit={this.onSubmit}
                   buttonTitle={"Iniciar Sesión"}
                   error={this.state.error}
+                  isLoading={this.props.isLoading}
                   onForgotPassword={this.onForgotPassword}/>
         );
     }
 }
 
-export default connect(null, { login })(Login);
+function mapStateToProps(state, props) {
+    return {
+        isLoading: state.authReducer.isLoading
+    }
+}
+
+export default connect(mapStateToProps, { login })(Login);

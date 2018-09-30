@@ -63,7 +63,7 @@ class Form extends React.Component {
     }
 
     render() {
-        const { fields, showLabel, buttonTitle, onForgotPassword} = this.props;
+        const { fields, showLabel, buttonTitle, onForgotPassword, isLoading } = this.props;
 
         return (
             <View style={styles.container}>
@@ -93,7 +93,10 @@ class Form extends React.Component {
 
                     <Button
                         raised
-                        title={buttonTitle}
+                        loading={isLoading}
+                        disabled={isLoading}
+                        disabledStyle={styles.button}
+                        title={isLoading ? "" : buttonTitle}
                         borderRadius={0}
                         containerViewStyle={styles.containerView}
                         buttonStyle={styles.button}

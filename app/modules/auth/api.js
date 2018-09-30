@@ -79,8 +79,7 @@ export function signInWithFacebook (fbToken, callback) {
     auth.signInAndRetrieveDataWithCredential(credential)
         .then((userCredential) => {
             console.log('userFB', userCredential.user.email);
-            // callback(false, null, "Se ha producido un error, intente mas tarde.")
-
+            
             getLoggedUser(userCredential.user.email, function (success, data, error) {
                 console.log('success', success);
                 if (success) {

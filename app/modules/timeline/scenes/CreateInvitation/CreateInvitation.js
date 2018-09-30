@@ -10,10 +10,8 @@ import Quota from '../../components/Quota/Quota';
 import Target from '../../components/Target';
 import InvitedUsers from '../../components/InvitedUsers';
 
-import { constants } from '../../index';
 import { pimbayType, invitationType as invType, contextActionSize } from '../../../shared/constants';
 
-import { CloseButtonOnPress } from '../../../../config/routesComponents/buttons';
 import { connect } from 'react-redux';
 import styles from './styles';
 import { Button } from 'react-native-elements';
@@ -40,12 +38,6 @@ class CreateInvitation extends Component {
 
     componentWillMount() {
         const { type, invitationType, item } = this.props;
-        Actions.refresh({
-            title: invitationType === invType.OPEN
-                ? "Invitación Abierta"
-                : "Invitación Dirigida",
-            left: <CloseButtonOnPress onPress={this.cleanCreateInvitation} />,
-        });
         switch (type) {
             case pimbayType.CONTEXT_ACTION:
                 this.setState({
@@ -69,11 +61,6 @@ class CreateInvitation extends Component {
 
     onPressViewEvent = (item) => {
         Actions.push("EventDetail", { props: this.props, item });
-    }
-
-    cleanCreateInvitation = () => {
-        this.props.cleanCreateInvitation();
-        Actions.pop();
     }
 
     createInvitation = () => {
@@ -100,7 +87,6 @@ class CreateInvitation extends Component {
             sex: targetUsers,
             minAge,
             maxAge,
-            ownerId: constants.USER_ID,
             contextActionId: contextActionSelected ? contextActionSelected.id : null,
             eventId: eventInvitation ? eventInvitation.id : null,
             invitedUsers: this.getInvitedUsersIds()

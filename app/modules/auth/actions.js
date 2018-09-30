@@ -4,8 +4,9 @@ import { auth } from "../../config/firebase";
 
 export function register(user, successCB, errorCB) {
     return (dispatch) => {
+        dispatch({type: t.LOADING});
         api.register(user, function (success, data, error) {
-            // console.log('register', data);
+            dispatch({type: t.LOADING});
             if (success) {
                 dispatch({type: t.LOGGED_IN, data});
                 successCB(data);
@@ -17,7 +18,9 @@ export function register(user, successCB, errorCB) {
 
 export function finalizeCreateUser(user, successCB, errorCB) {
     return (dispatch) => {
+        dispatch({type: t.LOADING});
         api.updateUser(user, function (success, data, error) {
+            dispatch({type: t.LOADING});
             if (success) {
                 dispatch({type: t.LOGGED_IN, data: user});
                 successCB();
@@ -28,7 +31,9 @@ export function finalizeCreateUser(user, successCB, errorCB) {
 
 export function login(data, successCB, errorCB) {
     return (dispatch) => {
+        dispatch({type: t.LOADING});
         api.login(data, function (success, data, error) {
+            dispatch({type: t.LOADING});
             if (success) {
                 if (data.exists) dispatch({type: t.LOGGED_IN, data: data.user});
                 successCB(data);
@@ -47,7 +52,6 @@ export function resetPassword(data, successCB, errorCB) {
 }
 
 export function signOut(successCB, errorCB) {
-    console.log('entro');
     return (dispatch) => {
         api.signOut(function (success, data, error) {
             if (success) {
