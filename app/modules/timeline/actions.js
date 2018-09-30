@@ -1,5 +1,6 @@
 import * as t from './actionTypes';
 import * as api from './api';
+import { AsyncStorage } from "react-native";
 
 // errorCB -> errorCallback
 // export function getEventsOrInvitations(start, errorCB) {
@@ -60,9 +61,10 @@ export function getContextActionList(errorCB) {
 }
 
 export function createNewInvitation(invitation, successCB, errorCB) {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: t.LOADING_CREATE_INVITATION });
-        api.createInvitation(invitation, function (success, data, error) {
+        const ownerId = await AsyncStorage.getItem('user_id');
+        api.createInvitation({ ...invitation, ownerId }, function (success, data, error) {
             if (success) {
                 dispatch({ type: t.CREATE_INVITATION_SUCCESS });
                 successCB();

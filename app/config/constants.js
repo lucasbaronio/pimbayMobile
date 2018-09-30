@@ -7,8 +7,6 @@ export const FIREBASE_MESSAGING_SENDER_ID = "619978772784";
 
 export const FACEBOOK_APP_ID = '197787241068265';
 
-export const USER_ID = '7idtcB9R1KNmaPTCfN9y';
-
 export const API = 'https://api-pimbay.appspot.com/';
 
 export const API_EVENT_SIZE = 10;
@@ -23,7 +21,6 @@ export const API_INVITATIONS_IN = ({ userId }) => `${API_INVITATION}/${userId}/r
 export const API_INVITATIONS_OUT = ({ userId }) => `${API_INVITATION}/${userId}/sended`;
 
 export const API_RESPONSE_INVITATION = ({ invitationId, userId }) => `${API_INVITATION}/${invitationId}/response?user=${userId}`;
-// export const API_REJECT_INVITATION = ({ invitationId, userId }) => `${API_INVITATION}/${userId}/sended`;
 
 export const API_CONTEXT_ACTION = `${API}context-actions`;
 export const API_CONTEXT_ACTION_BY_ID = ({ contextActionId }) => `${API_CONTEXT_ACTION}/${contextActionId}`;
@@ -31,5 +28,6 @@ export const API_CONTEXT_ACTION_BY_ID = ({ contextActionId }) => `${API_CONTEXT_
 export const API_USER = `${API}users`;
 export const API_GET_ALL_USERS = `${API}all-users`;
 export const API_USER_BY_ID = ({ userId }) => `${API_USER}/${userId}`;
+export const API_USER_BY_FIELD = ({ field, value }) => `${API_USER}/field?${field}=${value}`;
 
 export const API_PUSH_NOTIFICATION = `${API}users/token`;

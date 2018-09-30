@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { Scene, Stack, Modal } from 'react-native-router-flux';
-import Chats from '../../../modules/home/scenes/Chats';
+import Chats from '../../../modules/chats/scenes/Chats';
 
 import chatFocused from '../../../assets/icons/chat-black.png';
 import chat from '../../../assets/icons/chat.png';

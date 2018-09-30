@@ -25,17 +25,20 @@ class Welcome extends React.Component {
 
     //get users permission authorization (ret: facebook token)
     async onSignInWithFacebook() {
-        const options = { permissions: ['public_profile', 'email'] }
-        const { type, token } = await Facebook.logInWithReadPermissionsAsync(c.FACEBOOK_APP_ID, options);
+        alert("Aún no esta disponible esta funcionalidad");
+        // const options = { permissions: ['public_profile', 'email'] }
+        // const { type, token } = await Facebook.logInWithReadPermissionsAsync(c.FACEBOOK_APP_ID, options);
 
-        console.log(type, token);
-        if (type === 'success') {
-            this.props.signInWithFacebook(token, this.onSuccess, this.onError)
-        }
+        // console.log(type, token);
+        // if (type === 'success') {
+        //     this.props.signInWithFacebook(token, this.onSuccess, this.onError)
+        // }
     }
 
-    onSuccess({ exists, user}) {
-        if (exists) Actions.Main()
+    onSuccess({ hasUserName, user}) {
+        console.log('hasUserName', hasUserName);
+        console.log('user', user);
+        if (hasUserName) Actions.Main()
         else Actions.CompleteProfile({ user })
     }
 

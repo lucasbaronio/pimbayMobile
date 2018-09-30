@@ -19,6 +19,15 @@ const fields = [
         type: "email"
     },
     {
+        key: 'fullName',
+        label: "Nombre Completo",
+        placeholder: "Nombre Completo",
+        autoFocus: false,
+        secureTextEntry: false,
+        value: "",
+        type: "text"
+    },
+    {
         key: 'username',
         label: "Username",
         placeholder: "Usuario",
@@ -50,6 +59,8 @@ const fields = [
 const error = {
     general: "",
     email: "",
+    fullName: "",
+    username: "",
     password: "",
     confirm_password: ""
 }
@@ -96,9 +107,16 @@ class Register extends React.Component {
                   showLabel={false}
                   onSubmit={this.onSubmit}
                   buttonTitle={"Crear cuenta"}
+                  isLoading={this.props.isLoading}
                   error={this.state.error}/>
         );
     }
 }
 
-export default connect(null, { register })(Register);
+function mapStateToProps(state, props) {
+    return {
+        isLoading: state.authReducer.isLoading
+    }
+}
+
+export default connect(mapStateToProps, { register })(Register);

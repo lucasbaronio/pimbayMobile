@@ -1,11 +1,12 @@
 import * as t from './actionTypes';
 import * as api from './api';
-import { USER_ID } from './constants';
+import { AsyncStorage } from "react-native";
 
 export function getInvitationsOut(errorCB) {
-    return (dispatch) => {
-        dispatch({ type: t.LOADING_INVITATION_OUT })
-        api.getInvitationsOut({ userId: USER_ID }, function (success, data, error) {
+    return async (dispatch) => {
+        dispatch({ type: t.LOADING_INVITATION_OUT });
+        const userId = await AsyncStorage.getItem('user_id');
+        api.getInvitationsOut({ userId }, function (success, data, error) {
             if (success) dispatch({ type: t.INVITATION_OUT_AVAILABLE, data });
             else if (error) errorCB(error)
         });
@@ -13,9 +14,10 @@ export function getInvitationsOut(errorCB) {
 }
 
 export function getInvitationsOutRefresh(errorCB) {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: t.LOADING_HEADER_INVITATION_OUT });
-        api.getInvitationsOut({ userId: USER_ID }, function (success, data, error) {
+        const userId = await AsyncStorage.getItem('user_id');
+        api.getInvitationsOut({ userId }, function (success, data, error) {
             if (success) dispatch({ type: t.INVITATION_OUT_REFRESHED, data });
             else if (error) errorCB(error)
         });
@@ -23,27 +25,29 @@ export function getInvitationsOutRefresh(errorCB) {
 }
 
 export function getInvitationsIn(errorCB) {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: t.LOADING_INVITATION_IN });
-        api.getInvitationsIn({ userId: USER_ID }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_IN_AVAILABLE, data, userId: USER_ID });
+        const userId = await AsyncStorage.getItem('user_id');
+        api.getInvitationsIn({ userId }, function (success, data, error) {
+            if (success) dispatch({ type: t.INVITATION_IN_AVAILABLE, data, userId });
             else if (error) errorCB(error);
         });
     };
 }
 
 export function getInvitationsInRefresh(errorCB) {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: t.LOADING_HEADER_INVITATION_IN });
-        api.getInvitationsIn({ userId: USER_ID }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId: USER_ID });
+        const userId = await AsyncStorage.getItem('user_id');
+        api.getInvitationsIn({ userId }, function (success, data, error) {
+            if (success) dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId });
             else if (error) errorCB(error);
         });
     };
 }
 
 export function getUserById(userId, errorCB) {
-    return (dispatch) => {
+    return async (dispatch) => {
         api.getUserById(userId, function (success, data, error) {
             if (success) dispatch({ type: t.ADD_USER, data });
             else if (error) errorCB(error);
@@ -52,20 +56,20 @@ export function getUserById(userId, errorCB) {
 }
 
 export function confirmInvitation(invitationId, errorCB) {
-    return (dispatch) => {
-        // dispatch({ type: t.INVITATION_CONFIRMED, userId: USER_ID, invitationId });
-        api.confirmInvitation({ invitationId, userId: USER_ID }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId: USER_ID, invitationId });
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        api.confirmInvitation({ invitationId, userId }, function (success, data, error) {
+            if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
             else if (error) errorCB(error);
         });
     };
 }
 
 export function rejectInvitation(invitationId, errorCB) {
-    return (dispatch) => {
-        // dispatch({ type: t.INVITATION_REJECTED, userId: USER_ID, invitationId });
-        api.rejectInvitation({ invitationId, userId: USER_ID }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId: USER_ID, invitationId });
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        api.rejectInvitation({ invitationId, userId }, function (success, data, error) {
+            if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId, invitationId });
             else if (error) errorCB(error);
         });
     };

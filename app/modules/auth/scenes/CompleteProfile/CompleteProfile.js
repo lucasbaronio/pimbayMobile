@@ -3,7 +3,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { actions as auth } from "../../index"
-const { createUser } = auth;
+const { finalizeCreateUser } = auth;
 
 import Form from "../../components/Form"
 
@@ -11,7 +11,7 @@ const fields = [
     {
         key: 'username',
         label: "Username",
-        placeholder: "Username",
+        placeholder: "Usuario",
         autoFocus: false,
         secureTextEntry: false,
         value: "",
@@ -38,12 +38,12 @@ class CompleteProfile extends React.Component {
 
     onSubmit(data) {
         this.setState({error: error}); //clear out error messages
+        
+        const newUser = {
+            username: data.username,
+        }
 
-        //attach user id
-        const { user } = this.props;
-        data['uid'] = user.uid;
-
-        this.props.createUser(data, this.onSuccess, this.onError)
+        this.props.finalizeCreateUser({ id: data.id, newUser }, user.id, this.onSuccess, this.onError)
     }
 
     onSuccess() {
@@ -76,4 +76,4 @@ class CompleteProfile extends React.Component {
     }
 }
 
-export default connect(null, { createUser })(CompleteProfile);
+export default connect(null, { finalizeCreateUser })(CompleteProfile);

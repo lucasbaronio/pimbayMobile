@@ -1,5 +1,6 @@
 import { Permissions, Notifications } from 'expo';
-import { USER_ID, API_PUSH_NOTIFICATION } from '../../../../config/constants';
+import { AsyncStorage } from "react-native"
+import { API_PUSH_NOTIFICATION } from '../../../../config/constants';
 import { post } from '../../../globalApi';
 
 export default async function registerForPushNotificationsAsync() {
@@ -24,31 +25,13 @@ export default async function registerForPushNotificationsAsync() {
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
     console.log(token);
+    const id = await AsyncStorage.getItem('user_id');
+    console.log(id);
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    post(API_PUSH_NOTIFICATION, {
-        expoToken: token,
-        id: USER_ID,
-    });
-    // return fetch(PUSH_ENDPOINT, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         expoToken: token,
-    //         id: USER_ID,
-    //     }),
-    // })
-    // .then(response => {
-    //     if (!response.ok) {
-    //         console.log(response);
-    //     }
-    // })
-    // .then(data => {
-    //     console.log(data);
-    // })
-    // .catch((error) => {
-    //     console.log(error);
-    // });
+    if (id) {
+        post(API_PUSH_NOTIFICATION, {
+            expoToken: token,
+            id,
+        });
+    }
 }
