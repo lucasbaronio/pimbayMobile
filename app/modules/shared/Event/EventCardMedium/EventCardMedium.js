@@ -32,7 +32,7 @@ class EventCardMedium extends PureComponent {
                                 backgroundColor={color.orange}
                                 onPress={this.onInvitePress}
                                 buttonStyle={styles.button}
-                                title='CREAR INIVTACIÓN'
+                                title='CREAR INVITACIÓN'
                                 fontSize={fontSize.text4} />
                         </View>
                     </ImageBackground>
