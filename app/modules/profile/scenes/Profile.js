@@ -17,7 +17,7 @@ class Profile extends React.Component {
     renderInterests(interests) {
         return interests.map((item, key) => {
             return (
-                <Text style={{ borderColor: 'orange', marginRight: 5 }}>
+                <Text style={styles.interestTextStyle}>
                     {item}
                 </Text>
             );
@@ -63,7 +63,7 @@ class Profile extends React.Component {
                     <View style={styles.horizontalLineStyle} />
                     <View style={{ alignSelf: 'flex-start' }}>
                         <Text style={styles.interestsTitleStyle}>Intereses</Text>
-                        <View style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20 }}>
+                        <View style={{ flexDirection: 'row', marginLeft: 20, flexWrap: 'wrap' }}>
                             {this.renderInterests(interests)}
                         </View>
                     </View>

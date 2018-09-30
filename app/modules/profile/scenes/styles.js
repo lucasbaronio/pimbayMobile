@@ -42,8 +42,21 @@ const styles = StyleSheet.create({
         fontSize: fontSize.text3,
         fontFamily: fontFamily.medium,
         marginTop: 15,
-        marginLeft: 15
+        marginLeft: 15,
+        marginBottom: 15
     },
+    interestTextStyle: {
+        fontSize: fontSize.text4,
+        fontFamily: fontFamily.medium,
+        backgroundColor: '#fcedea',
+        marginRight: 10,
+        marginBottom: 10,
+        borderColor: 'transparent',
+        borderWidth: 0,
+        borderRadius: 25,
+        paddingVertical: 5,
+        paddingHorizontal: 15
+    }
 });
 
 export default styles;
