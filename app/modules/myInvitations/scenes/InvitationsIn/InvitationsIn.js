@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, RefreshControl, ActivityIndicator, Alert } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator, Alert, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { actions as invitationsActions } from "../../index";
@@ -48,9 +48,14 @@ class InvitationsIn extends Component {
                                 onRefresh={() => getInvitationsInRefresh((error) => alert(error.message))}
                             />
                         }
+                        ListEmptyComponent={
+                            <View style={{marginTop: 100}}>
+                                <Text>Usted aún no ha recibido ninguna invitación</Text>
+                            </View>
+                        }
                     />
                 </View>
-            );
+            )
         }
     }
 }
