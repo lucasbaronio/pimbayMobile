@@ -36,7 +36,7 @@ import inOutFocused from '../assets/icons/in-out-selected.png';
 import inOut from '../assets/icons/in-out.png';
 
 // Profile
-import Profile from '../modules/home/scenes/Profile';
+import Profile from '../modules/profile/scenes/Profile';
 import userFocused from '../assets/icons/user-black.png';
 import user from '../assets/icons/user.png';
 
