@@ -20,7 +20,7 @@ import withActionSheetInvitationHOC from '../modules/shared/withActionSheetInvit
 import withNotificationExpoHOC from '../modules/timeline/hocs/NotificationExpo/withNotificationExpoHOC';
 import SelectUsersFromList from '../modules/timeline/scenes/SelectUsersFromList';
 import EventDetail from '../modules/eventDetail/EventDetail';
-import { SearchButton, BackButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
+import { SearchButton, BackButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
 import houseFocused from '../assets/icons/house-black.png';
 import house from '../assets/icons/house.png';
 
@@ -203,7 +203,12 @@ class RouterApp extends React.Component {
                     <Scene key="SelectUsersFromList"
                         hideNavBar={false}
                         hideTabBar
-                        renderLeftButton={<BackButton />}
+                        renderLeftButton={null}
+                        renderRightButton={
+                            <TextButton 
+                                text="Listo"
+                                onPress={() => Actions.pop()} />
+                        }
                         component={SelectUsersFromList} title="Seleccionar usuarios" />
                 </Modal>
             </Router>

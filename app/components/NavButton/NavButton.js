@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Text } from 'react-native';
 
 import {Icon} from 'react-native-elements'
 
@@ -25,7 +25,9 @@ class NavButton extends React.Component {
                                     style={{width: 28, height: 28}}
                                     source={source} />
                                 :
-                                <Text>{buttonText}</Text>
+                                <Text style={{color: color, fontSize: size, marginHorizontal: 3}}>
+                                    {buttonText}
+                                </Text>
                     }
                 </View>
             </TouchableOpacity>
@@ -42,9 +44,6 @@ NavButton.propTypes = {
 
 
 NavButton.defaultProps = {
-    name: "ios-settings",
-    type: "ionicon",
-    size: 26,
     color: "rgba(0,0,0,.84)",
     onPress: null,
     buttonText: "",

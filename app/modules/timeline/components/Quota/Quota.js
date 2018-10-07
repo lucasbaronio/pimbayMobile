@@ -14,7 +14,7 @@ import styles from "./styles";
 class Quota extends React.Component {
 
     state = {
-        switchHasQuota: true,
+        switchHasQuota: false,
         toggleQuotaPickerVisible: false,
         quota: 10,
         possibleQuota: [],
@@ -89,7 +89,7 @@ class Quota extends React.Component {
             <View style={styles.container}>
                 <View style={styles.headerQuota}>
                     <View>
-                        <Text style={styles.text}>Con cupo limite?</Text>
+                        <Text style={styles.text}>Limite de invitados</Text>
                     </View>
                     <View>
                         <Switch
@@ -110,7 +110,7 @@ class Quota extends React.Component {
                             onPress={this.onPressTogglePicker}
                             style={styles.chooseQuotaView}>
 
-                            <Text style={styles.text}>Cupo limite de invitados</Text>
+                            <Text style={styles.text}>Limite:</Text>
                             <Text style={styles.text}>{this.state.quota}</Text>
                         </TouchableOpacity>
                         {

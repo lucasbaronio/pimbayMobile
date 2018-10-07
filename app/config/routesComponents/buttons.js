@@ -107,6 +107,16 @@ export function CreateInvitationButton() {
     )
 }
 
+export function TextButton({ text, onPress }) {
+    return (
+        <NavButton
+            onPress={onPress}
+            color={color.blue}
+            size={fontSize.text2}
+            buttonText={text} />
+    )
+}
+
 const actionSheetStyles = {
     titleText: {
         fontSize: fontSize.text4,
