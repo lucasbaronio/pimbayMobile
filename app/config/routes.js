@@ -19,7 +19,7 @@ import CreateInvitation from '../modules/timeline/scenes/CreateInvitation';
 import withActionSheetInvitationHOC from '../modules/shared/withActionSheetInvitationHOC';
 import withNotificationExpoHOC from '../modules/timeline/hocs/NotificationExpo/withNotificationExpoHOC';
 import SelectUsersFromList from '../modules/timeline/scenes/SelectUsersFromList';
-import EventDetail from '../modules/eventDetail/EventDetail';
+import EventDetail from '../modules/shared/Event/EventDetail';
 import { SearchButton, BackButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
 import houseFocused from '../assets/icons/house-black.png';
 import house from '../assets/icons/house.png';

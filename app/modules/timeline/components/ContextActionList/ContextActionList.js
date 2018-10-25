@@ -52,7 +52,9 @@ class ContextActionList extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
-                    🔥 Tendencias 🔥
+                    <Text style={styles.fire}>🔥</Text>
+                    <Text> Tendencias </Text>
+                    <Text style={styles.fire}>🔥</Text>
                 </Text>
                 <FlatList
                     horizontal

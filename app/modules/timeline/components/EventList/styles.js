@@ -4,10 +4,12 @@ const { fontFamily, fontSize } = theme;
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 10
     },
     activityIndicatorCenter: {
         flex: 1,
+        height: 200,
         backgroundColor: '#fff',
         justifyContent: "center"
     },
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: fontFamily.bold,
-        fontSize: fontSize.text2,
+        fontSize: fontSize.text1,
         marginLeft: 10
     }
 

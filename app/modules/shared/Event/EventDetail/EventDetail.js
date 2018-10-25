@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
-import LocationButton from "../shared/Event/components/LocationButton";
-import { getCompleteFormalDate } from "../shared/utils/date";
-import styles from './styles';
+import { Button as ButtonElements } from 'react-native-elements';
+import LocationButton from "../components/LocationButton";
+import { getCompleteFormalDate } from "../../utils/date";
+import styles, { color, fontSize } from './styles';
 
 class EventDetail extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            showMore: false
-        }
+    state = {
+        showMore: false
+    }
+
+    onInvitePress = () => {
+        const { item } = this.props;
+        this.props.onPressCreateInvitation(item);
     }
 
     render() {
@@ -29,6 +32,14 @@ class EventDetail extends Component {
                     <Text style={styles.eventTitleStyle}>{title}</Text>
                     <Text style={styles.eventDateStyle}>{getCompleteFormalDate(realizationDate)}</Text>
                     <LocationButton place={place} ellipsizeText={false} />
+                </View>
+                <View style={styles.buttonView}>
+                    <ButtonElements
+                        backgroundColor={color.orange}
+                        onPress={this.onInvitePress}
+                        buttonStyle={styles.button}
+                        title='CREAR INVITACIÓN'
+                        fontSize={fontSize.text3} />
                 </View>
                 <View style={styles.dividerLineViewStyle} />
                 <View style={styles.eventDetailContainerStyle}>

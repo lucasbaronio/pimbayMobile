@@ -26,7 +26,7 @@ class Timeline extends React.Component {
 
     renderItem = ({ item, index }) => {
         return (
-            <View>
+            <View style={{marginTop: 10}}>
                 {
                     !!(index === 0) &&
                     <Text style={styles.titleInvitationsSection}>
@@ -53,7 +53,7 @@ class Timeline extends React.Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", { props: this.props, item });
+        Actions.push("EventDetail", { onPressCreateInvitation: this.onPressEvent, item });
     }
 
     renderHeader = () => {

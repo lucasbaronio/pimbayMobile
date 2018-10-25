@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     },
     activityIndicatorCenter: {
         flex: 1,
+        height: 200,
         backgroundColor: '#fff',
         justifyContent: "center"
     },
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     },
     titleInvitationsSection: {
         fontFamily: fontFamily.bold,
-        fontSize: fontSize.text2,
+        fontSize: fontSize.text1,
         marginLeft: 10,
         marginBottom: 10
     }

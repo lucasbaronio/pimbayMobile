@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import { theme } from "../index";
+import { theme } from "../../../index";
 const { fontSize, fontFamily, color, windowWidth } = theme;
 
 const styles = StyleSheet.create({
@@ -65,7 +65,21 @@ const styles = StyleSheet.create({
         marginHorizontal: 5, 
         height: 250, 
         width: (windowWidth - 30)
-    }
+    },
+    button: {
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 25,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+    },
+    buttonView: {
+        flex: 1,
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
+        marginBottom: 5
+    },
 });
 
+export { color, fontSize }
 export default styles;
