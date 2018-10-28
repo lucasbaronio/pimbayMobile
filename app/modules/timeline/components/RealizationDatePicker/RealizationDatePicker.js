@@ -196,7 +196,7 @@ class RealizationDatePicker extends React.Component {
         const { eventDate } = this.props;
         return (
             <View style={styles.container}>
-                <Text style={styles.titleRealizationDate}>Cuando se hace?</Text>
+                <Text style={styles.titleRealizationDate}>¿Cuándo se hace?</Text>
                 {
                     !!eventDate
                         ? <View>

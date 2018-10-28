@@ -55,7 +55,7 @@ class Quota extends React.Component {
                 >
                     <View style={styles.pickerContainer}>
                         <Text style={styles.pickerTitle}>
-                            Elija el cupo limite de la invitación:
+                            Elija el cupo límite de la invitación:
                         </Text>
                         <Picker
                             // style={{width: 100}}
