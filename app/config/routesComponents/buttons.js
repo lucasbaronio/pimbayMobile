@@ -25,6 +25,14 @@ export function SearchButton({ goToScreen }) {
     )
 }
 
+export function EditButton({ goToScreen }) {
+    return (
+        <NavButton onPress={() => Actions.push(goToScreen)}
+            name={"md-create"} type={"ionicon"}
+            color={color.black} />
+    )
+}
+
 export function CloseButton() {
     return (
         <NavButton onPress={Actions.pop}
