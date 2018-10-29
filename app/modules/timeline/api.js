@@ -6,7 +6,8 @@ import {
     API_CONTEXT_ACTION,
     API_GET_CONTEXT_ACTION_BY_ID,
     API_GET_ALL_USERS,
-    API_GET_USER_BY_ID
+    API_GET_USER_BY_ID,
+    API_SEARCH_USERS
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -40,4 +41,8 @@ export function getFavoriteUsers(callback) {
 
 export function getUserById(userId, callback) {
     get(API_GET_USER_BY_ID({ userId }), callback);
+}
+
+export function searchUsersByUserNameOrFullName(value, callback) {
+    get(API_SEARCH_USERS({ value }), callback);
 }

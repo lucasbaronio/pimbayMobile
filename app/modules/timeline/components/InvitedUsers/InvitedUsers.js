@@ -18,7 +18,7 @@ class InvitedUsers extends React.Component {
     renderHeader = () => {
         return (
             <AvatarUser
-                onPressInviteButtom={this.onPressInviteButtom}
+                onPressButtom={this.onPressInviteButtom}
                 item={{
                     avatar: "../../../assets/icons/adduser.png",
                     userName: "Invitar",

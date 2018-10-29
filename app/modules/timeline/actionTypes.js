@@ -23,4 +23,7 @@ export const FAVORITE_USERS_AVAILABLE = 'createInvitation/FAVORITE_USERS_AVAILAB
 export const ADD_USER_TO_INVITED_LIST = 'createInvitation/ADD_USER_TO_INVITED_LIST';
 export const REMOVE_USER_FROM_INVITED_LIST = 'createInvitation/REMOVE_USER_FROM_INVITED_LIST';
 
+export const SEARCHED_USERS = 'searchTimeline/SEARCHED_USERS';
+export const LOADING_SEARCHED_USERS = 'searchTimeline/LOADING_SEARCHED_USERS';
+
 // export const LOGGED_OUT = logged_out;
