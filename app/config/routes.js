@@ -20,7 +20,7 @@ import withActionSheetInvitationHOC from '../modules/shared/withActionSheetInvit
 import withNotificationExpoHOC from '../modules/timeline/hocs/NotificationExpo/withNotificationExpoHOC';
 import SelectUsersFromList from '../modules/timeline/scenes/SelectUsersFromList';
 import EventDetail from '../modules/shared/Event/EventDetail';
-import { EditButton, SearchButton, BackButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
+import { EditButton, SearchButton, SaveButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
 import houseFocused from '../assets/icons/house-black.png';
 import house from '../assets/icons/house.png';
 
@@ -180,7 +180,9 @@ class RouterApp extends React.Component {
                         </Stack>
                     </Scene>
                     <Scene key="EditProfile"
-                        component={EditProfile} title="Editar perfil" />
+                        title="Editar perfil" 
+                        component={EditProfile} 
+                        renderRightButton={ <SaveButton onPress={() => Actions.pop()} /> }/>
                     <Scene key="SearchTimeline"
                         hideNavBar
                         hideTabBar
