@@ -181,8 +181,7 @@ class RouterApp extends React.Component {
                     </Scene>
                     <Scene key="EditProfile"
                         title="Editar perfil" 
-                        component={EditProfile} 
-                        renderRightButton={ <SaveButton onPress={() => Actions.pop()} /> }/>
+                        component={EditProfile} />
                     <Scene key="SearchTimeline"
                         hideNavBar
                         hideTabBar

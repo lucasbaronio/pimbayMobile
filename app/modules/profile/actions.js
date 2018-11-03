@@ -12,3 +12,13 @@ export function getLoggedUserData(errorCB) {
         });
     };
 }
+
+export function updateUser(updateData, errorCB) {
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        api.updateUser(userId, updateData, function (success, data, error) {
+            if (success) dispatch({ data });
+            else if (error) errorCB(error);
+        });
+    };
+}
