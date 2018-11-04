@@ -20,6 +20,8 @@ import withActionSheetInvitationHOC from '../modules/shared/withActionSheetInvit
 import withNotificationExpoHOC from '../modules/timeline/hocs/NotificationExpo/withNotificationExpoHOC';
 import SelectUsersFromList from '../modules/timeline/scenes/SelectUsersFromList';
 import EventDetail from '../modules/shared/Event/EventDetail';
+import SearchTimelineEvent from '../modules/timeline/scenes/SearchTimeline/tabs/SearchTimelineEvent';
+import SearchTimelineUser from '../modules/timeline/scenes/SearchTimeline/tabs/SearchTimelineUser';
 import { SearchButton, BackButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
 import houseFocused from '../assets/icons/house-black.png';
 import house from '../assets/icons/house.png';
@@ -115,7 +117,7 @@ class RouterApp extends React.Component {
                                 />
                                 
                                 <Tabs
-                                    tabBarStyle={{ marginTop: statusBarHeight, backgroundColor: '#ffffff' }}
+                                    tabBarStyle={{ paddingTop: statusBarHeight, backgroundColor: '#ffffff' }}
                                     activeTintColor='#000000'
                                     inactiveTintColor='#000000'
                                     hideNavBar
@@ -178,9 +180,38 @@ class RouterApp extends React.Component {
                         </Stack>
                     </Scene>
                     <Scene key="SearchTimeline"
-                        hideNavBar
-                        hideTabBar
-                        component={SearchTimeline} title="Buscar" />
+                        tabBarStyle={{ backgroundColor: '#ffffff' }}
+                        activeTintColor='#000000'
+                        inactiveTintColor='#000000'
+                        indicatorStyle={{
+                            backgroundColor: '#de5134'
+                        }}
+                        tabs
+                        // hideNavBar
+                        // hideTabBar
+                        // component={SearchTimeline} 
+                        navBar={SearchTimeline}
+                        showLabel={true}
+                        lazy={true}
+                        tabBarPosition='top'
+                        labelStyle={{ fontFamily: fontFamily.medium }}
+                        swipeEnabled={true}
+                        title="Buscar" >
+                        
+                        <Scene
+                            hideNavBar
+                            key={"SearchTimelineUser"}
+                            title="Personas"
+                            component={SearchTimelineUser}
+                        />
+                        <Scene
+                            hideNavBar
+                            key={"SearchTimelineEvent"}
+                            title="Eventos"
+                            component={SearchTimelineEvent}
+                        />
+
+                    </Scene>
                     <Scene key="CreateInvitation"
                         hideTabBar
                         onEnter={({ invitationType }) => {

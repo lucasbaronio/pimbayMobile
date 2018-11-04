@@ -12,6 +12,7 @@ class SearchBarApp extends React.PureComponent {
             <SearchBar
                 round
                 lightTheme
+                returnKeyType={"search"}
                 containerStyle={styles.search}
                 onChangeText={onChangeText}
                 onClearText={onClearText}

@@ -17,13 +17,13 @@ class AvatarUser extends React.PureComponent {
     }
 
     onPress = () => {
-        const { item, selectable, onPressInviteButtom, onSelectUser, onDeselectUser } = this.props;
+        const { item, selectable, onPressButtom, onSelectUser, onDeselectUser } = this.props;
         if (selectable) {
             this.setState({
                 selectedToggle: !this.state.selectedToggle
             }, () => this.state.selectedToggle ? onSelectUser(item) : onDeselectUser(item))
         } else {
-            onPressInviteButtom && onPressInviteButtom();
+            onPressButtom && onPressButtom();
         }
     }
 

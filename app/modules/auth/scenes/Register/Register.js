@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
@@ -7,6 +7,7 @@ import { actions as auth } from "../../index"
 const { register } = auth;
 
 import Form from "../../components/Form"
+import styles from './styles';
 
 const fields = [
     {
@@ -16,7 +17,9 @@ const fields = [
         autoFocus: false,
         secureTextEntry: false,
         value: "",
-        type: "email"
+        type: "email",
+        returnKeyType: "next",
+        keyboardType: "email-address"
     },
     {
         key: 'fullName',
@@ -25,7 +28,8 @@ const fields = [
         autoFocus: false,
         secureTextEntry: false,
         value: "",
-        type: "text"
+        type: "text",
+        returnKeyType: "next"
     },
     {
         key: 'username',
@@ -34,7 +38,8 @@ const fields = [
         autoFocus: false,
         secureTextEntry: false,
         value: "",
-        type: "text"
+        type: "text",
+        returnKeyType: "next"
     },
     {
         key: 'password',
@@ -43,7 +48,8 @@ const fields = [
         autoFocus: false,
         secureTextEntry: true,
         value: "",
-        type: "password"
+        type: "password",
+        returnKeyType: "next"
     },
     {
         key: 'confirm_password',
@@ -52,7 +58,8 @@ const fields = [
         autoFocus: false,
         secureTextEntry: true,
         value: "",
-        type: "confirm_password"
+        type: "confirm_password",
+        returnKeyType: "done"
     }
 ];
 
@@ -103,12 +110,20 @@ class Register extends React.Component {
 
     render() {
         return (
-            <Form fields={fields}
-                  showLabel={false}
-                  onSubmit={this.onSubmit}
-                  buttonTitle={"Crear cuenta"}
-                  isLoading={this.props.isLoading}
-                  error={this.state.error}/>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={(Platform.OS === 'ios') ? "padding" : null}
+            // keyboardVerticalOffset={Platform.select({ ios: 30, android: 500 })}
+            enabled >
+            <ScrollView style={{ flex: 1 }}>
+                <Form fields={fields}
+                    showLabel={false}
+                    onSubmit={this.onSubmit}
+                    buttonTitle={"Crear cuenta"}
+                    isLoading={this.props.isLoading}
+                    error={this.state.error}/>
+            </ScrollView>
+        </KeyboardAvoidingView>
         );
     }
 }

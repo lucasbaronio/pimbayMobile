@@ -112,6 +112,18 @@ export function getUserById(userId, errorCB) {
     };
 }
 
+export function searchUsersByUserNameOrFullName(value, errorCB) {
+    return (dispatch) => {
+        dispatch({ type: t.LOADING_SEARCHED_USERS });
+        // if (value === "") dispatch({ type: t.SEARCHED_USERS, data: { matched_users: [], emptySearchInput: true } });
+        // else 
+        api.searchUsersByUserNameOrFullName(value, function (success, data, error) {
+            if (success) dispatch({ type: t.SEARCHED_USERS, data: { ...data, emptySearchInput: value === "" } });
+            else if (error) errorCB(error);
+        });
+    };
+}
+
 export function getContextActionById(contextActionId, errorCB) {
     return (dispatch) => {
         api.getContextActionById(contextActionId, function (success, data, error) {

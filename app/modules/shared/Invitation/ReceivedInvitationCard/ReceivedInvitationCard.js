@@ -118,6 +118,7 @@ class ReceivedInvitationCard extends Component {
                 <View style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]}>
                     <UserPhotoSection 
                         userAvatar={owner.avatar} 
+                        fullName={owner.fullName}
                         icon={receivedIcon} isPublic={false} />
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>

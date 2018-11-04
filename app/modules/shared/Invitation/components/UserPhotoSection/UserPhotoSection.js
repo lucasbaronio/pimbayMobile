@@ -5,14 +5,17 @@ import styles from "./styles";
 
 class UserPhotoSection extends Component {
 
-    renderUserPhotoSection = (userAvatar, icon) => {
+    renderUserPhotoSection = (userAvatar, fullName, icon) => {
+        var initials = fullName.match(/\b\w/g) || [];
+        initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
         return (
             <View style={styles.container}>
                 <Avatar
                     rounded
                     medium
                     large
-                    source={{ uri: userAvatar }}
+                    title={(!userAvatar) ? initials : null}
+                    source={(userAvatar) ? { uri: userAvatar } : null}
                     containerStyle={{ marginTop: 20 }}
                 />
                 <Image source={icon} style={styles.iconSentStyle} />
@@ -21,8 +24,8 @@ class UserPhotoSection extends Component {
     }
 
     render() {
-        const { userAvatar, icon } = this.props;
-        return this.renderUserPhotoSection(userAvatar, icon);
+        const { userAvatar, fullName, icon } = this.props;
+        return this.renderUserPhotoSection(userAvatar, fullName, icon);
     }
 }
 

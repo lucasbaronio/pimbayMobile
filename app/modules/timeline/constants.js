@@ -9,6 +9,7 @@ import {
     API_CREATE_INVITATION as apiCreateInvitation,
     API_GET_ALL_USERS as apiGetAllUsers,
     API_USER_BY_ID as apiGetUserById,
+    API_SEARCH_USERS as apiSearchUsers,
     API_EVENT_BY_ID as apiGetEventById,
 } from "../../config/constants";
 
@@ -25,3 +26,4 @@ export const API_GET_CONTEXT_ACTION_BY_ID = apiGetContextActionById;
 export const API_CREATE_INVITATION = apiCreateInvitation;
 export const API_GET_ALL_USERS = apiGetAllUsers;
 export const API_GET_USER_BY_ID = apiGetUserById;
+export const API_SEARCH_USERS = apiSearchUsers;
