@@ -16,6 +16,11 @@ const profileReducer = (state = initialState, action) => {
             return { user: data, isLoadingUser: false }
         }
 
+        case t.UPDATED_USER: {
+            let { data } = action;
+            return { user: data, isLoadingUser: false }
+        }
+
         default:
             return state;
     }

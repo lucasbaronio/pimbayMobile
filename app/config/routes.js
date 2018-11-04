@@ -20,7 +20,7 @@ import withActionSheetInvitationHOC from '../modules/shared/withActionSheetInvit
 import withNotificationExpoHOC from '../modules/timeline/hocs/NotificationExpo/withNotificationExpoHOC';
 import SelectUsersFromList from '../modules/timeline/scenes/SelectUsersFromList';
 import EventDetail from '../modules/shared/Event/EventDetail';
-import { SearchButton, BackButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
+import { EditButton, SearchButton, SaveButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
 import houseFocused from '../assets/icons/house-black.png';
 import house from '../assets/icons/house.png';
 
@@ -37,6 +37,7 @@ import inOut from '../assets/icons/in-out.png';
 
 // Profile
 import Profile from '../modules/profile/scenes/Profile';
+import EditProfile from '../modules/profile/scenes/EditProfile/';
 import userFocused from '../assets/icons/user-black.png';
 import user from '../assets/icons/user.png';
 
@@ -173,10 +174,14 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? userFocused : user} />
                                     )}
+                                    renderRightButton={<EditButton goToScreen='EditProfile' />}
                                 />
                             </Scene>
                         </Stack>
                     </Scene>
+                    <Scene key="EditProfile"
+                        title="Editar perfil" 
+                        component={EditProfile} />
                     <Scene key="SearchTimeline"
                         hideNavBar
                         hideTabBar

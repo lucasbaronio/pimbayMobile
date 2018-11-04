@@ -29,5 +29,6 @@ export const API_USER = `${API}users`;
 export const API_GET_ALL_USERS = `${API}all-users`;
 export const API_USER_BY_ID = ({ userId }) => `${API_USER}/${userId}`;
 export const API_USER_BY_FIELD = ({ field, value }) => `${API_USER}/field?${field}=${value}`;
+export const API_UPDATE_USER = ({ userId }) => `${API_USER}/${userId}`;
 
 export const API_PUSH_NOTIFICATION = `${API}users/token`;
