@@ -13,11 +13,15 @@ export function getLoggedUserData(errorCB) {
     };
 }
 
-export function updateUser(updateData, errorCB) {
+export function updateUser(updateData, successCB, errorCB) {
     return async (dispatch) => {
+        dispatch({ type: t.UPDATING_USER });        
         const userId = await AsyncStorage.getItem('user_id');
         api.updateUser(userId, updateData, function (success, data, error) {
-            if (success) dispatch({ data });
+            if (success) {
+                dispatch({ type: t.UPDATED_USER, data });
+                successCB(data);
+            }
             else if (error) errorCB(error);
         });
     };
