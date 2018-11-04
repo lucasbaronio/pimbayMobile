@@ -222,7 +222,7 @@ class DatePicker extends React.Component {
         const { eventDate } = this.props;
         return (
             <View style={styles.container}>
-                <Text style={styles.titleTimerDueDate}>Cuando se vence?</Text>
+                <Text style={styles.titleTimerDueDate}>¿Cuándo se vence?</Text>
                 {
                     !!eventDate
                         ? <View>
