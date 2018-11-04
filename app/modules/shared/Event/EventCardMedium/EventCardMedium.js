@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, StyleSheet } from 'react-native';
 import { Button as ButtonElements } from 'react-native-elements';
 import LocationButton from "../components/LocationButton";
 import styles, { fontSize, color } from "./styles";
@@ -27,6 +27,7 @@ class EventCardMedium extends PureComponent {
                         source={{ uri: item.image }}
                         imageStyle={{ borderRadius: 10 }}
                         style={styles.image} >
+                        <View style={styles.overlay} />
                         <View style={styles.buttonView}>
                             <ButtonElements
                                 backgroundColor={color.orange}
@@ -53,6 +54,14 @@ class EventCardMedium extends PureComponent {
                         <LocationButton place={item.place} ellipsizeText={true} />
                     {/* </View> */}
                 </TouchableOpacity>
+                {/* <View style={styles.buttonView}>
+                    <ButtonElements
+                        backgroundColor={color.orange}
+                        onPress={this.onInvitePress}
+                        buttonStyle={styles.button}
+                        title='CREAR INVITACIÓN'
+                        fontSize={fontSize.text4} />
+                </View> */}
             </View>
         )
     }

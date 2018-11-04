@@ -11,12 +11,20 @@ const styles = StyleSheet.create({
         margin: 15,
     },
     image: {
+        flex: 1,
         height: 150, 
+        width: windowWidth * 0.75,
         borderRadius: 10, 
         backgroundColor: color.grey,
         borderWidth: 0.5,
         borderColor: color.grey,
         borderRadius: 10,
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'black',
+        opacity: 0.4,
+        borderRadius: 10
     },
     button: {
         borderColor: "transparent",

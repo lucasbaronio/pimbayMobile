@@ -16,7 +16,9 @@ const fields = [
         autoFocus:false,
         secureTextEntry:false,
         value: "",
-        type: "email"
+        type: "email",
+        returnKeyType: "done",
+        keyboardType: "email-address"
     }
 ];
 

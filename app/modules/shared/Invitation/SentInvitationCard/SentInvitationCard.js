@@ -22,13 +22,6 @@ const { getUserById } = myInvitations;
 
 class SentInvitationCard extends Component {
 
-    componentWillMount(){
-        const { item } = this.props;
-
-        if (item.invitationType === invType.DIRECTED)
-            this.props.getUserById(item.invitedUsers[0], (error) => alert(error.message));
-    }
-
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
             return this.renderDetailsWithoutDueDate(item);
@@ -94,7 +87,8 @@ class SentInvitationCard extends Component {
         return (
             (item.invitationType === invType.DIRECTED)
             ? <UserPhotoSection
-                userAvatar={firstUserInvited ? firstUserInvited.avatar : ''}
+                userAvatar={firstUserInvited ? firstUserInvited.avatar : null}
+                fullName={firstUserInvited ? firstUserInvited.fullName : ""}
                 icon={sentIcon}
             />
             : <View style={{flex: 1, alignItems: 'center', marginTop: 20, margin: 10}}>
