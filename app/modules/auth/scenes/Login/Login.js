@@ -17,7 +17,9 @@ const fields = [
         autoFocus: false,
         secureTextEntry: false,
         value: "",
-        type: "email"
+        type: "email",
+        returnKeyType: "next",
+        keyboardType: "email-address"
     },
     {
         key: 'password',
@@ -26,7 +28,8 @@ const fields = [
         autoFocus: false,
         secureTextEntry: true,
         value: "",
-        type: "password"
+        type: "password",
+        returnKeyType: "done",
     }
 ];
 

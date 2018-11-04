@@ -6,9 +6,20 @@ export function getInvitationsOut(errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_INVITATION_OUT });
         const userId = await AsyncStorage.getItem('user_id');
-        api.getInvitationsOut({ userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_OUT_AVAILABLE, data });
-            else if (error) errorCB(error)
+        api.getInvitationsOut({ userId }, function (success, invitsationsData, error) {
+            if (success) {
+                for (var i = 0; i < invitsationsData.length; i++) {
+                    const { invitation } = invitsationsData[i];
+                    api.getUserById(invitation.invitedUsers[0], function (userSuccess, userData, userError) {
+                        if (userSuccess) {
+                            dispatch({ type: t.ADD_USER, data: userData });
+                            if (i === invitsationsData.length)
+                                dispatch({ type: t.INVITATION_OUT_AVAILABLE, data: invitsationsData });
+                        } else if (i === invitsationsData.length)
+                            dispatch({ type: t.INVITATION_OUT_AVAILABLE, data: invitsationsData });
+                    });
+                }
+            } else if (error) errorCB(error)
         });
     };
 }
@@ -17,9 +28,20 @@ export function getInvitationsOutRefresh(errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_HEADER_INVITATION_OUT });
         const userId = await AsyncStorage.getItem('user_id');
-        api.getInvitationsOut({ userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_OUT_REFRESHED, data });
-            else if (error) errorCB(error)
+        api.getInvitationsOut({ userId }, function (success, invitsationsData, error) {
+            if (success) {
+                for (var i = 0; i < invitsationsData.length; i++) {
+                    const { invitation } = invitsationsData[i];
+                    api.getUserById(invitation.invitedUsers[0], function (userSuccess, userData, userError) {
+                        if (userSuccess) {
+                            dispatch({ type: t.ADD_USER, data: userData });
+                            if (i === invitsationsData.length)
+                                dispatch({ type: t.INVITATION_OUT_REFRESHED, data: invitsationsData });
+                        } else if (i === invitsationsData.length)
+                            dispatch({ type: t.INVITATION_OUT_REFRESHED, data: invitsationsData });
+                    });
+                }
+            } else if (error) errorCB(error)
         });
     };
 }

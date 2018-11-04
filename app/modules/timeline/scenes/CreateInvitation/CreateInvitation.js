@@ -42,7 +42,8 @@ class CreateInvitation extends Component {
             case pimbayType.CONTEXT_ACTION:
                 this.setState({
                     contextActionSelected: item,
-                    invitationType
+                    invitationType,
+                    description: item.description
                 });
                 break;
             case pimbayType.EVENT:
@@ -137,6 +138,7 @@ class CreateInvitation extends Component {
                     numberOfLines={4}
                     onChangeText={(description) => this.setState({ description })}
                     editable={true}
+                    value={this.state.description}
                     placeholder="Estoy para ..."
                     autoCorrect={false}
                     underlineColorAndroid="transparent"
@@ -186,12 +188,14 @@ class CreateInvitation extends Component {
     render() {
         const { type, isLoading } = this.props;
         return (
-            <View style={{ flex: 1 }}>
+            // <View style={{ flex: 1 }}>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={(Platform.OS === 'ios') ? "padding" : null}
+                keyboardVerticalOffset={Platform.select({ ios: 70, android: 500 })}
+                enabled >
                 <ScrollView style={styles.container}>
-                    <KeyboardAvoidingView
-                        behavior={(Platform.OS === 'ios') ? "padding" : null}
-                        keyboardVerticalOffset={Platform.select({ ios: 84, android: 500 })}
-                        enabled >
+                    
 
                         {this.renderType()}
                         {
@@ -223,7 +227,7 @@ class CreateInvitation extends Component {
                             <InvitedUsers
                                 onChangeInvitedUserList={this.onChangeInvitedUserList} />
                         }
-                    </KeyboardAvoidingView>
+                    
                 </ScrollView>
                 {
                     !!isLoading
@@ -239,7 +243,8 @@ class CreateInvitation extends Component {
                             textStyle={styles.createInvitationText}
                             onPress={this.createInvitation} />
                 }
-            </View>
+                </KeyboardAvoidingView>
+            // </View>
         );
     }
 }

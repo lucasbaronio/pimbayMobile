@@ -7,8 +7,8 @@ export const colorBackgroundHeader = color.white;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: color.white
+        // flex: 1,
+        // backgroundColor: color.white
     },
     header: {
         

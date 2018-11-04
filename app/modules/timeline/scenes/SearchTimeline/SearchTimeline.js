@@ -5,8 +5,8 @@ import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
 
-// import { actions as home } from "../../index"
-// const { getEventsOrInvitations } = home;
+import { actions as home } from "../../index"
+const { searchUsersByUserNameOrFullName } = home;
 
 import styles, { colorBackgroundHeader } from "./styles"
 import SearchBarApp from '../../../shared/SearchBarApp/SearchBarApp';
@@ -17,8 +17,18 @@ class SearchTimeline extends React.Component {
     //     this.props.getEventsOrInvitations((error) => alert(error.message))
     // }
 
-    onChangeText = () => {
+    onChangeText = (value) => {
+        const { searchUsersByUserNameOrFullName } = this.props;
+        switch (Actions.currentScene) {
+            case '_SearchTimelineUser': {
+                searchUsersByUserNameOrFullName(value, this.onError);
+                break;
+            }
+            case '_SearchTimelineEvent': {
 
+                break;
+            }
+        }
     }
 
     onClearText = () => {
@@ -71,4 +81,4 @@ class SearchTimeline extends React.Component {
 // }
 
 // export default connect(mapStateToProps, { getEventsOrInvitations })(SearchTimeline);
-export default connect(null, {})(SearchTimeline);
+export default connect(null, { searchUsersByUserNameOrFullName })(SearchTimeline);

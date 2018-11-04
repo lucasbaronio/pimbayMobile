@@ -9,7 +9,7 @@ import styles from "./styles"
 
 class AuthTextInput extends Component {
     render() {
-        const { showLabel, placeholder, autoFocus, onChangeText, secureTextEntry, placeholderTextColor, keyboardType } = this.props;
+        const { showLabel, placeholder, autoFocus, onChangeText, secureTextEntry, placeholderTextColor, keyboardType, returnKeyType } = this.props;
 
         return (
             <View style={styles.container}>
@@ -29,6 +29,7 @@ class AuthTextInput extends Component {
                     inputStyle={styles.inputContainer}
                     placeholderTextColor={placeholderTextColor}
                     keyboardType={keyboardType}
+                    returnKeyType={returnKeyType}
                     value={this.props.value}/>
                 {
                     (!isEmpty(this.props.error)) &&

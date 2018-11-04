@@ -75,7 +75,7 @@ class Form extends React.Component {
 
                     {
                         fields.map((data, idx) => {
-                            let {key, label, placeholder, autoFocus, secureTextEntry, keyboardType} = data;
+                            let {key, label, placeholder, autoFocus, secureTextEntry, keyboardType, returnKeyType} = data;
                             return (
                                 <AuthTextInput key={key}
                                                label={label}
@@ -85,6 +85,7 @@ class Form extends React.Component {
                                                onChangeText={(text) => this.onChange(key, text)}
                                                secureTextEntry={secureTextEntry}
                                                keyboardType={keyboardType}
+                                               returnKeyType={returnKeyType}
                                                value={this.state[key]['value']}
                                                error={this.state.error[key]}/>
                             )

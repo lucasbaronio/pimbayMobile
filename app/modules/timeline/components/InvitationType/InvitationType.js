@@ -20,7 +20,6 @@ class InvitationType extends React.Component {
 
     updateIndex = (selectedIndex) => {
         this.setState({ selectedIndex });
-        console.log(selectedIndex);
         switch (selectedIndex) {
             case 0:
                 this.props.onChangeInvitationType({ invitationTypeSelected: invitationType.OPEN });
