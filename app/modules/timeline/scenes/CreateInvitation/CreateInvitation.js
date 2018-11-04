@@ -42,7 +42,8 @@ class CreateInvitation extends Component {
             case pimbayType.CONTEXT_ACTION:
                 this.setState({
                     contextActionSelected: item,
-                    invitationType
+                    invitationType,
+                    description: item.description
                 });
                 break;
             case pimbayType.EVENT:
@@ -137,6 +138,7 @@ class CreateInvitation extends Component {
                     numberOfLines={4}
                     onChangeText={(description) => this.setState({ description })}
                     editable={true}
+                    value={this.state.description}
                     placeholder="Estoy para ..."
                     autoCorrect={false}
                     underlineColorAndroid="transparent"
