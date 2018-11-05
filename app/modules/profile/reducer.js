@@ -2,6 +2,8 @@ import * as t from './actionTypes';
 
 let initialState = {
     user: null,
+    // userToShow: null,
+    // loggedUser: null,
     isLoadingUser: true
 };
 

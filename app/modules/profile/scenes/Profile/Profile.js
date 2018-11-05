@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { actions as profileActions } from "../index";
+
+import { actions as profileActions } from "../../index";
 const { getLoggedUserData } = profileActions;
 
 import styles from "./styles"
@@ -10,7 +11,9 @@ import styles from "./styles"
 class Profile extends React.Component {
 
     componentDidMount() {
-        this.props.getLoggedUserData(this.onError);
+        const { getLoggedUserData, userId } = this.props;
+        // getUserData(userId, this.onError);
+        getLoggedUserData(this.onError);
     }
 
     onError(error) {
@@ -81,9 +84,11 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state, props) {
+    const { userId } = props;
     return {
         isLoadingUser: state.profileReducer.isLoadingUser,
-        user: state.profileReducer.user
+        user: state.profileReducer.user,
+        // user: state.timelineReducer.users.filter(user => user.id === userId)
     }
 }
 
