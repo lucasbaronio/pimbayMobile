@@ -54,7 +54,8 @@ export function post(uri, body, callback) {
 }
 
 export function put(uri, body, callback) {
-    // console.log("put-body", body);
+    //console.log("uri", uri);
+    //console.log("put-body", body);
     return fetch(uri, {
         method: 'put',
         headers: {

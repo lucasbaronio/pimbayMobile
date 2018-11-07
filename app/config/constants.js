@@ -29,6 +29,7 @@ export const API_USER = `${API}users`;
 export const API_GET_ALL_USERS = `${API}all-users`;
 export const API_USER_BY_ID = ({ userId }) => `${API_USER}/${userId}`;
 export const API_USER_BY_FIELD = ({ field, value }) => `${API_USER}/field?${field}=${value}`;
+export const API_UPDATE_USER = ({ userId }) => `${API_USER}/${userId}`;
 
 //Ver como es el endpoint de backend:
 export const API_SEARCH_USERS = ({ value }) => `${API_USER}?search=${value}`;

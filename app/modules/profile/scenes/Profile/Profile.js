@@ -31,8 +31,6 @@ class Profile extends React.Component {
     }
 
     render() {
-        
-
         if (this.props.isLoadingUser) {
             return (
                 <View style={styles.activityIndicatorCenter}>
