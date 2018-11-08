@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 
-import { invitationType } from "../../constants";
+// import { invitationType } from "../../constants";
 import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 
-import { actions as timeline } from "../../../timeline/index";
-const { getUserById, getContextActionById, getEventById } = timeline;
+// import { actions as timeline } from "../../../timeline/index";
+// const { getUserById, getContextActionById, getEventById } = timeline;
 
 import styles, { fontSize, color } from "./styles";
 
@@ -65,14 +65,19 @@ class InvitationCard extends Component {
 
     renderUserInfoSection = () => {
         const { owner, contextAction } = this.props;
-        // if (!item) return null;
+        var initials = "";
+        if (owner.fullName) {
+            initials = owner.fullName.match(/\b\w/g) || [];
+            initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
+        }
         if (!contextAction) {
             return (
                 <View style={styles.userInfoSectionContainer}>
                     <Avatar
                         rounded
                         large
-                        source={owner ? { uri: owner.avatar } : null}
+                        title={(!owner.avatar) ? initials : null}
+                        source={(owner.avatar) ? { uri: owner.avatar } : null}
                         containerStyle={{ marginTop: 20 }}
                     />
                     <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>
@@ -85,7 +90,8 @@ class InvitationCard extends Component {
                         <Avatar
                             rounded
                             large
-                            source={owner ? { uri: owner.avatar } : null}
+                            title={(!owner.avatar) ? initials : null}
+                            source={(owner.avatar) ? { uri: owner.avatar } : null}
                             containerStyle={{ marginTop: 20 }}
                         />
                         <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>

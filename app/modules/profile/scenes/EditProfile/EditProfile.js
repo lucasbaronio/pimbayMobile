@@ -36,7 +36,7 @@ class EditProfile extends React.Component {
 
     saveChanges = () => {
         this.setState({ errors: false });
-        var momentDate = moment(this.state.birthdate).format();
+        var momentDate = new Date(moment(this.state.birthdate).format());
         let data = { 'birthdate': momentDate };
         (this.state.biography && this.state.biography.length > 0)
             ? data = { ...data, 'biography': this.state.biography }

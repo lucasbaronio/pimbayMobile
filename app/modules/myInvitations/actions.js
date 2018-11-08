@@ -19,6 +19,7 @@ export function getInvitationsOut(errorCB) {
                             dispatch({ type: t.INVITATION_OUT_AVAILABLE, data: invitsationsData });
                     });
                 }
+                if (invitsationsData.length === 0) dispatch({ type: t.INVITATION_OUT_AVAILABLE, data: invitsationsData });
             } else if (error) errorCB(error)
         });
     };
@@ -41,6 +42,7 @@ export function getInvitationsOutRefresh(errorCB) {
                             dispatch({ type: t.INVITATION_OUT_REFRESHED, data: invitsationsData });
                     });
                 }
+                if (invitsationsData.length === 0) dispatch({ type: t.INVITATION_OUT_AVAILABLE, data: invitsationsData });
             } else if (error) errorCB(error)
         });
     };

@@ -13,7 +13,6 @@ class UserPhotoSection extends Component {
                 <Avatar
                     rounded
                     medium
-                    large
                     title={(!userAvatar) ? initials : null}
                     source={(userAvatar) ? { uri: userAvatar } : null}
                     containerStyle={{ marginTop: 20 }}
