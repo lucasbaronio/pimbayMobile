@@ -117,6 +117,7 @@ class ReceivedInvitationCard extends Component {
             <View>
                 <View style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]}>
                     <UserPhotoSection 
+                        userId={owner.id}
                         userAvatar={owner.avatar} 
                         fullName={owner.fullName}
                         icon={receivedIcon} isPublic={false} />

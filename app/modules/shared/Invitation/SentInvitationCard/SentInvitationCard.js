@@ -87,6 +87,7 @@ class SentInvitationCard extends Component {
         return (
             (item.invitationType === invType.DIRECTED)
             ? <UserPhotoSection
+                userId={firstUserInvited.id}
                 userAvatar={firstUserInvited ? firstUserInvited.avatar : null}
                 fullName={firstUserInvited ? firstUserInvited.fullName : ""}
                 icon={sentIcon}
