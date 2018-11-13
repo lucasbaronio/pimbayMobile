@@ -63,7 +63,7 @@ const withActionSheetInvitationHOC = WrappedComponent =>
                     />
                     <ActionSheet
                         ref={o => this.ActionSheet = o}
-                        title={'Crear Invitación - De que tipo?'}
+                        title={'Crear Invitación - ¿De que tipo?'}
                         message={'Abierta: Visible para todos en Pimbay.\nDirigida: Visible solo para usuarios invitados.'}
                         options={['Invitación Abierta', 'Invitación Dirigida', 'Cancelar']}
                         cancelButtonIndex={2}
