@@ -27,15 +27,15 @@ class EventCardMedium extends PureComponent {
                         source={{ uri: item.image }}
                         imageStyle={{ borderRadius: 10 }}
                         style={styles.image} >
-                        <View style={styles.overlay} />
-                        <View style={styles.buttonView}>
+                        {/*<View style={styles.overlay} />*/}
+                        {/*<View style={styles.buttonView}>
                             <ButtonElements
                                 backgroundColor={color.orange}
                                 onPress={this.onInvitePress}
                                 buttonStyle={styles.button}
                                 title='CREAR INVITACIÓN'
                                 fontSize={fontSize.text4} />
-                        </View>
+                        </View>*/}
                     </ImageBackground>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.onPressViewEvent} activeOpacity={0.9}>
@@ -54,14 +54,14 @@ class EventCardMedium extends PureComponent {
                         <LocationButton place={item.place} ellipsizeText={true} />
                     {/* </View> */}
                 </TouchableOpacity>
-                {/* <View style={styles.buttonView}>
+                <View style={styles.buttonView}>
                     <ButtonElements
                         backgroundColor={color.orange}
                         onPress={this.onInvitePress}
                         buttonStyle={styles.button}
                         title='CREAR INVITACIÓN'
                         fontSize={fontSize.text4} />
-                </View> */}
+                </View>
             </View>
         )
     }
