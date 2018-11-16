@@ -23,7 +23,7 @@ class AvatarUser extends React.PureComponent {
                 selectedToggle: !this.state.selectedToggle
             }, () => this.state.selectedToggle ? onSelectUser(item) : onDeselectUser(item))
         } else {
-            onPressButtom && onPressButtom();
+            onPressButtom && onPressButtom(item);
         }
     }
 

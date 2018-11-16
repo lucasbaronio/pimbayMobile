@@ -7,6 +7,8 @@ import GridView from 'react-native-super-grid';
 
 // import { actions as invitationsActions } from "../../index";
 // const { getInvitationsIn, getInvitationsInRefresh } = invitationsActions;
+import { actions as profileActions } from "../../../../../profile/index";
+const { getUserData } = profileActions;
 
 import styles, { windowWidth } from "./styles";
 
@@ -30,7 +32,16 @@ class SearchTimelineUser extends Component {
     }
 
     onPressUser = (item) => {
-        console.log("Ir a perfil del usuario.");
+        const { getUserData } = this.props;
+        getUserData(item.id, this.onSuccess, this.onError);
+    }
+
+    onSuccess(isLoggedUser) {
+        Actions.push("ProfileUser", { isLoggedUser });
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
     }
 
     render() {
@@ -69,4 +80,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { })(SearchTimelineUser);
+export default connect(mapStateToProps, { getUserData })(SearchTimelineUser);
