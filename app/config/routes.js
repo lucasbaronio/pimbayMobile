@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Platform } from 'react-native';
+import { Image, Platform, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Scene, Router, Stack, Modal, Tabs, Actions } from 'react-native-router-flux';
 
@@ -52,6 +52,8 @@ import store from '../redux/store'
 import { checkLoginStatus } from "../modules/auth/actions";
 import { actions as createInvitation } from "../modules/timeline/index";
 const { cleanCreateInvitation } = createInvitation;
+import { actions as profileActions } from "../modules/profile/index";
+const { getUserData } = profileActions;
 
 import { color, navTitleStyle, fontFamily, fontSize, statusBarHeight } from "../styles/theme";
 
@@ -176,6 +178,12 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? userFocused : user} />
                                     )}
+                                    onEnter={({ }) => {
+                                        this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
+                                        Actions.refresh({
+                                            isLoggedUser: true
+                                        });
+                                    }}
                                     renderRightButton={<EditButton goToScreen='EditProfile' />}
                                 />
                             </Scene>
@@ -225,7 +233,7 @@ class RouterApp extends React.Component {
                                     ? "Invitación Abierta"
                                     : "Invitación Dirigida",
                                 left: <CloseButtonOnPress onPress={() => {
-                                    cleanCreateInvitation();
+                                    this.props.cleanCreateInvitation();
                                     Actions.pop();
                                 }} />,
                             });
@@ -246,6 +254,10 @@ class RouterApp extends React.Component {
                                 onPress={() => Actions.pop()} />
                         }
                         component={SelectUsersFromList} title="Seleccionar usuarios" />
+                    <Scene
+                        key={"ProfileUser"}
+                        title="Perfil"
+                        component={Profile} />
                 </Modal>
             </Router>
         )
@@ -258,4 +270,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, {  })(RouterApp);
+export default connect(mapStateToProps, { getUserData, cleanCreateInvitation })(RouterApp);

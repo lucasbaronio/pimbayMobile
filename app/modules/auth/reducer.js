@@ -21,6 +21,7 @@ const authReducer = (state = initialState, action) => {
                 ['user_username', user.userName], 
                 ['user_fullName', user.fullName], 
                 ['user_mail', user.mail], 
+                // ['user_favoriteUsers', JSON.stringify(!user.favoriteUsers ? user.favoriteUsers : [])],
             ]);
 
             return { ...state, isLoggedIn: true, user: user, isLoading: false };

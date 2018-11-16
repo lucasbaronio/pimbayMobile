@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Button as ButtonElements, Avatar } from 'react-native-elements';
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
@@ -11,6 +11,8 @@ import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 
 // import { actions as timeline } from "../../../timeline/index";
 // const { getUserById, getContextActionById, getEventById } = timeline;
+import { actions as profileActions } from "../../../profile/index";
+const { getUserData } = profileActions;
 
 import styles, { fontSize, color } from "./styles";
 
@@ -63,39 +65,49 @@ class InvitationCard extends Component {
             </View>);
     }
 
-    renderUserInfoSection = () => {
-        const { owner, contextAction } = this.props;
+    renderUserInfoOnly = () => {
+        const { owner } = this.props;
         var initials = "";
         if (owner.fullName) {
             initials = owner.fullName.match(/\b\w/g) || [];
             initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
         }
+        return (
+            <TouchableOpacity style={styles.userInfoSectionContainer} onPress={this.onPressUserInfo}>
+                <Avatar
+                    rounded
+                    large
+                    title={(!owner.avatar) ? initials : null}
+                    source={(owner.avatar) ? { uri: owner.avatar } : null}
+                    containerStyle={{ marginTop: 20 }}
+                />
+                <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    onPressUserInfo = () => {
+        const { getUserData, owner } = this.props;
+        getUserData(owner.id, this.onSuccess, this.onError);
+    }
+
+    onSuccess(isLoggedUser) {
+        Actions.push("ProfileUser", { isLoggedUser });
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
+    }
+
+    renderUserInfoSection = () => {
+        const { contextAction } = this.props;
+        
         if (!contextAction) {
-            return (
-                <View style={styles.userInfoSectionContainer}>
-                    <Avatar
-                        rounded
-                        large
-                        title={(!owner.avatar) ? initials : null}
-                        source={(owner.avatar) ? { uri: owner.avatar } : null}
-                        containerStyle={{ marginTop: 20 }}
-                    />
-                    <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>
-                </View>
-            );
+            return this.renderUserInfoOnly();
         } else {
             return (
                 <View style={styles.userInfoSectionContainer}>
-                    <View style={styles.userInfoSectionContainer}>
-                        <Avatar
-                            rounded
-                            large
-                            title={(!owner.avatar) ? initials : null}
-                            source={(owner.avatar) ? { uri: owner.avatar } : null}
-                            containerStyle={{ marginTop: 20 }}
-                        />
-                        <Text style={styles.userNameStyle}>{owner && owner.userName}</Text>
-                    </View>
+                    {this.renderUserInfoOnly()}
                     <Avatar
                         small
                         rounded
@@ -177,4 +189,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { })(InvitationCard);
+export default connect(mapStateToProps, { getUserData })(InvitationCard);
