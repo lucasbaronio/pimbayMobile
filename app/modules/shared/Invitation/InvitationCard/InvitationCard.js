@@ -89,8 +89,6 @@ class InvitationCard extends Component {
     onPressUserInfo = () => {
         const { getUserData, owner } = this.props;
         getUserData(owner.id, this.onSuccess, this.onError);
-        // const { owner } = this.props;
-        // Actions.push("ProfileUser", { userId: owner.id });
     }
 
     onSuccess(isLoggedUser) {

@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import * as t from './actionTypes';
 
 let initialState = {
@@ -17,7 +18,8 @@ const profileReducer = (state = initialState, action) => {
         case t.USER_INFO_AVAILABLE: {
             let { data, isLoggedUser } = action;
             return { 
-                userToShow: isLoggedUser ? null : data, 
+                ...state,
+                userToShow: isLoggedUser ? state.userToShow : data, 
                 loggedUser: isLoggedUser ? data : state.loggedUser,
                 isLoadingUser: false 
             }
@@ -29,7 +31,8 @@ const profileReducer = (state = initialState, action) => {
 
         case t.UPDATED_USER: {
             let { data } = action;
-            return { loggedUser: data, isLoadingUser: false }
+            AsyncStorage.setItem('user_fullName', data.fullName);
+            return { ...state, loggedUser: data, isLoadingUser: false }
         }
 
         case t.LOADING_ADD_FAVOURITE_USER: {
@@ -38,7 +41,7 @@ const profileReducer = (state = initialState, action) => {
 
         case t.ADD_FAVOURITE_USER: {
             let { data } = action;
-            return { loggedUser: data, isLoadingAddFavouriteUser: false }
+            return { ...state, loggedUser: data, isLoadingAddFavouriteUser: false }
         }
 
         default:

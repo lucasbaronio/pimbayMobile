@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { Avatar, Button as ButtonElements } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -23,16 +23,18 @@ class Profile extends React.Component {
     renderFollowUserButton() {
         const { isLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
         if (!isLoggedUser) {
-            // if (isLoadingAddFavouriteUser) {
-            //     return (
-
-            //     );
-            // }
+            if (isLoadingAddFavouriteUser) {
+                return (
+                    // TODO: Agregar un box de loading cuando esta esperando por el req de add/remove fav user
+                    null
+                );
+            }
             return (
                 <ButtonElements
                     backgroundColor={iAmFollowing ? color.white : color.orange}
                     onPress={iAmFollowing ? this.onRemoveFavouriteUser : this.onAddFavouriteUser}
                     buttonStyle={styles.button}
+                    color={iAmFollowing ? color.black : color.white}
                     title={iAmFollowing ? 'ELIMINAR FAVORITO' : 'AGREGAR FAVORITO'}
                     fontColor={iAmFollowing ? color.orange : color.white} // ver si funca esto
                     fontSize={fontSize.text4} />
@@ -48,6 +50,7 @@ class Profile extends React.Component {
     onRemoveFavouriteUser = () => {
         // const { removeFavouriteUser, user } = this.props;
         // removeFavouriteUser(user.mail, this.onError);
+        Alert.alert("Oops", "Aún no es posible eliminar un favorito.");
     }
 
     onError(error) {
@@ -63,7 +66,6 @@ class Profile extends React.Component {
             );
         } else {
             let { avatar, biography, favoriteUsers, fullName, interests } = this.props.user;
-            var { isLoggedUser } = this.props;
             var initials = fullName.match(/\b\w/g) || [];
             initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 
@@ -77,15 +79,7 @@ class Profile extends React.Component {
                         containerStyle={{ marginTop: 20 }} />
                     <Text style={styles.fullNameStyle}>{fullName}</Text>
                     <Text style={styles.bioStyle}>{biography}</Text>
-                    {
-                        !isLoggedUser &&
-                        <ButtonElements
-                            backgroundColor={color.orange}
-                            onPress={this.onAddFavouriteUser}
-                            buttonStyle={styles.button}
-                            title='AGREGAR FAVORITO'
-                            fontSize={fontSize.text4} />
-                    }
+                    {this.renderFollowUserButton()}
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
                         <View style={{ flex: 1, height: 60, alignItems: 'center' }} >
                             <Text style={styles.bioStyle}>{favoriteUsers ? favoriteUsers.length : 0}</Text>
@@ -124,7 +118,9 @@ function mapStateToProps(state, props) {
         isLoadingAddFavouriteUser,
         iAmFollowing: isLoggedUser 
                         ? false 
-                        : loggedUser.favoriteUsers.contains(userToShow.id),
+                        :  loggedUser &&
+                        loggedUser.favoriteUsers &&
+                        loggedUser.favoriteUsers.indexOf(userToShow.id) > -1
     }
 }
 

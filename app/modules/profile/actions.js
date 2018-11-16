@@ -20,11 +20,20 @@ export function getUserData(userId, successCB, errorCB) {
         var loggedUserId = await AsyncStorage.getItem('user_id');
         if (isLoggedUser) userId = loggedUserId;
         else isLoggedUser = loggedUserId === userId;
-        console.log("isLoggedUser", isLoggedUser);
         api.getUserById(userId, function (success, data, error) {
             if (success) {
-                dispatch({ type: t.USER_INFO_AVAILABLE, data, isLoggedUser });
-                successCB(isLoggedUser);
+                if (!isLoggedUser) {
+                    api.getUserById(loggedUserId, function (successLoggedUser, dataLoggedUser, errorLoggedUser) {
+                        if (successLoggedUser) {
+                            dispatch({ type: t.USER_INFO_AVAILABLE, data: dataLoggedUser, isLoggedUser: true });
+                            dispatch({ type: t.USER_INFO_AVAILABLE, data, isLoggedUser });
+                            successCB(isLoggedUser);
+                        } else if (errorLoggedUser) errorCB(errorLoggedUser);
+                    });
+                } else {
+                    dispatch({ type: t.USER_INFO_AVAILABLE, data, isLoggedUser });
+                    successCB(isLoggedUser);
+                }
             } else if (error) errorCB(error);
         });
     };
@@ -48,7 +57,7 @@ export function addFavouriteUser(mailToAdd, errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_ADD_FAVOURITE_USER });
         const myMail = await AsyncStorage.getItem('user_mail');
-        api.updateUser({ myMail, mailToAdd }, null, function (success, data, error) {
+        api.addFavouriteUser({ myMail, mailToAdd }, null, function (success, data, error) {
             if (success) dispatch({ type: t.ADD_FAVOURITE_USER, data });
             else if (error) errorCB(error);
         });
