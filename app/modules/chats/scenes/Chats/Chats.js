@@ -32,9 +32,9 @@ class Chats extends React.Component {
                     raised
                     title="CERRAR SESIÓN"
                     borderRadius={4}
-                    containerViewStyle={styles.signOutContainer}
-                    buttonStyle={styles.signOutButton}
-                    textStyle={styles.signOutText}
+                    // containerViewStyle={styles.signOutContainer}
+                    // buttonStyle={styles.signOutButton}
+                    // textStyle={styles.signOutText}
                     onPress={this.onSignOut} />
             </View>
         );

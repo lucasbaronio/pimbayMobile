@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { Avatar, Button as ButtonElements } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { actions as profileActions } from "../../index";
-const { addFavouriteUser } = profileActions;
+const { addFavouriteUser, signOut } = profileActions;
 
 import styles, { color, fontSize } from "./styles"
 
@@ -57,6 +58,14 @@ class Profile extends React.Component {
         Alert.alert("Oops", error.message);
     }
 
+    onSignOut = () => {
+        this.props.signOut(this.onSuccess, this.onError)
+    }
+
+    onSuccess = () => {
+        Actions.reset('root');
+    }
+
     render() {
         if (this.props.isLoadingUser) {
             return (
@@ -103,6 +112,14 @@ class Profile extends React.Component {
                             {this.renderInterests(interests)}
                         </View>
                     </View>
+                    <ButtonElements
+                        raised
+                        title="CERRAR SESIÓN"
+                        borderRadius={4}
+                        // containerViewStyle={styles.signOutContainer}
+                        // buttonStyle={styles.signOutButton}
+                        // textStyle={styles.signOutText}
+                        onPress={this.onSignOut} />
                 </View>
             );
         }
@@ -124,4 +141,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { addFavouriteUser })(Profile);
+export default connect(mapStateToProps, { addFavouriteUser, signOut })(Profile);
