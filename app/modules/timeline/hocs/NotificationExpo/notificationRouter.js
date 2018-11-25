@@ -7,8 +7,10 @@ export default function notificationRouter({ notification, getInvitationsInRefre
         switch (notification.data.actionType) {
             // switch (t.NEW_DIRECT_INVITATION) {
                 case t.NEW_DIRECT_INVITATION: {
-                    getInvitationsInRefresh((error) => alert(error.message));
-                    Actions.push("InvitationsInOut");
+                    console.log("Llega hasta aca!!!");
+                    getInvitationsInRefresh((error) => alert(error.message), 
+                        () => { Actions.push("InvitationsInOut") }
+                    );
                     break;
                 }
         

@@ -59,13 +59,15 @@ export function getInvitationsIn(errorCB) {
     };
 }
 
-export function getInvitationsInRefresh(errorCB) {
+export function getInvitationsInRefresh(errorCB, successCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_HEADER_INVITATION_IN });
         const userId = await AsyncStorage.getItem('user_id');
         api.getInvitationsIn({ userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId });
-            else if (error) errorCB(error);
+            if (success) {
+                dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId });
+                successCB && successCB();
+            } else if (error) errorCB(error);
         });
     };
 }

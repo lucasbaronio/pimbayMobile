@@ -27,14 +27,15 @@ const withNotificationExpoHOC = WrappedComponent =>
             }
 
             _handleNotification = (notification) => {
+                console.log(notification);
                 if (notification.origin === 'received') {
                     this.popup.show({
                         onPress: () => notificationRouter({ notification, ...this.props }),
                         appIconSource: require('../../../../assets/pimbay.png'),
                         appTitle: 'Pimbay',
                         timeText: 'Ahora',
-                        title: notification.data.title ? notification.data.title : 'Nueva invitación',
-                        body: notification.data.body ? notification.data.body : 'Tienes una nueva invitación de tu amigo Usuario 😀',
+                        title: notification.data.title ? notification.data.title : 'Sin Título',
+                        body: notification.data.body ? notification.data.body : 'Notificación sin un body 😀',
                     });
                 } else {
                     notificationRouter({ notification, ...this.props });

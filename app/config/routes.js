@@ -178,11 +178,11 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? userFocused : user} />
                                     )}
-                                    onEnter={({ }) => {
-                                        this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
+                                    onEnter={() => {
                                         Actions.refresh({
                                             isLoggedUser: true
                                         });
+                                        this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
                                     }}
                                     renderRightButton={<EditButton goToScreen='EditProfile' />}
                                 />
