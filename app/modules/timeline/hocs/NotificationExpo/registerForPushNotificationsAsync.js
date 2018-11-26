@@ -32,6 +32,6 @@ export default async function registerForPushNotificationsAsync() {
         post(API_PUSH_NOTIFICATION, {
             expoToken: token,
             id,
-        });
+        }, {}, null);
     }
 }

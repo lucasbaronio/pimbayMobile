@@ -32,7 +32,7 @@ export function getContextActionById(contextActionId, callback) {
 }
 
 export function createInvitation(invitation, callback) {
-    post(API_INVITATION, invitation, callback);
+    post(API_INVITATION, invitation, {}, callback);
 }
 
 export function getFavoriteUsers(callback) {

@@ -25,7 +25,7 @@ export function register(data, callback) {
 }
 
 export function createUser (user, callback) {
-    post(API_USER, user, callback);
+    post(API_USER, user, {}, callback);
 }
 
 export function updateUser ({ id, newUser }, callback) {

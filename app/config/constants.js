@@ -34,3 +34,19 @@ export const API_SEARCH_USERS = ({ value }) => `${API_USER}?search=${value}`;
 export const API_ADD_FAVOURITE_USER = ({ myMail, mailToAdd }) => `${API_USER}/${myMail}/favorite?email_to_add=${mailToAdd}`;
 
 export const API_PUSH_NOTIFICATION = `${API}users/token`;
+
+
+
+export const API_CHATCAMP = 'https://api.chatcamp.io//api/1.0/';
+export const X_APP_ID = '6470728469452943360';
+export const X_API_KEY = 'WGVEUjY5UzZxZXVvallRVkNiaXdGdz09';
+
+export function API_GET_CHAT_LIST() {
+    return {
+        url: `${API_CHATCAMP}group_channels.my_list`, 
+        header: {
+            'x-app-id': X_APP_ID,
+            'x-api-key': X_API_KEY
+        }
+    }
+};
