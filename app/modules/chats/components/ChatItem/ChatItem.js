@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, Image } from 'react-native';
+import { Badge } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -8,7 +9,7 @@ import { connect } from 'react-redux';
 import { actions as chat } from "../../index";
 const { signOut } = chat;
 
-import styles from "./styles";
+import styles, { color } from "./styles";
 
 class ChatItem extends React.Component {
 
@@ -31,15 +32,15 @@ class ChatItem extends React.Component {
                 <View>
                     <Image
                         style={styles.avatar}
-                        source={{uri: chat.participants[0].avatar_url}} />
+                        source={{uri: chat.metadata.avatar}} />
                 </View>
                 <View style={styles.chatInfo}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                             {chat.name}
                         </Text>
                         {
-                            !!chat.last_message.user &&
-                            <View>
+                            !!chat.last_message &&
+                            <View style={{ paddingLeft: 10 }}>
                                 <Text>
                                     {chat.last_message.user.display_name}
                                 </Text>
@@ -49,10 +50,18 @@ class ChatItem extends React.Component {
                             </View>
                         }
                 </View>
+                {
+                    !!(chat.unread_message_count > 0) &&
+                    <View style={styles.unreadMessageCount}>
+                        <Badge
+                            value={chat.unread_message_count}
+                            containerStyle={{ backgroundColor: color.orange }} />
+                    </View>
+                }
                 <View style={styles.arrowForward}>
                     <Ionicons
                         name='ios-arrow-forward'
-                        // color={((this.props.theme === LIGHT_THEME) ? LIGHT_THEME_FONT : DARK_THEME_FONT)} 
+                        color={color.orange} 
                         size={26} />
                 </View>
             </TouchableOpacity>

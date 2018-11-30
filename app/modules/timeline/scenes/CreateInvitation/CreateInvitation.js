@@ -188,7 +188,6 @@ class CreateInvitation extends Component {
     render() {
         const { type, isLoading } = this.props;
         return (
-            // <View style={{ flex: 1 }}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={(Platform.OS === 'ios') ? "padding" : null}
@@ -243,8 +242,7 @@ class CreateInvitation extends Component {
                             textStyle={styles.createInvitationText}
                             onPress={this.createInvitation} />
                 }
-                </KeyboardAvoidingView>
-            // </View>
+            </KeyboardAvoidingView>
         );
     }
 }

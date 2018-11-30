@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         height: 70
     },
     chatInfo: {
-        flex: 3,
+        flex: 7,
         flexDirection: 'column',
         justifyContent: 'center',
         marginLeft: 10
@@ -31,9 +31,16 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         paddingRight: 10
     },
+    unreadMessageCount: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        // paddingRight: 10
+    },
     lastMessage: {
         color: color.grey
     }
 });
 
+export { color };
 export default styles;

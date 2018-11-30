@@ -26,7 +26,6 @@ const chatReducer = (state = initialState, action) => {
 
         case t.CHAT_LIST_AVAILABLE: {
             let { data } = action;
-            console.log(data);
             let chatList = [].concat(data.group_channels);
 
             return { 
