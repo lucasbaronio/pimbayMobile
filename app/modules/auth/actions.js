@@ -6,14 +6,19 @@ import { auth } from "../../config/firebase";
 export function register(user, successCB, errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING});
-        api.register(user, function (success, data, error) {
+        api.register(user, function (successRegister, data, errorRegister) {
             dispatch({type: t.LOADING});
-            if (success) {
-                dispatch({type: t.LOGGED_IN, data});
-                dispatch({type: tProfile.USER_INFO_AVAILABLE, data, isLoggedUser: true });
-                successCB(data);
+            if (successRegister) {
+                api.createUserChatCamp(data, function (successCreateUser, dataCreateUser, errorCreateUser) {
+                    if (successCreateUser) {
+                        dispatch({type: t.LOGGED_IN, data});
+                        dispatch({type: tProfile.USER_INFO_AVAILABLE, data, isLoggedUser: true });
+                        successCB(data);
+                    }
+                    else if (errorCreateUser) { console.log("adbkjasasdlhjas"); errorCB(errorCreateUser) }
+                });
             }
-            else if (error) errorCB(error)
+            else if (errorRegister) errorCB(errorRegister)
         });
     };
 }

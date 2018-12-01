@@ -40,13 +40,24 @@ export const API_PUSH_NOTIFICATION = `${API}users/token`;
 export const API_CHATCAMP = 'https://api.chatcamp.io//api/1.0/';
 export const X_APP_ID = '6470728469452943360';
 export const X_API_KEY = 'WGVEUjY5UzZxZXVvallRVkNiaXdGdz09';
+const HEADER_CHAT_CAMP = {
+    'x-app-id': X_APP_ID,
+    'x-api-key': X_API_KEY
+};
 
-export function API_GET_CHAT_LIST() {
+export const API_GET_CHAT_LIST = () => {
     return {
         url: `${API_CHATCAMP}group_channels.my_list`, 
-        header: {
-            'x-app-id': X_APP_ID,
-            'x-api-key': X_API_KEY
+        header: HEADER_CHAT_CAMP
+    }
+};
+export const API_CREATE_USER_CHAT_CAMP = () => {
+    return {
+        url: `${API_CHATCAMP}users.create`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {
+            check_access_token: false
         }
     }
 };
+

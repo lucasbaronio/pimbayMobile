@@ -16,7 +16,7 @@ class UserPhotoSection extends Component {
     }
 
     onSuccess(isLoggedUser) {
-        Actions.push("ProfileUser", { isLoggedUser });
+        Actions.push("ProfileUser", { isNotLoggedUser: !isLoggedUser });
     }
 
     onError(error) {

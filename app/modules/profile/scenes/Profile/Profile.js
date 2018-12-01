@@ -127,17 +127,17 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state, props) {
-    const { isLoggedUser } = props;
+    const { isNotLoggedUser } = props;
     const { isLoadingUser, loggedUser, userToShow, isLoadingAddFavouriteUser } = state.profileReducer;
     return {
         isLoadingUser,
-        user: isLoggedUser ? loggedUser : userToShow,
+        user: isNotLoggedUser ? userToShow : loggedUser,
         isLoadingAddFavouriteUser,
-        iAmFollowing: isLoggedUser 
-                        ? false 
-                        :  loggedUser &&
-                        loggedUser.favoriteUsers &&
-                        loggedUser.favoriteUsers.indexOf(userToShow.id) > -1
+        iAmFollowing: isNotLoggedUser 
+                        ? loggedUser &&
+                            loggedUser.favoriteUsers &&
+                            loggedUser.favoriteUsers.indexOf(userToShow.id) > -1 
+                        : false
     }
 }
 
