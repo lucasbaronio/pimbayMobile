@@ -54,6 +54,8 @@ import { actions as createInvitation } from "../modules/timeline/index";
 const { cleanCreateInvitation } = createInvitation;
 import { actions as profileActions } from "../modules/profile/index";
 const { getUserData } = profileActions;
+import { actions as chatActions } from "../modules/chats/index";
+const { getChatList } = chatActions;
 
 import { color, navTitleStyle, fontFamily, fontSize, statusBarHeight } from "../styles/theme";
 
@@ -168,6 +170,9 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? chatFocused : chat} />
                                     )}
+                                    onEnter={() => {
+                                        this.props.getChatList((error) => Alert.alert("Oops", error.message));
+                                    }}
                                 />
                                 <Scene
                                     key={"Profile"}
@@ -179,9 +184,9 @@ class RouterApp extends React.Component {
                                             source={focused ? userFocused : user} />
                                     )}
                                     onEnter={() => {
-                                        Actions.refresh({
-                                            isLoggedUser: true
-                                        });
+                                        // Actions.refresh({
+                                        //     isLoggedUser: true
+                                        // });
                                         this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
                                     }}
                                     renderRightButton={<EditButton goToScreen='EditProfile' />}
@@ -270,4 +275,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserData, cleanCreateInvitation })(RouterApp);
+export default connect(mapStateToProps, { getUserData, getChatList, cleanCreateInvitation })(RouterApp);

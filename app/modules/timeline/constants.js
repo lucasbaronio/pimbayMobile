@@ -11,6 +11,7 @@ import {
     API_USER_BY_ID as apiGetUserById,
     API_SEARCH_USERS as apiSearchUsers,
     API_EVENT_BY_ID as apiGetEventById,
+    API_CREATE_CHAT_CHAT_CAMP as apiCreateChatChatCamp,
 } from "../../config/constants";
 
 export const NAME = 'timeline';
@@ -27,3 +28,4 @@ export const API_CREATE_INVITATION = apiCreateInvitation;
 export const API_GET_ALL_USERS = apiGetAllUsers;
 export const API_GET_USER_BY_ID = apiGetUserById;
 export const API_SEARCH_USERS = apiSearchUsers;
+export const API_CREATE_CHAT_CHAT_CAMP = apiCreateChatChatCamp;

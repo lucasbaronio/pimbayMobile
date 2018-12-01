@@ -60,4 +60,13 @@ export const API_CREATE_USER_CHAT_CAMP = () => {
         }
     }
 };
+export const API_CREATE_CHAT_CHAT_CAMP = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.create`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {
+            is_distinct: true
+        }
+    }
+};
 

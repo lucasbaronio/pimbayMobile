@@ -80,6 +80,11 @@ class CreateInvitation extends Component {
             Alert.alert('Usuarios invitados', "No se han elegido los usuarios invitados.");
             return;
         }
+        const avatar = contextActionSelected
+                        ? contextActionSelected.image
+                        : eventInvitation
+                            ? eventInvitation.image
+                            : "";
         createNewInvitation({
             description,
             dueDate,
@@ -91,7 +96,7 @@ class CreateInvitation extends Component {
             contextActionId: contextActionSelected ? contextActionSelected.id : null,
             eventId: eventInvitation ? eventInvitation.id : null,
             invitedUsers: this.getInvitedUsersIds()
-        }, this.onSuccess, this.onError);
+        }, avatar, this.onSuccess, this.onError);
     }
 
     onSuccess() {

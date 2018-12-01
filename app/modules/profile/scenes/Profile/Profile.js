@@ -22,8 +22,8 @@ class Profile extends React.Component {
     }
 
     renderFollowUserButton() {
-        const { isLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
-        if (!isLoggedUser) {
+        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
+        if (isNotLoggedUser) {
             if (isLoadingAddFavouriteUser) {
                 return (
                     // TODO: Agregar un box de loading cuando esta esperando por el req de add/remove fav user
