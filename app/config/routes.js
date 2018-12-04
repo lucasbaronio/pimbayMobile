@@ -30,6 +30,7 @@ import house from '../assets/icons/house.png';
 import Chats from '../modules/chats/scenes/Chats';
 import chatFocused from '../assets/icons/chat-black.png';
 import chat from '../assets/icons/chat.png';
+import ChatMessenger from '../modules/chats/scenes/ChatMessenger';
 
 // InvitationInOut
 import InvitationsIn from '../modules/myInvitations/scenes/InvitationsIn';
@@ -56,6 +57,8 @@ import { actions as profileActions } from "../modules/profile/index";
 const { getUserData } = profileActions;
 import { actions as chatActions } from "../modules/chats/index";
 const { getChatList } = chatActions;
+import { actions as authActions } from "../modules/auth/index";
+const { userLoggedInToCache } = authActions;
 
 import { color, navTitleStyle, fontFamily, fontSize, statusBarHeight } from "../styles/theme";
 
@@ -72,6 +75,7 @@ class RouterApp extends React.Component {
 
     componentDidMount() {
         let _this = this;
+        this.props.userLoggedInToCache();
         store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
             _this.setState({ isReady: true, /*exist, */isLoggedIn});
         }));
@@ -263,6 +267,10 @@ class RouterApp extends React.Component {
                         key={"ProfileUser"}
                         title="Perfil"
                         component={Profile} />
+                    <Scene
+                        key={"ChatMessenger"}
+                        title="ChatMessenger"
+                        component={ChatMessenger} />
                 </Modal>
             </Router>
         )
@@ -275,4 +283,9 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserData, getChatList, cleanCreateInvitation })(RouterApp);
+export default connect(mapStateToProps, { 
+    getUserData, 
+    getChatList, 
+    cleanCreateInvitation,
+    userLoggedInToCache
+})(RouterApp);

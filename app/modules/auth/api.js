@@ -5,6 +5,8 @@ import {
     API_CREATE_USER_CHAT_CAMP
 } from './constants';
 import { get, post } from '../globalApi';
+import { getUserById } from '../profile/api';
+export { getUserById }
 
 //Register the user using email and password
 export function register(data, callback) {

@@ -24,4 +24,17 @@ export function getChatList(errorCB) {
     };
 }
 
+export function getChatMessages(chatId, errorCB) {
+    return (dispatch) => {
+        dispatch({ type: t.LOADING_CHAT_MESSAGES });
+        // const userId = await AsyncStorage.getItem('user_id');
+        api.getChatMessages(chatId, function (success, data, error) {
+            if (success) dispatch({ type: t.CHAT_MESSAGES_AVAILABLE, data });
+            else if (error) errorCB(error);
+        });
+    };
+}
+
+
+
 // export { signOut };

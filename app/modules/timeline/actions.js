@@ -64,15 +64,19 @@ export function createNewInvitation(invitation, avatar, successCB, errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_CREATE_INVITATION });
         const ownerId = await AsyncStorage.getItem('user_id');
-        api.createInvitation({ ...invitation, ownerId }, function (successCreateInvitation, data, errorCreateInvitation) {
-            if (successCreateInvitation) {
-                api.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
-                    if (successCreateChat) {
+        api.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
+            if (successCreateChat) {
+                api.createInvitation({ 
+                    ...invitation, 
+                    ownerId, 
+                    chatId: dataCreateChat.group_channel.id
+                }, function (successCreateInvitation, data, errorCreateInvitation) {
+                    if (successCreateInvitation) {
                         dispatch({ type: t.CREATE_INVITATION_SUCCESS });
                         successCB();
-                    } else if (errorCreateChat) errorCB(errorCreateChat);
+                    } else if (errorCreateInvitation) errorCB(errorCreateInvitation);
                 });
-            } else if (errorCreateInvitation) errorCB(errorCreateInvitation);
+            } else if (errorCreateChat) errorCB(errorCreateChat);
         });
     };
 }

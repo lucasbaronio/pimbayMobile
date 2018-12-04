@@ -14,12 +14,8 @@ import styles, { color } from "./styles";
 class ChatItem extends React.Component {
 
     onPress = () => {
-
-        // this.props.handleOnClick();
-        // this.props.navigation.navigate('DetailScreen', {
-        //     username: this.props.user.username,
-        //     theme: this.props.theme
-        // });
+        const { chat } = this.props;
+        Actions.push("ChatMessenger", { chat });
     };
 
     render() {

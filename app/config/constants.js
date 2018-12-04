@@ -69,4 +69,12 @@ export const API_CREATE_CHAT_CHAT_CAMP = () => {
         }
     }
 };
+export const API_GET_CHAT_MESSAGES = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.history`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+
 

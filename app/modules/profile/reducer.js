@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import * as t from './actionTypes';
 
 let initialState = {
-    user: null,
+    // user: null,
     userToShow: null,
     loggedUser: null,
     isLoadingUser: true,

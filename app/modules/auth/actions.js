@@ -3,6 +3,8 @@ import * as tProfile from '../profile/actionTypes';
 import * as api from './api';
 import { auth } from "../../config/firebase";
 
+import { AsyncStorage } from "react-native";
+
 export function register(user, successCB, errorCB) {
     return (dispatch) => {
         dispatch({type: t.LOADING});
@@ -109,5 +111,17 @@ export function signInWithFacebook(facebookToken, successCB, errorCB) {
                 successCB(data);
             }else if (error) errorCB(error)
         });
+    };
+}
+
+export function userLoggedInToCache() {
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        if (userId) {
+            api.getUserById(userId, function (success, data, error) {
+                if (success) dispatch({ type: t.COMPLETE_USER_INFO, data });
+                else if (error) dispatch({ type: t.ONLY_USER_ID_INFO, data: userId });
+            });
+        }
     };
 }
