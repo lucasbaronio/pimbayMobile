@@ -5,15 +5,18 @@ import Message from './components/Message';
 import { connect } from 'react-redux';
 
 import { actions as chat } from "../../index";
-const { getChatMessages } = chat;
+const { getChatMessages, markAsReadAllChatMessages } = chat;
 
 import styles from "./styles";
 
 class MessagesList extends React.Component {
 
 	componentDidMount() {
-        const { getChatMessages, chat } = this.props;
-		this.timer = setInterval(() => getChatMessages(chat.id, this.onError), 1000);
+        const { getChatMessages, markAsReadAllChatMessages, chat } = this.props;
+		this.timer = setInterval(() => {
+            getChatMessages(chat.id, this.onError);
+            markAsReadAllChatMessages(chat.id, this.onError);
+        }, 1000);
     }
 
     onError(error) {
@@ -77,4 +80,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getChatMessages })(MessagesList);
+export default connect(mapStateToProps, { getChatMessages, markAsReadAllChatMessages })(MessagesList);

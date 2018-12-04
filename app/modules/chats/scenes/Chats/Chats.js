@@ -14,11 +14,19 @@ import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 class Chats extends React.Component {
 
     componentDidMount() {
-        this.props.getChatList(this.onError);
+        const { getChatList } = this.props;
+		this.timer = setInterval(() => {
+            getChatList(this.onError);
+        }, 1000);
     }
 
     onError(error) {
         Alert.alert("Oops", error.message);
+    }
+    
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
     }
 
     renderSeparator = () => (
@@ -31,13 +39,13 @@ class Chats extends React.Component {
     );
 
     render() {
-        if (this.props.isLoadingChatList) {
-            return (
-                <View style={styles.activityIndicatorCenter}>
-                    <ActivityIndicator animating={true} />
-                </View>
-            )
-        } else {
+        // if (this.props.isLoadingChatList) {
+        //     return (
+        //         <View style={styles.activityIndicatorCenter}>
+        //             <ActivityIndicator animating={true} />
+        //         </View>
+        //     )
+        // } else {
             return (
                 <View style={styles.container}>
                     <FlatList
@@ -60,7 +68,7 @@ class Chats extends React.Component {
                     />
                 </View>
             );
-        }
+        // }
     }
 }
 

@@ -25,11 +25,14 @@ class ChatItem extends React.Component {
             <TouchableOpacity 
                 style={styles.container}
                 onPress={this.onPress} >
-                <View>
-                    <Image
-                        style={styles.avatar}
-                        source={{uri: chat.metadata.avatar}} />
-                </View>
+                {
+                    !!(chat.metadata.avatar !== "") &&
+                    <View>
+                        <Image
+                            style={styles.avatar}
+                            source={{uri: chat.metadata.avatar}} />
+                    </View>
+                }
                 <View style={styles.chatInfo}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                             {chat.name}

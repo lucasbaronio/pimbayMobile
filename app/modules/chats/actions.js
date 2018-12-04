@@ -2,8 +2,6 @@ import * as t from './actionTypes';
 import * as api from './api';
 import { AsyncStorage } from "react-native";
 
-// import { signOut } from '../auth/actions';
-
 export function getUserById(userId, errorCB) {
     return (dispatch) => {
         api.getUserById(userId, function (success, data, error) {
@@ -27,7 +25,6 @@ export function getChatList(errorCB) {
 export function getChatMessages(chatId, errorCB) {
     return (dispatch) => {
         dispatch({ type: t.LOADING_CHAT_MESSAGES });
-        // const userId = await AsyncStorage.getItem('user_id');
         api.getChatMessages(chatId, function (success, data, error) {
             if (success) dispatch({ type: t.CHAT_MESSAGES_AVAILABLE, data });
             else if (error) errorCB(error);
@@ -35,6 +32,11 @@ export function getChatMessages(chatId, errorCB) {
     };
 }
 
-
-
-// export { signOut };
+export function markAsReadAllChatMessages(chatId, errorCB) {
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        api.markAsReadAllChatMessages({ chatId, userId }, function (success, data, error) {
+            if (error) errorCB(error);
+        });
+    };
+}

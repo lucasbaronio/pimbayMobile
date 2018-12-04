@@ -76,5 +76,11 @@ export const API_GET_CHAT_MESSAGES = () => {
         bodyExtra: {}
     }
 };
-
+export const API_MARK_AS_READ_ALL_CHAT_MESSAGES = () => {
+    return {
+        url: `${API_CHATCAMP}users.mark_as_read_all`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
 
