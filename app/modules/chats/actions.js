@@ -40,3 +40,12 @@ export function markAsReadAllChatMessages(chatId, errorCB) {
         });
     };
 }
+
+export function sendMessage(message, chatId, errorCB) {
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        api.sendMessage({ chatId, userId, message }, function (success, data, error) {
+            if (error) errorCB(error);
+        });
+    };
+}

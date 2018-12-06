@@ -10,7 +10,7 @@ import UserPhotoSection from '../components/UserPhotoSection';
 import { contextActionSize } from '../../constants';
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
-const { confirmInvitation, rejectInvitation } = invitationsActions;
+const { confirmInvitation, confirmInvitationA, rejectInvitation, rejectInvitationA } = invitationsActions;
 
 import receivedIcon from '../../../../assets/icons/ReceivedIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
@@ -93,12 +93,20 @@ class ReceivedInvitationCard extends Component {
 
     onPressConfirm = () => {
         const { item } = this.props;
-        this.props.confirmInvitation(item.id, this.onError);
+        console.log(item);
+        // Sacar esta linea cuando terminen US: Cuando se crea una invitación se le va a pasar un campo adicional chatId.
+        if (!item.chatId) this.props.confirmInvitationA(item.id, this.onError);
+        //
+        else this.props.confirmInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
     }
 
     onPressReject = () => {
         const { item } = this.props;
-        this.props.rejectInvitation(item.id, this.onError);
+        console.log(item);
+        // Sacar esta linea cuando terminen US: Cuando se crea una invitación se le va a pasar un campo adicional chatId.
+        if (!item.chatId) this.props.rejectInvitationA(item.id, this.onError);
+        //
+        else this.props.rejectInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
     }
 
     onError(error) {
@@ -187,5 +195,7 @@ function mapStateToProps(state, props) {
 
 export default connect(mapStateToProps, { 
     confirmInvitation, 
-    rejectInvitation 
+    confirmInvitationA, 
+    rejectInvitation,
+    rejectInvitationA 
 })(ReceivedInvitationCard);

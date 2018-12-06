@@ -3,7 +3,8 @@ import { View, Text, Image, ActivityIndicator } from 'react-native';
 // import LinkPreview from 'react-native-link-preview';
 // import CardMessageComponent from './CardMessageComponent';
 // import { formatDate } from 'chatapp-core/build/utils/formatDate';
-// import TimeComponent from './TimeComponent';
+import { formatFullDate } from '../../../../../shared/utils/date';
+import Time from './components/Time';
 
 import { connect } from 'react-redux';
 
@@ -32,7 +33,8 @@ class Message extends React.Component {
 	// }
 
 	render() {
-        const { direction, message } = this.props;
+		const { direction, message } = this.props;
+		var date = new Date(Number(message.inserted_at)*1000);
 
 		return (
 			<View
@@ -44,6 +46,7 @@ class Message extends React.Component {
 				<View
 					style={[
 						styles.box,
+						styles.boxText,
 						{ backgroundColor: (direction === 'in' ? color.white : color.grey) },
 						// (this.props.message.photo) ? styles.boxImage : styles.boxText
 					]}
@@ -67,10 +70,10 @@ class Message extends React.Component {
 					>
 						{message.text}
 					</Text>
-					{/* <TimeComponent
+					<Time
 						direction={direction}
-						time={formatDate(new Date(this.props.time))}
-					/> */}
+						time={formatFullDate(date)}
+					/>
 				</View>
 			</View>
 		)

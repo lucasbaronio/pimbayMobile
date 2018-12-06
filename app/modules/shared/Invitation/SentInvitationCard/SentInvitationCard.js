@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import ContextAction from '../../ContextAction';
-import UserPhotoSection from '../components/UserPhotoSection';
+// import UserPhotoSection from '../components/UserPhotoSection';
 
 import { contextActionSize, invitationType as invType } from '../../constants';
 import { getDueTime, getInvSentTime } from "../../../shared/utils/date";
@@ -83,15 +83,20 @@ class SentInvitationCard extends Component {
     }
 
     renderUserPhotoSection = (item) => {
-        const { firstUserInvited } = this.props;
+        // const { firstUserInvited } = this.props;
         return (
             (item.invitationType === invType.DIRECTED)
-            ? <UserPhotoSection
-                userId={firstUserInvited.id}
-                userAvatar={firstUserInvited ? firstUserInvited.avatar : null}
-                fullName={firstUserInvited ? firstUserInvited.fullName : ""}
-                icon={sentIcon}
-            />
+            // ? <UserPhotoSection
+            //     userId={firstUserInvited.id}
+            //     userAvatar={firstUserInvited ? firstUserInvited.avatar : null}
+            //     fullName={firstUserInvited ? firstUserInvited.fullName : ""}
+            //     icon={sentIcon}
+            // />
+            ? <View style={{flex: 1, alignItems: 'center', marginTop: 20, margin: 10}}>
+                <Image 
+                source={sentIcon} 
+                style={{ height: 50, width: 50 }} />
+            </View>
             : <View style={{flex: 1, alignItems: 'center', marginTop: 20, margin: 10}}>
                 <Image 
                 source={publicEarth} 
@@ -109,16 +114,14 @@ class SentInvitationCard extends Component {
     }
 
     renderGoToChatButton = (item) => {
-        if (item.invitationType != 'OPEN') {
-            return (
-                <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
-                    <View style={styles.buttonViewChat}>
-                        <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
-                        <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-                    </View>
-                </TouchableWithoutFeedback>
-            );
-        }
+        return (
+            <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
+                <View style={styles.buttonViewChat}>
+                    <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
+                    <Image source={rightArrow} style={{ height: 10, width: 10 }} />
+                </View>
+            </TouchableWithoutFeedback>
+        );
     }
 
     onPressViewEvent = (item) => {
@@ -127,6 +130,7 @@ class SentInvitationCard extends Component {
 
     render() {
         const { item } = this.props;
+        // console.log(item);
 
         return (
             <View>
@@ -163,9 +167,9 @@ class SentInvitationCard extends Component {
 function mapStateToProps(state, props) {
     const { item } = props;
     return {
-        firstUserInvited: item.invitationType === invType.DIRECTED
-            ? state.invitationsReducer.users.filter(user => user.id === item.invitedUsers[0])[0]
-            : null,
+        // firstUserInvited: item.invitationType === invType.DIRECTED
+        //     ? state.invitationsReducer.users.filter(user => user.id === item.invitedUsers[0])[0]
+        //     : null,
         contextAction: item.contextActionId
             ? state.invitationsReducer.contextActionsFromInvitations
                 .filter(contextAction => contextAction.id === item.contextActionId)[0]

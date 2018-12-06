@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		zIndex: 1,
-		marginBottom: 5,
+		marginBottom: 10,
 		marginTop: 2,
 	},
     containerIn: {
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		display: 'flex',
 		padding: 10,
+		paddingBottom: 17,
 		borderRadius: 6,
 		shadowOffset: { width: 1, height: 0.5 },
 		shadowColor: 'black',

@@ -6,9 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
 
-import { actions as chat } from "../../index";
-const { signOut } = chat;
-
 import styles, { color } from "./styles";
 
 class ChatItem extends React.Component {

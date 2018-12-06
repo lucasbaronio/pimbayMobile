@@ -65,6 +65,7 @@ export function createNewInvitation(invitation, avatar, successCB, errorCB) {
         dispatch({ type: t.LOADING_CREATE_INVITATION });
         const ownerId = await AsyncStorage.getItem('user_id');
         api.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
+            console.log(dataCreateChat);
             if (successCreateChat) {
                 api.createInvitation({ 
                     ...invitation, 

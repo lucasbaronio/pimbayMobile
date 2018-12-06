@@ -3,8 +3,8 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 
 import { connect } from 'react-redux';
 
-// import { actions as chat } from "../../index";
-// const { getChatList } = chat;
+import { actions as chat } from "../../index";
+const { sendMessage } = chat;
 
 import MessagesList from '../../components/MessagesList';
 import MessageInput from '../../components/MessageInput';
@@ -14,7 +14,9 @@ import styles from "./styles";
 class ChatMessenger extends React.Component {
 
     onSendMessage = (message) => {
-        console.log("Envio el mensaje: ", message);
+        const { sendMessage, chat } = this.props;
+        sendMessage(message, chat.id);
+        // console.log("Envio el mensaje: ", message);
     }
 
     render() {
@@ -37,4 +39,4 @@ class ChatMessenger extends React.Component {
 //     }
 // }
 
-export default connect(null, {  })(ChatMessenger);
+export default connect(null, { sendMessage })(ChatMessenger);

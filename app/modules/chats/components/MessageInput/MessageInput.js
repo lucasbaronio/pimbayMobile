@@ -46,8 +46,10 @@ class MessageInput extends React.Component {
                 <View style={styles.sendMessageView}>
                     <TouchableOpacity
                         style={styles.sendMessageButton}
-                        onPress={() => { this.props.onSendMessage(this.state.message) }}
-                    >
+                        onPress={() => { 
+                            this.setState({ message: "" });
+                            this.props.onSendMessage(this.state.message);
+                        }} >
                         <Icon
                             name='send'
                             color={color.white} />

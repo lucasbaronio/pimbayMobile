@@ -31,7 +31,7 @@ const chatReducer = (state = initialState, action) => {
 
         case t.CHAT_MESSAGES_AVAILABLE: {
             let { data } = action;
-            var chatMessages = arrayUnique(state.chatMessages.concat(data.messages));
+            var chatMessages = arrayUnique(data.messages.concat(state.chatMessages));
 
             return { 
                 ...state,

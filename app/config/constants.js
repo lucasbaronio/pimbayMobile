@@ -65,7 +65,7 @@ export const API_CREATE_CHAT_CHAT_CAMP = () => {
         url: `${API_CHATCAMP}group_channels.create`, 
         header: HEADER_CHAT_CAMP,
         bodyExtra: {
-            is_distinct: true
+            is_distinct: false
         }
     }
 };
@@ -83,4 +83,26 @@ export const API_MARK_AS_READ_ALL_CHAT_MESSAGES = () => {
         bodyExtra: {}
     }
 };
-
+export const API_SEND_MESSAGE = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.message`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {
+            type: ""
+        }
+    }
+};
+export const API_ADD_USER_TO_CHAT = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.invite`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_REMOVE_USER_FROM_CHAT = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.leave`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
