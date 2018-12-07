@@ -1,3 +1,4 @@
+
 import {
     API_USER_BY_ID as apiGetUserById,
     API_GET_CHAT_LIST as apiGetChatList,
@@ -17,3 +18,6 @@ export const API_MARK_AS_READ_ALL_CHAT_MESSAGES = apiMarkAsReadAllChatMessages;
 export const API_SEND_MESSAGE = apiSendMessage;
 export const API_ADD_USER_TO_CHAT = apiAddUserToChat;
 export const API_REMOVE_USER_FROM_CHAT = apiRemoveUserFromChat;
+
+export const URL_PROXY = 'https://cors-anywhere.herokuapp.com/';
+export const NO_IMG_CARD = 'https://www.kdeblog.com/wp-content/themes/gonzo/images/no-image-featured-image.png';

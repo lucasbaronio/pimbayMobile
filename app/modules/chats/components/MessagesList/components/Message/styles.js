@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		zIndex: 1,
-		marginBottom: 10,
-		marginTop: 2,
+		marginBottom: 5,
+		marginTop: 5,
 	},
     containerIn: {
 		justifyContent: 'flex-start',
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 		marginRight: 5,
     },
     box: {
-		maxWidth: '80%',
+		maxWidth: '70%',
 		position: 'relative',
 		display: 'flex',
 		padding: 10,
