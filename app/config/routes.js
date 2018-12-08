@@ -188,9 +188,6 @@ class RouterApp extends React.Component {
                                             source={focused ? userFocused : user} />
                                     )}
                                     onEnter={() => {
-                                        // Actions.refresh({
-                                        //     isLoggedUser: true
-                                        // });
                                         this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
                                     }}
                                     renderRightButton={<EditButton goToScreen='EditProfile' />}
@@ -209,9 +206,6 @@ class RouterApp extends React.Component {
                             backgroundColor: '#de5134'
                         }}
                         tabs
-                        // hideNavBar
-                        // hideTabBar
-                        // component={SearchTimeline} 
                         navBar={SearchTimeline}
                         showLabel={true}
                         lazy={true}
@@ -266,10 +260,15 @@ class RouterApp extends React.Component {
                     <Scene
                         key={"ProfileUser"}
                         title="Perfil"
+                        renderLeftButton={<CloseButton />}
                         component={Profile} />
                     <Scene
                         key={"ChatMessenger"}
-                        title="ChatMessenger"
+                        onEnter={({ chat }) => {
+                            Actions.refresh({
+                                title: chat.name,
+                            });
+                        }}
                         component={ChatMessenger} />
                 </Modal>
             </Router>

@@ -49,3 +49,12 @@ export function sendMessage(message, chatId, errorCB) {
         });
     };
 }
+
+export function changeChatName(name, chatId, errorCB) {
+    return (dispatch) => {
+        api.changeChatName({ chatId, name }, function (success, data, error) {
+            if (success) console.log(data);
+            if (error) errorCB(error);
+        });
+    };
+}

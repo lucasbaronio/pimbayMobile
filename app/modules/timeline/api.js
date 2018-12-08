@@ -47,15 +47,3 @@ export function getUserById(userId, callback) {
 export function searchUsersByUserNameOrFullName(value, callback) {
     get(API_SEARCH_USERS({ value }), callback);
 }
-
-export function createChat({ ownerId, avatar }, callback) {
-    const { url, header, bodyExtra } = API_CREATE_CHAT_CHAT_CAMP();
-    post(url, { 
-        participant_ids: [ownerId],
-        name: "Ingrese un nombre al grupo",
-        metadata: {
-            avatar: avatar
-        },
-        ...bodyExtra
-    }, header, callback);
-}

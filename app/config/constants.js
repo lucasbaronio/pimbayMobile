@@ -106,3 +106,10 @@ export const API_REMOVE_USER_FROM_CHAT = () => {
         bodyExtra: {}
     }
 };
+export const API_CHANGE_CHAT_NAME = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.update`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};

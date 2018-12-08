@@ -6,11 +6,25 @@ import {
     API_SEND_MESSAGE,
     API_ADD_USER_TO_CHAT,
     API_REMOVE_USER_FROM_CHAT,
+    API_CHANGE_CHAT_NAME,
+    CHAT_GROUP_DEFAULT_NAME,
 } from './constants';
 import { get, post } from '../globalApi';
 
 export function getUserById(userId, callback) {
     get(API_GET_USER_BY_ID({ userId }), callback);
+}
+
+export function createChat({ ownerId, avatar }, callback) {
+    const { url, header, bodyExtra } = API_CREATE_CHAT_CHAT_CAMP();
+    post(url, { 
+        participant_ids: [ownerId],
+        name: CHAT_GROUP_DEFAULT_NAME,
+        metadata: {
+            avatar: avatar
+        },
+        ...bodyExtra
+    }, header, callback);
 }
 
 export function getChatList(userId, callback) {
@@ -41,4 +55,9 @@ export function addUserToChat({ chatId, userId }, callback) {
 export function removeUserFromChat({ chatId, userId }, callback) {
     const { url, header, bodyExtra } = API_REMOVE_USER_FROM_CHAT();
     post(url, { id: chatId, participant_ids: [userId], ...bodyExtra }, header, callback);
+}
+
+export function changeChatName({ chatId, name }, callback) {
+    const { url, header, bodyExtra } = API_CHANGE_CHAT_NAME();
+    post(url, { id: chatId, name, ...bodyExtra }, header, callback);
 }

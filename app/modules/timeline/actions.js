@@ -1,5 +1,6 @@
 import * as t from './actionTypes';
 import * as api from './api';
+import * as apiChat from '../chats/api';
 import { AsyncStorage } from "react-native";
 
 // errorCB -> errorCallback
@@ -64,7 +65,7 @@ export function createNewInvitation(invitation, avatar, successCB, errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_CREATE_INVITATION });
         const ownerId = await AsyncStorage.getItem('user_id');
-        api.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
+        apiChat.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
             console.log(dataCreateChat);
             if (successCreateChat) {
                 api.createInvitation({ 
