@@ -35,6 +35,26 @@ export const API_ADD_FAVOURITE_USER = ({ myMail, mailToAdd }) => `${API_USER}/${
 
 export const API_PUSH_NOTIFICATION = `${API}users/token`;
 
+export const API_EXPO_PUSH = 'https://exp.host/--/api/v2/push/send';
+
+export const API_SEND_NOTIFICATION = ({ chat, message, userToPushToken }) => {
+    const titleAndBody = {
+        title: `${message.user.display_name} @ ${chat.name}`,
+        body: message.text,
+    };
+    return {
+        url: API_EXPO_PUSH,
+        body: {
+            to: userToPushToken,
+            ...titleAndBody,
+            data: {
+                ...titleAndBody,
+                actionType: "NEW_CHAT_MESSAGE",
+                id: chat.id
+            }
+        }
+    }
+};
 
 
 export const API_CHATCAMP = 'https://api.chatcamp.io//api/1.0/';
@@ -118,5 +138,12 @@ export const API_GET_CHAT_DETAIL = () => {
         url: `${API_CHATCAMP}group_channels.get`, 
         header: HEADER_CHAT_CAMP,
         bodyExtra: {}
+    }
+};
+export const API_UPDATE_USER_CHAT_CAMP = (body) => {
+    return {
+        url: `${API_CHATCAMP}users.update`, 
+        header: HEADER_CHAT_CAMP,
+        body
     }
 };

@@ -9,6 +9,7 @@ import {
     API_CHANGE_CHAT_NAME,
     CHAT_GROUP_DEFAULT_NAME,
     API_GET_CHAT_DETAIL,
+    API_SEND_NOTIFICATION,
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -66,4 +67,9 @@ export function changeChatName({ chatId, name }, callback) {
 export function getChatDetail({ chatId }, callback) {
     const { url, header, bodyExtra } = API_GET_CHAT_DETAIL();
     post(url, { id: chatId, ...bodyExtra }, header, callback);
+}
+
+export function sendNotification({ chat, message, userToPushToken }, callback) {
+    const { url, body } = API_SEND_NOTIFICATION({ chat, message, userToPushToken});
+    post(url, body, {}, callback);
 }

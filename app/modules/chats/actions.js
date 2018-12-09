@@ -43,10 +43,26 @@ export function markAsReadAllChatMessages(chatId, errorCB) {
     };
 }
 
-export function sendMessage(message, chatId, errorCB) {
+export function sendMessage({ message, chat }, errorCB) {
     return async (dispatch) => {
         const userId = await AsyncStorage.getItem('user_id');
-        api.sendMessage({ chatId, userId, message }, function (success, data, error) {
+        api.sendMessage({ chatId: chat.id, userId, message }, function (success, data, error) {
+            if (success) {
+                const { participants } = chat;
+                for (var i = 0; i < participants.length; i++) {
+                    const { id, metadata, display_name } = participants[i];
+                    if (id !== userId && metadata) {
+                        api.sendNotification({ 
+                            chat, 
+                            message: data.message, 
+                            userToPushToken: metadata.expoToken 
+                        }, function (successSendNotif, data, errorSendNotif) {
+                            if (successSendNotif) console.log("Se envió push a ", display_name);
+                            if (errorSendNotif) errorCB(error);
+                        });
+                    }
+                }
+            }
             if (error) errorCB(error);
         });
     };

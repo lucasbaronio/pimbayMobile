@@ -95,19 +95,11 @@ class ReceivedInvitationCard extends Component {
 
     onPressConfirm = () => {
         const { item } = this.props;
-        // Sacar esta linea cuando terminen US: Cuando se crea una invitación se le va a pasar un campo adicional chatId.
-        // if (!item.chatId) this.props.confirmInvitationA(item.id, this.onError);
-        //
-        // else 
         this.props.confirmInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
     }
 
     onPressReject = () => {
         const { item } = this.props;
-        // Sacar esta linea cuando terminen US: Cuando se crea una invitación se le va a pasar un campo adicional chatId.
-        // if (!item.chatId) this.props.rejectInvitationA(item.id, this.onError);
-        //
-        // else 
         this.props.rejectInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
     }
 
