@@ -11,13 +11,15 @@ export function getUserById(userId, errorCB) {
     };
 }
 
-export function getChatList(errorCB) {
+export function getChatList(successCB, errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_CHAT_LIST });
         const userId = await AsyncStorage.getItem('user_id');
         api.getChatList(userId, function (success, data, error) {
-            if (success) dispatch({ type: t.CHAT_LIST_AVAILABLE, data });
-            else if (error) errorCB(error);
+            if (success) {
+                dispatch({ type: t.CHAT_LIST_AVAILABLE, data });
+                successCB();
+            } else if (error) errorCB(error);
         });
     };
 }
@@ -54,6 +56,15 @@ export function changeChatName(name, chatId, errorCB) {
     return (dispatch) => {
         api.changeChatName({ chatId, name }, function (success, data, error) {
             if (success) console.log(data);
+            if (error) errorCB(error);
+        });
+    };
+}
+
+export function getChatDetail(chatId, successCB, errorCB) {
+    return (dispatch) => {
+        api.getChatDetail({ chatId }, function (success, data, error) {
+            if (success) successCB(data);
             if (error) errorCB(error);
         });
     };

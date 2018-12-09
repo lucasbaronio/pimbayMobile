@@ -26,6 +26,7 @@ class ChatMessenger extends React.Component {
 
     render() {
         const { chat, changeChatName } = this.props;
+
         return (
             <KeyboardAvoidingView 
                 behavior= {(Platform.OS === 'ios')? "padding" : null} 
@@ -58,9 +59,10 @@ class ChatMessenger extends React.Component {
 }
 
 // function mapStateToProps(state, props) {
+//     const { chat } = this.props;
+//     console.log(chat);
 //     return {
-//         chatList: state.chatReducer.chatList,
-//         isLoadingChatList: state.chatReducer.isLoadingChatList,
+//         chatFromReducer: state.chatReducer.chatList.filter(x => x.id === chat.id)[0]
 //     }
 // }
 

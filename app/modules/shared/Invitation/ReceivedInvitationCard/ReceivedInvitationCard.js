@@ -10,7 +10,9 @@ import UserPhotoSection from '../components/UserPhotoSection';
 import { contextActionSize } from '../../constants';
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
-const { confirmInvitation, confirmInvitationA, rejectInvitation, rejectInvitationA } = invitationsActions;
+const { confirmInvitation, rejectInvitation } = invitationsActions;
+import { actions as chatActions } from "../../../chats/index";
+const { getChatDetail } = chatActions;
 
 import receivedIcon from '../../../../assets/icons/ReceivedIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
@@ -93,20 +95,20 @@ class ReceivedInvitationCard extends Component {
 
     onPressConfirm = () => {
         const { item } = this.props;
-        console.log(item);
         // Sacar esta linea cuando terminen US: Cuando se crea una invitación se le va a pasar un campo adicional chatId.
-        if (!item.chatId) this.props.confirmInvitationA(item.id, this.onError);
+        // if (!item.chatId) this.props.confirmInvitationA(item.id, this.onError);
         //
-        else this.props.confirmInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
+        // else 
+        this.props.confirmInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
     }
 
     onPressReject = () => {
         const { item } = this.props;
-        console.log(item);
         // Sacar esta linea cuando terminen US: Cuando se crea una invitación se le va a pasar un campo adicional chatId.
-        if (!item.chatId) this.props.rejectInvitationA(item.id, this.onError);
+        // if (!item.chatId) this.props.rejectInvitationA(item.id, this.onError);
         //
-        else this.props.rejectInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
+        // else 
+        this.props.rejectInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
     }
 
     onError(error) {
@@ -114,8 +116,10 @@ class ReceivedInvitationCard extends Component {
     }
 
     onPressChat = () => {
-        const { item } = this.props;
-        Actions.push("Chats");
+        const { item, getChatDetail } = this.props;
+        getChatDetail(item.chatId, ({ group_channel }) => {
+            Actions.push("ChatMessenger", { chat: group_channel });
+        }, this.onError);
     }
 
     render() {
@@ -195,7 +199,6 @@ function mapStateToProps(state, props) {
 
 export default connect(mapStateToProps, { 
     confirmInvitation, 
-    confirmInvitationA, 
     rejectInvitation,
-    rejectInvitationA 
+    getChatDetail,
 })(ReceivedInvitationCard);

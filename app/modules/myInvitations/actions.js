@@ -82,15 +82,15 @@ export function getUserById(userId, errorCB) {
     };
 }
 
-export function confirmInvitationA(invitationId, errorCB) {
-    return async (dispatch) => {
-        const userId = await AsyncStorage.getItem('user_id');
-        api.confirmInvitation({ invitationId, userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
-            else if (error) errorCB(error);
-        });
-    };
-}
+// export function confirmInvitationA(invitationId, errorCB) {
+//     return async (dispatch) => {
+//         const userId = await AsyncStorage.getItem('user_id');
+//         api.confirmInvitation({ invitationId, userId }, function (success, data, error) {
+//             if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
+//             else if (error) errorCB(error);
+//         });
+//     };
+// }
 
 export function confirmInvitation({ invitationId, chatId }, errorCB) {
     return async (dispatch) => {
@@ -106,17 +106,17 @@ export function confirmInvitation({ invitationId, chatId }, errorCB) {
     };
 }
 
-export function rejectInvitationA(invitationId, errorCB) {
-    return async (dispatch) => {
-        const userId = await AsyncStorage.getItem('user_id');
-        api.rejectInvitation({ invitationId, userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId, invitationId });
-            else if (error) errorCB(error);
-        });
-    };
-}
+// export function rejectInvitationA(invitationId, errorCB) {
+//     return async (dispatch) => {
+//         const userId = await AsyncStorage.getItem('user_id');
+//         api.rejectInvitation({ invitationId, userId }, function (success, data, error) {
+//             if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId, invitationId });
+//             else if (error) errorCB(error);
+//         });
+//     };
+// }
 
-export function rejectInvitation(invitationId, errorCB) {
+export function rejectInvitation({ invitationId, chatId }, errorCB) {
     return async (dispatch) => {
         const userId = await AsyncStorage.getItem('user_id');
         api.rejectInvitation({ invitationId, userId }, function (success, data, error) {

@@ -113,3 +113,10 @@ export const API_CHANGE_CHAT_NAME = () => {
         bodyExtra: {}
     }
 };
+export const API_GET_CHAT_DETAIL = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.get`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
 import { connect } from "react-redux";
+import { Actions } from "react-native-router-flux";
 
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import ContextAction from '../../ContextAction';
@@ -19,6 +20,8 @@ import publicEarth from '../../../../assets/icons/earthColor.png';
 
 import { actions as myInvitations } from "../../../myInvitations/index";
 const { getUserById } = myInvitations;
+import { actions as chatActions } from "../../../chats/index";
+const { getChatDetail } = chatActions;
 
 class SentInvitationCard extends Component {
 
@@ -113,9 +116,9 @@ class SentInvitationCard extends Component {
         )
     }
 
-    renderGoToChatButton = (item) => {
+    renderGoToChatButton = () => {
         return (
-            <TouchableWithoutFeedback onPress={() => { Alert.alert('Ir al chat'); }}>
+            <TouchableWithoutFeedback onPress={() => { this.onPressChat() }}>
                 <View style={styles.buttonViewChat}>
                     <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
                     <Image source={rightArrow} style={{ height: 10, width: 10 }} />
@@ -124,13 +127,23 @@ class SentInvitationCard extends Component {
         );
     }
 
+    onPressChat = () => {
+        const { item, getChatDetail } = this.props;
+        getChatDetail(item.chatId, ({ group_channel }) => {
+            Actions.push("ChatMessenger", { chat: group_channel });
+        }, this.onError);
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
+    }
+
     onPressViewEvent = (item) => {
         this.props.onPressViewEvent(item);
     };
 
     render() {
         const { item } = this.props;
-        // console.log(item);
 
         return (
             <View>
@@ -181,4 +194,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserById })(SentInvitationCard);
+export default connect(mapStateToProps, { getUserById, getChatDetail })(SentInvitationCard);

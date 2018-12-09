@@ -16,7 +16,7 @@ class Chats extends React.Component {
     componentDidMount() {
         const { getChatList } = this.props;
 		this.timer = setInterval(() => {
-            getChatList(this.onError);
+            getChatList(() => { }, this.onError);
         }, 1000);
     }
 

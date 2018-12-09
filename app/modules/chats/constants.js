@@ -8,6 +8,7 @@ import {
     API_ADD_USER_TO_CHAT as apiAddUserToChat,
     API_REMOVE_USER_FROM_CHAT as apiRemoveUserFromChat,
     API_CHANGE_CHAT_NAME as apiChangeChatName,
+    API_GET_CHAT_DETAIL as apiGetChatDetail,
 } from "../../config/constants";
 
 export const NAME = 'chat';
@@ -20,6 +21,7 @@ export const API_SEND_MESSAGE = apiSendMessage;
 export const API_ADD_USER_TO_CHAT = apiAddUserToChat;
 export const API_REMOVE_USER_FROM_CHAT = apiRemoveUserFromChat;
 export const API_CHANGE_CHAT_NAME = apiChangeChatName;
+export const API_GET_CHAT_DETAIL = apiGetChatDetail;
 
 export const URL_PROXY = 'https://cors-anywhere.herokuapp.com/';
 export const NO_IMG_CARD = 'https://www.kdeblog.com/wp-content/themes/gonzo/images/no-image-featured-image.png';

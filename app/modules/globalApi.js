@@ -71,7 +71,7 @@ export function put(uri, body, callback) {
                 return response.json();
             },
             err => {
-                console.log(err);
+                // console.log(err);
                 const error = new Error(err);
                 error.response = response;
                 throw error;

@@ -175,7 +175,7 @@ class RouterApp extends React.Component {
                                             source={focused ? chatFocused : chat} />
                                     )}
                                     onEnter={() => {
-                                        this.props.getChatList((error) => Alert.alert("Oops", error.message));
+                                        this.props.getChatList(() => { }, (error) => Alert.alert("Oops", error.message));
                                     }}
                                 />
                                 <Scene
@@ -265,9 +265,11 @@ class RouterApp extends React.Component {
                     <Scene
                         key={"ChatMessenger"}
                         onEnter={({ chat }) => {
-                            Actions.refresh({
-                                title: chat.name,
-                            });
+                            if (chat.name) {
+                                Actions.refresh({
+                                    title: chat.name
+                                });
+                            }
                         }}
                         component={ChatMessenger} />
                 </Modal>
