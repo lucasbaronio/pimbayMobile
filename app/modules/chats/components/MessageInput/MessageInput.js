@@ -32,7 +32,7 @@ class MessageInput extends React.Component {
                     <TextInput
                         placeholder="Escribe un mensaje"
                         placeholderTextColor={color.grey}
-                        autoCorrect={false}
+                        autoCorrect={true}
                         underlineColorAndroid={color.transparent}
                         style={styles.messageInput}
                         multiline = {true}

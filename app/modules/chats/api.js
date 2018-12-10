@@ -10,6 +10,7 @@ import {
     CHAT_GROUP_DEFAULT_NAME,
     API_GET_CHAT_DETAIL,
     API_SEND_NOTIFICATION,
+    API_CREATE_CHAT_CHAT_CAMP,
 } from './constants';
 import { get, post } from '../globalApi';
 
