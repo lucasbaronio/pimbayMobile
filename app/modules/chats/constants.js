@@ -11,6 +11,7 @@ import {
     API_GET_CHAT_DETAIL as apiGetChatDetail,
     API_SEND_NOTIFICATION as apiSendNotification,
     API_CREATE_CHAT_CHAT_CAMP as apiCreateChatChatCamp,
+    API_DELETE_CHAT as apiDeleteChat,
 } from "../../config/constants";
 
 export const NAME = 'chat';
@@ -26,6 +27,7 @@ export const API_CHANGE_CHAT_NAME = apiChangeChatName;
 export const API_GET_CHAT_DETAIL = apiGetChatDetail;
 export const API_SEND_NOTIFICATION = apiSendNotification;
 export const API_CREATE_CHAT_CHAT_CAMP = apiCreateChatChatCamp;
+export const API_DELETE_CHAT = apiDeleteChat;
 
 export const URL_PROXY = 'https://cors-anywhere.herokuapp.com/';
 export const NO_IMG_CARD = 'https://www.kdeblog.com/wp-content/themes/gonzo/images/no-image-featured-image.png';

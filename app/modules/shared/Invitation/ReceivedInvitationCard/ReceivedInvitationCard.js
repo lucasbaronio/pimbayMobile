@@ -21,6 +21,8 @@ import rightArrow from '../../../../assets/icons/right-arrow.png';
 import tick from '../../../../assets/icons/tick.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 
+import { isInvitationExpired } from '../../utils/date';
+
 class ReceivedInvitationCard extends Component {
 
     renderDetailsInformation = (item) => {
@@ -89,6 +91,39 @@ class ReceivedInvitationCard extends Component {
         }
     }
 
+    renderButtons = (item) => {
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
+                <TouchableOpacity onPress={this.onPressReject}>
+                    {
+                        !item.iAmOut &&
+                        <View style={styles.buttonViewReject}>
+                            <Image source={letterX} style={{ height: 10, width: 10 }} />
+                            <Text style={[styles.button, { marginLeft: 10 }]}>
+                                {item.iAmConfirmed ? "SALIR" : "RECHAZAR"}
+                            </Text>
+                        </View>
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity onPress={item.iAmConfirmed ? this.onPressChat : this.onPressConfirm}>
+                    <View style={styles.buttonViewConfirm}>
+                        <Text style={[styles.button, { marginRight: 10 }]}>
+                            {item.iAmConfirmed 
+                                ? "IR AL CHAT" 
+                                : item.iAmOut
+                                    ? "ME ARREPENTÍ, QUIERO IR!"
+                                    : "ESTOY"
+                            }
+                        </Text>
+                        <Image 
+                            source={item.iAmConfirmed ? rightArrow : tick} 
+                            style={{ height: 10, width: 10 }} />
+                    </View>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
     onPressViewEvent = (item) => {
         this.props.onPressViewEvent(item);
     }
@@ -132,34 +167,10 @@ class ReceivedInvitationCard extends Component {
                             </Text>
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
-                                <TouchableOpacity onPress={this.onPressReject}>
-                                    {
-                                        !item.iAmOut &&
-                                        <View style={styles.buttonViewReject}>
-                                            <Image source={letterX} style={{ height: 10, width: 10 }} />
-                                            <Text style={[styles.button, { marginLeft: 10 }]}>
-                                                {item.iAmConfirmed ? "SALIR" : "RECHAZAR"}
-                                            </Text>
-                                        </View>
-                                    }
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={item.iAmConfirmed ? this.onPressChat : this.onPressConfirm}>
-                                    <View style={styles.buttonViewConfirm}>
-                                        <Text style={[styles.button, { marginRight: 10 }]}>
-                                            {item.iAmConfirmed 
-                                                ? "IR AL CHAT" 
-                                                : item.iAmOut
-                                                    ? "ME ARREPENTÍ, QUIERO IR!"
-                                                    : "ESTOY"
-                                            }
-                                        </Text>
-                                        <Image 
-                                            source={item.iAmConfirmed ? rightArrow : tick} 
-                                            style={{ height: 10, width: 10 }} />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
+                            {
+                                !isInvitationExpired(item.realizationDate) &&
+                                this.renderButtons(item)
+                            }
                         </View>
                     </View>
                 </View>

@@ -6,7 +6,7 @@ import ChatItem from '../../components/ChatItem';
 import { connect } from 'react-redux';
 
 import { actions as chat } from "../../index";
-const { getChatList } = chat;
+const { getChatList, deleteChatList } = chat;
 
 import styles, { fontSize } from "./styles";
 import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
@@ -14,10 +14,15 @@ import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 class Chats extends React.Component {
 
     componentDidMount() {
-        const { getChatList } = this.props;
-		this.timer = setInterval(() => {
+        const { getChatList, deleteChatList } = this.props;
+        getChatList(() => { }, this.onError);
+		this.timerGet = setInterval(() => {
             getChatList(() => { }, this.onError);
         }, 1000);
+        deleteChatList(() => { }, this.onError);
+        this.timerDelete = setInterval(() => {
+            deleteChatList(() => { }, this.onError);
+        }, 60000);
     }
 
     onError(error) {
@@ -25,8 +30,10 @@ class Chats extends React.Component {
     }
     
     componentWillUnmount() {
-        clearInterval(this.timer);
-        this.timer = null;
+        clearInterval(this.timerGet);
+        this.timerGet = null;
+        clearInterval(this.timerDelete);
+        this.timerDelete = null;
     }
 
     renderSeparator = () => (
@@ -79,4 +86,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getChatList })(Chats);
+export default connect(mapStateToProps, { getChatList, deleteChatList })(Chats);

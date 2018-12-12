@@ -147,3 +147,10 @@ export const API_UPDATE_USER_CHAT_CAMP = (body) => {
         body
     }
 };
+export const API_DELETE_CHAT = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.delete`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};

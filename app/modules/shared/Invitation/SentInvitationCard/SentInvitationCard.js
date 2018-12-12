@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 
@@ -22,6 +22,8 @@ import { actions as myInvitations } from "../../../myInvitations/index";
 const { getUserById } = myInvitations;
 import { actions as chatActions } from "../../../chats/index";
 const { getChatDetail } = chatActions;
+
+import { isInvitationExpired } from '../../utils/date';
 
 class SentInvitationCard extends Component {
 
@@ -118,12 +120,23 @@ class SentInvitationCard extends Component {
 
     renderGoToChatButton = () => {
         return (
-            <TouchableWithoutFeedback onPress={() => { this.onPressChat() }}>
+            <TouchableOpacity onPress={() => { this.onPressChat() }}>
                 <View style={styles.buttonViewChat}>
                     <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
                     <Image source={rightArrow} style={{ height: 10, width: 10 }} />
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
+        );
+    }
+
+    renderFinalizeButton = () => {
+        return (
+            <TouchableOpacity onPress={() => { Alert.alert('Finalizar'); }}>
+                <View style={styles.buttonViewFinalize}>
+                    <Image source={letterX} style={{ height: 10, width: 10 }} />
+                    <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
+                </View>
+            </TouchableOpacity>
         );
     }
 
@@ -154,15 +167,13 @@ class SentInvitationCard extends Component {
                             {this.renderUserNameIfDirected(item)}
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
-                                <TouchableWithoutFeedback onPress={() => { Alert.alert('Finalizar'); }}>
-                                    <View style={styles.buttonViewFinalize}>
-                                        <Image source={letterX} style={{ height: 10, width: 10 }} />
-                                        <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                {this.renderGoToChatButton(item)}
-                            </View>
+                            {
+                                !isInvitationExpired(item.realizationDate) &&
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
+                                    {this.renderFinalizeButton(item)}
+                                    {this.renderGoToChatButton(item)}
+                                </View>
+                            }
                         </View>
                     </View>
                 </View>

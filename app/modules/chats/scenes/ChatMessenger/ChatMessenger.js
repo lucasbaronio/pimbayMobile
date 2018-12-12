@@ -21,7 +21,7 @@ class ChatMessenger extends React.Component {
 
     onSendMessage = (message) => {
         const { sendMessage, chat } = this.props;
-        if (message !== "") sendMessage({ message, chat });
+        if (message.trim() !== "") sendMessage({ message, chat });
     }
 
     render() {

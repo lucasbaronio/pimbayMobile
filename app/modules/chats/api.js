@@ -11,6 +11,7 @@ import {
     API_GET_CHAT_DETAIL,
     API_SEND_NOTIFICATION,
     API_CREATE_CHAT_CHAT_CAMP,
+    API_DELETE_CHAT,
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -70,7 +71,13 @@ export function getChatDetail({ chatId }, callback) {
     post(url, { id: chatId, ...bodyExtra }, header, callback);
 }
 
+export function deleteChat(chatId, callback) {
+    const { url, header, bodyExtra } = API_DELETE_CHAT();
+    post(url, { id: chatId, ...bodyExtra }, header, callback);
+}
+
 export function sendNotification({ chat, message, userToPushToken }, callback) {
     const { url, body } = API_SEND_NOTIFICATION({ chat, message, userToPushToken});
     post(url, body, {}, callback);
 }
+

@@ -1,6 +1,8 @@
 import * as t from './actionTypes';
 import * as api from './api';
+import * as apiMyInvitations from '../myInvitations/api';
 import { AsyncStorage } from "react-native";
+import { isInvitationExpired } from '../shared/utils/date';
 
 export function getUserById(userId, errorCB) {
     return (dispatch) => {
@@ -22,6 +24,35 @@ export function getChatList(successCB, errorCB) {
             } else if (error) errorCB(error);
         });
     };
+}
+
+export function deleteChatList(successCB, errorCB) {
+    return async (dispatch) => {
+        const userId = await AsyncStorage.getItem('user_id');
+        apiMyInvitations.getInvitationsIn({ userId }, function (success, invitsationsData, error) {
+            if (success) deleteChats(invitsationsData);
+            else if (error) errorCB(error);
+        });
+        apiMyInvitations.getInvitationsOut({ userId }, function (success, invitsationsData, error) {
+            if (success) deleteChats(invitsationsData);
+            else if (error) errorCB(error)
+        });
+    };
+}
+
+function deleteChats(invitations) {
+    for (var i = 0; i < invitations.length; i++) {
+        const { invitation } = invitations[i];
+        if (isInvitationExpired(invitation.realizationDate)) {
+            api.deleteChat(invitation.chatId, function (successDeleteChat, dataDeleteChat, errorDeleteChat) {
+                if (successDeleteChat) {
+                    // console.log(dataDeleteChat);
+                } else if (errorDeleteChat) {
+                    // console.log(errorDeleteChat);
+                }
+            });
+        }
+    }
 }
 
 export function getChatMessages(chatId, errorCB) {
@@ -71,7 +102,7 @@ export function sendMessage({ message, chat }, errorCB) {
 export function changeChatName(name, chatId, errorCB) {
     return (dispatch) => {
         api.changeChatName({ chatId, name }, function (success, data, error) {
-            if (success) console.log(data);
+            // if (success) console.log(data);
             if (error) errorCB(error);
         });
     };
