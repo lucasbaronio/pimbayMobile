@@ -30,6 +30,7 @@ import house from '../assets/icons/house.png';
 import Chats from '../modules/chats/scenes/Chats';
 import chatFocused from '../assets/icons/chat-black.png';
 import chat from '../assets/icons/chat.png';
+import ChatMessenger from '../modules/chats/scenes/ChatMessenger';
 
 // InvitationInOut
 import InvitationsIn from '../modules/myInvitations/scenes/InvitationsIn';
@@ -54,6 +55,10 @@ import { actions as createInvitation } from "../modules/timeline/index";
 const { cleanCreateInvitation } = createInvitation;
 import { actions as profileActions } from "../modules/profile/index";
 const { getUserData } = profileActions;
+import { actions as chatActions } from "../modules/chats/index";
+const { getChatList } = chatActions;
+import { actions as authActions } from "../modules/auth/index";
+const { userLoggedInToCache } = authActions;
 
 import { color, navTitleStyle, fontFamily, fontSize, statusBarHeight } from "../styles/theme";
 
@@ -70,6 +75,7 @@ class RouterApp extends React.Component {
 
     componentDidMount() {
         let _this = this;
+        this.props.userLoggedInToCache();
         store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
             _this.setState({ isReady: true, /*exist, */isLoggedIn});
         }));
@@ -168,6 +174,9 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? chatFocused : chat} />
                                     )}
+                                    onEnter={() => {
+                                        this.props.getChatList(() => { }, (error) => Alert.alert("Oops", error.message));
+                                    }}
                                 />
                                 <Scene
                                     key={"Profile"}
@@ -179,9 +188,6 @@ class RouterApp extends React.Component {
                                             source={focused ? userFocused : user} />
                                     )}
                                     onEnter={() => {
-                                        Actions.refresh({
-                                            isLoggedUser: true
-                                        });
                                         this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
                                     }}
                                     renderRightButton={<EditButton goToScreen='EditProfile' />}
@@ -200,9 +206,6 @@ class RouterApp extends React.Component {
                             backgroundColor: '#de5134'
                         }}
                         tabs
-                        // hideNavBar
-                        // hideTabBar
-                        // component={SearchTimeline} 
                         navBar={SearchTimeline}
                         showLabel={true}
                         lazy={true}
@@ -257,7 +260,18 @@ class RouterApp extends React.Component {
                     <Scene
                         key={"ProfileUser"}
                         title="Perfil"
+                        renderLeftButton={<CloseButton />}
                         component={Profile} />
+                    <Scene
+                        key={"ChatMessenger"}
+                        onEnter={({ chat }) => {
+                            if (chat.name) {
+                                Actions.refresh({
+                                    title: chat.name
+                                });
+                            }
+                        }}
+                        component={ChatMessenger} />
                 </Modal>
             </Router>
         )
@@ -270,4 +284,9 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserData, cleanCreateInvitation })(RouterApp);
+export default connect(mapStateToProps, { 
+    getUserData, 
+    getChatList, 
+    cleanCreateInvitation,
+    userLoggedInToCache
+})(RouterApp);

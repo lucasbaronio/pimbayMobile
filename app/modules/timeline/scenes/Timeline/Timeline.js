@@ -101,6 +101,11 @@ class Timeline extends React.Component {
                                 </View>
                             );
                         }}
+                        ListEmptyComponent={
+                            <View style={{alignItems: 'center', marginTop: 50}}>
+                                <Text>Actualmente nadie ha creado invitaciones abiertas</Text>
+                            </View>
+                        }
                         ListHeaderComponent={this.renderHeader}
                         refreshControl={
                             <RefreshControl

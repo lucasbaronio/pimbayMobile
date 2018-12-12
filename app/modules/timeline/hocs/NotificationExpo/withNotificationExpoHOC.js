@@ -7,12 +7,14 @@ import notificationRouter from './notificationRouter';
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
 const { getInvitationsInRefresh } = invitationsActions;
+import { actions as chatActions } from "../../../chats/index";
+const { getChatDetail } = chatActions;
 
 // This refers to the function defined earlier in this guide
 import registerForPushNotificationsAsync from './registerForPushNotificationsAsync';
 
 const withNotificationExpoHOC = WrappedComponent =>
-    connect(null, { getInvitationsInRefresh })(
+    connect(null, { getInvitationsInRefresh, getChatDetail })(
         class extends React.Component {
 
             componentDidMount() {

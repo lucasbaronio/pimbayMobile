@@ -21,12 +21,13 @@ export function get(uri, callback) {
         });
 }
 
-export function post(uri, body, callback) {
+export function post(uri, body, header, callback) {
     // console.log("post-body", body);
+    // console.log("post-header", header);
     return fetch(uri, {
         method: 'post',
         headers: {
-            // 'Accept': 'application/json',
+            ...header,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
@@ -37,7 +38,7 @@ export function post(uri, body, callback) {
                 return response.json();
             },
             err => {
-                console.log(err);
+                // console.log(err);
                 const error = new Error(err);
                 error.response = response;
                 throw error;
@@ -70,7 +71,7 @@ export function put(uri, body, callback) {
                 return response.json();
             },
             err => {
-                console.log(err);
+                // console.log(err);
                 const error = new Error(err);
                 error.response = response;
                 throw error;

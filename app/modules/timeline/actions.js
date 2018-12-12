@@ -1,5 +1,6 @@
 import * as t from './actionTypes';
 import * as api from './api';
+import * as apiChat from '../chats/api';
 import { AsyncStorage } from "react-native";
 
 // errorCB -> errorCallback
@@ -60,15 +61,24 @@ export function getContextActionList(errorCB) {
     };
 }
 
-export function createNewInvitation(invitation, successCB, errorCB) {
+export function createNewInvitation(invitation, avatar, successCB, errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_CREATE_INVITATION });
         const ownerId = await AsyncStorage.getItem('user_id');
-        api.createInvitation({ ...invitation, ownerId }, function (success, data, error) {
-            if (success) {
-                dispatch({ type: t.CREATE_INVITATION_SUCCESS });
-                successCB();
-            } else if (error) errorCB(error);
+        apiChat.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
+            console.log(dataCreateChat);
+            if (successCreateChat) {
+                api.createInvitation({ 
+                    ...invitation, 
+                    ownerId, 
+                    chatId: dataCreateChat.group_channel.id
+                }, function (successCreateInvitation, data, errorCreateInvitation) {
+                    if (successCreateInvitation) {
+                        dispatch({ type: t.CREATE_INVITATION_SUCCESS });
+                        successCB();
+                    } else if (errorCreateInvitation) errorCB(errorCreateInvitation);
+                });
+            } else if (errorCreateChat) errorCB(errorCreateChat);
         });
     };
 }

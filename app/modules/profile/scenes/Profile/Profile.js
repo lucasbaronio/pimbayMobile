@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { Avatar, Button as ButtonElements } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { actions as profileActions } from "../../index";
-const { addFavouriteUser } = profileActions;
+const { addFavouriteUser, signOut } = profileActions;
 
 import styles, { color, fontSize } from "./styles"
 
@@ -21,8 +22,8 @@ class Profile extends React.Component {
     }
 
     renderFollowUserButton() {
-        const { isLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
-        if (!isLoggedUser) {
+        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
+        if (isNotLoggedUser) {
             if (isLoadingAddFavouriteUser) {
                 return (
                     // TODO: Agregar un box de loading cuando esta esperando por el req de add/remove fav user
@@ -55,6 +56,14 @@ class Profile extends React.Component {
 
     onError(error) {
         Alert.alert("Oops", error.message);
+    }
+
+    onSignOut = () => {
+        this.props.signOut(this.onSuccess, this.onError)
+    }
+
+    onSuccess = () => {
+        Actions.reset('root');
     }
 
     render() {
@@ -103,6 +112,14 @@ class Profile extends React.Component {
                             {this.renderInterests(interests)}
                         </View>
                     </View>
+                    <ButtonElements
+                        raised
+                        title="CERRAR SESIÓN"
+                        borderRadius={4}
+                        // containerViewStyle={styles.signOutContainer}
+                        // buttonStyle={styles.signOutButton}
+                        // textStyle={styles.signOutText}
+                        onPress={this.onSignOut} />
                 </View>
             );
         }
@@ -110,18 +127,18 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state, props) {
-    const { isLoggedUser } = props;
+    const { isNotLoggedUser } = props;
     const { isLoadingUser, loggedUser, userToShow, isLoadingAddFavouriteUser } = state.profileReducer;
     return {
         isLoadingUser,
-        user: isLoggedUser ? loggedUser : userToShow,
+        user: isNotLoggedUser ? userToShow : loggedUser,
         isLoadingAddFavouriteUser,
-        iAmFollowing: isLoggedUser 
-                        ? false 
-                        :  loggedUser &&
-                        loggedUser.favoriteUsers &&
-                        loggedUser.favoriteUsers.indexOf(userToShow.id) > -1
+        iAmFollowing: isNotLoggedUser 
+                        ? loggedUser &&
+                            loggedUser.favoriteUsers &&
+                            loggedUser.favoriteUsers.indexOf(userToShow.id) > -1 
+                        : false
     }
 }
 
-export default connect(mapStateToProps, { addFavouriteUser })(Profile);
+export default connect(mapStateToProps, { addFavouriteUser, signOut })(Profile);

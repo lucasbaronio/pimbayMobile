@@ -2,6 +2,8 @@ import * as t from './actionTypes';
 import * as api from './api';
 import { AsyncStorage } from "react-native";
 
+import { signOut } from '../auth/actions';
+
 // export function getLoggedUserData(errorCB) {
 //     return async (dispatch) => {
 //         dispatch({ type: t.LOADING_USER });
@@ -63,3 +65,5 @@ export function addFavouriteUser(mailToAdd, errorCB) {
         });
     };
 }
+
+export { signOut };

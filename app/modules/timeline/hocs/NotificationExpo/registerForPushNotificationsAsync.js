@@ -1,6 +1,6 @@
 import { Permissions, Notifications } from 'expo';
 import { AsyncStorage } from "react-native"
-import { API_PUSH_NOTIFICATION } from '../../../../config/constants';
+import { API_PUSH_NOTIFICATION, API_UPDATE_USER_CHAT_CAMP } from '../../../../config/constants';
 import { post } from '../../../globalApi';
 
 export default async function registerForPushNotificationsAsync() {
@@ -32,6 +32,13 @@ export default async function registerForPushNotificationsAsync() {
         post(API_PUSH_NOTIFICATION, {
             expoToken: token,
             id,
+        }, {}, null);
+        const { url, header, body } = API_UPDATE_USER_CHAT_CAMP({ 
+            id,
+            metadata: {
+                expoToken: token
+            },
         });
+        post(url, body, header, null);
     }
 }

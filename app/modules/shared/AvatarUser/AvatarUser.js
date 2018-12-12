@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Avatar } from 'react-native-elements';
 
-import styles from "./styles";
+import styles, { fontSize } from "./styles";
 import { Ionicons } from '@expo/vector-icons';
 
 class AvatarUser extends React.PureComponent {
@@ -27,7 +27,7 @@ class AvatarUser extends React.PureComponent {
         }
     }
 
-    renderAvatar = ({ item, initials }) => {
+    renderAvatar = ({ item, initials, small }) => {
         if (item.avatar && item.avatar.startsWith('../')) {
             return (
                 <View style={styles.inviteButton}>
@@ -40,7 +40,8 @@ class AvatarUser extends React.PureComponent {
         } else {
             return (
                 <Avatar
-                    medium
+                    small={small ? true : false}
+                    medium={small ? false : true}
                     rounded
                     title={(!item.avatar) ? initials : null}
                     source={(item.avatar) ? { uri: item.avatar } : null}
@@ -51,22 +52,26 @@ class AvatarUser extends React.PureComponent {
     }
 
     render() {
-        const { item } = this.props;
+        const { item, small } = this.props;
         var initials = item.fullName.match(/\b\w/g) || [];
         initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 
         return (
             <TouchableOpacity onPress={this.onPress}>
-                <View style={styles.container}>
-                    <View style={styles.avatar}>
-                        {this.renderAvatar({ item, initials })}
+                <View style={[styles.container, !small && { margin: 5 }]}>
+                    <View style={!small && styles.avatar}>
+                        {this.renderAvatar({ item, initials, small })}
                         {
                             !!this.state.selectedToggle &&
                             <Ionicons name="ios-checkmark-circle" size={22} color="green" style={styles.icon} />
                         }
                     </View>
                     <View>
-                        <Text style={styles.text}>
+                        <Text style={[
+                            styles.text, 
+                            !!small && { fontSize: fontSize.text5 },
+                            !small && { marginBottom: 5 },
+                        ]}>
                             {item.userName}
                         </Text>
                     </View>

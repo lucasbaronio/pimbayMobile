@@ -5,22 +5,12 @@ import { Actions } from 'react-native-router-flux';
 import AvatarUser from '../../../../../shared/AvatarUser';
 import GridView from 'react-native-super-grid';
 
-// import { actions as invitationsActions } from "../../index";
-// const { getInvitationsIn, getInvitationsInRefresh } = invitationsActions;
 import { actions as profileActions } from "../../../../../profile/index";
 const { getUserData } = profileActions;
 
 import styles, { windowWidth } from "./styles";
 
 class SearchTimelineUser extends Component {
-
-    // componentDidMount() {
-    //     this.props.getInvitationsIn(this.onError);
-    // }
-
-    // onError(error) {
-    //     Alert.alert("Oops", error.message);
-    // }
 
     renderItem = (item) => {
         return (
@@ -37,7 +27,7 @@ class SearchTimelineUser extends Component {
     }
 
     onSuccess(isLoggedUser) {
-        Actions.push("ProfileUser", { isLoggedUser });
+        Actions.push("ProfileUser", { isNotLoggedUser: !isLoggedUser });
     }
 
     onError(error) {

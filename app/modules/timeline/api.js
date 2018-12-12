@@ -7,7 +7,8 @@ import {
     API_GET_CONTEXT_ACTION_BY_ID,
     API_GET_ALL_USERS,
     API_GET_USER_BY_ID,
-    API_SEARCH_USERS
+    API_SEARCH_USERS,
+    API_CREATE_CHAT_CHAT_CAMP
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -32,7 +33,7 @@ export function getContextActionById(contextActionId, callback) {
 }
 
 export function createInvitation(invitation, callback) {
-    post(API_INVITATION, invitation, callback);
+    post(API_INVITATION, invitation, {}, callback);
 }
 
 export function getFavoriteUsers(callback) {
