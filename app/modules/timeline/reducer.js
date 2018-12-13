@@ -5,6 +5,7 @@ let initialState = {
     isLoadingHeader: false,
     isLoadingMore: false,
     invitations: [],
+    invitationsFromFavouriteUsers: [],
     isLoadingEvents: false,
     isLoadingMoreEvents: false,
     events: [],
@@ -42,8 +43,9 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_LIST_AVAILABLE: {
-            let { data, start } = action;
+            let { data, start, user } = action;
             let invitations = [],
+                invitationsFromFavouriteUsers = [],
                 users = [],
                 eventsFromInvitations = [],
                 contextActionsFromInvitations = [];
@@ -52,24 +54,33 @@ const timelineReducer = (state = initialState, action) => {
                 eventsFromInvitations = state.eventsFromInvitations;
                 contextActionsFromInvitations = state.contextActionsFromInvitations;
                 invitations = state.invitations;
+                invitationsFromFavouriteUsers = state.invitationsFromFavouriteUsers;
             }
             let invitationsData = [], 
+                invitationsFromFavouriteUsersData = [],
                 contextActionsData = [],
                 usersData = [],
                 eventData = [];
+            const { favoriteUsers } = user;
             for (var i = 0; i < data.length; i++) {
                 const { invitation, context_action, user, event } = data[i];
                 if(context_action) contextActionsData.push(context_action);
                 if(event) eventData.push(event);
                 usersData.push(user);
                 invitationsData.push(invitation);
+                if (favoriteUsers.indexOf(invitation.ownerId) > -1)
+                    invitationsFromFavouriteUsersData.push(invitation);
             }
             eventsFromInvitations = eventsFromInvitations.concat(eventData);
-            contextActionsFromInvitations = contextActionsFromInvitations.concat(contextActionsData);
+            contextActionsFromInvitations = contextActionsFromInvitations
+                                                .concat(contextActionsData);
             users = users.concat(usersData);
             invitations = invitations.concat(invitationsData);
+            invitationsFromFavouriteUsers = invitationsFromFavouriteUsers
+                                                .concat(invitationsFromFavouriteUsersData);
             return {
                 ...state, invitations,
+                invitationsFromFavouriteUsers,
                 users, eventsFromInvitations,
                 contextActionsFromInvitations,
                 isLoading: false,
@@ -78,24 +89,30 @@ const timelineReducer = (state = initialState, action) => {
         }
 
         case t.INVITATION_LIST_REFRESHED: {
-            let { data } = action;
+            let { data, user } = action;
             let invitationsData = [],
+                invitationsFromFavouriteUsersData = [],
                 contextActionsData = [],
                 usersData = [],
                 eventData = [];
+            const { favoriteUsers } = user;
             for (var i = 0; i < data.length; i++) {
                 const { invitation, context_action, user, event } = data[i];
                 if(context_action) contextActionsData.push(context_action);
                 if(event) eventData.push(event);
                 usersData.push(user);
                 invitationsData.push(invitation);
+                if (favoriteUsers.indexOf(invitation.ownerId) > -1)
+                    invitationsFromFavouriteUsersData.push(invitation);
             }
             let eventsFromInvitations = [].concat(eventData);
             let contextActionsFromInvitations = [].concat(contextActionsData);
             let users = [].concat(usersData);
             let invitations = [].concat(invitationsData);
+            let invitationsFromFavouriteUsers = [].concat(invitationsFromFavouriteUsersData);
             return {
                 ...state, invitations,
+                invitationsFromFavouriteUsers,
                 users, eventsFromInvitations,
                 contextActionsFromInvitations,
                 isLoadingHeader: false,

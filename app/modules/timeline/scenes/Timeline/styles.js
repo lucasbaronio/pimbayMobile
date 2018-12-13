@@ -36,6 +36,20 @@ const styles = StyleSheet.create({
         fontSize: fontSize.text1,
         marginLeft: 10,
         marginBottom: 10
+    },
+    badgeView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    badgeContainer: {
+        marginHorizontal: 5,
+        marginVertical: 5
+    },
+    badgeText: {
+        fontSize: fontSize.text4,
+        fontFamily: fontFamily.bold
     }
 });
 

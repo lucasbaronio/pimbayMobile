@@ -114,13 +114,14 @@ export function signInWithFacebook(facebookToken, successCB, errorCB) {
     };
 }
 
-export function userLoggedInToCache() {
+export function userLoggedInToCache(successCB) {
     return async (dispatch) => {
         const userId = await AsyncStorage.getItem('user_id');
         if (userId) {
             api.getUserById(userId, function (success, data, error) {
                 if (success) dispatch({ type: t.COMPLETE_USER_INFO, data });
                 else if (error) dispatch({ type: t.ONLY_USER_ID_INFO, data: userId });
+                successCB();
             });
         }
     };

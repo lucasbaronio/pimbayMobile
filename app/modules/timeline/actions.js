@@ -17,23 +17,25 @@ import { AsyncStorage } from "react-native";
 // }
 
 export function getInvitations(start, errorCB) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { user } = getState().authReducer;
         (start === 0)
             ? dispatch({ type: t.LOADING_INVITATION_LIST })
             : dispatch({ type: t.LOADING_FOOTER_INVITATION_LIST })
         api.getInvitations(start, function (success, data, error) {
             if (success) {
-                dispatch({ type: t.INVITATION_LIST_AVAILABLE, data, start });
+                dispatch({ type: t.INVITATION_LIST_AVAILABLE, data, start, user });
             } else if (error) errorCB(error)
         });
     };
 }
 
 export function getInvitationsRefresh(errorCB) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { user } = getState().authReducer;
         dispatch({ type: t.LOADING_HEADER });
         api.getInvitations(0, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_LIST_REFRESHED, data });
+            if (success) dispatch({ type: t.INVITATION_LIST_REFRESHED, data, user });
             else if (error) errorCB(error)
         });
     };

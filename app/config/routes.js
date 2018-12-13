@@ -75,7 +75,7 @@ class RouterApp extends React.Component {
 
     componentDidMount() {
         let _this = this;
-        this.props.userLoggedInToCache();
+        this.props.userLoggedInToCache(() => {});
         store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
             _this.setState({ isReady: true, /*exist, */isLoggedIn});
         }));
