@@ -153,3 +153,13 @@ export function getEventById(eventId, errorCB) {
         });
     };
 }
+
+export function searchEvents(value, errorCB) {
+    return (dispatch) => {
+        dispatch({ type: t.LOADING_SEARCH_EVENTS });
+        api.searchEvents(value, function (success, data, error) {
+            if (success) dispatch({ type: t.SEARCHED_EVENTS, data: { ...data, emptySearchInput: value === "" } });
+            else if (error) errorCB(error);
+        });
+    };
+}

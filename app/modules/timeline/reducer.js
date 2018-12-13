@@ -20,6 +20,8 @@ let initialState = {
     contextActionsFromInvitations: [],
     isLoadingSearchedUsers: false,
     searchedUsers: [],
+    isLoadingSearchedEvents: false,
+    searchedEvents: [],
     emptySearchInput: true
 };
 
@@ -269,6 +271,23 @@ const timelineReducer = (state = initialState, action) => {
 
         case t.LOADING_SEARCHED_USERS: {
             return { ...state, isLoadingSearchedUsers: true }
+        }
+
+        case t.SEARCHED_EVENTS: {
+            let { data } = action;
+            let searchedEvents = [];
+
+            searchedEvents = searchedEvents.concat(data.matched_events);
+            return {
+                ...state, 
+                searchedEvents,
+                emptySearchInput: data.emptySearchInput,
+                isLoadingSearchedEvents: false,
+            };
+        }
+
+        case t.LOADING_SEARCH_EVENTS: {
+            return { ...state, isLoadingSearchedEvents: true }
         }
 
         default:

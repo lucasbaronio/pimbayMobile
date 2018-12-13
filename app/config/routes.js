@@ -224,7 +224,7 @@ class RouterApp extends React.Component {
                             hideNavBar
                             key={"SearchTimelineEvent"}
                             title="Eventos"
-                            component={SearchTimelineEvent}
+                            component={withActionSheetInvitationHOC(SearchTimelineEvent)}
                         />
 
                     </Scene>

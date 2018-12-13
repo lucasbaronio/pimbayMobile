@@ -1,31 +1,27 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, SafeAreaView } from 'react-native';
 import { Header } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
 
-import { actions as home } from "../../index"
-const { searchUsersByUserNameOrFullName } = home;
+import { actions as timeline } from "../../index"
+const { searchUsersByUserNameOrFullName, searchEvents } = timeline;
 
 import styles, { colorBackgroundHeader } from "./styles"
 import SearchBarApp from '../../../shared/SearchBarApp/SearchBarApp';
 
 class SearchTimeline extends React.Component {
 
-    // componentDidMount() {
-    //     this.props.getEventsOrInvitations((error) => alert(error.message))
-    // }
-
     onChangeText = (value) => {
-        const { searchUsersByUserNameOrFullName } = this.props;
+        const { searchUsersByUserNameOrFullName, searchEvents } = this.props;
         switch (Actions.currentScene) {
             case '_SearchTimelineUser': {
                 searchUsersByUserNameOrFullName(value, this.onError);
                 break;
             }
             case '_SearchTimelineEvent': {
-
+                searchEvents(value, this.onError);
                 break;
             }
         }
@@ -60,15 +56,17 @@ class SearchTimeline extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Header
-                    leftComponent={{ text: '' }}
-                    centerComponent={this.renderSearchBar()}
-                    rightComponent={this.renderCancelButton()}
-                    // innerContainerStyles={styles.header}
-                    backgroundColor={colorBackgroundHeader}
-                />
-            </View>
+            <SafeAreaView style={{backgroundColor: '#fff'}}>
+                <View style={styles.container}>
+                    <Header
+                        leftComponent={{ text: '' }}
+                        centerComponent={this.renderSearchBar()}
+                        rightComponent={this.renderCancelButton()}
+                        // innerContainerStyles={styles.header}
+                        backgroundColor={colorBackgroundHeader}
+                    />
+                </View>
+            </SafeAreaView>
         );
     }
 }
@@ -81,4 +79,4 @@ class SearchTimeline extends React.Component {
 // }
 
 // export default connect(mapStateToProps, { getEventsOrInvitations })(SearchTimeline);
-export default connect(null, { searchUsersByUserNameOrFullName })(SearchTimeline);
+export default connect(null, { searchUsersByUserNameOrFullName, searchEvents })(SearchTimeline);

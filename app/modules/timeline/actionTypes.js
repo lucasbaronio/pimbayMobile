@@ -26,4 +26,7 @@ export const REMOVE_USER_FROM_INVITED_LIST = 'createInvitation/REMOVE_USER_FROM_
 export const SEARCHED_USERS = 'searchTimeline/SEARCHED_USERS';
 export const LOADING_SEARCHED_USERS = 'searchTimeline/LOADING_SEARCHED_USERS';
 
+export const SEARCHED_EVENTS = 'searchTimeline/SEARCHED_EVENTS';
+export const LOADING_SEARCH_EVENTS = 'searchTimeline/LOADING_SEARCH_EVENTS';
+
 // export const LOGGED_OUT = logged_out;

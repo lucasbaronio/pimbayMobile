@@ -13,6 +13,7 @@ export const API_EVENT_SIZE = 10;
 export const API_EVENT = `${API}events`;
 export const API_EVENTS_PAGINATION = ({ start }) => `${API_EVENT}/pagination?start=${start}&size=${API_EVENT_SIZE}`;
 export const API_EVENT_BY_ID = ({ eventId }) => `${API_EVENT}/${eventId}`;
+export const API_SEARCH_EVENTS = ({ value }) => `${API_EVENT}_search?search=${value}`;
 
 export const API_INVITATION_SIZE = 10;
 export const API_INVITATION = `${API}invitations`;

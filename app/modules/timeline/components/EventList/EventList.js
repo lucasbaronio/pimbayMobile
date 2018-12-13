@@ -33,6 +33,7 @@ class EventList extends React.Component {
         return (
             <EventCardMedium
                 item={item}
+                search={false}
                 onPressItem={this.onPressItem}
                 onPressViewEvent={this.onPressViewEvent} />
         )
