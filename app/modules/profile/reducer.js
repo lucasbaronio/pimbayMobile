@@ -6,7 +6,7 @@ let initialState = {
     userToShow: null,
     loggedUser: null,
     isLoadingUser: true,
-    isLoadingAddFavouriteUser: false,
+    isLoadingAddFavouriteUser: false
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -40,6 +40,15 @@ const profileReducer = (state = initialState, action) => {
         }
 
         case t.ADD_FAVOURITE_USER: {
+            let { data } = action;
+            return { ...state, loggedUser: data, isLoadingAddFavouriteUser: false }
+        }
+
+        case t.LOADING_DELETE_FAVOURITE_USER: {
+            return { ...state, isLoadingAddFavouriteUser: true }
+        }
+
+        case t.REMOVE_FAVOURITE_USER: {
             let { data } = action;
             return { ...state, loggedUser: data, isLoadingAddFavouriteUser: false }
         }
