@@ -33,6 +33,7 @@ export const API_USER_BY_FIELD = ({ field, value }) => `${API_USER}/field?${fiel
 export const API_UPDATE_USER = ({ userId }) => `${API_USER}/${userId}`;
 export const API_SEARCH_USERS = ({ value }) => `${API_USER}?search=${value}`;
 export const API_ADD_FAVOURITE_USER = ({ myMail, mailToAdd }) => `${API_USER}/${myMail}/favorite?email_to_add=${mailToAdd}`;
+export const API_REMOVE_FAVOURITE_USER = ({ myMail, mailToRemove }) => `${API_USER}/${myMail}/favorite?email_to_delete=${mailToRemove}`;
 
 export const API_PUSH_NOTIFICATION = `${API}users/token`;
 

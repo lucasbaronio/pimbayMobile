@@ -86,3 +86,30 @@ export function put(uri, body, callback) {
             callback && callback(false, null, error)
         });
 }
+
+export function deleteMethod(uri, body, callback) {
+    return fetch(uri, {
+        method: 'delete',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    })
+        .then(
+            response => {
+                return response.json();
+            },
+            err => {
+                const error = new Error(err);
+                error.response = response;
+                throw error;
+            }
+        )
+        .then(data => {
+            callback && callback(true, data, null)
+        })
+        .catch((error) => {
+            callback && callback(false, null, error)
+        });
+}
