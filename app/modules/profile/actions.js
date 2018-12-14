@@ -66,4 +66,15 @@ export function addFavouriteUser(mailToAdd, errorCB) {
     };
 }
 
+export function removeFavouriteUser(mailToRemove, errorCB) {
+    return async (dispatch) => {
+        dispatch({ type: t.LOADING_ADD_FAVOURITE_USER });
+        const myMail = await AsyncStorage.getItem('user_mail');
+        api.removeFavouriteUser({ myMail, mailToRemove }, null, function (success, data, error) {
+            if (success) dispatch({ type: t.REMOVE_FAVOURITE_USER, data });
+            else if (error) errorCB(error);
+        });
+    };
+}
+
 export { signOut };

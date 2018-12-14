@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { actions as profileActions } from "../../index";
-const { addFavouriteUser, signOut } = profileActions;
+const { addFavouriteUser, removeFavouriteUser, signOut } = profileActions;
 
 import styles, { color, fontSize } from "./styles"
 
@@ -22,7 +22,7 @@ class Profile extends React.Component {
     }
 
     renderFollowUserButton() {
-        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
+        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser, isLoadingRemoveFavouriteUser } = this.props;
         if (isNotLoggedUser) {
             if (isLoadingAddFavouriteUser) {
                 return (
@@ -49,9 +49,9 @@ class Profile extends React.Component {
     }
 
     onRemoveFavouriteUser = () => {
-        // const { removeFavouriteUser, user } = this.props;
-        // removeFavouriteUser(user.mail, this.onError);
-        Alert.alert("Oops", "Aún no es posible eliminar un favorito.");
+        const { removeFavouriteUser, user } = this.props;
+        removeFavouriteUser(user.mail, this.onError);
+        //Alert.alert("Oops", "Aún no es posible eliminar un favorito.");
     }
 
     onError(error) {
@@ -141,4 +141,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { addFavouriteUser, signOut })(Profile);
+export default connect(mapStateToProps, { addFavouriteUser, removeFavouriteUser, signOut })(Profile);
