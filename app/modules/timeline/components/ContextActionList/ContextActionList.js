@@ -13,11 +13,15 @@ class ContextActionList extends React.Component {
 
     state = {
         selected: new Map(),
-        itemSelected: {}
+        itemSelected: {},
+        itemSelectedIndex: 0
     };
 
     componentWillMount() {
+        console.log(this.props);
         const { selectedItem } = this.props;
+        selectedIndex = this.props.contextActions.indexOf(selectedItem);
+        this.setState({itemSelectedIndex: selectedIndex});
         selectedItem && this.onPressItem(selectedItem);
     }
 
@@ -55,6 +59,8 @@ class ContextActionList extends React.Component {
                     <Text> Sugerido para ti </Text>
                 </Text>
                 <FlatList
+                    ref={(ref) => { this.flatListRef = ref; }}
+                    initialScrollIndex={this.state.itemSelectedIndex}
                     horizontal
                     data={this.props.contextActions}
                     extraData={this.state}
