@@ -23,6 +23,12 @@ const styles = StyleSheet.create({
     saveButtonText: {
         fontSize: fontSize.text2,
         fontFamily: fontFamily.medium
+    },
+    labelStyle : {
+        color: color.black
+    },
+    formInputStyle : {
+        color: color.black
     }
 });
 

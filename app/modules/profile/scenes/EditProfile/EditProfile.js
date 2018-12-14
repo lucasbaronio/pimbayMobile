@@ -64,8 +64,8 @@ class EditProfile extends React.Component {
                     source={(avatar) ? { uri: avatar } : null}
                     containerStyle={{ marginTop: 20, alignSelf: "center" }} />
 
-                <FormLabel>Nombre</FormLabel>
-                <FormInput onChangeText={(text) => { this.setState({ fullName: text }) }}>{fullName}</FormInput>
+                <FormLabel labelStyle={styles.labelStyle}>Nombre</FormLabel>
+                <FormInput inputStyle={styles.formInputStyle} onChangeText={(text) => { this.setState({ fullName: text }) }}>{fullName}</FormInput>
                 <FormValidationMessage>
                     {
                         !!this.state.nameError
@@ -74,10 +74,10 @@ class EditProfile extends React.Component {
                     }
                 </FormValidationMessage>
 
-                <FormLabel>Biografía</FormLabel>
-                <FormInput onChangeText={(text) => { this.setState({ biography: text }) }}>{biography}</FormInput>
+                <FormLabel labelStyle={styles.labelStyle}>Biografía</FormLabel>
+                <FormInput inputStyle={styles.formInputStyle} onChangeText={(text) => { this.setState({ biography: text }) }}>{biography}</FormInput>
 
-                <FormLabel>Fecha de nacimiento</FormLabel>
+                <FormLabel labelStyle={styles.labelStyle}>Fecha de nacimiento</FormLabel>
                 <DatePicker
                     style={{ width: 200 }}
                     date={this.state.birthdate}
