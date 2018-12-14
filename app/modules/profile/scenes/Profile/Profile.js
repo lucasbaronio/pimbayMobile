@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
 import { Avatar, Button as ButtonElements } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -79,7 +79,7 @@ class Profile extends React.Component {
             initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 
             return (
-                <View style={styles.container}>
+                <SafeAreaView style={styles.container}>
                     <Avatar
                         xlarge
                         rounded
@@ -120,7 +120,7 @@ class Profile extends React.Component {
                         // buttonStyle={styles.signOutButton}
                         // textStyle={styles.signOutText}
                         onPress={this.onSignOut} />
-                </View>
+                </SafeAreaView>
             );
         }
     }

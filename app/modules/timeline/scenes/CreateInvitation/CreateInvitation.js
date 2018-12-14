@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Alert, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { 
+    ScrollView, View, Alert, TextInput, 
+    ActivityIndicator, KeyboardAvoidingView, 
+    Platform, SafeAreaView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ContextActionList from '../../components/ContextActionList';
@@ -15,6 +18,7 @@ import { pimbayType, invitationType as invType, contextActionSize } from '../../
 import { connect } from 'react-redux';
 import styles from './styles';
 import { Button } from 'react-native-elements';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 import { actions as createInvitation } from "../../index";
 const { createNewInvitation, cleanCreateInvitation } = createInvitation;
@@ -196,57 +200,57 @@ class CreateInvitation extends Component {
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={(Platform.OS === 'ios') ? "padding" : null}
-                keyboardVerticalOffset={Platform.select({ ios: 70, android: 500 })}
+                keyboardVerticalOffset={Platform.select({ ios: 63 + getBottomSpace(), android: 500 })}
                 enabled >
-                <ScrollView style={styles.container}>
-                    
-
-                        {this.renderType()}
-                        {
-                            !!(type !== pimbayType.SIMPLE) &&
-                            this.renderTextBox()
-                        }
-                        <RealizationDatePicker
-                            eventDate={
-                                this.props.type === pimbayType.EVENT
-                                    ? this.state.eventInvitation.realizationDate
-                                    : null
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ScrollView style={styles.container}>
+                            {this.renderType()}
+                            {
+                                !!(type !== pimbayType.SIMPLE) &&
+                                this.renderTextBox()
                             }
-                            onChangeRealizationDate={this.onChangeRealizationDate} />
-                        <DatePicker
-                            eventDate={
-                                this.props.type === pimbayType.EVENT
-                                    ? this.state.eventInvitation.realizationDate
-                                    : null
+                            <RealizationDatePicker
+                                eventDate={
+                                    this.props.type === pimbayType.EVENT
+                                        ? this.state.eventInvitation.realizationDate
+                                        : null
+                                }
+                                onChangeRealizationDate={this.onChangeRealizationDate} />
+                            <DatePicker
+                                eventDate={
+                                    this.props.type === pimbayType.EVENT
+                                        ? this.state.eventInvitation.realizationDate
+                                        : null
+                                }
+                                onChangeDueDate={this.onChangeDueDate} />
+                            {
+                                !!(this.props.invitationType === invType.OPEN) &&
+                                <Target onChangeTargetUsers={this.onChangeTargetUsers} />
                             }
-                            onChangeDueDate={this.onChangeDueDate} />
-                        {
-                            !!(this.props.invitationType === invType.OPEN) &&
-                            <Target onChangeTargetUsers={this.onChangeTargetUsers} />
-                        }
-                        <Quota
-                            onChangeQuota={this.onChangeQuota} />
-                        {
-                            !!(this.props.invitationType !== invType.OPEN) &&
-                            <InvitedUsers
-                                onChangeInvitedUserList={this.onChangeInvitedUserList} />
-                        }
-                    
-                </ScrollView>
-                {
-                    !!isLoading
-                        ? <View style={styles.loadingCreateInvitation}>
-                            <ActivityIndicator color="white" />
-                        </View>
-                        : <Button
-                            raised
-                            title="Crear Invitación"
-                            borderRadius={4}
-                            containerViewStyle={styles.createInvitationContainer}
-                            buttonStyle={styles.createInvitationButton}
-                            textStyle={styles.createInvitationText}
-                            onPress={this.createInvitation} />
-                }
+                            <Quota
+                                onChangeQuota={this.onChangeQuota} />
+                            {
+                                !!(this.props.invitationType !== invType.OPEN) &&
+                                <InvitedUsers
+                                    onChangeInvitedUserList={this.onChangeInvitedUserList} />
+                            }
+                        
+                    </ScrollView>
+                    {
+                        !!isLoading
+                            ? <View style={styles.loadingCreateInvitation}>
+                                <ActivityIndicator color="white" />
+                            </View>
+                            : <Button
+                                raised
+                                title="Crear Invitación"
+                                borderRadius={4}
+                                containerViewStyle={styles.createInvitationContainer}
+                                buttonStyle={styles.createInvitationButton}
+                                textStyle={styles.createInvitationText}
+                                onPress={this.createInvitation} />
+                    }
+                </SafeAreaView>
             </KeyboardAvoidingView>
         );
     }

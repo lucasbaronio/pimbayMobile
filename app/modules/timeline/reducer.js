@@ -63,6 +63,7 @@ const timelineReducer = (state = initialState, action) => {
                 contextActionsData = [],
                 usersData = [],
                 eventData = [];
+            console.log("user", user);
             const { favoriteUsers } = user;
             for (var i = 0; i < data.length; i++) {
                 const { invitation, context_action, user, event } = data[i];
@@ -70,7 +71,7 @@ const timelineReducer = (state = initialState, action) => {
                 if(event) eventData.push(event);
                 usersData.push(user);
                 invitationsData.push(invitation);
-                if (favoriteUsers.indexOf(invitation.ownerId) > -1)
+                if (favoriteUsers && favoriteUsers.indexOf(invitation.ownerId) > -1)
                     invitationsFromFavouriteUsersData.push(invitation);
             }
             eventsFromInvitations = eventsFromInvitations.concat(eventData);
@@ -80,6 +81,7 @@ const timelineReducer = (state = initialState, action) => {
             invitations = invitations.concat(invitationsData);
             invitationsFromFavouriteUsers = invitationsFromFavouriteUsers
                                                 .concat(invitationsFromFavouriteUsersData);
+            console.log("holaaaa");
             return {
                 ...state, invitations,
                 invitationsFromFavouriteUsers,
@@ -104,7 +106,7 @@ const timelineReducer = (state = initialState, action) => {
                 if(event) eventData.push(event);
                 usersData.push(user);
                 invitationsData.push(invitation);
-                if (favoriteUsers.indexOf(invitation.ownerId) > -1)
+                if (favoriteUsers && favoriteUsers.indexOf(invitation.ownerId) > -1)
                     invitationsFromFavouriteUsersData.push(invitation);
             }
             let eventsFromInvitations = [].concat(eventData);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, SafeAreaView } from 'react-native';
 import GridView from 'react-native-super-grid';
 
 import { connect } from 'react-redux';
@@ -81,13 +81,13 @@ class SelectUsersFromList extends React.Component {
         } else {
             const { favoriteUsers } = this.state;
             return (
-                <View style={styles.container}>
+                <SafeAreaView style={styles.container}>
                     <GridView
                         itemDimension={windowWidth * 0.2}
                         items={favoriteUsers}
                         renderItem={this.renderItem}
                     />
-                </View>
+                </SafeAreaView>
             )
         }
     }
