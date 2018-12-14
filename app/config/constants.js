@@ -13,6 +13,7 @@ export const API_EVENT_SIZE = 10;
 export const API_EVENT = `${API}events`;
 export const API_EVENTS_PAGINATION = ({ start }) => `${API_EVENT}/pagination?start=${start}&size=${API_EVENT_SIZE}`;
 export const API_EVENT_BY_ID = ({ eventId }) => `${API_EVENT}/${eventId}`;
+export const API_SEARCH_EVENTS = ({ value }) => `${API_EVENT}_search?search=${value}`;
 
 export const API_INVITATION_SIZE = 10;
 export const API_INVITATION = `${API}invitations`;
@@ -30,8 +31,127 @@ export const API_GET_ALL_USERS = `${API}all-users`;
 export const API_USER_BY_ID = ({ userId }) => `${API_USER}/${userId}`;
 export const API_USER_BY_FIELD = ({ field, value }) => `${API_USER}/field?${field}=${value}`;
 export const API_UPDATE_USER = ({ userId }) => `${API_USER}/${userId}`;
-
-//Ver como es el endpoint de backend:
 export const API_SEARCH_USERS = ({ value }) => `${API_USER}?search=${value}`;
+export const API_ADD_FAVOURITE_USER = ({ myMail, mailToAdd }) => `${API_USER}/${myMail}/favorite?email_to_add=${mailToAdd}`;
 
 export const API_PUSH_NOTIFICATION = `${API}users/token`;
+
+export const API_EXPO_PUSH = 'https://exp.host/--/api/v2/push/send';
+
+export const API_SEND_NOTIFICATION = ({ chat, message, userToPushToken }) => {
+    const titleAndBody = {
+        title: `${message.user.display_name} @ ${chat.name}`,
+        body: message.text,
+    };
+    return {
+        url: API_EXPO_PUSH,
+        body: {
+            to: userToPushToken,
+            ...titleAndBody,
+            data: {
+                ...titleAndBody,
+                actionType: "NEW_CHAT_MESSAGE",
+                id: chat.id
+            }
+        }
+    }
+};
+
+
+export const API_CHATCAMP = 'https://api.chatcamp.io//api/1.0/';
+export const X_APP_ID = '6470728469452943360';
+export const X_API_KEY = 'WGVEUjY5UzZxZXVvallRVkNiaXdGdz09';
+const HEADER_CHAT_CAMP = {
+    'x-app-id': X_APP_ID,
+    'x-api-key': X_API_KEY
+};
+
+export const API_GET_CHAT_LIST = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.my_list`, 
+        header: HEADER_CHAT_CAMP
+    }
+};
+export const API_CREATE_USER_CHAT_CAMP = () => {
+    return {
+        url: `${API_CHATCAMP}users.create`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {
+            check_access_token: false
+        }
+    }
+};
+export const API_CREATE_CHAT_CHAT_CAMP = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.create`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {
+            is_distinct: false
+        }
+    }
+};
+export const API_GET_CHAT_MESSAGES = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.history`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_MARK_AS_READ_ALL_CHAT_MESSAGES = () => {
+    return {
+        url: `${API_CHATCAMP}users.mark_as_read_all`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_SEND_MESSAGE = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.message`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {
+            type: ""
+        }
+    }
+};
+export const API_ADD_USER_TO_CHAT = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.invite`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_REMOVE_USER_FROM_CHAT = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.leave`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_CHANGE_CHAT_NAME = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.update`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_GET_CHAT_DETAIL = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.get`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};
+export const API_UPDATE_USER_CHAT_CAMP = (body) => {
+    return {
+        url: `${API_CHATCAMP}users.update`, 
+        header: HEADER_CHAT_CAMP,
+        body
+    }
+};
+export const API_DELETE_CHAT = () => {
+    return {
+        url: `${API_CHATCAMP}group_channels.delete`, 
+        header: HEADER_CHAT_CAMP,
+        bodyExtra: {}
+    }
+};

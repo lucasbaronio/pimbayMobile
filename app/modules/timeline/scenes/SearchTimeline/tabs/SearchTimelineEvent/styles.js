@@ -7,6 +7,8 @@ export const colorBackgroundHeader = color.white;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         backgroundColor: color.white
     },
     activityIndicatorCenter: {

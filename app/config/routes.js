@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Platform } from 'react-native';
+import { Image, Platform, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Scene, Router, Stack, Modal, Tabs, Actions } from 'react-native-router-flux';
 
@@ -30,6 +30,7 @@ import house from '../assets/icons/house.png';
 import Chats from '../modules/chats/scenes/Chats';
 import chatFocused from '../assets/icons/chat-black.png';
 import chat from '../assets/icons/chat.png';
+import ChatMessenger from '../modules/chats/scenes/ChatMessenger';
 
 // InvitationInOut
 import InvitationsIn from '../modules/myInvitations/scenes/InvitationsIn';
@@ -52,6 +53,12 @@ import store from '../redux/store'
 import { checkLoginStatus } from "../modules/auth/actions";
 import { actions as createInvitation } from "../modules/timeline/index";
 const { cleanCreateInvitation } = createInvitation;
+import { actions as profileActions } from "../modules/profile/index";
+const { getUserData } = profileActions;
+import { actions as chatActions } from "../modules/chats/index";
+const { getChatList } = chatActions;
+import { actions as authActions } from "../modules/auth/index";
+const { userLoggedInToCache } = authActions;
 
 import { color, navTitleStyle, fontFamily, fontSize, statusBarHeight } from "../styles/theme";
 
@@ -68,6 +75,7 @@ class RouterApp extends React.Component {
 
     componentDidMount() {
         let _this = this;
+        this.props.userLoggedInToCache(() => {});
         store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
             _this.setState({ isReady: true, /*exist, */isLoggedIn});
         }));
@@ -166,6 +174,9 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? chatFocused : chat} />
                                     )}
+                                    onEnter={() => {
+                                        this.props.getChatList(() => { }, (error) => Alert.alert("Oops", error.message));
+                                    }}
                                 />
                                 <Scene
                                     key={"Profile"}
@@ -176,6 +187,9 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? userFocused : user} />
                                     )}
+                                    onEnter={() => {
+                                        this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
+                                    }}
                                     renderRightButton={<EditButton goToScreen='EditProfile' />}
                                 />
                             </Scene>
@@ -192,9 +206,6 @@ class RouterApp extends React.Component {
                             backgroundColor: '#de5134'
                         }}
                         tabs
-                        // hideNavBar
-                        // hideTabBar
-                        // component={SearchTimeline} 
                         navBar={SearchTimeline}
                         showLabel={true}
                         lazy={true}
@@ -213,7 +224,7 @@ class RouterApp extends React.Component {
                             hideNavBar
                             key={"SearchTimelineEvent"}
                             title="Eventos"
-                            component={SearchTimelineEvent}
+                            component={withActionSheetInvitationHOC(SearchTimelineEvent)}
                         />
 
                     </Scene>
@@ -225,7 +236,7 @@ class RouterApp extends React.Component {
                                     ? "Invitación Abierta"
                                     : "Invitación Dirigida",
                                 left: <CloseButtonOnPress onPress={() => {
-                                    cleanCreateInvitation();
+                                    this.props.cleanCreateInvitation();
                                     Actions.pop();
                                 }} />,
                             });
@@ -246,6 +257,21 @@ class RouterApp extends React.Component {
                                 onPress={() => Actions.pop()} />
                         }
                         component={SelectUsersFromList} title="Seleccionar usuarios" />
+                    <Scene
+                        key={"ProfileUser"}
+                        title="Perfil"
+                        renderLeftButton={<CloseButton />}
+                        component={Profile} />
+                    <Scene
+                        key={"ChatMessenger"}
+                        onEnter={({ chat }) => {
+                            if (chat.name) {
+                                Actions.refresh({
+                                    title: chat.name
+                                });
+                            }
+                        }}
+                        component={ChatMessenger} />
                 </Modal>
             </Router>
         )
@@ -258,4 +284,9 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, {  })(RouterApp);
+export default connect(mapStateToProps, { 
+    getUserData, 
+    getChatList, 
+    cleanCreateInvitation,
+    userLoggedInToCache
+})(RouterApp);

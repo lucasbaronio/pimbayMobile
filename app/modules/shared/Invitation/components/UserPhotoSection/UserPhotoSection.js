@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { connect } from "react-redux";
+import { Image, TouchableOpacity, Alert } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import styles from "./styles";
+import { Actions } from 'react-native-router-flux';
+
+import { actions as profileActions } from "../../../../profile/index";
+const { getUserData } = profileActions;
 
 class UserPhotoSection extends Component {
+
+    onPress = () => {
+        const { getUserData, userId } = this.props;
+        getUserData(userId, this.onSuccess, this.onError);
+    }
+
+    onSuccess(isLoggedUser) {
+        Actions.push("ProfileUser", { isNotLoggedUser: !isLoggedUser });
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
+    }
 
     renderUserPhotoSection = (userAvatar, fullName, icon) => {
         var initials = fullName.match(/\b\w/g) || [];
         initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
         return (
-            <View style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={this.onPress}>
                 <Avatar
                     rounded
                     medium
@@ -18,7 +36,7 @@ class UserPhotoSection extends Component {
                     containerStyle={{ marginTop: 20 }}
                 />
                 <Image source={icon} style={styles.iconSentStyle} />
-            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -28,4 +46,5 @@ class UserPhotoSection extends Component {
     }
 }
 
-export default UserPhotoSection;
+// export default UserPhotoSection;
+export default connect(null, { getUserData })(UserPhotoSection);

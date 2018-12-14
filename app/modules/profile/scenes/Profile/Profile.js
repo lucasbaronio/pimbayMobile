@@ -1,24 +1,15 @@
 import React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import { View, Text, ActivityIndicator, Alert } from 'react-native';
+import { Avatar, Button as ButtonElements } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { actions as profileActions } from "../../index";
-const { getLoggedUserData } = profileActions;
+const { addFavouriteUser, signOut } = profileActions;
 
-import styles from "./styles"
+import styles, { color, fontSize } from "./styles"
 
 class Profile extends React.Component {
-
-    componentDidMount() {
-        const { getLoggedUserData, userId } = this.props;
-        // getUserData(userId, this.onError);
-        getLoggedUserData(this.onError);
-    }
-
-    onError(error) {
-        Alert.alert("Oops", error.message);
-    }
 
     renderInterests(interests) {
         return interests.map((item, key) => {
@@ -28,6 +19,51 @@ class Profile extends React.Component {
                 </Text>
             );
         });
+    }
+
+    renderFollowUserButton() {
+        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
+        if (isNotLoggedUser) {
+            if (isLoadingAddFavouriteUser) {
+                return (
+                    // TODO: Agregar un box de loading cuando esta esperando por el req de add/remove fav user
+                    null
+                );
+            }
+            return (
+                <ButtonElements
+                    backgroundColor={iAmFollowing ? color.white : color.orange}
+                    onPress={iAmFollowing ? this.onRemoveFavouriteUser : this.onAddFavouriteUser}
+                    buttonStyle={styles.button}
+                    color={iAmFollowing ? color.black : color.white}
+                    title={iAmFollowing ? 'ELIMINAR FAVORITO' : 'AGREGAR FAVORITO'}
+                    fontColor={iAmFollowing ? color.orange : color.white} // ver si funca esto
+                    fontSize={fontSize.text4} />
+            );
+        } else return null;
+    }
+
+    onAddFavouriteUser = () => {
+        const { addFavouriteUser, user } = this.props;
+        addFavouriteUser(user.mail, this.onError);
+    }
+
+    onRemoveFavouriteUser = () => {
+        // const { removeFavouriteUser, user } = this.props;
+        // removeFavouriteUser(user.mail, this.onError);
+        Alert.alert("Oops", "Aún no es posible eliminar un favorito.");
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
+    }
+
+    onSignOut = () => {
+        this.props.signOut(this.onSuccess, this.onError)
+    }
+
+    onSuccess = () => {
+        Actions.reset('root');
     }
 
     render() {
@@ -52,6 +88,7 @@ class Profile extends React.Component {
                         containerStyle={{ marginTop: 20 }} />
                     <Text style={styles.fullNameStyle}>{fullName}</Text>
                     <Text style={styles.bioStyle}>{biography}</Text>
+                    {this.renderFollowUserButton()}
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
                         <View style={{ flex: 1, height: 60, alignItems: 'center' }} >
                             <Text style={styles.bioStyle}>{favoriteUsers ? favoriteUsers.length : 0}</Text>
@@ -75,6 +112,14 @@ class Profile extends React.Component {
                             {this.renderInterests(interests)}
                         </View>
                     </View>
+                    <ButtonElements
+                        raised
+                        title="CERRAR SESIÓN"
+                        borderRadius={4}
+                        // containerViewStyle={styles.signOutContainer}
+                        // buttonStyle={styles.signOutButton}
+                        // textStyle={styles.signOutText}
+                        onPress={this.onSignOut} />
                 </View>
             );
         }
@@ -82,12 +127,18 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state, props) {
-    const { userId } = props;
+    const { isNotLoggedUser } = props;
+    const { isLoadingUser, loggedUser, userToShow, isLoadingAddFavouriteUser } = state.profileReducer;
     return {
-        isLoadingUser: state.profileReducer.isLoadingUser,
-        user: state.profileReducer.user,
-        // user: state.timelineReducer.users.filter(user => user.id === userId)
+        isLoadingUser,
+        user: isNotLoggedUser ? userToShow : loggedUser,
+        isLoadingAddFavouriteUser,
+        iAmFollowing: isNotLoggedUser 
+                        ? loggedUser &&
+                            loggedUser.favoriteUsers &&
+                            loggedUser.favoriteUsers.indexOf(userToShow.id) > -1 
+                        : false
     }
 }
 
-export default connect(mapStateToProps, { getLoggedUserData })(Profile);
+export default connect(mapStateToProps, { addFavouriteUser, signOut })(Profile);

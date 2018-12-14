@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { fontSize, color, windowWidth, fontFamily } = theme;
-
-export { color };
+const { fontSize, color, fontFamily } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -56,7 +54,18 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         paddingVertical: 5,
         paddingHorizontal: 15
-    }
+    },
+    button: {
+        marginTop: 20,
+        // borderColor: "transparent",
+        // borderWidth: 0,
+        borderColor: color.orange,
+        borderWidth: 1,
+        borderRadius: 25,
+        paddingVertical: 5,
+        paddingHorizontal: 8,
+    },
 });
 
+export { color, fontSize };
 export default styles;

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { color } = theme;
+const { color, fontSize } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        margin: 5,
         maxWidth: 85,
     },
     avatar: {
@@ -21,7 +20,6 @@ const styles = StyleSheet.create({
         backgroundColor: theme.color.light_blue,
     },
     text: {
-        marginBottom: 5,
         textAlign: 'center',
     },
     textSelected: {
@@ -44,4 +42,5 @@ const styles = StyleSheet.create({
     }
 });
 
+export { fontSize };
 export default styles;

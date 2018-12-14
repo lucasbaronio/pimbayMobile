@@ -5,15 +5,15 @@ const { fontSize, color, windowWidth } = theme;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: windowWidth * 0.75,
+        // width: windowWidth * 0.75,
         flexDirection: "column", 
         justifyContent: "flex-start", 
         margin: 15,
     },
     image: {
         flex: 1,
-        height: 150, 
-        width: windowWidth * 0.75,
+        // height: 150, 
+        // width: windowWidth * 0.75,
         borderRadius: 10, 
         backgroundColor: color.grey,
         borderWidth: 0.5,
@@ -60,5 +60,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export { fontSize, color };
+export { fontSize, color, windowWidth };
 export default styles;

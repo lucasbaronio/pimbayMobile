@@ -7,12 +7,14 @@ import notificationRouter from './notificationRouter';
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
 const { getInvitationsInRefresh } = invitationsActions;
+import { actions as chatActions } from "../../../chats/index";
+const { getChatDetail } = chatActions;
 
 // This refers to the function defined earlier in this guide
 import registerForPushNotificationsAsync from './registerForPushNotificationsAsync';
 
 const withNotificationExpoHOC = WrappedComponent =>
-    connect(null, { getInvitationsInRefresh })(
+    connect(null, { getInvitationsInRefresh, getChatDetail })(
         class extends React.Component {
 
             componentDidMount() {
@@ -27,14 +29,15 @@ const withNotificationExpoHOC = WrappedComponent =>
             }
 
             _handleNotification = (notification) => {
+                console.log(notification);
                 if (notification.origin === 'received') {
                     this.popup.show({
                         onPress: () => notificationRouter({ notification, ...this.props }),
                         appIconSource: require('../../../../assets/pimbay.png'),
                         appTitle: 'Pimbay',
                         timeText: 'Ahora',
-                        title: notification.data.title ? notification.data.title : 'Nueva invitación',
-                        body: notification.data.body ? notification.data.body : 'Tienes una nueva invitación de tu amigo Usuario 😀',
+                        title: notification.data.title ? notification.data.title : 'Sin Título',
+                        body: notification.data.body ? notification.data.body : 'Notificación sin un body 😀',
                     });
                 } else {
                     notificationRouter({ notification, ...this.props });

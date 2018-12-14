@@ -14,14 +14,12 @@ const styles = StyleSheet.create({
         
     },
     searchView: {
-        flex: 5,
-        width: windowWidth * 0.8,
-        paddingTop: windowHeight * 0.005,
+        justifyContent: "center",
+        width: windowWidth * 0.80,
     },
     buttonView: {
         flex: 1,
-        height: '100%',
-        marginTop: statusBarHeight,
+        justifyContent: "center"
     },
     buttonText: {
         fontSize: fontSize.text4,

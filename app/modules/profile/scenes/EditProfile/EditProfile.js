@@ -119,7 +119,7 @@ class EditProfile extends React.Component {
 
 function mapStateToProps(state, props) {
     return {
-        user: state.profileReducer.user
+        user: state.profileReducer.loggedUser
     }
 }
 

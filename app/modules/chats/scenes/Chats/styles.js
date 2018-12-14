@@ -1,31 +1,28 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index";
-const { color, fontSize, normalize, fontFamily } = theme;
+const { color, fontSize, windowWidth, fontFamily } = theme;
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+        backgroundColor: color.white,
     },
-    createInvitationContainer: {
-        margin: 10,
-        height: 40,
+    listChatUsers: { 
+        flex: 1, 
+        flexDirection: 'column', 
+        marginHorizontal: 10 
     },
-    createInvitationButton: {
-        backgroundColor: color.orange,
-        height: normalize(40)
+    dividerImageStyle: {
+        alignSelf: 'flex-start', 
+        width: windowWidth
     },
-    createInvitationText: {
-        fontSize: fontSize.text2,
-        fontFamily: fontFamily.medium
+    activityIndicatorCenter: {
+        flex: 1,
+        height: 200,
+        backgroundColor: '#fff',
+        justifyContent: "center"
     },
-    loadingCreateInvitation: {
-        justifyContent: 'center',
-        borderRadius: 4,
-        marginHorizontal: 15,
-        marginVertical: 8,
-        backgroundColor: color.orange,
-        height: 42
-    }
 });
 
+export { fontSize };
 export default styles;

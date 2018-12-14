@@ -1,5 +1,6 @@
 import * as t from './actionTypes';
 import * as api from './api';
+import * as apiChat from '../chats/api';
 import { AsyncStorage } from "react-native";
 
 export function getInvitationsOut(errorCB) {
@@ -59,13 +60,15 @@ export function getInvitationsIn(errorCB) {
     };
 }
 
-export function getInvitationsInRefresh(errorCB) {
+export function getInvitationsInRefresh(errorCB, successCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_HEADER_INVITATION_IN });
         const userId = await AsyncStorage.getItem('user_id');
         api.getInvitationsIn({ userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId });
-            else if (error) errorCB(error);
+            if (success) {
+                dispatch({ type: t.INVITATION_IN_REFRESHED, data, userId });
+                successCB && successCB();
+            } else if (error) errorCB(error);
         });
     };
 }
@@ -79,22 +82,32 @@ export function getUserById(userId, errorCB) {
     };
 }
 
-export function confirmInvitation(invitationId, errorCB) {
+export function confirmInvitation({ invitationId, chatId }, errorCB) {
     return async (dispatch) => {
         const userId = await AsyncStorage.getItem('user_id');
         api.confirmInvitation({ invitationId, userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
-            else if (error) errorCB(error);
+            if (success) {
+                apiChat.addUserToChat({ chatId, userId }, function (successAddUserToChat, dataAddUserToChat, errorAddUserToChat) {
+                    if (successAddUserToChat) dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
+                    else if (errorAddUserToChat) errorCB(errorAddUserToChat);
+                });
+            } else if (error) errorCB(error);
         });
     };
 }
 
-export function rejectInvitation(invitationId, errorCB) {
+export function rejectInvitation({ invitationId, chatId }, errorCB) {
     return async (dispatch) => {
         const userId = await AsyncStorage.getItem('user_id');
         api.rejectInvitation({ invitationId, userId }, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_REJECTED, data, userId, invitationId });
-            else if (error) errorCB(error);
+            if (success) {
+                apiChat.removeUserFromChat({ chatId, userId }, function (successRemoveUserFromChat, dataRemoveUserFromChat, errorRemoveUserFromChat) {
+                    if (successRemoveUserFromChat) dispatch({ type: t.INVITATION_REJECTED, data, userId, invitationId });
+                    else if (errorRemoveUserFromChat) { 
+                        dispatch({ type: t.INVITATION_REJECTED, data, userId, invitationId });
+                    }
+                });
+            } else if (error) errorCB(error);
         });
     };
 }

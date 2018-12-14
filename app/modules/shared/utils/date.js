@@ -143,6 +143,14 @@ const getInvReceivedTime = (dateCreated) => {
     if (minutes < 1) return "Recibida ahora";
 }
 
+const isInvitationExpired = (realizationDate) => {
+    var realizationDateParsed = moment(realizationDate);
+    var now = moment(new Date());
+    var diff = moment.duration(moment(realizationDateParsed).diff(now));
+    var minutes = parseInt(diff.asMinutes());
+    return minutes + 1440 < 0;
+}
+
 export {
     formatDateFromString,
     formatFullDate,
@@ -153,5 +161,6 @@ export {
     getDueTime,
     getCreatedTime,
     getInvSentTime,
-    getInvReceivedTime
+    getInvReceivedTime,
+    isInvitationExpired
 }

@@ -80,6 +80,11 @@ class CreateInvitation extends Component {
             Alert.alert('Usuarios invitados', "No se han elegido los usuarios invitados.");
             return;
         }
+        const avatar = contextActionSelected
+                        ? contextActionSelected.image
+                        : eventInvitation
+                            ? eventInvitation.image
+                            : "";
         createNewInvitation({
             description,
             dueDate,
@@ -91,7 +96,7 @@ class CreateInvitation extends Component {
             contextActionId: contextActionSelected ? contextActionSelected.id : null,
             eventId: eventInvitation ? eventInvitation.id : null,
             invitedUsers: this.getInvitedUsersIds()
-        }, this.onSuccess, this.onError);
+        }, avatar, this.onSuccess, this.onError);
     }
 
     onSuccess() {
@@ -188,7 +193,6 @@ class CreateInvitation extends Component {
     render() {
         const { type, isLoading } = this.props;
         return (
-            // <View style={{ flex: 1 }}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={(Platform.OS === 'ios') ? "padding" : null}
@@ -243,8 +247,7 @@ class CreateInvitation extends Component {
                             textStyle={styles.createInvitationText}
                             onPress={this.createInvitation} />
                 }
-                </KeyboardAvoidingView>
-            // </View>
+            </KeyboardAvoidingView>
         );
     }
 }

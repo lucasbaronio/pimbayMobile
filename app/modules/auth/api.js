@@ -1,14 +1,17 @@
 import { auth, database, provider } from "../../config/firebase";
 import {
     API_USER,
-    API_USER_BY_FIELD
+    API_USER_BY_FIELD,
+    API_CREATE_USER_CHAT_CAMP
 } from './constants';
 import { get, post } from '../globalApi';
+import { getUserById } from '../profile/api';
+export { getUserById }
 
 //Register the user using email and password
 export function register(data, callback) {
     const { email, password, username, fullName } = data;
-    console.log(email, password, username, fullName);
+    // console.log(email, password, username, fullName);
     auth.createUserWithEmailAndPassword(email, password)
         .then((resp) => {
             createUser({ 
@@ -19,13 +22,28 @@ export function register(data, callback) {
             }, callback)
         })
         .catch((error) => {
-            console.log(error);
             callback(false, null, error);
         });
 }
 
 export function createUser (user, callback) {
-    post(API_USER, user, callback);
+    post(API_USER, user, {}, callback);
+}
+
+export function createUserChatCamp(user, callback) {
+    const { url, header, bodyExtra } = API_CREATE_USER_CHAT_CAMP();
+    post(url, { 
+        id: user.id,
+        display_name: user.fullName,
+        ...bodyExtra
+    }, header, callback);
+}
+
+export function getChatList(user, callback) {
+    const { url, header } = API_GET_CHAT_LIST();
+    post(url, { 
+        user_id: userId
+    }, header, callback);
 }
 
 export function updateUser ({ id, newUser }, callback) {

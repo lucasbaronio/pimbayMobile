@@ -1,5 +1,6 @@
 import * as t from './actionTypes';
 import * as api from './api';
+import * as apiChat from '../chats/api';
 import { AsyncStorage } from "react-native";
 
 // errorCB -> errorCallback
@@ -16,23 +17,25 @@ import { AsyncStorage } from "react-native";
 // }
 
 export function getInvitations(start, errorCB) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { user } = getState().authReducer;
         (start === 0)
             ? dispatch({ type: t.LOADING_INVITATION_LIST })
             : dispatch({ type: t.LOADING_FOOTER_INVITATION_LIST })
         api.getInvitations(start, function (success, data, error) {
             if (success) {
-                dispatch({ type: t.INVITATION_LIST_AVAILABLE, data, start });
+                dispatch({ type: t.INVITATION_LIST_AVAILABLE, data, start, user });
             } else if (error) errorCB(error)
         });
     };
 }
 
 export function getInvitationsRefresh(errorCB) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const { user } = getState().authReducer;
         dispatch({ type: t.LOADING_HEADER });
         api.getInvitations(0, function (success, data, error) {
-            if (success) dispatch({ type: t.INVITATION_LIST_REFRESHED, data });
+            if (success) dispatch({ type: t.INVITATION_LIST_REFRESHED, data, user });
             else if (error) errorCB(error)
         });
     };
@@ -60,15 +63,24 @@ export function getContextActionList(errorCB) {
     };
 }
 
-export function createNewInvitation(invitation, successCB, errorCB) {
+export function createNewInvitation(invitation, avatar, successCB, errorCB) {
     return async (dispatch) => {
         dispatch({ type: t.LOADING_CREATE_INVITATION });
         const ownerId = await AsyncStorage.getItem('user_id');
-        api.createInvitation({ ...invitation, ownerId }, function (success, data, error) {
-            if (success) {
-                dispatch({ type: t.CREATE_INVITATION_SUCCESS });
-                successCB();
-            } else if (error) errorCB(error);
+        apiChat.createChat({ ownerId, avatar }, function (successCreateChat, dataCreateChat, errorCreateChat) {
+            console.log(dataCreateChat);
+            if (successCreateChat) {
+                api.createInvitation({ 
+                    ...invitation, 
+                    ownerId, 
+                    chatId: dataCreateChat.group_channel.id
+                }, function (successCreateInvitation, data, errorCreateInvitation) {
+                    if (successCreateInvitation) {
+                        dispatch({ type: t.CREATE_INVITATION_SUCCESS });
+                        successCB();
+                    } else if (errorCreateInvitation) errorCB(errorCreateInvitation);
+                });
+            } else if (errorCreateChat) errorCB(errorCreateChat);
         });
     };
 }
@@ -137,6 +149,16 @@ export function getEventById(eventId, errorCB) {
     return (dispatch) => {
         api.getEventById(eventId, function (success, data, error) {
             if (success) dispatch({ type: t.ADD_EVENT, data });
+            else if (error) errorCB(error);
+        });
+    };
+}
+
+export function searchEvents(value, errorCB) {
+    return (dispatch) => {
+        dispatch({ type: t.LOADING_SEARCH_EVENTS });
+        api.searchEvents(value, function (success, data, error) {
+            if (success) dispatch({ type: t.SEARCHED_EVENTS, data: { ...data, emptySearchInput: value === "" } });
             else if (error) errorCB(error);
         });
     };
