@@ -1,13 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { FormLabel, FormInput, FormValidationMessage, Avatar, Button } from 'react-native-elements'
+import { 
+    FormLabel, FormInput,
+    FormValidationMessage, Avatar,
+    Button
+} from 'react-native-elements'
 import DatePicker from 'react-native-datepicker'
 
 import { connect } from 'react-redux';
 import { actions as profileActions } from "../../index";
 const { updateUser } = profileActions;
 import moment from 'moment';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 import styles from "./styles"
 
@@ -56,63 +61,70 @@ class EditProfile extends React.Component {
         initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 
         return (
-            <View style={styles.container}>
-                <Avatar
-                    large
-                    rounded
-                    title={(!avatar) ? initials : null}
-                    source={(avatar) ? { uri: avatar } : null}
-                    containerStyle={{ marginTop: 20, alignSelf: "center" }} />
+            <KeyboardAvoidingView
+                behavior= {(Platform.OS === 'ios')? "padding" : null} 
+                keyboardVerticalOffset={Platform.select({ ios: 63 + getBottomSpace(), android: 500 })}
+                style={styles.container} 
+                enabled>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ScrollView style={{ flex: 1 }}>
+                        <Avatar
+                            large
+                            rounded
+                            title={(!avatar) ? initials : null}
+                            source={(avatar) ? { uri: avatar } : null}
+                            containerStyle={{ marginTop: 20, alignSelf: "center" }} />
 
-                <FormLabel labelStyle={styles.labelStyle}>Nombre</FormLabel>
-                <FormInput inputStyle={styles.formInputStyle} onChangeText={(text) => { this.setState({ fullName: text }) }}>{fullName}</FormInput>
-                <FormValidationMessage>
-                    {
-                        !!this.state.nameError
-                            ? "Nombre es requerido"
-                            : ""
-                    }
-                </FormValidationMessage>
+                        <FormLabel labelStyle={styles.labelStyle}>Nombre</FormLabel>
+                        <FormInput inputStyle={styles.formInputStyle} onChangeText={(text) => { this.setState({ fullName: text }) }}>{fullName}</FormInput>
+                        <FormValidationMessage>
+                            {
+                                !!this.state.nameError
+                                    ? "Nombre es requerido"
+                                    : ""
+                            }
+                        </FormValidationMessage>
 
-                <FormLabel labelStyle={styles.labelStyle}>Biografía</FormLabel>
-                <FormInput inputStyle={styles.formInputStyle} onChangeText={(text) => { this.setState({ biography: text }) }}>{biography}</FormInput>
+                        <FormLabel labelStyle={styles.labelStyle}>Biografía</FormLabel>
+                        <FormInput inputStyle={styles.formInputStyle} onChangeText={(text) => { this.setState({ biography: text }) }}>{biography}</FormInput>
 
-                <FormLabel labelStyle={styles.labelStyle}>Fecha de nacimiento</FormLabel>
-                <DatePicker
-                    style={{ width: 200 }}
-                    date={this.state.birthdate}
-                    mode="date"
-                    placeholder="Fecha de nacimiento"
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirmar"
-                    cancelBtnText="Cancelar"
-                    showIcon={false}
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginTop: 10,
-                            marginLeft: 25,
-                            alignItems: 'flex-start',
-                            borderWidth: 0
-                        }
-                    }}
-                    onDateChange={(date) => { this.setState({ birthdate: date }) }}
-                />
-
-                <Button
-                    raised
-                    title="Guardar"
-                    borderRadius={4}
-                    containerViewStyle={styles.saveButtonContainer}
-                    buttonStyle={styles.saveButton}
-                    textStyle={styles.saveButtonText}
-                    onPress={this.saveChanges} />
-            </View>
+                        <FormLabel labelStyle={styles.labelStyle}>Fecha de nacimiento</FormLabel>
+                        <DatePicker
+                            style={{ width: 200 }}
+                            date={this.state.birthdate}
+                            mode="date"
+                            placeholder="Fecha de nacimiento"
+                            format="YYYY-MM-DD"
+                            confirmBtnText="Confirmar"
+                            cancelBtnText="Cancelar"
+                            showIcon={false}
+                            customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                },
+                                dateInput: {
+                                    marginTop: 10,
+                                    marginLeft: 25,
+                                    alignItems: 'flex-start',
+                                    borderWidth: 0
+                                }
+                            }}
+                            onDateChange={(date) => { this.setState({ birthdate: date }) }}
+                        />
+                    </ScrollView>
+                    <Button
+                        raised
+                        title="Guardar"
+                        borderRadius={4}
+                        containerViewStyle={styles.saveButtonContainer}
+                        buttonStyle={styles.saveButton}
+                        textStyle={styles.saveButtonText}
+                        onPress={this.saveChanges} />
+                </SafeAreaView>
+            </KeyboardAvoidingView>
         );
     }
 }

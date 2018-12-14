@@ -204,37 +204,36 @@ class CreateInvitation extends Component {
                 enabled >
                 <SafeAreaView style={{ flex: 1 }}>
                     <ScrollView style={styles.container}>
-                            {this.renderType()}
-                            {
-                                !!(type !== pimbayType.SIMPLE) &&
-                                this.renderTextBox()
+                        {this.renderType()}
+                        {
+                            !!(type !== pimbayType.SIMPLE) &&
+                            this.renderTextBox()
+                        }
+                        <RealizationDatePicker
+                            eventDate={
+                                this.props.type === pimbayType.EVENT
+                                    ? this.state.eventInvitation.realizationDate
+                                    : null
                             }
-                            <RealizationDatePicker
-                                eventDate={
-                                    this.props.type === pimbayType.EVENT
-                                        ? this.state.eventInvitation.realizationDate
-                                        : null
-                                }
-                                onChangeRealizationDate={this.onChangeRealizationDate} />
-                            <DatePicker
-                                eventDate={
-                                    this.props.type === pimbayType.EVENT
-                                        ? this.state.eventInvitation.realizationDate
-                                        : null
-                                }
-                                onChangeDueDate={this.onChangeDueDate} />
-                            {
-                                !!(this.props.invitationType === invType.OPEN) &&
-                                <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                            onChangeRealizationDate={this.onChangeRealizationDate} />
+                        <DatePicker
+                            eventDate={
+                                this.props.type === pimbayType.EVENT
+                                    ? this.state.eventInvitation.realizationDate
+                                    : null
                             }
-                            <Quota
-                                onChangeQuota={this.onChangeQuota} />
-                            {
-                                !!(this.props.invitationType !== invType.OPEN) &&
-                                <InvitedUsers
-                                    onChangeInvitedUserList={this.onChangeInvitedUserList} />
-                            }
-                        
+                            onChangeDueDate={this.onChangeDueDate} />
+                        {
+                            !!(this.props.invitationType === invType.OPEN) &&
+                            <Target onChangeTargetUsers={this.onChangeTargetUsers} />
+                        }
+                        <Quota
+                            onChangeQuota={this.onChangeQuota} />
+                        {
+                            !!(this.props.invitationType !== invType.OPEN) &&
+                            <InvitedUsers
+                                onChangeInvitedUserList={this.onChangeInvitedUserList} />
+                        }
                     </ScrollView>
                     {
                         !!isLoading
