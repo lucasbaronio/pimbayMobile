@@ -18,7 +18,6 @@ class ContextActionList extends React.Component {
     };
 
     componentWillMount() {
-        console.log(this.props);
         const { selectedItem } = this.props;
         selectedIndex = this.props.contextActions.indexOf(selectedItem);
         this.setState({itemSelectedIndex: selectedIndex});
