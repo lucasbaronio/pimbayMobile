@@ -130,7 +130,11 @@ class ReceivedInvitationCard extends Component {
 
     onPressConfirm = () => {
         const { item } = this.props;
-        this.props.confirmInvitation({ invitationId: item.id, chatId: item.chatId }, this.onError);
+        this.props.confirmInvitation({ 
+            invitationId: item.id, 
+            chatId: item.chatId,
+            isOpenInvitation: false
+        }, this.onError);
     }
 
     onPressReject = () => {

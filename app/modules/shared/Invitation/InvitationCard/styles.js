@@ -50,11 +50,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     buttonView: {
-        alignSelf: 'flex-end',
-        alignItems: "flex-end",
-        justifyContent: "flex-end",
-        marginTop: 5,
-        marginBottom: 5
+        flexDirection: 'row', 
+        justifyContent: 'flex-end',
+        marginVertical: 5,
+        marginRight: 10
+    },
+    buttonViewGoToChat: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+        marginRight: 10
     },
     dividerImageStyle: {
         alignSelf: 'flex-start', 

@@ -1,4 +1,5 @@
 import * as t from './actionTypes';
+import * as tTimeline from '../timeline/actionTypes';
 import * as api from './api';
 import * as apiChat from '../chats/api';
 import { AsyncStorage } from "react-native";
@@ -82,14 +83,16 @@ export function getUserById(userId, errorCB) {
     };
 }
 
-export function confirmInvitation({ invitationId, chatId }, errorCB) {
+export function confirmInvitation({ invitationId, chatId, isOpenInvitation }, errorCB) {
     return async (dispatch) => {
         const userId = await AsyncStorage.getItem('user_id');
         api.confirmInvitation({ invitationId, userId }, function (success, data, error) {
             if (success) {
                 apiChat.addUserToChat({ chatId, userId }, function (successAddUserToChat, dataAddUserToChat, errorAddUserToChat) {
-                    if (successAddUserToChat) dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
-                    else if (errorAddUserToChat) errorCB(errorAddUserToChat);
+                    if (successAddUserToChat) {
+                        if (isOpenInvitation) dispatch({ type: tTimeline.OPEN_INVITATION_CONFIRMED, data });
+                        else dispatch({ type: t.INVITATION_CONFIRMED, data, userId, invitationId });
+                    } else if (errorAddUserToChat) errorCB(errorAddUserToChat);
                 });
             } else if (error) errorCB(error);
         });

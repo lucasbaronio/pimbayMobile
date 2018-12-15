@@ -5,12 +5,12 @@ import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
 
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
+import GoToChatButton from '../components/GoToChatButton';
 
-// import { invitationType } from "../../constants";
 import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 
-// import { actions as timeline } from "../../../timeline/index";
-// const { getUserById, getContextActionById, getEventById } = timeline;
+import { actions as invitationsActions } from "../../../myInvitations/index";
+const { confirmInvitation } = invitationsActions;
 import { actions as profileActions } from "../../../profile/index";
 const { getUserData } = profileActions;
 
@@ -21,9 +21,13 @@ import DividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 
 class InvitationCard extends Component {
 
-    onInvitePress = () => {
-        // Crear un metodo en actions para hacer un post al backend
-        // this.goToCreateInvitation({ type: invitationType.OPEN, openInvitation: this.props.item });
+    onPressConfirm = () => {
+        const { item, confirmInvitation } = this.props;
+        confirmInvitation({ 
+            invitationId: item.id, 
+            chatId: item.chatId,
+            isOpenInvitation: true
+        }, this.onError);
     }
 
     goToCreateInvitation = (props) => {
@@ -134,7 +138,7 @@ class InvitationCard extends Component {
     }
 
     render() {
-        const { item, event } = this.props;
+        const { item, event, iAmConfirmed } = this.props;
 
         return (
             <View>
@@ -150,15 +154,19 @@ class InvitationCard extends Component {
                                 <Text style={styles.descriptionStyle}>{item.description}</Text>
                             </View>
                             {this.renderDetailsInformation(item)}
-                            <View>
-                                <View style={styles.buttonView}>
-                                    <ButtonElements
-                                        backgroundColor={color.orange}
-                                        onPress={this.onInvitePress}
-                                        buttonStyle={styles.button}
-                                        title='ESTOY'
-                                        fontSize={fontSize.text4} />
-                                </View>
+                            <View style={styles.buttonView}>
+                                {
+                                    !iAmConfirmed 
+                                    ? <ButtonElements
+                                            backgroundColor={color.orange}
+                                            onPress={this.onPressConfirm}
+                                            buttonStyle={styles.button}
+                                            title='ESTOY'
+                                            fontSize={fontSize.text4} />
+                                    : <GoToChatButton 
+                                            chatId={item.chatId}
+                                            buttonViewChatStyle={styles.buttonViewGoToChat}/>
+                                }
                             </View>
                         </View>
                     </View>
@@ -176,6 +184,7 @@ class InvitationCard extends Component {
 
 function mapStateToProps(state, props) {
     const { item } = props;
+    const { user } = state.authReducer;
     return {
         owner: state.timelineReducer.users.filter(user => user.id === item.ownerId)[0],
         contextAction: item.contextActionId
@@ -186,7 +195,8 @@ function mapStateToProps(state, props) {
             ? state.timelineReducer.eventsFromInvitations
                 .filter(event => event.id === item.eventId)[0]
             : null,
+        iAmConfirmed: item.ownerId === user.id || (item.confirmedUsers.indexOf(user.id) > -1)
     }
 }
 
-export default connect(mapStateToProps, { getUserData })(InvitationCard);
+export default connect(mapStateToProps, { getUserData, confirmInvitation })(InvitationCard);

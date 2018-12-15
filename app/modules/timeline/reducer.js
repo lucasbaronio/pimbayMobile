@@ -290,6 +290,28 @@ const timelineReducer = (state = initialState, action) => {
             return { ...state, isLoadingSearchedEvents: true }
         }
 
+        case t.OPEN_INVITATION_CONFIRMED: {
+            let { data } = action;
+            console.log(data);
+
+            let invitations = state.invitations.map((invitation, index) =>
+                invitation.id === data.invitation.id 
+                    ? data.invitation
+                    : invitation
+            );
+
+            let invitationsFromFavouriteUsers = state.invitationsFromFavouriteUsers.map((invitation, index) =>
+                invitation.id === data.invitation.id 
+                    ? data.invitation
+                    : invitation
+            );
+            
+            return { 
+                ...state, invitations,
+                invitationsFromFavouriteUsers 
+            }
+        }
+
         default:
             return state;
     }

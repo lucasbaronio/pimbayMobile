@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
+// import { Actions } from "react-native-router-flux";
 
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import ContextAction from '../../ContextAction';
+import GoToChatButton from '../components/GoToChatButton';
 // import UserPhotoSection from '../components/UserPhotoSection';
 
 import { contextActionSize, invitationType as invType } from '../../constants';
@@ -14,7 +15,7 @@ import styles from "./styles";
 import sentIcon from '../../../../assets/icons/sentIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
-import rightArrow from '../../../../assets/icons/right-arrow.png';
+// import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
@@ -118,16 +119,16 @@ class SentInvitationCard extends Component {
         )
     }
 
-    renderGoToChatButton = () => {
-        return (
-            <TouchableOpacity onPress={() => { this.onPressChat() }}>
-                <View style={styles.buttonViewChat}>
-                    <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
-                    <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-                </View>
-            </TouchableOpacity>
-        );
-    }
+    // renderGoToChatButton = () => {
+    //     return (
+    //         <TouchableOpacity 
+    //             style={styles.buttonViewChat}
+    //             onPress={() => { this.onPressChat() }}>
+    //                 <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
+    //                 <Image source={rightArrow} style={{ height: 10, width: 10 }} />
+    //         </TouchableOpacity>
+    //     );
+    // }
 
     renderFinalizeButton = () => {
         return (
@@ -140,12 +141,12 @@ class SentInvitationCard extends Component {
         );
     }
 
-    onPressChat = () => {
-        const { item, getChatDetail } = this.props;
-        getChatDetail(item.chatId, ({ group_channel }) => {
-            Actions.push("ChatMessenger", { chat: group_channel });
-        }, this.onError);
-    }
+    // onPressChat = () => {
+    //     const { item, getChatDetail } = this.props;
+    //     getChatDetail(item.chatId, ({ group_channel }) => {
+    //         Actions.push("ChatMessenger", { chat: group_channel });
+    //     }, this.onError);
+    // }
 
     onError(error) {
         Alert.alert("Oops", error.message);
@@ -171,7 +172,10 @@ class SentInvitationCard extends Component {
                                 !isInvitationExpired(item.realizationDate) &&
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
                                     {this.renderFinalizeButton(item)}
-                                    {this.renderGoToChatButton(item)}
+                                    {/* {this.renderGoToChatButton(item)} */}
+                                    <GoToChatButton 
+                                        chatId={item.chatId}
+                                        buttonViewChatStyle={styles.buttonViewChat}/>
                                 </View>
                             }
                         </View>
