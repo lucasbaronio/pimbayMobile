@@ -168,7 +168,7 @@ class CreateInvitation extends Component {
     }
 
     onPressContextAction = (item) => {
-        this.setState({ contextActionSelected: item });
+        this.setState({ contextActionSelected: item, description: item.description });
     }
 
     renderEventInvitation = () => {
