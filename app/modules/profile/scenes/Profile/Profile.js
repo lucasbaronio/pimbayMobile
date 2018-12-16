@@ -74,7 +74,7 @@ class Profile extends React.Component {
                 </View>
             );
         } else {
-            let { avatar, biography, favoriteUsers, fullName, interests } = this.props.user;
+            let { avatar, biography, favoriteUsers, fullName, interests, openInvitationsCount } = this.props.user;
             var initials = fullName.match(/\b\w/g) || [];
             initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 
@@ -100,7 +100,7 @@ class Profile extends React.Component {
                             <Text style={styles.userInfoLabel}>Intereses</Text>
                         </View>
                         <View style={{ flex: 1, height: 60, alignItems: 'center' }} >
-                            <Text style={styles.bioStyle}>9</Text>
+                            <Text style={styles.bioStyle}>{openInvitationsCount}</Text>
                             <Text style={styles.userInfoLabel}>Invitaciones</Text>
                             <Text style={styles.userInfoLabel}>abiertas</Text>
                         </View>
