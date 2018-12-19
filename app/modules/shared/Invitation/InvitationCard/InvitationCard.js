@@ -10,7 +10,7 @@ import GoToChatButton from '../components/GoToChatButton';
 import { getDueTime, getCreatedTime } from "../../../shared/utils/date";
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
-const { confirmInvitation } = invitationsActions;
+const { confirmInvitation, getConfirmedUsers, getRejectedUsers } = invitationsActions;
 import { actions as profileActions } from "../../../profile/index";
 const { getUserData } = profileActions;
 
@@ -137,12 +137,26 @@ class InvitationCard extends Component {
         }
     }
 
+    onPressViewInvitation = () => {
+        if (Actions.currentScene !== 'InvitationDetails') {
+            const { item, getConfirmedUsers, getRejectedUsers } = this.props;
+            getRejectedUsers({ rejectedUsers: item.rejectedUsers }, this.onError);
+            getConfirmedUsers({ confirmedUsers: item.confirmedUsers }, () => {
+                Actions.push("InvitationDetails", { invitation: item });
+            }, this.onError);
+        }
+    }
+
     render() {
         const { item, event, iAmConfirmed } = this.props;
 
         return (
             <View>
-                <View style={styles.container}>
+                <TouchableOpacity 
+                    onPress={this.onPressViewInvitation} 
+                    activeOpacity={0.9} 
+                    style={styles.container} >
+                {/* <View style={styles.container}> */}
                     {this.renderUserInfoSection()}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
@@ -170,7 +184,8 @@ class InvitationCard extends Component {
                             </View>
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
+                </TouchableOpacity>
                 <View>
                     <Image
                         style={styles.dividerImageStyle}
@@ -199,4 +214,9 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserData, confirmInvitation })(InvitationCard);
+export default connect(mapStateToProps, { 
+    getUserData, 
+    confirmInvitation,
+    getConfirmedUsers,
+    getRejectedUsers,
+})(InvitationCard);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
-// import { Actions } from "react-native-router-flux";
+import { Actions } from "react-native-router-flux";
 
 import EventCardCreateInvitation from '../../../shared/Event/EventCardCreateInvitation';
 import ContextAction from '../../ContextAction';
@@ -20,7 +20,7 @@ import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
 import { actions as myInvitations } from "../../../myInvitations/index";
-const { getUserById } = myInvitations;
+const { getUserById, getConfirmedUsers, getRejectedUsers } = myInvitations;
 import { actions as chatActions } from "../../../chats/index";
 const { getChatDetail } = chatActions;
 
@@ -156,12 +156,26 @@ class SentInvitationCard extends Component {
         this.props.onPressViewEvent(item);
     };
 
+    onPressViewInvitation = () => {
+        if (Actions.currentScene !== 'InvitationDetails') {
+            const { item, getConfirmedUsers, getRejectedUsers } = this.props;
+            getRejectedUsers({ rejectedUsers: item.rejectedUsers }, this.onError);
+            getConfirmedUsers({ confirmedUsers: item.confirmedUsers }, () => {
+                Actions.push("InvitationDetails", { invitation: item });
+            }, this.onError);
+        }
+    }
+
     render() {
         const { item } = this.props;
 
         return (
             <View>
-                <View style={styles.container}>
+                <TouchableOpacity
+                    onPress={this.onPressViewInvitation} 
+                    activeOpacity={0.9} 
+                    style={styles.container} >
+                {/* <View style={styles.container}> */}
                     {this.renderUserPhotoSection(item)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
@@ -180,7 +194,8 @@ class SentInvitationCard extends Component {
                             }
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
+                </TouchableOpacity>
                 <View>
                     <Image
                         style={styles.dividerImageStyle}
@@ -209,4 +224,9 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserById, getChatDetail })(SentInvitationCard);
+export default connect(mapStateToProps, { 
+    getUserById, 
+    getChatDetail,
+    getConfirmedUsers,
+    getRejectedUsers,
+})(SentInvitationCard);

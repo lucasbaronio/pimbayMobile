@@ -12,6 +12,8 @@ let initialState = {
     isLoadingIn: false,
     isLoadingHeaderIn: false,
     isLoadingMoreIn: false,
+    confirmedUsersDetail: [],
+    rejectedUsersDetail: []
 };
 
 const invitationsReducer = (state = initialState, action) => {
@@ -227,6 +229,30 @@ const invitationsReducer = (state = initialState, action) => {
             );
 
             return { ...state, invitationsIn }
+        }
+
+        case t.EMPTY_CONFIRMED_USER: {
+            return { ...state, confirmedUsersDetail: [] }
+        }
+
+        case t.NEW_CONFIRMED_USER: {
+            let { data } = action;
+            let confirmedUsersDetail = state.confirmedUsersDetail;
+            confirmedUsersDetail.push(data);
+
+            return { ...state, confirmedUsersDetail }
+        }
+
+        case t.EMPTY_REJECTED_USER: {
+            return { ...state, rejectedUsersDetail: [] }
+        }
+
+        case t.NEW_REJECTED_USER: {
+            let { data } = action;
+            let rejectedUsersDetail = state.rejectedUsersDetail;
+            rejectedUsersDetail.push(data);
+
+            return { ...state, rejectedUsersDetail }
         }
 
         default:

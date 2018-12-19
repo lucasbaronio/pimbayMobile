@@ -114,3 +114,34 @@ export function rejectInvitation({ invitationId, chatId }, errorCB) {
         });
     };
 }
+
+export function getConfirmedUsers({ confirmedUsers }, successCB, errorCB) {
+    return (dispatch) => {
+        dispatch({ type: t.EMPTY_CONFIRMED_USER });
+        var cont = 0;
+        for (var i = 0; i < confirmedUsers.length; i++) {
+            const userId = confirmedUsers[i];
+            api.getUserById(userId, function (success, data, error) {
+                if (success) {
+                    dispatch({ type: t.NEW_CONFIRMED_USER, data });
+                    cont = cont + 1;
+                    if (cont === confirmedUsers.length) successCB();
+                } else if (error) errorCB(error);
+            });
+        }
+    };
+}
+
+export function getRejectedUsers({ rejectedUsers }, errorCB) {
+    return (dispatch) => {
+        dispatch({ type: t.EMPTY_REJECTED_USER });
+        for (var i = 0; i < rejectedUsers.length; i++) {
+            const userId = rejectedUsers[i];
+            api.getUserById(userId, function (success, data, error) {
+                if (success) {
+                    dispatch({ type: t.NEW_REJECTED_USER, data });
+                } else if (error) errorCB(error);
+            });
+        }
+    };
+}

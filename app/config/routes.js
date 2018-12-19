@@ -1,7 +1,7 @@
 import React from 'react';
-import { Image, Platform, Alert } from 'react-native';
+import { Image, Platform, Alert, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Scene, Router, Stack, Modal, Tabs, Actions } from 'react-native-router-flux';
+import { Scene, Router, Stack, Modal, Tabs, Actions, Drawer } from 'react-native-router-flux';
 
 import Splash from '../components/Splash/Splash';
 
@@ -35,6 +35,7 @@ import ChatMessenger from '../modules/chats/scenes/ChatMessenger';
 // InvitationInOut
 import InvitationsIn from '../modules/myInvitations/scenes/InvitationsIn';
 import InvitationsOut from '../modules/myInvitations/scenes/InvitationsOut';
+import InvitationDetails from '../modules/shared/Invitation/InvitationDetails';
 import inOutFocused from '../assets/icons/in-out-selected.png';
 import inOut from '../assets/icons/in-out.png';
 
@@ -182,6 +183,12 @@ class RouterApp extends React.Component {
                                 <Scene
                                     key={"Profile"}
                                     title="Perfil"
+                                    // drawer={true}
+                                    // contentComponent={
+                                    //     <Text>menu items go here</Text>
+                                    // }
+                                    // drawerWidth={250}
+                                    // drawerPosition="right"
                                     component={Profile}
                                     icon={({ focused }) => (
                                         <Image
@@ -197,8 +204,18 @@ class RouterApp extends React.Component {
                         </Stack>
                     </Scene>
                     <Scene key="EditProfile"
-                        title="Editar perfil" 
+                        title="Editar perfil"
                         component={EditProfile} />
+                    <Scene key="InvitationDetails"
+                        onEnter={({ invitation }) => {
+                            Actions.refresh({
+                                title: invitation.invitationType === invType.OPEN
+                                    ? "Invitación Abierta"
+                                    : "Invitación Dirigida",
+                                left: <CloseButton />,
+                            });
+                        }}
+                        component={InvitationDetails} />
                     <Scene key="SearchTimeline"
                         tabBarStyle={{ backgroundColor: '#ffffff' }}
                         activeTintColor='#000000'

@@ -21,7 +21,7 @@ class EventDetail extends Component {
     render() {
         const latitude = -34.9076753;
         const longitude = -56.2011147;
-        const { title, realizationDate, place, image, categories, description } = this.props.item;
+        const { title, realizationDate, place, image, categories, description, onPressCreateInvitation } = this.props.item;
 
         return (
             <ScrollView style={styles.scrollViewStyle}>
@@ -33,14 +33,17 @@ class EventDetail extends Component {
                     <Text style={styles.eventDateStyle}>{getCompleteFormalDate(realizationDate)}</Text>
                     <LocationButton place={place} ellipsizeText={false} />
                 </View>
-                <View style={styles.buttonView}>
-                    <ButtonElements
-                        backgroundColor={color.orange}
-                        onPress={this.onInvitePress}
-                        buttonStyle={styles.button}
-                        title='CREAR INVITACIÓN'
-                        fontSize={fontSize.text3} />
-                </View>
+                {
+                    !!onPressCreateInvitation &&
+                    <View style={styles.buttonView}>
+                        <ButtonElements
+                            backgroundColor={color.orange}
+                            onPress={this.onInvitePress}
+                            buttonStyle={styles.button}
+                            title='CREAR INVITACIÓN'
+                            fontSize={fontSize.text3} />
+                    </View>
+                }
                 <View style={styles.dividerLineViewStyle} />
                 <View style={styles.eventDetailContainerStyle}>
                     <Text style={styles.eventDetailHeaderStyle}>Detalles</Text>

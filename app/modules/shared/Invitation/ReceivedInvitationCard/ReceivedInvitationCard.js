@@ -10,7 +10,12 @@ import UserPhotoSection from '../components/UserPhotoSection';
 import { contextActionSize } from '../../constants';
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
-const { confirmInvitation, rejectInvitation } = invitationsActions;
+const { 
+    confirmInvitation, 
+    rejectInvitation, 
+    getConfirmedUsers, 
+    getRejectedUsers 
+} = invitationsActions;
 import { actions as chatActions } from "../../../chats/index";
 const { getChatDetail } = chatActions;
 
@@ -153,12 +158,26 @@ class ReceivedInvitationCard extends Component {
         }, this.onError);
     }
 
+    onPressViewInvitation = () => {
+        if (Actions.currentScene !== 'InvitationDetails') {
+            const { item, getConfirmedUsers, getRejectedUsers } = this.props;
+            getRejectedUsers({ rejectedUsers: item.rejectedUsers }, this.onError);
+            getConfirmedUsers({ confirmedUsers: item.confirmedUsers }, () => {
+                Actions.push("InvitationDetails", { invitation: item });
+            }, this.onError);
+        }
+    }
+
     render() {
         const { item, owner } = this.props;
 
         return (
             <View>
-                <View style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]}>
+                <TouchableOpacity 
+                    onPress={this.onPressViewInvitation} 
+                    activeOpacity={0.9} 
+                    style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]} >
+                {/* <View style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]}> */}
                     <UserPhotoSection 
                         userId={owner.id}
                         userAvatar={owner.avatar} 
@@ -177,7 +196,8 @@ class ReceivedInvitationCard extends Component {
                             }
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
+                </TouchableOpacity>
                 <View>
                     <Image
                         style={styles.dividerImageStyle}
@@ -208,4 +228,6 @@ export default connect(mapStateToProps, {
     confirmInvitation, 
     rejectInvitation,
     getChatDetail,
+    getConfirmedUsers,
+    getRejectedUsers,
 })(ReceivedInvitationCard);
