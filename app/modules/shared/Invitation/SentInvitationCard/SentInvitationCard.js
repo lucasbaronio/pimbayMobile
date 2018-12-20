@@ -31,7 +31,7 @@ class SentInvitationCard extends Component {
     renderDetailsInformation = (item) => {
         if (item.dueDate == null) {
             return this.renderDetailsWithoutDueDate(item);
-        } else {
+        } else { 
             return this.renderDetailsWithDueDate(item)
         }
     }
@@ -130,9 +130,9 @@ class SentInvitationCard extends Component {
     //     );
     // }
 
-    renderFinalizeButton = () => {
+    renderFinalizeButton = (item) => {
         return (
-            <TouchableOpacity onPress={() => { Alert.alert('Finalizar'); }}>
+            <TouchableOpacity onPress={this.onPressFinalize(item)}>
                 <View style={styles.buttonViewFinalize}>
                     <Image source={letterX} style={{ height: 10, width: 10 }} />
                     <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
@@ -154,6 +154,11 @@ class SentInvitationCard extends Component {
 
     onPressViewEvent = (item) => {
         this.props.onPressViewEvent(item);
+    };
+
+    onPressFinalize = (item) => {
+        console.log('onPressFinalize en SentInvitationCard');
+        this.props.onPressFinalize(item);
     };
 
     onPressViewInvitation = () => {
@@ -183,6 +188,7 @@ class SentInvitationCard extends Component {
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             {
+                                (item.state != 'DELETED') && 
                                 !isInvitationExpired(item.realizationDate) &&
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
                                     {this.renderFinalizeButton(item)}

@@ -145,3 +145,18 @@ export function getRejectedUsers({ rejectedUsers }, errorCB) {
         }
     };
 }
+
+export function finalizeInvitation(invitationId, errorCB) {
+    console.log('estoy a');
+    return (dispatch) => {
+        
+        //dispatch({ type: t.INVITATION_DELETED });
+        console.log('voy a finalizar invitacion');
+        api.finalizeInvitation(invitationId, function (success, data, error) {
+            if (success) {
+                console.log('finalizada');
+                dispatch({ type: t.INVITATION_DELETED, data });
+            } else if (error) errorCB(error);
+        });
+    };
+}

@@ -231,6 +231,13 @@ const invitationsReducer = (state = initialState, action) => {
             return { ...state, invitationsIn }
         }
 
+        case t.INVITATION_DELETED: {
+            let { data } = action;
+            console.log('estoy en reducer');
+            console.log(data);
+            return { ...state }
+        }
+
         case t.EMPTY_CONFIRMED_USER: {
             return { ...state, confirmedUsersDetail: [] }
         }

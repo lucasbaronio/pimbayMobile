@@ -3,7 +3,7 @@ import { View, FlatList, RefreshControl, ActivityIndicator, Alert, Text } from '
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { actions as invitationsActions } from "../../index";
-const { getInvitationsOut, getInvitationsOutRefresh } = invitationsActions;
+const { getInvitationsOut, getInvitationsOutRefresh, finalizeInvitation } = invitationsActions;
 
 import SentInvitationCard from "../../../shared/Invitation/SentInvitationCard";
 import styles from "./styles";
@@ -22,8 +22,14 @@ class InvitationsOut extends Component {
         Actions.push("EventDetail", { props: this.props, item });
     }
 
+    onPressFinalize = (item) => {
+        console.log('onPressFinalize en InvitationOut');
+        console.log(item);
+        finalizeInvitation(item.id, (error) => alert(error.message))
+    }
+
     renderItem = ({ item, index }) => {
-        return <SentInvitationCard item={item} onPressViewEvent={this.onPressViewEvent}/>
+        return <SentInvitationCard item={item} onPressViewEvent={this.onPressViewEvent} onPressFinalize={this.onPressFinalize}/>
     }
 
     render() {
@@ -69,4 +75,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getInvitationsOut, getInvitationsOutRefresh })(InvitationsOut);
+export default connect(mapStateToProps, { getInvitationsOut, getInvitationsOutRefresh, finalizeInvitation })(InvitationsOut);
