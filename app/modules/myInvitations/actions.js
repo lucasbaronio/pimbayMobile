@@ -147,7 +147,7 @@ export function getRejectedUsers({ rejectedUsers }, errorCB) {
 }
 
 export function finalizeInvitation(invitationId, successCB, errorCB) {
-    return async (dispatch) => {
+    return (dispatch) => {
         dispatch({ type: t.LOADING_INVITATION_DELETE });
         console.log(invitationId);
         api.finalizeInvitation(invitationId, function (success, data, error) {

@@ -22,7 +22,7 @@ import publicEarth from '../../../../assets/icons/earthColor.png';
 import { actions as myInvitations } from "../../../myInvitations/index";
 const { getUserById, getConfirmedUsers, getRejectedUsers, finalizeInvitation } = myInvitations;
 import { actions as chatActions } from "../../../chats/index";
-const { getChatDetail } = chatActions;
+const { getChatDetail, deleteChat } = chatActions;
 
 import { isInvitationExpired } from '../../utils/date';
 
@@ -157,8 +157,10 @@ class SentInvitationCard extends Component {
     };
 
     onPressFinalize = () => {
-        const { item, finalizeInvitation } = this.props;
-        finalizeInvitation(item.id, this.onError);
+        const { item, finalizeInvitation, deleteChat } = this.props;
+        finalizeInvitation(item.id, (data) => {
+            deleteChat(data);
+        }, this.onError);
     };
 
     onPressViewInvitation = () => {
@@ -233,6 +235,7 @@ function mapStateToProps(state, props) {
 export default connect(mapStateToProps, { 
     getUserById, 
     getChatDetail,
+    deleteChat,
     getConfirmedUsers,
     getRejectedUsers,
     finalizeInvitation

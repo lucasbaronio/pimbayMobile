@@ -55,6 +55,18 @@ function deleteChats(invitations) {
     }
 }
 
+export function deleteChat(invitation) {
+    return async (dispatch) => {
+        api.deleteChat(invitation.chatId, function (successDeleteChat, dataDeleteChat, errorDeleteChat) {
+            if (successDeleteChat) {
+                //console.log('exito al borrar chat');
+            } else if (errorDeleteChat) {
+                //console.log('error al borrar chat');
+            }
+        });
+    }
+}
+
 export function getChatMessages(chatId, errorCB) {
     return (dispatch) => {
         dispatch({ type: t.LOADING_CHAT_MESSAGES });
@@ -83,10 +95,10 @@ export function sendMessage({ message, chat }, errorCB) {
                 for (var i = 0; i < participants.length; i++) {
                     const { id, metadata, display_name } = participants[i];
                     if (id !== userId && metadata) {
-                        api.sendNotification({ 
-                            chat, 
-                            message: data.message, 
-                            userToPushToken: metadata.expoToken 
+                        api.sendNotification({
+                            chat,
+                            message: data.message,
+                            userToPushToken: metadata.expoToken
                         }, function (successSendNotif, data, errorSendNotif) {
                             if (successSendNotif) console.log("Se envió push a ", display_name);
                             if (errorSendNotif) errorCB(error);
