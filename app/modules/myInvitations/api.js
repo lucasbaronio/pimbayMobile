@@ -42,5 +42,5 @@ export function rejectInvitation({ invitationId, userId }, callback) {
 }
 
 export function finalizeInvitation(invitationId, callback) {
-    deleteMethod(API_FINALIZE_INVITATION(invitationId), callback);
+    deleteMethod(API_FINALIZE_INVITATION({ invitationId }), null, callback);
 }

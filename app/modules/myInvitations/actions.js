@@ -146,16 +146,14 @@ export function getRejectedUsers({ rejectedUsers }, errorCB) {
     };
 }
 
-export function finalizeInvitation(invitationId, errorCB) {
-    console.log('estoy a');
-    return (dispatch) => {
-        
-        //dispatch({ type: t.INVITATION_DELETED });
-        console.log('voy a finalizar invitacion');
+export function finalizeInvitation(invitationId, successCB, errorCB) {
+    return async (dispatch) => {
+        dispatch({ type: t.LOADING_INVITATION_DELETE });
+        console.log(invitationId);
         api.finalizeInvitation(invitationId, function (success, data, error) {
             if (success) {
-                console.log('finalizada');
                 dispatch({ type: t.INVITATION_DELETED, data });
+                successCB(data);
             } else if (error) errorCB(error);
         });
     };

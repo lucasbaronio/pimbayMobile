@@ -20,7 +20,7 @@ import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
 import { actions as myInvitations } from "../../../myInvitations/index";
-const { getUserById, getConfirmedUsers, getRejectedUsers } = myInvitations;
+const { getUserById, getConfirmedUsers, getRejectedUsers, finalizeInvitation } = myInvitations;
 import { actions as chatActions } from "../../../chats/index";
 const { getChatDetail } = chatActions;
 
@@ -130,9 +130,9 @@ class SentInvitationCard extends Component {
     //     );
     // }
 
-    renderFinalizeButton = (item) => {
+    renderFinalizeButton = () => {
         return (
-            <TouchableOpacity onPress={this.onPressFinalize(item)}>
+            <TouchableOpacity onPress={this.onPressFinalize}>
                 <View style={styles.buttonViewFinalize}>
                     <Image source={letterX} style={{ height: 10, width: 10 }} />
                     <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
@@ -156,9 +156,9 @@ class SentInvitationCard extends Component {
         this.props.onPressViewEvent(item);
     };
 
-    onPressFinalize = (item) => {
-        console.log('onPressFinalize en SentInvitationCard');
-        this.props.onPressFinalize(item);
+    onPressFinalize = () => {
+        const { item, finalizeInvitation } = this.props;
+        finalizeInvitation(item.id, this.onError);
     };
 
     onPressViewInvitation = () => {
@@ -191,7 +191,7 @@ class SentInvitationCard extends Component {
                                 (item.state != 'DELETED') && 
                                 !isInvitationExpired(item.realizationDate) &&
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
-                                    {this.renderFinalizeButton(item)}
+                                    {this.renderFinalizeButton()}
                                     {/* {this.renderGoToChatButton(item)} */}
                                     <GoToChatButton 
                                         chatId={item.chatId}
@@ -235,4 +235,5 @@ export default connect(mapStateToProps, {
     getChatDetail,
     getConfirmedUsers,
     getRejectedUsers,
+    finalizeInvitation
 })(SentInvitationCard);

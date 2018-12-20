@@ -12,6 +12,7 @@ export const ADD_USER = 'invitations/ADD_USER';
 export const INVITATION_CONFIRMED = 'invitations/INVITATION_CONFIRMED';
 export const INVITATION_REJECTED = 'invitations/INVITATION_REJECTED';
 export const INVITATION_DELETED = 'invitations/INVITATION_DELETED';
+export const LOADING_INVITATION_DELETE = 'invitations/LOADING_INVITATION_DELETE';
 export const EMPTY_CONFIRMED_USER = 'invitations/EMPTY_CONFIRMED_USER';
 export const NEW_CONFIRMED_USER = 'invitations/NEW_CONFIRMED_USER';
 export const EMPTY_REJECTED_USER = 'invitations/EMPTY_REJECTED_USER';
