@@ -12,6 +12,7 @@ let initialState = {
     isLoadingIn: false,
     isLoadingHeaderIn: false,
     isLoadingMoreIn: false,
+    isDeletingInvitation: false,
     confirmedUsersDetail: [],
     rejectedUsersDetail: []
 };
@@ -232,12 +233,12 @@ const invitationsReducer = (state = initialState, action) => {
         }
 
         case t.LOADING_INVITATION_DELETE: {
-            return { ...state }
+            return { ...state, isDeletingInvitation: true }
         }
 
         case t.INVITATION_DELETED: {
             let { data } = action;
-            return { ...state }
+            return { ...state, isDeletingInvitation: false }
         }
 
         case t.EMPTY_CONFIRMED_USER: {
