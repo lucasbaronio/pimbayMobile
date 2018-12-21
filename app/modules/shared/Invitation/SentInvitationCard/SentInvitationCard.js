@@ -37,10 +37,12 @@ class SentInvitationCard extends Component {
     }
 
     renderDetailsWithDueDate = (item) => {
+        const { invitationDeleted } = this.props;
         return (
             <View style={{ marginTop: 2, flexDirection: 'row' }}>
                 <Text style={styles.createdTimeStyle}>{getInvSentTime(item.dateCreated)}</Text>
                 {
+                    !invitationDeleted &&
                     (item.state != 'DELETED') &&
                     <Image
                         style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
@@ -178,7 +180,7 @@ class SentInvitationCard extends Component {
     }
 
     render() {
-        const { item, isDeletingInvitation } = this.props;
+        const { item, isDeletingInvitation, invitationDeleted } = this.props;
         return (
             <View>
                 <TouchableOpacity
@@ -193,6 +195,7 @@ class SentInvitationCard extends Component {
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             {
+                                !invitationDeleted &&
                                 (item.state != 'DELETED') &&
                                 !isInvitationExpired(item.realizationDate) &&
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
@@ -230,6 +233,8 @@ function mapStateToProps(state, props) {
         // firstUserInvited: item.invitationType === invType.DIRECTED
         //     ? state.invitationsReducer.users.filter(user => user.id === item.invitedUsers[0])[0]
         //     : null,
+        isDeletingInvitation: state.invitationsReducer.isDeletingInvitation,
+        invitationDeleted: state.invitationsReducer.invitationDeleted,
         contextAction: item.contextActionId
             ? state.invitationsReducer.contextActionsFromInvitations
                 .filter(contextAction => contextAction.id === item.contextActionId)[0]
