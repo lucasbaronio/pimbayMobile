@@ -1,9 +1,11 @@
 
 export function get(uri, callback) {
+    // console.log("uri", uri);
     return fetch(uri/*, {
         headers: { Authorization: `Bearer ${accessToken}`},
     }*/)
         .then(response => {
+            // console.log("get-response", response);
             // if (response.status >= 200 && response.status < 300) {
             if (response.ok) {
                 return response.json();
@@ -14,9 +16,11 @@ export function get(uri, callback) {
             }
         })
         .then(data => {
+            // console.log("get-data", data);
             callback(true, data, null)
         })
         .catch((error) => {
+            // console.log("get-error", error);
             callback(false, null, error)
         });
 }

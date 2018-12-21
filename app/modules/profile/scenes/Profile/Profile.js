@@ -63,6 +63,7 @@ class Profile extends React.Component {
     }
 
     onSuccess = () => {
+        console.log("dljfalskfals");
         Actions.reset('root');
     }
 

@@ -17,7 +17,7 @@ export function register(user, successCB, errorCB) {
                         dispatch({type: tProfile.USER_INFO_AVAILABLE, data, isLoggedUser: true });
                         successCB(data);
                     }
-                    else if (errorCreateUser) { console.log("adbkjasasdlhjas"); errorCB(errorCreateUser) }
+                    else if (errorCreateUser) errorCB(errorCreateUser)
                 });
             }
             else if (errorRegister) errorCB(errorRegister)
@@ -79,9 +79,9 @@ export function checkLoginStatus(callback) {
     return (dispatch) => {
         auth.onAuthStateChanged((user) => {
             let isLoggedIn = (user !== null);
-
+            
             if (isLoggedIn){
-                api.getLoggedUser(user, function (success, data, error) {
+                api.getLoggedUser(user.email, function (success, data, error) {
                     if (success) {
                         const { exists, user } = data;
                         if (exists) {
@@ -123,6 +123,6 @@ export function userLoggedInToCache(successCB) {
                 else if (error) dispatch({ type: t.ONLY_USER_ID_INFO, data: userId });
                 successCB();
             });
-        }
+        } else successCB();
     };
 }

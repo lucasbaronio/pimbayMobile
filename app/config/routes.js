@@ -78,6 +78,7 @@ class RouterApp extends React.Component {
         let _this = this;
         this.props.userLoggedInToCache(() => {
             store.dispatch(checkLoginStatus((exist, isLoggedIn) => {
+                // console.log("isLoggedIn", isLoggedIn);
                 _this.setState({ isReady: true, /*exist, */isLoggedIn});
             }));
         });
@@ -112,7 +113,7 @@ class RouterApp extends React.Component {
                                 swipeEnabled={false}
                             >
                                 <Scene
-                                    initial
+                                    // initial
                                     key="Timeline"
                                     title={(Platform.OS === 'ios') ? "Pimbay" : null}
                                     component={withNotificationExpoHOC(withActionSheetInvitationHOC(Timeline))}
@@ -125,6 +126,9 @@ class RouterApp extends React.Component {
                                             style={{ width: 28, height: 28 }}
                                             source={focused ? houseFocused : house} />
                                     )}
+                                    // onEnter={() => {
+                                    //     this.props.getChatList(() => { }, (error) => Alert.alert("Oops", error.message));
+                                    // }}
                                 />
                                 
                                 <Tabs

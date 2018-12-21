@@ -25,6 +25,7 @@ class Timeline extends React.Component {
 
     componentDidMount() {
         const { start } = this.state;
+        // Sacar para afueraaa!!
         this.props.getInvitations(start, (error) => alert(error.message));
     }
 

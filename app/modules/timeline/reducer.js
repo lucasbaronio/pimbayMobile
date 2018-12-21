@@ -187,7 +187,7 @@ const timelineReducer = (state = initialState, action) => {
 
         case t.FAVORITE_USERS_AVAILABLE: {
             let { data } = action;
-            let favoriteUsers = data
+            let favoriteUsers = data;
             return {
                 ...state, favoriteUsers,
                 isLoadingFavoriteUsers: false,
@@ -292,7 +292,6 @@ const timelineReducer = (state = initialState, action) => {
 
         case t.OPEN_INVITATION_CONFIRMED: {
             let { data } = action;
-            console.log(data);
 
             let invitations = state.invitations.map((invitation, index) =>
                 invitation.id === data.invitation.id 

@@ -36,8 +36,6 @@ class Welcome extends React.Component {
     }
 
     onSuccess({ hasUserName, user}) {
-        console.log('hasUserName', hasUserName);
-        console.log('user', user);
         if (hasUserName) Actions.Main()
         else Actions.CompleteProfile({ user })
     }
