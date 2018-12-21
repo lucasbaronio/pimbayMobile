@@ -23,7 +23,7 @@ class InvitationsOut extends Component {
     }
 
     renderItem = ({ item, index }) => {
-        return <SentInvitationCard item={item} onPressViewEvent={this.onPressViewEvent}/>
+        return <SentInvitationCard item={item} onPressViewEvent={this.onPressViewEvent} />
     }
 
     render() {

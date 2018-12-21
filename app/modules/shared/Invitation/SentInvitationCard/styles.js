@@ -81,6 +81,10 @@ const styles = StyleSheet.create({
         height: 22, 
         width: 22
     },
+    deletingInvitation: {
+        justifyContent: 'center',
+        height: 42
+    }
 });
 
 export { fontSize, windowWidth };
