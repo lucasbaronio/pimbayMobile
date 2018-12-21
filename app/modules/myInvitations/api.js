@@ -4,9 +4,10 @@ import {
     API_GET_USER_BY_ID,
     API_GET_CONTEXT_ACTION_BY_ID,
     API_GET_EVENT_BY_ID,
-    API_RESPONSE_INVITATION
+    API_RESPONSE_INVITATION,
+    API_FINALIZE_INVITATION
 } from './constants';
-import { get, put } from '../globalApi';
+import { get, put, deleteMethod } from '../globalApi';
 
 export function getInvitationsIn({ userId }, callback) {
     get(API_INVITATIONS_IN({ userId }), callback);
@@ -38,4 +39,8 @@ export function rejectInvitation({ invitationId, userId }, callback) {
     put(API_RESPONSE_INVITATION({ invitationId, userId }), {
         response: false
     }, callback);
+}
+
+export function finalizeInvitation(invitationId, callback) {
+    deleteMethod(API_FINALIZE_INVITATION({ invitationId }), null, callback);
 }

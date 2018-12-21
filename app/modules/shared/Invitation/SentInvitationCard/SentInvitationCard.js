@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 
@@ -20,9 +20,9 @@ import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png'
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
 import { actions as myInvitations } from "../../../myInvitations/index";
-const { getUserById, getConfirmedUsers, getRejectedUsers } = myInvitations;
+const { getUserById, getConfirmedUsers, getRejectedUsers, finalizeInvitation } = myInvitations;
 import { actions as chatActions } from "../../../chats/index";
-const { getChatDetail } = chatActions;
+const { getChatDetail, deleteChat } = chatActions;
 
 import { isInvitationExpired } from '../../utils/date';
 
@@ -37,15 +37,20 @@ class SentInvitationCard extends Component {
     }
 
     renderDetailsWithDueDate = (item) => {
+        const { invitationDeleted } = this.props;
         return (
             <View style={{ marginTop: 2, flexDirection: 'row' }}>
                 <Text style={styles.createdTimeStyle}>{getInvSentTime(item.dateCreated)}</Text>
-                <Image
-                    style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
-                    resizeMode='center'
-                    source={timePassing} />
+                {
+                    !invitationDeleted &&
+                    (item.state != 'DELETED') &&
+                    <Image
+                        style={{ alignSelf: 'flex-start', height: 16, width: 16, marginLeft: 5 }}
+                        resizeMode='center'
+                        source={timePassing} />
+                }
                 <Text style={styles.dueDateStyle}>
-                    {getDueTime(item.dueDate)}
+                    {(item.state != 'DELETED') ? getDueTime(item.dueDate) : 'Invitación cancelada'}
                 </Text>
             </View>
         );
@@ -92,29 +97,29 @@ class SentInvitationCard extends Component {
         // const { firstUserInvited } = this.props;
         return (
             (item.invitationType === invType.DIRECTED)
-            // ? <UserPhotoSection
-            //     userId={firstUserInvited.id}
-            //     userAvatar={firstUserInvited ? firstUserInvited.avatar : null}
-            //     fullName={firstUserInvited ? firstUserInvited.fullName : ""}
-            //     icon={sentIcon}
-            // />
-            ? <View style={{flex: 1, alignItems: 'center', marginTop: 20, margin: 10}}>
-                <Image 
-                source={sentIcon} 
-                style={{ height: 50, width: 50 }} />
-            </View>
-            : <View style={{flex: 1, alignItems: 'center', marginTop: 20, margin: 10}}>
-                <Image 
-                source={publicEarth} 
-                style={{ height: 50, width: 50 }} />
-            </View>
+                // ? <UserPhotoSection
+                //     userId={firstUserInvited.id}
+                //     userAvatar={firstUserInvited ? firstUserInvited.avatar : null}
+                //     fullName={firstUserInvited ? firstUserInvited.fullName : ""}
+                //     icon={sentIcon}
+                // />
+                ? <View style={{ flex: 1, alignItems: 'center', marginTop: 20, margin: 10 }}>
+                    <Image
+                        source={sentIcon}
+                        style={{ height: 50, width: 50 }} />
+                </View>
+                : <View style={{ flex: 1, alignItems: 'center', marginTop: 20, margin: 10 }}>
+                    <Image
+                        source={publicEarth}
+                        style={{ height: 50, width: 50 }} />
+                </View>
         );
     }
 
     renderUserNameIfDirected = (item) => {
         return (
             <Text style={styles.userNameStyle}>
-                { item.invitationType == 'OPEN' ? "Invitación abierta" : "Invitación dirigida" }
+                {item.invitationType == 'OPEN' ? "Invitación abierta" : "Invitación dirigida"}
             </Text>
         )
     }
@@ -132,12 +137,13 @@ class SentInvitationCard extends Component {
 
     renderFinalizeButton = () => {
         return (
-            <TouchableOpacity onPress={() => { Alert.alert('Finalizar'); }}>
+            <TouchableOpacity onPress={this.onPressFinalize}>
                 <View style={styles.buttonViewFinalize}>
                     <Image source={letterX} style={{ height: 10, width: 10 }} />
                     <Text style={[styles.button, { marginLeft: 10 }]}>FINALIZAR</Text>
                 </View>
             </TouchableOpacity>
+
         );
     }
 
@@ -156,6 +162,13 @@ class SentInvitationCard extends Component {
         this.props.onPressViewEvent(item);
     };
 
+    onPressFinalize = () => {
+        const { item, finalizeInvitation, deleteChat } = this.props;
+        finalizeInvitation(item.id, (data) => {
+            deleteChat(data);
+        }, this.onError);
+    };
+
     onPressViewInvitation = () => {
         if (Actions.currentScene !== 'InvitationDetails') {
             const { item, getConfirmedUsers, getRejectedUsers } = this.props;
@@ -167,15 +180,14 @@ class SentInvitationCard extends Component {
     }
 
     render() {
-        const { item } = this.props;
-
+        const { item, isDeletingInvitation, invitationDeleted } = this.props;
         return (
             <View>
                 <TouchableOpacity
-                    onPress={this.onPressViewInvitation} 
-                    activeOpacity={0.9} 
+                    onPress={this.onPressViewInvitation}
+                    activeOpacity={0.9}
                     style={styles.container} >
-                {/* <View style={styles.container}> */}
+                    {/* <View style={styles.container}> */}
                     {this.renderUserPhotoSection(item)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
@@ -183,18 +195,26 @@ class SentInvitationCard extends Component {
                             {this.renderDetailsInformation(item)}
                             {this.renderDescriptionInformation(item)}
                             {
+                                !invitationDeleted &&
+                                (item.state != 'DELETED') &&
                                 !isInvitationExpired(item.realizationDate) &&
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15 }}>
-                                    {this.renderFinalizeButton(item)}
+                                    {
+                                        !!isDeletingInvitation
+                                            ? <View style={styles.deletingInvitation}>
+                                                <ActivityIndicator color="orange" />
+                                            </View>
+                                            : this.renderFinalizeButton()
+                                    }
                                     {/* {this.renderGoToChatButton(item)} */}
-                                    <GoToChatButton 
+                                    <GoToChatButton
                                         chatId={item.chatId}
-                                        buttonViewChatStyle={styles.buttonViewChat}/>
+                                        buttonViewChatStyle={styles.buttonViewChat} />
                                 </View>
                             }
                         </View>
                     </View>
-                {/* </View> */}
+                    {/* </View> */}
                 </TouchableOpacity>
                 <View>
                     <Image
@@ -213,6 +233,8 @@ function mapStateToProps(state, props) {
         // firstUserInvited: item.invitationType === invType.DIRECTED
         //     ? state.invitationsReducer.users.filter(user => user.id === item.invitedUsers[0])[0]
         //     : null,
+        isDeletingInvitation: state.invitationsReducer.isDeletingInvitation,
+        invitationDeleted: state.invitationsReducer.invitationDeleted,
         contextAction: item.contextActionId
             ? state.invitationsReducer.contextActionsFromInvitations
                 .filter(contextAction => contextAction.id === item.contextActionId)[0]
@@ -224,9 +246,11 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { 
-    getUserById, 
+export default connect(mapStateToProps, {
+    getUserById,
     getChatDetail,
+    deleteChat,
     getConfirmedUsers,
     getRejectedUsers,
+    finalizeInvitation
 })(SentInvitationCard);
