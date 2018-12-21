@@ -129,7 +129,7 @@ export function getConfirmedUsers({ confirmedUsers }, successCB, errorCB) {
                 } else if (error) errorCB(error);
             });
         }
-        if (cont === 0) successCB();
+        if (confirmedUsers.length === 0) successCB();
     };
 }
 
