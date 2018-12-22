@@ -5,9 +5,14 @@ import {
     API_GET_CONTEXT_ACTION_BY_ID,
     API_GET_EVENT_BY_ID,
     API_RESPONSE_INVITATION,
-    API_FINALIZE_INVITATION
+    API_FINALIZE_INVITATION,
+    API_GET_INVITATION
 } from './constants';
 import { get, put, deleteMethod } from '../globalApi';
+
+export function getInvitation({ invitationId }, callback) {
+    get(API_GET_INVITATION({ invitationId }), callback);
+}
 
 export function getInvitationsIn({ userId }, callback) {
     get(API_INVITATIONS_IN({ userId }), callback);

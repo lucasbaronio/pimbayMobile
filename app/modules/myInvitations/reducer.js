@@ -266,6 +266,20 @@ const invitationsReducer = (state = initialState, action) => {
             return { ...state, rejectedUsersDetail }
         }
 
+        case t.ADD_EVENT_CONTEXTACTION_USER_DI: {
+            let { data } = action;
+            const { context_action, user, event } = data;
+            let eventsFromInvitations = state.eventsFromInvitations;
+            let contextActionsFromInvitations = state.contextActionsFromInvitations;
+            let users = state.users;
+            if(context_action) contextActionsFromInvitations.push(context_action);
+            if(event) eventsFromInvitations.push(event);
+            users.push(user);
+
+
+            return { ...state, eventsFromInvitations, contextActionsFromInvitations, users }
+        }
+
         default:
             return state;
     }

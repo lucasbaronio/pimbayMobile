@@ -6,7 +6,7 @@ import DefaultPopup from 'react-native-push-notification-popup';
 import notificationRouter from './notificationRouter';
 
 import { actions as invitationsActions } from "../../../myInvitations/index";
-const { getInvitationsInRefresh } = invitationsActions;
+const { getInvitation, getConfirmedUsers, getRejectedUsers } = invitationsActions;
 import { actions as chatActions } from "../../../chats/index";
 const { getChatDetail } = chatActions;
 
@@ -14,7 +14,7 @@ const { getChatDetail } = chatActions;
 import registerForPushNotificationsAsync from './registerForPushNotificationsAsync';
 
 const withNotificationExpoHOC = WrappedComponent =>
-    connect(null, { getInvitationsInRefresh, getChatDetail })(
+    connect(null, { getInvitation, getConfirmedUsers, getRejectedUsers, getChatDetail })(
         class extends React.Component {
 
             componentDidMount() {

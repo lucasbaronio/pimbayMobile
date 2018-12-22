@@ -5,7 +5,8 @@ import {
     API_CONTEXT_ACTION_BY_ID as apiGetContextActionById,
     API_EVENT_BY_ID as apiGetEventById,
     API_RESPONSE_INVITATION as apiResponseInvitation,
-    API_FINALIZE_INVITATION as apiFinalizeInvitation
+    API_FINALIZE_INVITATION as apiFinalizeInvitation,
+    API_GET_INVITATION as apiGetInvitation
 } from "../../config/constants";
 
 export const NAME = 'invitation';
@@ -17,3 +18,4 @@ export const API_GET_CONTEXT_ACTION_BY_ID = apiGetContextActionById;
 export const API_GET_EVENT_BY_ID = apiGetEventById;
 export const API_RESPONSE_INVITATION = apiResponseInvitation;
 export const API_FINALIZE_INVITATION = apiFinalizeInvitation;
+export const API_GET_INVITATION = apiGetInvitation;

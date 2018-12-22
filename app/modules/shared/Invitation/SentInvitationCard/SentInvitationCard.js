@@ -15,7 +15,6 @@ import styles from "./styles";
 import sentIcon from '../../../../assets/icons/sentIcon.png';
 import timePassing from '../../../../assets/icons/time-passing.png';
 import letterX from '../../../../assets/icons/letter-x.png';
-// import rightArrow from '../../../../assets/icons/right-arrow.png';
 import dividerOpenInvitation from '../../../../assets/dividerOpenInvitation.png';
 import publicEarth from '../../../../assets/icons/earthColor.png';
 
@@ -124,17 +123,6 @@ class SentInvitationCard extends Component {
         )
     }
 
-    // renderGoToChatButton = () => {
-    //     return (
-    //         <TouchableOpacity 
-    //             style={styles.buttonViewChat}
-    //             onPress={() => { this.onPressChat() }}>
-    //                 <Text style={[styles.button, { marginRight: 10 }]}>IR AL CHAT</Text>
-    //                 <Image source={rightArrow} style={{ height: 10, width: 10 }} />
-    //         </TouchableOpacity>
-    //     );
-    // }
-
     renderFinalizeButton = () => {
         return (
             <TouchableOpacity onPress={this.onPressFinalize}>
@@ -146,13 +134,6 @@ class SentInvitationCard extends Component {
 
         );
     }
-
-    // onPressChat = () => {
-    //     const { item, getChatDetail } = this.props;
-    //     getChatDetail(item.chatId, ({ group_channel }) => {
-    //         Actions.push("ChatMessenger", { chat: group_channel });
-    //     }, this.onError);
-    // }
 
     onError(error) {
         Alert.alert("Oops", error.message);
@@ -187,7 +168,6 @@ class SentInvitationCard extends Component {
                     onPress={this.onPressViewInvitation}
                     activeOpacity={0.9}
                     style={styles.container} >
-                    {/* <View style={styles.container}> */}
                     {this.renderUserPhotoSection(item)}
                     <View style={styles.invitationInfoSectionContainer}>
                         <View style={{ justifyContent: 'center' }}>
@@ -206,7 +186,6 @@ class SentInvitationCard extends Component {
                                             </View>
                                             : this.renderFinalizeButton()
                                     }
-                                    {/* {this.renderGoToChatButton(item)} */}
                                     <GoToChatButton
                                         chatId={item.chatId}
                                         buttonViewChatStyle={styles.buttonViewChat} />
@@ -214,7 +193,6 @@ class SentInvitationCard extends Component {
                             }
                         </View>
                     </View>
-                    {/* </View> */}
                 </TouchableOpacity>
                 <View>
                     <Image

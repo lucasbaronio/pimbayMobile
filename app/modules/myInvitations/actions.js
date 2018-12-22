@@ -3,6 +3,20 @@ import * as tTimeline from '../timeline/actionTypes';
 import * as api from './api';
 import * as apiChat from '../chats/api';
 import { AsyncStorage } from "react-native";
+import { invitationType } from '../shared/constants';
+
+export function getInvitation(invitationId, successCB, errorCB) {
+    return async (dispatch) => {
+        api.getInvitation({ invitationId }, function (success, data, error) {
+            if (success) {
+                if (data.invitation.invitationType === invitationType.DIRECTED)
+                    dispatch({ type: t.ADD_EVENT_CONTEXTACTION_USER_DI, data });
+                else dispatch({ type: tTimeline.ADD_EVENT_CONTEXTACTION_USER_OI, data });
+                successCB(data.invitation);
+            } else if (error) errorCB(error);
+        });
+    };
+}
 
 export function getInvitationsOut(errorCB) {
     return async (dispatch) => {
@@ -150,7 +164,6 @@ export function getRejectedUsers({ rejectedUsers }, errorCB) {
 export function finalizeInvitation(invitationId, successCB, errorCB) {
     return (dispatch) => {
         dispatch({ type: t.LOADING_INVITATION_DELETE });
-        console.log(invitationId);
         api.finalizeInvitation(invitationId, function (success, data, error) {
             if (success) {
                 dispatch({ type: t.INVITATION_DELETED, data });

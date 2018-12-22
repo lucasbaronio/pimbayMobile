@@ -177,7 +177,6 @@ class ReceivedInvitationCard extends Component {
                     onPress={this.onPressViewInvitation} 
                     activeOpacity={0.9} 
                     style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]} >
-                {/* <View style={[styles.container, item.iAmOut && styles.iAmOutBackgroundColor]}> */}
                     <UserPhotoSection 
                         userId={owner.id}
                         userAvatar={owner.avatar} 
@@ -196,7 +195,6 @@ class ReceivedInvitationCard extends Component {
                             }
                         </View>
                     </View>
-                {/* </View> */}
                 </TouchableOpacity>
                 <View>
                     <Image

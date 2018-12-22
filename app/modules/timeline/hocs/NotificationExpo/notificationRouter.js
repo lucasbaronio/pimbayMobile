@@ -1,19 +1,46 @@
 import { Actions } from 'react-native-router-flux';
 import * as t from './actionTypes';
 
-export default function notificationRouter({ notification, getInvitationsInRefresh, getChatDetail }) {
+export default function notificationRouter({ 
+    notification, getChatDetail, 
+    getInvitation, getConfirmedUsers, getRejectedUsers
+}) {
     const { data } = notification;
     if(data.actionType) {
         switch (data.actionType) {
             case t.NEW_DIRECT_INVITATION: {
-                getInvitationsInRefresh((error) => alert(error.message), 
-                    () => { Actions.push("InvitationsInOut") }
-                );
+                getInvitation(data.id, (invitation) => {
+                    getRejectedUsers({ rejectedUsers: invitation.rejectedUsers }, this.onError);
+                    getConfirmedUsers({ confirmedUsers: invitation.confirmedUsers }, () => {
+                        Actions.push("InvitationDetails", { invitation });
+                    }, this.onError);
+                }, this.onError);
                 break;
             }
+
             case t.NEW_CHAT_MESSAGE: {
                 getChatDetail(data.id, ({ group_channel }) => {
                     Actions.push("ChatMessenger", { chat: group_channel });
+                }, this.onError);
+                break;
+            }
+
+            case t.USER_CONFIRMS_ASSISTANCE: {
+                getInvitation(data.id, (invitation) => {
+                    getRejectedUsers({ rejectedUsers: invitation.rejectedUsers }, this.onError);
+                    getConfirmedUsers({ confirmedUsers: invitation.confirmedUsers }, () => {
+                        Actions.push("InvitationDetails", { invitation });
+                    }, this.onError);
+                }, this.onError);
+                break;
+            }
+
+            case t.USER_LEFT_INVITATION: {
+                getInvitation(data.id, (invitation) => {
+                    getRejectedUsers({ rejectedUsers: invitation.rejectedUsers }, this.onError);
+                    getConfirmedUsers({ confirmedUsers: invitation.confirmedUsers }, () => {
+                        Actions.push("InvitationDetails", { invitation });
+                    }, this.onError);
                 }, this.onError);
                 break;
             }
@@ -23,4 +50,8 @@ export default function notificationRouter({ notification, getInvitationsInRefre
         }
     }
     
+}
+
+onError = (error) => {
+    alert(error.message);
 }

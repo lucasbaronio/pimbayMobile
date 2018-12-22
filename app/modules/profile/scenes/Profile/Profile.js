@@ -197,7 +197,6 @@ function mapStateToProps(state, props) {
     const { 
         isLoadingUser, loggedUser, userToShow, 
         isLoadingAddFavouriteUser, 
-        // favouriteUsersFromLoggedUser 
     } = state.profileReducer;
     return {
         isLoadingUser,
@@ -208,7 +207,6 @@ function mapStateToProps(state, props) {
                             loggedUser.favoriteUsers &&
                             loggedUser.favoriteUsers.indexOf(userToShow.id) > -1 
                         : false,
-        // favouriteUsers: favouriteUsersFromLoggedUser
     }
 }
 

@@ -17,3 +17,4 @@ export const EMPTY_CONFIRMED_USER = 'invitations/EMPTY_CONFIRMED_USER';
 export const NEW_CONFIRMED_USER = 'invitations/NEW_CONFIRMED_USER';
 export const EMPTY_REJECTED_USER = 'invitations/EMPTY_REJECTED_USER';
 export const NEW_REJECTED_USER = 'invitations/NEW_REJECTED_USER';
+export const ADD_EVENT_CONTEXTACTION_USER_DI = 'invitations/ADD_EVENT_CONTEXTACTION_USER_DI';
