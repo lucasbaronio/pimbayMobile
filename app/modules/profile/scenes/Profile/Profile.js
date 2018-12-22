@@ -1,15 +1,26 @@
 import React from 'react';
-import { View, Text, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
+import { View, Text, ActivityIndicator, Alert, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Avatar, Button as ButtonElements } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import GridView from 'react-native-super-grid';
+
+import AvatarUser from '../../../shared/AvatarUser';
 
 import { actions as profileActions } from "../../index";
-const { addFavouriteUser, removeFavouriteUser, signOut } = profileActions;
+const { 
+    addFavouriteUser, removeFavouriteUser, 
+    signOut, getFavouriteUsers, getUserData 
+} = profileActions;
 
-import styles, { color, fontSize } from "./styles"
+import styles, { color, fontSize, windowWidth } from "./styles"
 
 class Profile extends React.Component {
+
+    state = {
+        selected: "INTERESTS",
+        favouriteUsers: [],
+    }
 
     renderInterests(interests) {
         return interests.map((item, key) => {
@@ -51,20 +62,53 @@ class Profile extends React.Component {
     onRemoveFavouriteUser = () => {
         const { removeFavouriteUser, user } = this.props;
         removeFavouriteUser(user.mail, this.onError);
-        //Alert.alert("Oops", "Aún no es posible eliminar un favorito.");
-    }
-
-    onError(error) {
-        Alert.alert("Oops", error.message);
     }
 
     onSignOut = () => {
         this.props.signOut(this.onSuccess, this.onError)
     }
 
+    onError(error) {
+        Alert.alert("Oops", error.message);
+    }
+
     onSuccess = () => {
-        console.log("dljfalskfals");
         Actions.reset('root');
+    }
+
+    onPressInterests = () => {
+        this.setState({ selected: "INTERESTS" });
+    }
+
+    onPressFavouriteUsers = () => {
+        const { getFavouriteUsers, user } = this.props;
+        getFavouriteUsers(user.id, (data) => {
+            this.setState({ selected: "FAVOURITE_USERS", favouriteUsers: data })
+        }, this.onError);
+    }
+
+    renderItem = (item) => {
+        return (
+            <AvatarUser
+                item={{ 
+                    ...item, 
+                    fullName: item.fullname ? item.fullname : item.fullName,
+                    userName: item.username ? item.username : item.userName
+                }}
+                // item={item}
+                selectable={false}
+                onPressButtom={this.onPressUserAvatar}
+            />
+        )
+    }
+
+    onPressUserAvatar = (user) => {
+        const { getUserData } = this.props;
+        getUserData(user.id, this.onSuccessUserAvatar, this.onError);
+    }
+
+    onSuccessUserAvatar(isLoggedUser) {
+        Actions.push("ProfileUser", { isNotLoggedUser: !isLoggedUser });
     }
 
     render() {
@@ -75,9 +119,11 @@ class Profile extends React.Component {
                 </View>
             );
         } else {
-            let { avatar, biography, favoriteUsers, fullName, interests, openInvitationsCount } = this.props.user;
+            let { user } = this.props;
+            let { avatar, biography, favoriteUsers, fullName, interests, openInvitationsCount } = user;
             var initials = fullName.match(/\b\w/g) || [];
             initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
+            let { selected, favouriteUsers } = this.state;
 
             return (
                 <SafeAreaView style={styles.container}>
@@ -91,16 +137,22 @@ class Profile extends React.Component {
                     <Text style={styles.bioStyle}>{biography}</Text>
                     {this.renderFollowUserButton()}
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                        <View style={{ flex: 1, height: 60, alignItems: 'center' }} >
+                        <TouchableOpacity 
+                            style={[ styles.optionsViews, 
+                                selected === "FAVOURITE_USERS" && styles.optionsSelected]}
+                            onPress={this.onPressFavouriteUsers}>
                             <Text style={styles.bioStyle}>{favoriteUsers ? favoriteUsers.length : 0}</Text>
                             <Text style={styles.userInfoLabel}>Usuarios</Text>
                             <Text style={styles.userInfoLabel}>favoritos</Text>
-                        </View>
-                        <View style={{ flex: 1, height: 60, alignItems: 'center' }} >
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={[ styles.optionsViews, 
+                                selected === "INTERESTS" && styles.optionsSelected]}
+                            onPress={this.onPressInterests}>
                             <Text style={styles.bioStyle}>{interests.length}</Text>
                             <Text style={styles.userInfoLabel}>Intereses</Text>
-                        </View>
-                        <View style={{ flex: 1, height: 60, alignItems: 'center' }} >
+                        </TouchableOpacity>
+                        <View style={styles.optionsViews} >
                             <Text style={styles.bioStyle}>{openInvitationsCount}</Text>
                             <Text style={styles.userInfoLabel}>Invitaciones</Text>
                             <Text style={styles.userInfoLabel}>abiertas</Text>
@@ -108,10 +160,23 @@ class Profile extends React.Component {
                     </View>
                     <View style={styles.horizontalLineStyle} />
                     <View style={{ alignSelf: 'flex-start' }}>
-                        <Text style={styles.interestsTitleStyle}>Intereses</Text>
-                        <View style={{ flexDirection: 'row', marginLeft: 20, flexWrap: 'wrap' }}>
-                            {this.renderInterests(interests)}
-                        </View>
+                        <Text style={styles.interestsTitleStyle}>
+                            {
+                                selected === "INTERESTS" ? 'Intereses' : 'Usuarios Favoritos'
+                            }
+                        </Text>
+                        {
+                            selected === "INTERESTS"
+                            ? <View style={{ flexDirection: 'row', marginLeft: 20, flexWrap: 'wrap' }}>
+                                {this.renderInterests(interests)}
+                            </View>
+                            : <GridView
+                                itemDimension={windowWidth * 0.2}
+                                items={favouriteUsers}
+                                renderItem={this.renderItem}
+                            />
+                        }
+                        
                     </View>
                     <ButtonElements
                         raised
@@ -129,7 +194,11 @@ class Profile extends React.Component {
 
 function mapStateToProps(state, props) {
     const { isNotLoggedUser } = props;
-    const { isLoadingUser, loggedUser, userToShow, isLoadingAddFavouriteUser } = state.profileReducer;
+    const { 
+        isLoadingUser, loggedUser, userToShow, 
+        isLoadingAddFavouriteUser, 
+        // favouriteUsersFromLoggedUser 
+    } = state.profileReducer;
     return {
         isLoadingUser,
         user: isNotLoggedUser ? userToShow : loggedUser,
@@ -138,8 +207,15 @@ function mapStateToProps(state, props) {
                         ? loggedUser &&
                             loggedUser.favoriteUsers &&
                             loggedUser.favoriteUsers.indexOf(userToShow.id) > -1 
-                        : false
+                        : false,
+        // favouriteUsers: favouriteUsersFromLoggedUser
     }
 }
 
-export default connect(mapStateToProps, { addFavouriteUser, removeFavouriteUser, signOut })(Profile);
+export default connect(mapStateToProps, { 
+    addFavouriteUser, 
+    removeFavouriteUser, 
+    getFavouriteUsers,
+    getUserData,
+    signOut 
+})(Profile);

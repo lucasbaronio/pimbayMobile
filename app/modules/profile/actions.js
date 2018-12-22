@@ -77,4 +77,15 @@ export function removeFavouriteUser(mailToRemove, errorCB) {
     };
 }
 
+export function getFavouriteUsers(userId, successCB, errorCB) {
+    return (dispatch) => {
+        api.getFavouriteUsers(userId, function (success, data, error) {
+            if (success) {
+                dispatch({ type: t.FAVOURITE_USERS_AVAILABLE, data });
+                successCB(data);
+            } else if (error) errorCB(error);
+        });
+    };
+}
+
 export { signOut };

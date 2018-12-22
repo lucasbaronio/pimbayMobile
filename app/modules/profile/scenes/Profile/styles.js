@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index"
-const { fontSize, color, fontFamily } = theme;
+const { fontSize, color, fontFamily, windowWidth } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -57,15 +57,23 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 20,
-        // borderColor: "transparent",
-        // borderWidth: 0,
         borderColor: color.orange,
         borderWidth: 1,
         borderRadius: 25,
         paddingVertical: 5,
         paddingHorizontal: 8,
     },
+    optionsViews: { 
+        flex: 1, 
+        height: 60, 
+        alignItems: 'center', 
+        marginHorizontal: 10 
+    },
+    optionsSelected: {
+        borderBottomColor: color.orange,
+        borderBottomWidth: 1,
+    }
 });
 
-export { color, fontSize };
+export { color, fontSize, windowWidth };
 export default styles;

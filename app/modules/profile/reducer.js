@@ -6,7 +6,8 @@ let initialState = {
     userToShow: null,
     loggedUser: null,
     isLoadingUser: true,
-    isLoadingAddFavouriteUser: false
+    isLoadingAddFavouriteUser: false,
+    favouriteUsersFromLoggedUser: [],
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -51,6 +52,16 @@ const profileReducer = (state = initialState, action) => {
         case t.REMOVE_FAVOURITE_USER: {
             let { data } = action;
             return { ...state, loggedUser: data, isLoadingAddFavouriteUser: false }
+        }
+
+        case t.FAVOURITE_USERS_AVAILABLE: {
+            let { data } = action;
+            let favouriteUsersFromLoggedUser = state.favouriteUsersFromLoggedUser;
+            if (data) {
+                favouriteUsersFromLoggedUser = [].concat(data);
+            }
+
+            return { ...state, favouriteUsersFromLoggedUser }
         }
 
         default:
