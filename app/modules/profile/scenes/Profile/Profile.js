@@ -33,7 +33,7 @@ class Profile extends React.Component {
     }
 
     renderFollowUserButton() {
-        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser, isLoadingRemoveFavouriteUser } = this.props;
+        const { isNotLoggedUser, iAmFollowing, isLoadingAddFavouriteUser } = this.props;
         if (isNotLoggedUser) {
             if (isLoadingAddFavouriteUser) {
                 return (
@@ -48,7 +48,7 @@ class Profile extends React.Component {
                     buttonStyle={styles.button}
                     color={iAmFollowing ? color.black : color.white}
                     title={iAmFollowing ? 'ELIMINAR FAVORITO' : 'AGREGAR FAVORITO'}
-                    fontColor={iAmFollowing ? color.orange : color.white} // ver si funca esto
+                    fontColor={iAmFollowing ? color.orange : color.white}
                     fontSize={fontSize.text4} />
             );
         } else return null;
@@ -90,12 +90,7 @@ class Profile extends React.Component {
     renderItem = (item) => {
         return (
             <AvatarUser
-                item={{ 
-                    ...item, 
-                    fullName: item.fullname ? item.fullname : item.fullName,
-                    userName: item.username ? item.username : item.userName
-                }}
-                // item={item}
+                item={item}
                 selectable={false}
                 onPressButtom={this.onPressUserAvatar}
             />

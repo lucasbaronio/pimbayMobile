@@ -31,8 +31,8 @@ const authReducer = (state = initialState, action) => {
         case t.LOGGED_OUT: {
             let keys = ['user_id', 'user_username', 'user_fullName', 'user_mail'];
             AsyncStorage.multiRemove(keys);
-
-            return { ...state, isLoggedIn: false, user: null, isLoading: false };
+            
+            return { ...state, isLoggedIn: false, isLoading: false };
         }
         
         case t.COMPLETE_USER_INFO: {

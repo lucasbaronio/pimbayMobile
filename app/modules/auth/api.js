@@ -54,7 +54,7 @@ export function updateUser ({ id, newUser }, callback) {
 export function login(data, callback) {
     const { email, password } = data;
     auth.signInWithEmailAndPassword(email, password)
-        .then((resp) => { console.log(resp); getLoggedUser(resp.user.email, callback)})
+        .then((resp) => getLoggedUser(resp.user.email, callback))
         .catch((error) => callback(false, null, error));
 }
 
@@ -79,14 +79,12 @@ export function resetPassword(data, callback) {
 }
 
 export function signOut(callback) {
-    console.log(auth);
     auth.signOut()
         .then(() => {
             if (callback) callback(true, null, null)
         })
         .catch((error) => {
-            if (callback) callback(true, null, null)
-            // if (callback) callback(false, null, error)
+            if (callback) callback(false, null, error)
         });
 }
 
