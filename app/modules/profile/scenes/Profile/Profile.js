@@ -51,7 +51,20 @@ class Profile extends React.Component {
                     fontColor={iAmFollowing ? color.orange : color.white}
                     fontSize={fontSize.text4} />
             );
-        } else return null;
+        } else return (
+            <ButtonElements
+                    backgroundColor={color.white}
+                    onPress={this.goToEditProfile}
+                    buttonStyle={styles.button}
+                    color={color.black}
+                    title={'EDITAR PERFIL'}
+                    fontColor={color.orange}
+                    fontSize={fontSize.text4} />
+        );
+    }
+
+    goToEditProfile = () => {
+        Actions.push('EditProfile');
     }
 
     onAddFavouriteUser = () => {
@@ -64,17 +77,17 @@ class Profile extends React.Component {
         removeFavouriteUser(user.mail, this.onError);
     }
 
-    onSignOut = () => {
-        this.props.signOut(this.onSuccess, this.onError)
-    }
+    // onSignOut = () => {
+    //     this.props.signOut(this.onSuccess, this.onError)
+    // }
 
     onError(error) {
         Alert.alert("Oops", error.message);
     }
 
-    onSuccess = () => {
-        Actions.reset('root');
-    }
+    // onSuccess = () => {
+    //     Actions.reset('root');
+    // }
 
     onPressInterests = () => {
         this.setState({ selected: "INTERESTS" });
@@ -173,14 +186,11 @@ class Profile extends React.Component {
                         }
                         
                     </View>
-                    <ButtonElements
+                    {/* <ButtonElements
                         raised
                         title="CERRAR SESIÓN"
                         borderRadius={4}
-                        // containerViewStyle={styles.signOutContainer}
-                        // buttonStyle={styles.signOutButton}
-                        // textStyle={styles.signOutText}
-                        onPress={this.onSignOut} />
+                        onPress={this.onSignOut} /> */}
                 </SafeAreaView>
             );
         }

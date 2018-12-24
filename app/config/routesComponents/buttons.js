@@ -33,6 +33,14 @@ export function EditButton({ goToScreen }) {
     )
 }
 
+export function LogOutButton({ onPress }) {
+    return (
+        <NavButton onPress={onPress}
+            name={"ios-log-out"} type={"ionicon"}
+            color={color.black} />
+    )
+}
+
 export function CloseButton() {
     return (
         <NavButton onPress={Actions.pop}

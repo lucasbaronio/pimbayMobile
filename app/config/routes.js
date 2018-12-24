@@ -22,7 +22,7 @@ import SelectUsersFromList from '../modules/timeline/scenes/SelectUsersFromList'
 import EventDetail from '../modules/shared/Event/EventDetail';
 import SearchTimelineEvent from '../modules/timeline/scenes/SearchTimeline/tabs/SearchTimelineEvent';
 import SearchTimelineUser from '../modules/timeline/scenes/SearchTimeline/tabs/SearchTimelineUser';
-import { EditButton, SearchButton, BackButton, SaveButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
+import { LogOutButton, SearchButton, BackButton, SaveButton, TextButton, CloseButton, CreateInvitationButton } from './routesComponents/buttons';
 import houseFocused from '../assets/icons/house-black.png';
 import house from '../assets/icons/house.png';
 
@@ -55,7 +55,7 @@ import { checkLoginStatus } from "../modules/auth/actions";
 import { actions as createInvitation } from "../modules/timeline/index";
 const { cleanCreateInvitation } = createInvitation;
 import { actions as profileActions } from "../modules/profile/index";
-const { getUserData } = profileActions;
+const { getUserData, signOut } = profileActions;
 import { actions as chatActions } from "../modules/chats/index";
 const { getChatList } = chatActions;
 import { actions as authActions } from "../modules/auth/index";
@@ -199,9 +199,33 @@ class RouterApp extends React.Component {
                                             source={focused ? userFocused : user} />
                                     )}
                                     onEnter={() => {
-                                        this.props.getUserData(false, () => {}, (error) => { Alert.alert("Oops", error.message) });
+                                        this.props.getUserData(false, () => {}, (error) => Alert.alert("Oops", error.message));
                                     }}
-                                    renderRightButton={<EditButton goToScreen='EditProfile' />}
+                                    renderRightButton={
+                                        <LogOutButton onPress={() => {
+                                            Alert.alert(
+                                                'Cerrar Sesión',
+                                                'Esta seguro que desea cerrar la sesión?',
+                                                [
+                                                    {
+                                                        text: 'Salir', 
+                                                        onPress: () => {
+                                                            this.props.signOut(
+                                                                () => Actions.reset('root'), 
+                                                                (error) => Alert.alert("Oops", error.message) 
+                                                            )
+                                                        }, 
+                                                        style: 'destructive'
+                                                    },
+                                                    {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
+                                                ],
+                                                { cancelable: false }
+                                            )
+
+
+                                            
+                                        }} 
+                                    />}
                                 />
                             </Scene>
                         </Stack>
@@ -309,5 +333,6 @@ export default connect(mapStateToProps, {
     getUserData, 
     getChatList, 
     cleanCreateInvitation,
-    userLoggedInToCache
+    userLoggedInToCache,
+    signOut
 })(RouterApp);
