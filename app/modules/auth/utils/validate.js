@@ -33,19 +33,19 @@ export function validate(form) {
         if (field !== "error"){
             var { type, value } = form[field];
             if (isEmpty(value)){
-                error[field] = 'Your ' + field + ' is required';
+                error[field] = 'Este campo es requerido';
                 success = false;
             }else{
                 error[field] = '';
 
                 if (type === "email" && !validateEmail(value)) {
-                    error[field] = 'Enter a valid email address';
+                    error[field] = 'Ingrese un mail válido';
                     success = false;
                 }else if (type === "password" && !validatePassword(value)) {
-                    error[field] = 'Password must be at least 6 characters';
+                    error[field] = 'La contraseña debe tener más de 6 caracteres';
                     success = false;
                 }else if (type === "confirm_password" && !confirmPassword(value, form["password"]['value'])) {
-                    error[field] = 'Password does not match.';
+                    error[field] = 'Las contraseñas no coinciden';
                     success = false;
                 }
             }
