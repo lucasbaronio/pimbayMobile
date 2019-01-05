@@ -6,7 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
 
-import styles, { color } from "./styles";
+import { IPHONE_SE_HEIGHT } from '../../../../config/phoneSizes';
+import styles, { color, windowHeight } from "./styles";
 
 class ChatItem extends React.Component {
 
@@ -31,17 +32,29 @@ class ChatItem extends React.Component {
                     </View>
                 }
                 <View style={styles.chatInfo}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-                            {chat.name}
+                        <Text style={{ fontSize: (windowHeight <= IPHONE_SE_HEIGHT) ? 16 : 20, fontWeight: 'bold' }}>
+                            {
+                                (chat.name.length > 15 && windowHeight <= IPHONE_SE_HEIGHT)
+                                ? chat.name.substring(0, 15) + '...'
+                                : (chat.name.length > 20)
+                                ? chat.name.substring(0, 20) + '...'
+                                : chat.name
+                            }
                         </Text>
                         {
                             !!chat.last_message &&
                             <View style={{ paddingLeft: 10 }}>
-                                <Text>
+                                <Text style={(windowHeight <= IPHONE_SE_HEIGHT) && { fontSize: 12 }}>
                                     {chat.last_message.user.display_name}
                                 </Text>
-                                <Text style={styles.lastMessage}>
-                                    {chat.last_message.text}
+                                <Text style={[(windowHeight <= IPHONE_SE_HEIGHT) && { fontSize: 12 }, styles.lastMessage]}>
+                                    {
+                                        (chat.last_message.text.length > 20 && windowHeight <= IPHONE_SE_HEIGHT)
+                                        ? chat.last_message.text.substring(0, 20) + '...'
+                                        : (chat.last_message.text.length > 30)
+                                        ? chat.last_message.text.substring(0, 30) + '...'
+                                        : chat.last_message.text
+                                    }
                                 </Text>
                             </View>
                         }
@@ -50,7 +63,12 @@ class ChatItem extends React.Component {
                     !!(chat.unread_message_count > 0) &&
                     <View style={styles.unreadMessageCount}>
                         <Badge
-                            value={chat.unread_message_count}
+                            textStyle={
+                                (windowHeight <= IPHONE_SE_HEIGHT) 
+                                ? { fontSize: (chat.unread_message_count > 99) ? 10 : 12 }
+                                : null
+                            }
+                            value={(chat.unread_message_count > 99) ? "+99" : chat.unread_message_count}
                             containerStyle={{ backgroundColor: color.orange }} />
                     </View>
                 }

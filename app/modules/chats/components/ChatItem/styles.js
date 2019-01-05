@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../index";
-const { color, fontSize, normalize, fontFamily } = theme;
+const { color, windowHeight, normalize, fontFamily } = theme;
 
 const styles = StyleSheet.create({
     container:{
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     avatar: {
-        margin: 5,
+        marginVertical: 5,
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,0.2)',
         alignItems: 'center',
@@ -23,16 +23,16 @@ const styles = StyleSheet.create({
         flex: 7,
         flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: 10
+        marginLeft: 5
     },
     arrowForward: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'flex-end',
-        paddingRight: 10
+        // paddingRight: 5
     },
     unreadMessageCount: {
-        flex: 1,
+        flex: 2,
         justifyContent: 'center',
         alignItems: 'flex-end',
         // paddingRight: 10
@@ -42,5 +42,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export { color };
+export { color, windowHeight };
 export default styles;

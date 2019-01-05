@@ -111,10 +111,10 @@ export function sendMessage({ message, chat }, errorCB) {
     };
 }
 
-export function changeChatName(name, chatId, errorCB) {
+export function changeChatName({ name, chatId }, successCB, errorCB) {
     return (dispatch) => {
         api.changeChatName({ chatId, name }, function (success, data, error) {
-            // if (success) console.log(data);
+            if (success) successCB();
             if (error) errorCB(error);
         });
     };
