@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Badge } from 'react-native-elements';
 import { actions as timeline } from "../../index";
-const { getInvitations, getInvitationsRefresh } = timeline;
+const { getInvitations, getInvitationsRefresh, getEventLocation } = timeline;
 import { actions as auth } from "../../../auth/index";
 const { userLoggedInToCache } = auth;
 
@@ -107,7 +107,20 @@ class Timeline extends React.Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", { onPressCreateInvitation: this.onPressEvent, item });
+        const { getEventLocation } = this.props;
+        const { place } = item;
+        getEventLocation(
+            place, 
+            (location) => Actions.push("EventDetail", { 
+                onPressCreateInvitation: this.onPressEvent, 
+                item: { ...item, location }
+            }), 
+            this.onError
+        );
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
     }
 
     renderHeader = () => {
@@ -208,5 +221,6 @@ function mapStateToProps(state, props) {
 export default connect(mapStateToProps, { 
     getInvitations, 
     getInvitationsRefresh,
-    userLoggedInToCache 
+    userLoggedInToCache,
+    getEventLocation
 })(Timeline);

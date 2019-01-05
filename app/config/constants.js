@@ -158,3 +158,6 @@ export const API_DELETE_CHAT = () => {
         bodyExtra: {}
     }
 };
+
+const GCP_API_KEY = "AIzaSyBLPUTSjHrq5JikApCOFJ0n2D8NFL5W0-Q";
+export const API_GEOCODING_RESPONSES = ({ place }) => `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${GCP_API_KEY}`;

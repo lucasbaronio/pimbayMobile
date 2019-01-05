@@ -19,9 +19,8 @@ class EventDetail extends Component {
     }
 
     render() {
-        const latitude = -34.9076753;
-        const longitude = -56.2011147;
-        const { title, realizationDate, place, image, categories, description, onPressCreateInvitation } = this.props.item;
+        const { onPressCreateInvitation } = this.props;
+        const { title, realizationDate, place, image, location, description } = this.props.item;
 
         return (
             <ScrollView style={styles.scrollViewStyle}>
@@ -68,24 +67,31 @@ class EventDetail extends Component {
                     </View>
                 </View>
                 <View style={styles.eventMapViewContainerStyle}>
-                    <Text style={styles.eventMapViewHeaderStyle}>Mapa</Text>
+                    <Text style={styles.eventMapViewHeaderStyle}>Lugar</Text>
                     <Text style={styles.eventMapViewPlaceStyle}>{place}</Text>
-                    <View pointerEvents="none">
-                        <MapView
-                            style={styles.eventMapViewComponentStyle}
-                            initialRegion={{
-                                latitude: latitude,
-                                longitude: longitude,
-                                latitudeDelta: 0.004757,
-                                longitudeDelta: 0.006866,
-                            }}
-                        >
-                            <MapView.Marker
-                                coordinate={{ latitude: latitude, longitude: longitude }}
-                                title={place}
-                            />
-                        </MapView>
-                    </View>
+                    {
+                        !!location &&
+                        // <View pointerEvents="none">
+                            <MapView
+                                style={styles.eventMapViewComponentStyle}
+                                region={{
+                                    latitude: location.lat,
+                                    longitude: location.lng,
+                                    latitudeDelta: 0.004757,
+                                    longitudeDelta: 0.006866,
+                                }}
+                                showsUserLocation
+                                loadingEnabled
+                                showsMyLocationButton
+                                // scrollEnabled={false}
+                            >
+                                <MapView.Marker
+                                    coordinate={{ latitude: location.lat, longitude: location.lng }}
+                                    title={place}
+                                />
+                            </MapView>
+                        // </View>
+                    }
                 </View>
             </ScrollView>
         );

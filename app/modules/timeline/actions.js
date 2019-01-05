@@ -162,3 +162,14 @@ export function searchEvents(value, errorCB) {
         });
     };
 }
+
+export function getEventLocation(place, successCB, errorCB) {
+    return (dispatch) => {
+        api.getEventLocation(place, function (success, data, error) {
+            if (success) {
+                if (data.status === "ZERO_RESULTS") successCB(null)
+                else successCB(data.results[0].geometry.location)
+            } else if (error) errorCB(error);
+        });
+    };
+}

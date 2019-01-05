@@ -21,7 +21,7 @@ import { Button } from 'react-native-elements';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 import { actions as createInvitation } from "../../index";
-const { createNewInvitation, cleanCreateInvitation } = createInvitation;
+const { createNewInvitation, cleanCreateInvitation, getEventLocation } = createInvitation;
 
 class CreateInvitation extends Component {
 
@@ -65,7 +65,15 @@ class CreateInvitation extends Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", { props: this.props, item });
+        const { getEventLocation } = this.props;
+        const { place } = item;
+        getEventLocation(
+            place, 
+            (location) => Actions.push("EventDetail", {
+                item: { ...item, location }
+            }), 
+            this.onError
+        );
     }
 
     createInvitation = () => {
@@ -265,5 +273,6 @@ function mapStateToProps(state, props) {
 
 export default connect(mapStateToProps, {
     createNewInvitation,
-    cleanCreateInvitation
+    cleanCreateInvitation,
+    getEventLocation
 })(CreateInvitation);

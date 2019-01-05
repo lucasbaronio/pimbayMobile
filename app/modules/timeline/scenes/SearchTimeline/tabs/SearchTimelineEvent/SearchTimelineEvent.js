@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, ActivityIndicator, Text } from 'react-native';
+import { View, FlatList, ActivityIndicator, Text, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
@@ -7,6 +7,8 @@ import { pimbayType } from '../../../../../shared/constants';
 import EventCardMedium from '../../../../../shared/Event/EventCardMedium';
 import { actions as profileActions } from "../../../../../profile/index";
 const { getUserData } = profileActions;
+import { actions as timelineActions } from "../../../../../timeline/index";
+const { getEventLocation } = timelineActions;
 
 import styles from "./styles";
 
@@ -20,7 +22,20 @@ class SearchTimelineEvent extends Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", { onPressCreateInvitation: this.onPressEvent, item });
+        const { getEventLocation } = this.props;
+        const { place } = item;
+        getEventLocation(
+            place, 
+            (location) => Actions.push("EventDetail", { 
+                onPressCreateInvitation: this.onPressEvent, 
+                item: { ...item, location }
+            }), 
+            this.onError
+        );
+    }
+
+    onError(error) {
+        Alert.alert("Oops", error.message);
     }
 
     renderItem = ({ item, index }) => {
@@ -74,4 +89,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserData })(SearchTimelineEvent);
+export default connect(mapStateToProps, { getUserData, getEventLocation })(SearchTimelineEvent);

@@ -9,6 +9,7 @@ import {
     API_GET_USER_BY_ID,
     API_SEARCH_USERS,
     API_SEARCH_EVENTS,
+    API_GEOCODING_RESPONSES
 } from './constants';
 import { get, post } from '../globalApi';
 
@@ -50,4 +51,9 @@ export function searchUsersByUserNameOrFullName(value, callback) {
 
 export function searchEvents(value, callback) {
     get(API_SEARCH_EVENTS({ value }), callback);
+}
+
+export function getEventLocation(place, callback) {
+    place=place.replace(/ /g,"+");
+    get(API_GEOCODING_RESPONSES({ place }), callback);
 }

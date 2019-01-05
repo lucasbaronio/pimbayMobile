@@ -15,6 +15,8 @@ import { actions as invitationsActions } from "../../../myInvitations/index";
 const { confirmInvitation } = invitationsActions;
 import { actions as profileActions } from "../../../profile/index";
 const { getUserData } = profileActions;
+import { actions as timelineActions } from "../../../timeline/index";
+const { getEventLocation } = timelineActions;
 
 import styles, { color, windowWidth } from "./styles";
 
@@ -46,7 +48,15 @@ class InvitationDetails extends Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", { props: this.props, item: item });
+        const { getEventLocation } = this.props;
+        const { place } = item;
+        getEventLocation(
+            place, 
+            (location) => Actions.push("EventDetail", { 
+                item: { ...item, location }
+            }), 
+            this.onError
+        );
     }
 
     renderBadgeHeader = () => {
@@ -168,4 +178,4 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getUserData, confirmInvitation })(InvitationDetails);
+export default connect(mapStateToProps, { getUserData, confirmInvitation, getEventLocation })(InvitationDetails);

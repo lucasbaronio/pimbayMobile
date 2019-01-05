@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { actions as invitationsActions } from "../../index";
 const { getInvitationsOut, getInvitationsOutRefresh } = invitationsActions;
+import { actions as timelineActions } from "../../../timeline/index";
+const { getEventLocation } = timelineActions;
 
 import SentInvitationCard from "../../../shared/Invitation/SentInvitationCard";
 import styles from "./styles";
@@ -19,7 +21,15 @@ class InvitationsOut extends Component {
     }
 
     onPressViewEvent = (item) => {
-        Actions.push("EventDetail", { props: this.props, item });
+        const { getEventLocation } = this.props;
+        const { place } = item;
+        getEventLocation(
+            place, 
+            (location) => Actions.push("EventDetail", { 
+                item: { ...item, location }
+            }), 
+            this.onError
+        );
     }
 
     renderItem = ({ item, index }) => {
@@ -69,4 +79,8 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { getInvitationsOut, getInvitationsOutRefresh })(InvitationsOut);
+export default connect(mapStateToProps, { 
+    getInvitationsOut, 
+    getInvitationsOutRefresh,
+    getEventLocation
+})(InvitationsOut);
