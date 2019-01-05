@@ -2,7 +2,8 @@ import React from 'react';
 import { Linking, View, TouchableOpacity, Text, Image } from 'react-native';
 import { connect } from "react-redux";
 import mapLocation from '../../../../../assets/icons/map-location.png';
-import styles from "./styles"
+import styles, { windowHeight } from "./styles"
+import { IPHONE_SE_HEIGHT } from '../../../../../config/phoneSizes';
 
 class LocationButton extends React.Component {
     _onPressButton = () => {
@@ -21,9 +22,13 @@ class LocationButton extends React.Component {
                         style={{ width: 20, height: 20 }}
                         source={mapLocation} />
                     <Text style={styles.text}>
-                        {(place.length > 25 && ellipsizeText)
+                        {
+                            (place.length > 15 && windowHeight <= IPHONE_SE_HEIGHT && ellipsizeText)
+                            ? place.substring(0, 15) + '...'
+                            : (place.length > 25 && ellipsizeText)
                             ? place.substring(0, 25) + '...'
-                            : place}
+                            : place
+                        }
                     </Text>
                 </View>
             </TouchableOpacity>

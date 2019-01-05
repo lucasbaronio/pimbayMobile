@@ -29,13 +29,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'flex-end',
-        // paddingRight: 5
     },
     unreadMessageCount: {
         flex: 2,
         justifyContent: 'center',
         alignItems: 'flex-end',
-        // paddingRight: 10
     },
     lastMessage: {
         color: color.grey

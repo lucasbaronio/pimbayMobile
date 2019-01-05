@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from "../../../../index";
-const { fontSize, color, windowWidth } = theme;
+const { fontSize, color, windowHeight } = theme;
 
 const styles = StyleSheet.create({
     container: {
@@ -13,4 +13,5 @@ const styles = StyleSheet.create({
     },
 });
 
+export { windowHeight };
 export default styles;
