@@ -70,7 +70,7 @@ const timelineReducer = (state = initialState, action) => {
                 if(event) eventData.push(event);
                 usersData.push(user);
                 invitationsData.push(invitation);
-                if (favoriteUsers && favoriteUsers.indexOf(invitation.ownerId) > -1)
+                if (user && favoriteUsers && favoriteUsers.indexOf(invitation.ownerId) > -1)
                     invitationsFromFavouriteUsersData.push(invitation);
             }
             eventsFromInvitations = eventsFromInvitations.concat(eventData);
@@ -104,7 +104,7 @@ const timelineReducer = (state = initialState, action) => {
                 if(event) eventData.push(event);
                 usersData.push(user);
                 invitationsData.push(invitation);
-                if (favoriteUsers && favoriteUsers.indexOf(invitation.ownerId) > -1)
+                if (user && favoriteUsers && favoriteUsers.indexOf(invitation.ownerId) > -1)
                     invitationsFromFavouriteUsersData.push(invitation);
             }
             let eventsFromInvitations = [].concat(eventData);

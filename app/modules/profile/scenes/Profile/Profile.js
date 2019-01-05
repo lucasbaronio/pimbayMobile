@@ -7,13 +7,15 @@ import GridView from 'react-native-super-grid';
 
 import AvatarUser from '../../../shared/AvatarUser';
 
+import { IPHONE_SE_HEIGHT } from '../../../../config/phoneSizes';
+
 import { actions as profileActions } from "../../index";
 const { 
     addFavouriteUser, removeFavouriteUser, 
     signOut, getFavouriteUsers, getUserData 
 } = profileActions;
 
-import styles, { color, fontSize, windowWidth } from "./styles"
+import styles, { color, fontSize, windowWidth, windowHeight } from "./styles"
 
 class Profile extends React.Component {
 
@@ -127,6 +129,7 @@ class Profile extends React.Component {
                 </View>
             );
         } else {
+            console.log(windowHeight);
             let { user } = this.props;
             let { avatar, biography, favoriteUsers, fullName, interests, openInvitationsCount } = user;
             var initials = fullName.match(/\b\w/g) || [];
@@ -136,7 +139,8 @@ class Profile extends React.Component {
             return (
                 <SafeAreaView style={styles.container}>
                     <Avatar
-                        xlarge
+                        large={windowHeight <= IPHONE_SE_HEIGHT} 
+                        xlarge={windowHeight > IPHONE_SE_HEIGHT} 
                         rounded
                         title={(!avatar) ? initials : null}
                         source={(avatar) ? { uri: avatar } : null}

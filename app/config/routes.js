@@ -221,9 +221,6 @@ class RouterApp extends React.Component {
                                                 ],
                                                 { cancelable: false }
                                             )
-
-
-                                            
                                         }} 
                                     />}
                                 />

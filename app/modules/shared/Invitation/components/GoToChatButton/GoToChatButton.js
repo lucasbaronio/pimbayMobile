@@ -7,6 +7,8 @@ import { Actions } from 'react-native-router-flux';
 
 import { actions as chatActions } from "../../../../chats/index";
 const { getChatDetail } = chatActions;
+import { actions as timelineActions } from "../../../../timeline/index";
+const { getInvitationsRefresh } = timelineActions;
 
 class GoToChatButton extends Component {
 
@@ -18,7 +20,9 @@ class GoToChatButton extends Component {
     }
 
     onError(error) {
-        Alert.alert("Oops", error.message);
+        const { getInvitationsRefresh } = this.props;
+        getInvitationsRefresh((error) => Alert.alert("Oops", error.message));
+        Alert.alert("Invitación finalizada", "La invitación se ha finalizado");
     }
 
     render() {
@@ -34,4 +38,4 @@ class GoToChatButton extends Component {
     }
 }
 
-export default connect(null, { getChatDetail })(GoToChatButton);
+export default connect(null, { getChatDetail, getInvitationsRefresh })(GoToChatButton);
