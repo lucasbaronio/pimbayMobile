@@ -8,7 +8,8 @@ export default class extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <Image style={styles.image} source={require('../../assets/Pimbay-logo.png')}/>
+                    <Image style={styles.image} source={require('../../assets/pimbay.png')}/>
+                    <Image style={styles.imageTitle} source={require('../../assets/headerImg.png')}/>
                 </View>
                 <View style={styles.activityIndicatorContainer}>
                     <ActivityIndicator animating={true}/>

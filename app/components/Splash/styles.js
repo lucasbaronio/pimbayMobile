@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     },
 
     wrapper:{
+        flex: 1,
         paddingHorizontal:15,
         paddingBottom: padding * 2,
         justifyContent:"center",
@@ -20,7 +21,12 @@ const styles = StyleSheet.create({
     },
 
     image:{
-        width: 200,
+        height: 200,
+        resizeMode
+    },
+
+    imageTitle:{
+        height: 50,
         resizeMode
     },
 

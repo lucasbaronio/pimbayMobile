@@ -37,11 +37,10 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch'
     },
     interestsTitleStyle: {
+        // flex: 1,
         fontSize: fontSize.text3,
         fontFamily: fontFamily.medium,
-        marginTop: 15,
-        marginLeft: 15,
-        marginBottom: 15
+        margin: 15,
     },
     interestTextStyle: {
         fontSize: fontSize.text4,

@@ -8,6 +8,7 @@ import GridView from 'react-native-super-grid';
 import AvatarUser from '../../../shared/AvatarUser';
 
 import { IPHONE_SE_HEIGHT } from '../../../../config/phoneSizes';
+import { Ionicons } from '@expo/vector-icons';
 
 import { actions as profileActions } from "../../index";
 const { 
@@ -129,7 +130,6 @@ class Profile extends React.Component {
                 </View>
             );
         } else {
-            console.log(windowHeight);
             let { user } = this.props;
             let { avatar, biography, favoriteUsers, fullName, interests, openInvitationsCount } = user;
             var initials = fullName.match(/\b\w/g) || [];
@@ -172,11 +172,21 @@ class Profile extends React.Component {
                     </View>
                     <View style={styles.horizontalLineStyle} />
                     <View style={{ alignSelf: 'flex-start' }}>
-                        <Text style={styles.interestsTitleStyle}>
+                        <View style={{ width: windowWidth, justifyContent: 'space-between', flexDirection: 'row' }}>
+                           <Text style={styles.interestsTitleStyle}>
+                                {
+                                    selected === "INTERESTS" ? 'Intereses' : 'Usuarios Favoritos'
+                                }
+                            </Text>
                             {
-                                selected === "INTERESTS" ? 'Intereses' : 'Usuarios Favoritos'
+                                (selected !== "INTERESTS") &&
+                                <TouchableOpacity 
+                                    style={{ margin: 15 }} 
+                                    onPress={this.onPressFavouriteUsers}>
+                                    <Ionicons name="ios-refresh" size={32} color={color.orange} />
+                                </TouchableOpacity>
                             }
-                        </Text>
+                        </View>
                         {
                             selected === "INTERESTS"
                             ? <View style={{ flexDirection: 'row', marginLeft: 20, flexWrap: 'wrap' }}>
