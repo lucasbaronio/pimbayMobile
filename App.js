@@ -5,6 +5,8 @@ import { Font, AppLoading } from 'expo';
 import RouterApp from './app/config/routes';
 import store from './app/redux/store';
 
+import('./app/config/ReactotronConfig').then(() => console.log('Reactotron Configured'))
+
 function cacheFonts(fonts) {
     return fonts.map(font => Font.loadAsync(font));
 }

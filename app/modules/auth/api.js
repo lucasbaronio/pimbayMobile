@@ -11,14 +11,12 @@ export { getUserById }
 //Register the user using email and password
 export function register(data, callback) {
     const { email, password, username, fullName } = data;
-    // console.log(email, password, username, fullName);
     auth.createUserWithEmailAndPassword(email, password)
         .then((resp) => {
             createUser({ 
                 mail: email,
                 fullName,
                 userName: username, 
-                // uid:resp.user.uid 
             }, callback)
         })
         .catch((error) => {
